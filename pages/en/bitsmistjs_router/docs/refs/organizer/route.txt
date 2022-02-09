@@ -1,0 +1,193 @@
+====== RouteOrganizer ======
+
+''Inherit:Organizer''
+
+===== Overview =====
+
+RouteOrganizer handles the application routings. It can be used to do route-specific jobs.
+
+The RouteOrganizer references routes setting that describes what routes exist in the "routes" section of the component settings. This route setting and the current URL are used to determine the current route. Below is example settings:
+
+<code javascript>
+"routes": [
+  {
+    "name": "list",
+    "path": "/:resource/list/",
+    "specName": "{{:resource}}",
+    "componentName": "PadList"
+  },
+  {
+    "name": "top",
+    "path":　"/",
+    "specName": "top",
+    "componentName": "PadTop"
+  }
+]
+</code>
+
+The current route is determined by checking through each route settings whether it matches the following rules. The first matched one is adopted as the current route.
+
+  - Matches origins
+  - Matches path (Regular expression)
+
+The RouteOrganizer can load an additional settings file specific to the current route. This additional settings file is called a spec file. The settings format in the spec file is as same as the usual component settings.
+
+The RouteOrganizer also handles popstate events triggered by such as pressing the forward/back button. It calls open() method to process just like the usual loading process. Since it triggers beforePopstate/afterPopstate events to the component that is attached to the route, you can do your own process by writing event handlers for those events.
+
+===== Organizing =====
+
+Load route settings from the "routes" section and add them to the current route settings. These processes are done in beforeStart and afterSpecLoad timings.
+
+=== Sections ===
+
+  * routes
+
+=== Timings ===
+
+  * beforeStart
+  * afterSpecLoad
+
+===== Settings =====
+
+The route settings are placed in the "routes" section.
+
+====Syntax====
+
+<WRAP listtable>
+  * "routes": Array of  <rootInfo> {
+    * "name": <name>
+    * "origin": <origin>
+    * "path": <path>
+    * "specName": <specName>
+    * "componentName": <componentName>
+  * }
+</WRAP>
+
+====Description====
+
+^ Item^Type^Description^
+|routeInfo|Object|An object that holds route settings. The route settings include below:|
+|name \\ ''optional''|String|A name of the route.|
+|origin \\ ''optional''|String|An origin of the route.|
+|path \\ ''optional''|String|A path of the route. Regular expressions that are valid to [[https://github.com/pillarjs/path-to-regexp|path-to-regexp]] can be used. When not specified, all paths match.|
+|specName \\ ''optional''|String|A name of a spec file for the route. The spec file of the matched route will be loaded.|
+|componentName \\ ''optional''|String|A name of the main component for the route. The refresh() method of this component is called when redrawing.|
+
+===== Events =====
+
+==== afterSpecLoad ====
+
+Triggered right after a spec file is loaded.
+
+=== Extra Info ===
+
+^Paramter^Type^Description^
+|spec|Object|An spec file JSON contents converted to an object.|
+
+==== beforePopstate ====
+
+Triggered in popstate handling, before the router calls open() method to redraw.
+==== afterPopstate ====
+
+Triggered in popstate handling, after the router calls open() method and redraw.
+
+===== Extended Properties =====
+
+==== routeInfo ====
+
+''get'' ''Type:Object'' ''Inject:component''
+
+Returns an object that holds information about the current route.
+
+^Item^Type^Description^
+|name|String|A name of the route.|
+|specName|String|A spec file name of the route.|
+|componentName|String|A main component name of the route.|
+|url|String|The current URL.|
+|path|String|The path of the current URL. It doesn't contain a hostname or query parameters.|
+|query|String|The query part of the current URL.|
+|parsedUrl|Object|A URL class created from the current URL.|
+|routeParameters|Object|An object that holds path parameters. E.g. If a path in a route setting is ”/:person” and accessed to %%”https://example.com/john”%%, then the object is {"person":"John"}.|
+|queryParameters|Object|URL query parameters converted to an object.|
+
+==== spec ====
+
+''get'' ''Type:Object'' ''Inject:component''
+
+Returns an object that holds settings specific to the current route. That is spec file JSON contents converted to an object.
+
+=====  Extended Methods =====
+
+==== loadParameters() ====
+
+''Inject:component''
+
+Creates an object from the current URL query. 
+
+E.g. If a URL query is "?limit=10&offset=30" then the object returned is:
+
+<code javascript>
+{
+  "limit": 10,
+  "offset": 30
+}
+</code>
+
+=== Return Value ===
+
+A query parameter object.
+
+==== openRoute(routeInfo, options) ====
+
+''Inject:component''
+
+Transitions to the route according to the route information passed to the parameter. One of jumpRoute (), updateRoute (), and refreshRoute () is called based on the route information passed and the current route information.
+
+If the "name" of the current route information and the destination is different, jumpRoute () is called, if the "specName" is different, updateRoute () is called, and if both are the same, refreshRoute () is called.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|routeInfo|Object|A route information of the destination.|
+|options|Object|An option for the transition. It has the following keys:|
+|  "pushState" \\ ''default:True''|Boolean|Whether to pushState () the new route. pushState() will add a destination URL to your browser history.|
+|  "jump"|Boolean|Whether to trigger a page load when transitioning to the destination route.Triggers a page load when set to True.|
+
+==== replaceRoute(routeInfo) ====
+
+''Inject:component''
+
+Overwrites the route according to the route information passed to the parameter. Replaces the current URL without leaving the browser history.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|routeInfo|Object|A route information of the destination.|
+
+==== updateRoute(routeInfo) ====
+
+''Inject:component''
+
+It transitions to the route according to the route information passed to the parameter. Does loading components, etc. without causing page load.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|routeInfo|Object|A route information of the destination.|
+
+==== jumpRoute(routeInfo) ====
+
+''Inject:component''
+
+It transitions to the route according to the route information passed to the parameter. Causes a page load.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|routeInfo|Object|A route information of the destination.|
+
+==== refreshRoute() ====
+
+''Inject:component''
+
+Redraws the current route. Redrawing is done by calling the refresh () method of the component specified by "componentName" of the route information. The component must be held by the component to which this organizer is attached.

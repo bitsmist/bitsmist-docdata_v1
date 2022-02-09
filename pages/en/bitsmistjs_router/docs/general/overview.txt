@@ -1,0 +1,35 @@
+====== Overview ======
+
+===== Introduction =====
+
+The BitsmistJS Router is an addon library for BitsmistJS that handles routings. It can do specific jobs for each route, such as adding extra components for the current URL. 
+
+By importing the library, you can use the "<bm-router>" tag, and putting it on the HTML makes the router working. 
+
+The router can load additional settings for each route. A file containing additional settings is called a spec file. Specifying settings in the spec file makes an application do some extra jobs depending on the route.
+
+The router also handles the popstate event. When the event is triggered, the router calls the open() method to process as the usual loading process.
+
+===== Installation =====
+
+<WRAP admonition note links>
+You need to import the core library before the router.
+  *  <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:general:overview#installation|BitsmistJS Core:Overview#installation]]
+</WRAP>
+==== CDN ====
+
+Load BitsmistJS Router from CDN in your html files.
+
+<code html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js-router_v1@0.9.9/dist/bitsmist-js-router_v1.min.js"></script>
+</code>
+
+==== Download ====
+
+Download BitsmistJS and put bitsmist-js-router_v1.min.js in the dist folder to somewhere under your websites and load it in your HTML files.
+
+<code html>
+<script type="text/javascript" src="/js/bitsmist-js-router_v1.min.js"></script>
+</code>
+
+

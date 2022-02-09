@@ -1,0 +1,13 @@
+====== BitsmistJS Router Documents ======
+
+** GENERAL **
+
+  * [[en:bitsmistjs_router:docs:general:overview|Overview]]
+
+** REFERENCE - COMPONENT **
+
+  * [[en:bitsmistjs_router:docs:refs:component:router|Router]]
+
+** REFERENCE - ORGANIZER **
+
+  * [[en:bitsmistjs_router:docs:refs:organizer:route|RouteOrganizer]]

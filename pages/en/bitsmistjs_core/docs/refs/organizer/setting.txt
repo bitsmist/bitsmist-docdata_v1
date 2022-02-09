@@ -1,0 +1,97 @@
+====== SettingOrganizer ======
+
+''Inherit:Organizer''
+
+=====Overview=====
+
+SettingOrganizer manages basic settings such as the component's name and path. SettingOrganizer is called before any other organizers are called.
+
+=====Organizing=====
+
+At the initialization stage, it chains the component's settings property to global settings if "settings.useGlobalSettings" is set to True. 
+
+At the organizing stage, it loads settings passed via parameters and stores them as component settings. It also loads settings from an external setting file if specified, and load settings from tag attribute if exists.
+
+===Sections===
+
+  * settings
+
+===Timings===
+
+  * beforeStart
+
+=====Settings=====
+
+Settings are placed in the "settings" section. There are also some settings that can be set in tag attributes.
+
+====Syntax====
+
+<WRAP listtable>
+  * "settings": {
+    * "autoFill": <autoFill>
+    * "autoLoad": <autoLoad>
+    * "autoMorph": <autoMorph>
+    * "autoRefresh": <autoRefresh>
+    * "autoSetup": <autoSetup>
+    * "autoSetupOnStart": <autoSetupOnStart>
+    * "autoSetupOnOpen": <autoSetupOnOpen>
+    * "autoStop": <autoStop>
+    * "autoOpen": <autoOpen>
+    * "className": <className>
+    * "expose": <Boolean> | <expose>
+    * "fileName": <fileName>
+    * "loadGlobalSetting": <loadGlobalSetting>
+    * "name": <name>
+    * "path": <path>
+    * "rootNode": <rootNode>
+    * "sync": <sync>
+    * "templateName": <templateName>
+    * "templateNode": <templateNode>
+    * "tag": <tag>
+    * "tagName": <tagName>
+    * "triggerAppendOnStart": <triggerAppendOnStart>
+    * "useGlobalSetting": <useGlobalSetting>
+  * }
+</WRAP>
+
+====Description====
+
+^Item^Type^Description^
+|autoFill \\ ''optional'' \\ ''Default:true''|Boolean|Whether to call fill() automatically on refresh.|
+|autoLoad \\ ''optional'' \\ ''Default:true''|Boolean|Whether to load components automatically.|
+|autoMorph \\ ''optional'' \\ ''Default:false''|Boolean/ \\ String|If True, the component is treated as an HTML-only component and only an HTML file will be loaded.|
+|autoRefresh \\ ''optional'' \\ ''Default:true''|Boolean|Whether to call refresh() automatically when opening a component.|
+|autoSetup \\ ''optional'' \\ ''Default:true''|Boolean|Whether to cal setup() automatically. This setting has a lower priority than autoSetupOnStart、autoSetupOnOpen.|
+|autoSetupOnStart \\ ''optional''|Boolean|Whether to cal setup() automatically during initialization.|
+|autoSetupOnOpen \\ ''optional''|Boolean|Whether to call setup() automatically during opening a component.|
+|autoStop \\ ''optional'' \\ ''Default:true''|Boolean|Whether to do terminating process automatically when detached from a node.|
+|autoOpen \\ ''optional'' \\ ''Default:true''|Boolean|Whether to open a component automatically when attached to a node.|
+|className \\ ''optional''|String|A class name. If not specified, the component name is used as the class name.|
+|expose \\ ''optional'' \\ ''Default:false''|Boolean/ \\ String|If True, the added component will be exposed as a property of the parent component. If a string is set, then the value becomes the property name.|
+|fileName \\ ''optional''|String|A filename of the component.|
+|loadGlobalSetting \\ ''optional'' \\ ''Default:false''|Boolean|If True, the component's settings are merged into global settings.|
+|name \\ ''optional''|String|A component name.|
+|path \\ ''optional''|String|A path to load component files and HTML files.|
+|rootNode \\ ''optional''|String|A node to which the component attaches.|
+|sync \\ ''optional'' \\ ''Default:false''|Boolean/ \\ String|If a string is set, it waits for an added component to become the specified state. If set to True, it waits for the "started" state.|
+|templateName \\ ''optional'' \\ ''Default:<tag name>''|String|A default template name.|
+|templateNode \\ ''optional''|String|  |
+|tag \\ ''optional''|String|A tag for the component. This tag is inserted into the document tree. Unlike "tagName", you can specify attributes and classes also.|
+|tagName \\ ''optional''|String|A tag name for the component.|
+|triggerAppendOnStart \\ ''optional'' \\ ''default:True''|Boolean|Whether to trigger "afterAppend" event at the final stage of initialization of a component.|
+|useGlobalSetting \\ ''optional'' \\ ''Default:true''|Boolean|If True, the component's settings will be chained to global settings.|
+
+====Tag attributes====
+
+^Attribute^Description^
+|bm-autoload \\ ''optional''|A URL to the component file. The path of the URL will be set to "system.componentPath" and "system.templatePath", and "system.appBaseUrl" and "settings.path" will be cleared.|
+|bm-path \\ ''optional''|A path to the component or HTML file. This value will be set to "settings.path".|
+|bm-settingref \\ ''optional''|A URL to the component setting file.|
+|bm-settings \\ ''optional''|Settings in JSON format. These settings are merged into the component's settings as if they are placed in the "settings" section.|
+=====Extended properties=====
+
+==== settings ====
+
+''get'' ''Type:Store'' ''Inject:Component''
+
+Returns a [[en:bitsmistjs_core:docs:refs:util:store|Store class]] that holds settings for the component. 

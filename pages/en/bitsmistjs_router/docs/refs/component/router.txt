@@ -1,0 +1,41 @@
+====== Router ======
+
+''Inherit:Component'' 
+
+===== Overview =====
+
+The Router is a router component for the BitsmistJS framework. The router is enabled by placing a <bm-router> tag in the HTML.
+
+The route information depending on URLs is placed in component settings. Since the Route class inherits the Component class, settings can be set in an external settings file or can be set by returning settings in _getSettings() by inheriting the Route class and overriding the function. 
+
+<WRAP admonition note links>
+  *  <html><i class="fas fa-link"></i></html> [[en:bitsmistjs_core:docs:component:settings#specifying_settings|BitsmistJS Core:Component:Settings#Specifying settings]]
+</WRAP> 
+
+===== Organizers =====
+
+The Router attaches organizers below by default.
+
+  *  [[en:bitsmistjs_router:docs:refs:organizer:route|RouteOrganizer]]
+===== Methods =====
+
+==== start(settings) ====
+
+''Asynchronous''
+
+Starts initialization of a component. It is automatically called when the tag is instantiated, so you don't need to call this method explicitly.
+
+It reads the value of "bm-specpath" attribute and sets it to "system.specPath", so spec files will be loaded from the path.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|settings  \\ ''Optional''|Object|An object holding component settings.|
+
+=== Return Value===
+
+Undefined
+
+=== Events ===
+
+  * afterSpecLoad

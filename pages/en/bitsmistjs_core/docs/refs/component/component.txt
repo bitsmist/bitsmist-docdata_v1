@@ -1,0 +1,262 @@
+====== Component ======
+
+''Inherit:HTMLElement''
+
+=====Overview=====
+
+The Component is a core component of the BitsmistJS library. It inherits HTMLElement and can be used just like usual HTML elements in HTML.
+
+===== Organizers =====
+
+The Component class attaches organizers below by default.
+
+  * [[en:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]
+
+=====Events=====
+
+==== beforeStart ====
+
+Triggered during the early stage of a component initialization after the component is attached to the document tree.
+
+==== afterStart ====
+
+Triggered during the latter stage of a component initialization.
+
+==== beforeSetup ====
+
+Triggered when setup() method is called.
+
+====doSetup ====
+
+Triggered after a beforeSetup event.
+
+==== afterSetup ====
+
+Triggered after a doSetup event.
+
+====afterAppend====
+
+Triggered after a template HTML is attached to a component when switchTemplate() method is called. If a component doesn't have a template HTML file, then this event will not be triggered.
+
+====beforeRefresh====
+
+Triggered when refresh() method is called.
+
+====doTarget====
+
+Triggered after a beforeRefresh event.
+
+====beforeFetch====
+
+Triggered when fetch() method is called.
+
+====doFetch====
+
+Triggered after beforeFetch event.
+
+====afterFetch====
+
+Triggered after doFetch event.
+
+====doRefresh====
+
+Triggered after a doTarget event.
+
+====afterRefresh====
+
+Triggered after a doRefresh event.
+
+==== beforeStop ====
+
+Triggered after a component is detached from the document tree, during the terminating process.
+
+====doStop ====
+
+Triggered after a beforeStop event.
+
+==== afterStop ====
+
+Triggered after a doStop event.
+
+=====Properties=====
+
+==== name ====
+
+''get'' ''Type:String''
+
+Returns the component name. It is the same as the constructor name on default.
+
+==== uniqueId ====
+
+''get'' ''Type:String''
+
+Returns the automatically created unique id assigned to each component.
+
+==== rootElement ====
+
+''get'' ''Type:HTMLElement''
+
+Returns the root node of the component. Default is "this", the component itself.
+
+===== Methods =====
+
+==== start(settings) ====
+
+''Asynchronous''
+
+Starts initialization of a component. It is automatically called when the tag is instantiated, so you don't need to call this method explicitly. 
+
+===Parameters===
+
+^Parameter^Type^Description^
+|settings  \\ ''Optional''|Object|An object holding component settings.|
+
+=== Return value ===
+
+undefined
+
+===Events===
+
+  * beforeStart
+  * afterStart
+
+==== stop(options) ====
+
+''Asynchronous''
+
+Starts a terminating process of a component. It is automatically called when the tag is detached from a node, so you don't need to call this method explicityly.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding component settings.|
+
+===Return value===
+
+undefined
+
+===Events===
+
+  * beforeStop
+  * doStop
+  * afterStop
+
+==== setup(options) ====
+
+''Asynchronous''
+
+Sets up a component. Call it when you changed settings and apply them.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding options.|
+
+===Return value===
+
+undefined
+
+===Events===
+
+  * beforeSetup
+  * doSetup
+  * afterSetup
+
+==== switchTemplate(templateName, options) ====
+
+''Asynchronous''
+
+Switches to another HTML file to display. If the file is not loaded yet, it will be automatically loaded. The loaded file will be attached to the component, and then components inside the HTML will be loaded.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|templateName|String|A template name.|
+|options  \\ ''Optional''|Object|An object holding options.|
+
+===Return value===
+
+undefined
+
+===Events===
+
+  * afterAppend
+
+==== refresh(options) ====
+
+''Asynchronous''
+
+Redraws a component. If autoFetch option is set to True, fetch() method is called and if autoFill option is set to True, fill() method is called during refreshing.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding options.|
+
+===Return value===
+
+undefined
+
+===Events===
+
+  * beforeRefresh
+  * doRefresh
+  * afterRefresh
+
+==== fetch(options) ====
+
+''Asynchronous''
+
+Fetches data.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding options.|
+
+===Return value===
+
+undefined
+
+===Events===
+
+  * beforeFetch
+  * doFetch
+  * afterFetch
+
+
+
+==== fill(options) ====
+
+''Asynchronous''
+
+Fills a component with values. It does nothing in the Component base class and you need to override this function.
+
+===Parameter===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding options.|
+
+===Return value===
+
+undefined
+
+==== clear(options) ====
+
+''Asynchronous''
+
+Clears a component. It does nothing in the Component base class and you need to override this function.
+
+===Parameter===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding options.|
+
+===Return value===
+
+undefined

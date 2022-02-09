@@ -1,0 +1,100 @@
+====== ClassUtil ======
+
+===== 概要 =====
+
+新しいクラスの生成など、クラスに関わる操作を行うユーティリティークラスです。
+
+===== メソッド =====
+
+==== newComponent(superClass, settings, tagName, className) ====
+
+''Static''
+
+新しいコンポーネントの**定義（Functionオブジェクト）**を作成します。インスタンスを作成するのではないことに注意してください。HTMLファイルに引数で指定したタグ名を挿入することで、インスタンス化されます。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|superClass|Function|他のクラスを継承する場合は、ここにスーパークラスを指定します。|
+|settings|Object|作成するコンポーネントの設定を指定します。ここで指定された値が、Component._getSettings()で返されます。|
+|tagName|String|このコンポーネントのタグ名を指定します。|
+|className \\ ''optional'' \\ ''Default:（説明参照）''|String|クラス名を指定します。指定されない場合は、タグ名から生成されます。|
+||||
+
+=== 戻り値 ===
+
+作成したコンポーネントを返します。
+
+=== 使用例 ===
+
+<code javascript>
+// Search padコンポーネントを作成
+var PadSearch = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
+    "settings": {
+        "name": "PadSearch",
+        "path": "common"
+    }
+}, "pad-search");
+
+// 作成したコンポーネントにsearch()メソッドを追加する
+PadSearch.prototype.search = function(keyword)
+{
+   ...
+};
+</code>
+
+<code html>
+<html>
+...
+<body>
+<!-- インスタンス化 -->
+<pad-search></pad-search>
+</body>
+</html>
+</code>
+==== inherit(subClass, superClass) ====
+
+''Static''
+
+指定されたsubClassをsuperClassから継承させます。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|subClass|Function|継承されるクラスを指定します。|
+|superClass|Function|継承するスーパークラスを指定します。|
+
+=== 戻り値 ===
+
+なし。
+
+==== createObject(className, ...args) ====
+
+''Static''
+
+コンポーネントをインスタンス化します。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|className|Function|インスタンス化するクラスを指定します。|
+|...args \\ ''optional''| |コンストラクタに渡す引数を指定します。|
+
+=== 戻り値 ===
+
+作成したインスタンスを返します。
+
+==== getClass(className) ====
+
+''Static''
+
+指定されたクラス名のFunctionオブジェクトを返します。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|className|Function|クラス名を指定します。|
+
+=== 戻り値 ===
+
+Functionオブジェクトを返します。

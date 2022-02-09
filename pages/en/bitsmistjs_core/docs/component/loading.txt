@@ -1,0 +1,167 @@
+======Loading======
+
+=====Overview=====
+
+The components Javascript files and HTML files need to be loaded to a browser. Here we will show you how to specify where these files come from. Also, we will explain how to organize component paths and file names when those are not explicitly specified.
+
+
+=====Loading=====
+
+There are three ways to load components.
+
+  * Specify a component URL in tag attribute (Autoloading)
+  * Load default files (Autoloading)
+  * Import with <script> tag (Manualloading)
+
+====Specify a component URL in tag attribute====
+
+This is how we loaded a component in the previous page [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]], specifying the URL in bm-autoload attribute. A file extension differs depending on whether you are loading an HTML only component or an HTML+JS component.
+
+===HTML + JS===
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</code>
+
+If you are loading an HTML+JS component, specify **a URL to the Javascript file** in bm-autoload attribute. BitsmistJS library loads the file from the specified URL asynchronously. Then, the component is initialized and loads an interface HTML file, and shows it on your browser.
+
+
+<WRAP admonition note links>
+Though the path in this example is a relative path, you can use an absolute path also. However, the library uses XMLHttpRequest to load files, Servers hosting components need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
+  * [[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
+</WRAP>
+
+===HTML only===
+
+If you are loading a component that doesn't need any actions (event handlers), then you must specify **a path to the HTML file**.
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</code>
+
+This time, only the HTML file is loaded asynchronously and will be displayed on the browser.
+
+In both cases,  HTML+JS or HTML only, the components are loaded on DOMContentLoaded event. Also, components inside the component HTML file will be loaded after the HTML files are appended to nodes.
+====Load default files====
+
+When a URL is not specified in bm-autoload attribute, the files are loaded using default paths and names. Use bm-automorph attribute instead for HTML-only components.
+
+===HTML+JS===
+
+<code html>
+<pad-hello bm-autoload></pad-hello>
+</code>
+
+In the example above, the default path is the current path and the default file name is the tag name + extention ".js", thus "pad-hello.js". For example, if you are browsing https://example.com/index.html, the component is loaded from https://examples.com/pad-hello.js.
+
+<WRAP admonition tip links>
+Default path can be changed in settings.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:loading#default_path| Default path]]
+</WRAP>
+
+===HTML only===
+
+Use bm-automorph attribute for HTML-only components.
+
+<code html>
+<pad-hello bm-automorph></pad-hello>
+</code>
+
+In the example above, the default path is the current path and the default file name is the tag name + extension ".html", thus, "pad-hello.html".
+
+====Import with <script> tag====
+
+Just like usual Javascript files, import component script files using <script> tag in HTML.
+
+<code html>
+<script type='text/javascript' src='/bar-hello.js'></script>
+</code>
+
+Since the script tag loads the component, bm-autoload attribute is not necessary for this case.
+
+<code html>
+<pad-hello></pad-hello>
+</code>
+
+You can use this method to bundle several components in one file using a bundler like Webpack.
+
+<WRAP admonition note>
+You can not use this method for HTML-only components.
+</WRAP>
+
+=====Default path=====
+
+In [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]], we placed all the files right under the root path. However, in the actual environment, you might want to organize components files to specific directories. You can take advantage of using the default path and reduce the amount of typing instead of specifying each component URL in bm-autoload attribute. We will explain the default path here.
+
+====Three settings for default path====
+
+If a custom tag doesn't have a URL in bm-autoload attribute, the default path is used for loading the component. There are three settings that decide the default path.
+
+  * Base application url (system.appBaseUrl)
+  * Component path (system.componentPath)
+  * Path (settings.path)
+
+The component will be loaded from the path concatenated with the above three settings. Each setting defaults to "" (empty string).
+
+ex.)
+
+^Settings^Value^
+|Base application url|https://example.com|
+|Component path|components|
+|Path|common|
+
+<code html>
+<bar-header bm-autoload></bar-header>
+</code>
+
+With those settings and "bar-header" component in a HTML file, the component will be loaded from https://example.com/components/common/bar-header.js.
+
+====Specifying default path====
+
+The settings can be divided into two types in terms of scope. One is global settings that are shared by all components and the other is component settings that are specific to each component.
+
+<WRAP admonition tip links>
+For the details of the setting, refer to the link below.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:settings| Component:Settings]]
+</WRAP>
+
+It is natural that a base application URL and a component path are specified in global settings and a path in component settings.
+
+===Base application URL and component path in global setting===
+
+<code javascript>
+BITSMIST.v1.settings.merge({
+    "system": {
+        "appBaseUrl":"https://example.com",
+        "componentPath":"components",
+    },
+});
+</code>
+
+===Path in component setting===
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarHeader",
+            "path": "common"
+        },
+    };
+}
+</code>
+
+You can also specify a path in bm-path attribute.
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+<WRAP admonition note links>
+If a URL is specified in bm-autoload attribute, then "system.appBaseUrl", "system.componentPath",  "system.templatePath", "settings.path" settings will be set automatically according to the URL.
+  * [[en:bitsmistjs_core:docs:refs:organizer:setting#tag_attributes|SettingOrganizer#Tag attributes]]
+</WRAP>
+=====Default file names=====
+
+If a URL is not specified in bm-autoload attribute, then the default file name will be used for the component. The default file name is tag name + file extension, ".html" for HTML file, and ".js" for JS file.

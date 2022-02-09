@@ -1,0 +1,170 @@
+======ロード======
+
+=====概要=====
+
+各コンポーネントのJavascriptファイルやHTMLファイルはブラウザにロードされる必要があります。ここでは、どこからそのファイルをロードするかを指定する方法について説明します。また、特定のフォルダにコンポーネントを配置する場合のパスの指定方法や、ファイル名の指定がない場合に使われるデフォルトのファイル名についても説明します。
+
+=====ロード方法=====
+
+コンポーネントのロード方法には大きく分けると以下の3つがあります。
+
+  * タグの属性にコンポーネントのURLを記述する（オートロード）
+  * デフォルトのファイルをロードする（オートロード）
+  * <script>タグでインポートする（マニュアルロード）
+
+
+====タグの属性にコンポーネントのURLを記述する====
+
+これは[[ja:bitsmistjs_core:docs:general:sample|サンプルコンポーネント]]で使用した方法です。必要なファイルへのパスをbm-autoload属性に記述します。HTMLのみのファイルか、HTML+JSのファイルかによって指定するファイルの拡張子が変わります。
+
+===HTML + JS===
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</code>
+
+カスタムタグの”bm-autoload”属性にJavascriptファイルへのURLを記述します。するとBitsmistJSライブラリが指定されたURLからファイルを自動的にダウンロードします。その後コンポーネントが初期化され、インターフェースのHTMLファイルがロードされて画面に表示されます。
+
+<WRAP admonition note links>
+この例では相対パスを使っていますが、絶対パスでも構いません。ただし、XMLHttpRequestを使用して取得しているため、絶対パスを使って別のオリジンからロードする場合は、サーバー側でAccess-Control-Allow-Originヘッダーを付加する必要があります。
+  * [[https://developer.mozilla.org/ja/docs/Web/HTTP/CORS|オリジン間リソース共有 (CORS) | MDN Web Docs]]
+</WRAP>
+
+===HTMLのみ===
+
+動作（イベントハンドラ）が必要のないコンポーネントの場合はHTMLファイルへのURLを指定します。
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</code>
+
+この場合はHTMLファイルがサーバーから読み込まれ、カスタムタグ内に表示されます。
+
+HTML+JS、HTMLのみ、いずれの場合もコンポーネントがロードされるタイミングは、DOMContentLoadedイベントです。また読み込まれたコンポーネントのHTMLがノードにアタッチされた時に、そのコンポーネント内のコンポーネントがさらにロードされます。
+
+====デフォルトのファイルをロードする====
+
+bm-autoload属性の値にURLを指定しない場合は、デフォルトのパスとファイル名が使用されます。なお、HTMLのみの場合はbm-autoload属性ではなく、bm-automorph属性を指定します。
+
+===HTML+JS===
+
+<code html>
+<pad-hello bm-autoload></pad-hello>
+</code>
+
+と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた”pad-hello.js”となります。例えばhttps://example.com/index.htmlを表示している場合、https://example.com/pad-hello.jsが読み込まれます。
+
+<WRAP admonition tip links>
+デフォルトのパスは設定で変更することが可能です。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:component:loading#デフォルトのパスについて| デフォルトのパスについて]]
+</WRAP>
+
+===HTMLのみ===
+
+HTMLのみの場合は、bm-automorph属性を使用します。
+
+<code html>
+<pad-hello bm-automorph></pad-hello>
+</code>
+
+と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた”pad-hello.html”となります。
+
+====<script>タグでインポートする====
+
+通常のJavascriptのようにHTMLファイル内に<script>タグを記述してインポートします。
+
+<code html>
+<script type='text/javascript' src='/bar-hello.js'></script>
+</code>
+
+上記の文でコンポーネントは読み込まれているため、カスタムタグではbm-autoload属性は不要です。
+
+<code html>
+<pad-hello></pad-hello>
+</code>
+
+Webpack等を使用して複数のコンポーネントを一つのファイルにバンドルする場合は、この方法でロードすることになります。
+
+<WRAP admonition note>
+HTMLのみのコンポーネントの場合、このロード方法は使用できません。
+</WRAP>
+
+=====デフォルトのパスについて=====
+
+[[ja:bitsmistjs_core:docs:general:sample|サンプルとして作成したコンポーネント]]ではファイルは全てルート直下に置きました。実際の運用では、コンポーネントを分類して特定のフォルダにまとめることになると思います。その場合、bm-autoloadでURLを個別に指定するのではなく、デフォルトのパスをうまく使うことで、記述量を減らすことができます。ここではデフォルトのパスについて説明します。
+
+====パスを決める3つの設定====
+
+コンポーネントをロードする際、bm-autoload属性にURLの指定がない場合はデフォルトのパスが使われます。デフォルトのパスに影響する要素として、次の3つの設定があります。
+
+  * ベースURL （system.appBaseUrl）
+  * コンポーネントフォルダ （system.componentPath）
+  * パス （settings.path）
+
+上記3つの要素を繋げたフォルダからファイルがダウンロードされます。いずれも初期値は””（空文字列）です。
+
+例として以下のように設定したとします。
+
+^設定^値^
+|ベースURL|https://example.com|
+|コンポーネントパス|components|
+|パス|common|
+
+ヘッダーコンポーネント”bar-header”が以下のようにHTMLファイルに指定したあった場合、
+
+<code html>
+<bar-header bm-autoload></bar-header>
+</code>
+
+コンポーネントはhttps://example.com/components/common/bar-header.jsから読み込まれます。
+
+====デフォルトパスの指定方法====
+
+これらのパスの指定は設定で行います。設定には大きく分けると、各コンポーネントで共通のグローバル設定と、コンポーネント固有の設定があります。
+
+<WRAP admonition tip links>
+設定の詳細については設定を参照ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:component:settings| コンポーネントについて:設定]]
+</WRAP>
+
+ベースURLとコンポーネントパスはグローバル設定で行うのがいいでしょう。パスはそれぞれのコンポーネントで設定します。
+
+===ベースURLとコンポーネントパス===
+
+<code javascript>
+BITSMIST.v1.settings.merge({
+    "system": {
+        "appBaseUrl":"https://example.com",
+        "componentPath":"components",
+    },
+});
+</code>
+
+===パス===
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarHeader",
+            "path": "common"
+        },
+    };
+}
+</code>
+
+または
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+<WRAP admonition note links>
+bm-autoload属性にURLを指定した場合、その値に応じてコンポーネントの”system.appBaseUrl”、”system.componentPath”、”system.templatePath”、”settings.path”が自動的にセットされます。
+  * [[ja:bitsmistjs_core:docs:refs:organizer:setting#タグ属性|SettingOrganizer#タグ属性]]
+</WRAP>
+=====デフォルトのファイル名について=====
+
+BitsmistJSが使用するJavascriptファイルやHTMLファイルはbm-autoload属性での指定がない場合、デフォルトのファイル名が使われます。
+HTMLファイル、Javascriptファイル、いずれもタグ名がデフォルトのファイル名となり、それぞれ拡張子”.html”、”.js”が付加されます。

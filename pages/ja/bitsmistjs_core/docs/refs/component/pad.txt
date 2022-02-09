@@ -1,0 +1,170 @@
+====== Pad ======
+
+''Inherit:Component''
+
+===== 概要 =====
+
+ComponentオブジェクトにHTMLを表示する機能が追加されたコンポーネントです。HTMLファイルをロードし、自分自分自身にアタッチし表示します。Componentクラスを継承しています。
+
+<WRAP admonition note>
+このページでは、親クラスと違う箇所のみを説明しています。
+</WRAP>
+
+===== オーガナイザ =====
+
+Padは以下のオーガナイザをアタッチしています。
+
+  * [[ja:bitsmistjs_core:docs:refs:organizer:autoload|AutoloadOrganizer]]
+  * [[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]
+
+===== イベント =====
+
+====beforeOpen====
+
+open()メソッドが呼び出された際に発生します。
+====doOpen====
+
+beforeOpenイベントの後、refresh()/setup()が完了した後に発生します。
+====afterOpen====
+
+doOpenイベントの後に発生します。
+====beforeClose====
+
+close()メソッドが呼ばれた際に発生します。
+====doClose====
+
+beforeCloseイベントの後に発生します。
+====afterClose====
+
+doCloseイベントの後に発生します。
+====beforeRefresh====
+
+refresh()メソッドが呼ばれた際に発生します。
+====doRefresh====
+
+beforeRefreshの後、fill()メソッドが完了した後に発生します。
+====afterRefresh====
+
+doRefreshイベントの後に発生します。
+====afterAppend====
+
+switchTemplate()メソッドを呼び出した際に、テンプレートHTMLがノードにアタッチされた後に発生します。なお、Padの場合Componentの初期化処理最後のafterAppendイベントは発生しません。
+===== メソッド =====
+
+==== open(options) ====
+
+''非同期''
+
+コンポーネントをオープンします。オープンすると、テンプレートHTMLをロードして自身に追加し、表示します。その後、autoSetupオプションがTrueの場合、setup()メソッドを呼び出し設定処理を行い、さらにautoRefreshオプションがTrueの場合、refresh()メソッドを呼び出し再描画します。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeOpen
+  * doOpen
+  * afterOpen
+
+==== openModal(options) ====
+
+''非同期''
+
+コンポーネントをモーダルにオープンします。内部で自動的にopen()メソッドが呼び出されるため、詳細な説明は[[#open_options|open()]]を参照してください。open()との違いは、この関数が返すPromiseは、ウインドウがクローズされた時にresolve()されるということです。
+
+<code javascript>
+onBtnOpen_Click(sender, e, ex)
+{
+    document.querySelector("pad-search").openModal().then((modalResult) => {
+        if (modalResult.result)
+        {
+            console.log("Search word is ", modalResult[""]);
+        }
+    });
+}
+</code>
+
+==== close(options) ====
+
+''非同期''
+
+コンポーネントをクローズします。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeClose
+  * doClose
+  * afterClose
+
+==== refresh(options) ====
+
+''非同期''
+
+コンポーネントを再描画します。autoFillオプションがTrueの場合、自動的にfill()メソッドが呼び出されます。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeRefresh
+  * doRefresh
+  * afterRefresh
+
+==== switchTemplate(templateName, options) ====
+
+''非同期''
+
+テンプレートHTMLを切り替えます。HTMLファイルがまだロードされてない場合は、自動的にロードされます。ロードされたHTMLファイルは自身の内部にアタッチされます。
+
+追加された後、テンプレート内にオートロードの必要があるタグがある場合は、さらにそれらをロードします。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|templateName|String|切り替え先のテンプレート名。|
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * afterAppend
+
+==== fill(options) ====
+
+''非同期''
+
+コンポーネントに値を埋め込みます。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。

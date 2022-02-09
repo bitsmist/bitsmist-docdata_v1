@@ -1,0 +1,62 @@
+<div>
+	<i class="fas fa-home"></i>
+	<a id="title"><span></span></a>
+	<select id="libselector">
+		<option value="bitsmist_frameworks">Bitsmist Frameworks</option>
+		<option value="bitsmistjs_core">BitsmistJS Core</option>
+		<option value="bitsmistjs_router">BitsmistJS Router</option>
+		<option value="bitsmistjs_extras">BitsmistJS Extras</option>
+	</select>
+	<i class="fas fa-bars"></i>
+</div>
+
+<style>
+pad-libselector {
+	display: inline-block;
+	width: 95%;
+}
+
+pad-libselector > div {
+	align-items: center;
+	display: flex;
+	margin-bottom: 10px;
+	position: relative;
+}
+
+pad-libselector #title span {
+	color: #fcfcfc;
+	font-size: 100%;
+	font-weight: 700;
+	margin: 0 5px;
+}
+
+pad-libselector select {
+	border: none;
+	border-radius: 5px;
+	background-color: dimgray;
+	color: #fcfcfc;
+	cursor: pointer;
+	display: none;
+	font-size: 100%;
+	font-weight: 700;
+	left: 20px;
+	margin-top: 2px;
+	margin-left: 3px;
+	overflow-y: auto;
+	padding: 10px;
+	position: absolute;
+	top: -2px;
+	width: 200px;
+	z-index: 999;
+}
+
+pad-libselector select option {
+	padding: 5px;
+}
+
+pad-libselector > div > select + i {
+	cursor: pointer;
+	position: absolute;
+	right: 0
+}
+</style>

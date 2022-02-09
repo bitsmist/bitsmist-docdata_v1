@@ -1,0 +1,57 @@
+<ul class="wrapper-common">
+	<li class="logo"><a href="/">Bitsmist</a></li>
+	<li><pad-search bm-autoload="/components/common/pad-search.js"></pad-search></li>
+	<li id="btn-mainmenu" class=""><i class="fas fa-bars"></i></li>
+</ul>
+
+<style>
+bar-header {
+	background-color: white;
+	border-bottom: solid 1px;
+	box-shadow: 3px 0px 3px 3px rgb(0 0 0 / 30%);
+	color: dodgerblue;
+	display: block;
+	font-weight: bold;
+	height: 50px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+
+bar-header ul {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	list-style: none;
+}
+
+bar-header ul li:first-child {
+	margin-left: 0;
+	margin-right: auto;
+}
+
+bar-header ul li {
+	margin-left: 15px;
+}
+
+bar-header .logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+bar-header #btn-mainmenu i {
+	font-size: 24px;
+}
+
+bar-header #btn-mainmenu:hover {
+	cursor: pointer;
+}
+
+bar-header .search input[type=text] {
+	border-radius: 50px;
+	padding: 6px 12px;
+	width: 100%;
+}
+</style>

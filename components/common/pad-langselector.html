@@ -1,0 +1,37 @@
+<div>
+	<i class="fas fa-language"></i>
+	<select id="langselector">
+		<option value="en">En</option>
+		<option value="ja">Ja</option>
+	</select>
+	<i class="fas fa-caret-down"></i>
+</div>
+
+<style>
+pad-langselector {
+	display: inline-block;
+}
+
+pad-langselector > div {
+	align-items: center;
+	display: flex;
+}
+
+pad-langselector select {
+	border: none;
+	@background-color: #2980b9;
+	background-color: dimgray;
+	color: #fcfcfc;
+	cursor: pointer;
+	font-size: 80%;
+	font-weight: 700;
+	margin-left: 5px;
+	padding: 0 17px 0 0;
+}
+
+pad-langselector > div > select + i {
+	cursor: pointer;
+	pointer-events: none;
+	margin-left: -12px;
+}
+</style>

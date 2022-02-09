@@ -1,0 +1,10 @@
+======Bitsmist Frameworks======
+
+This is a Bitsmist frameworks site. \\
+ここは Bitsmistフレームワークのサイトです。
+
+Choose your language. \\
+言語を選んでください。
+
+  * [[en:bitsmist_frameworks:docs:start|English]]
+  * [[ja:bitsmist_frameworks:docs:start|日本語]]

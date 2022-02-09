@@ -1,0 +1,270 @@
+====== Component ======
+
+''Inherit:HTMLElement''
+
+===== 概要 =====
+
+BitsmistJSの核となるコンポーネントオブジェクトです。HTMLElementを継承しているため、通常のHTML要素の機能を引き継いでいます。
+
+===== オーガナイザ =====
+
+ Componentは以下のオーガナイザをアタッチしています。
+
+  * [[ja:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]
+  * [[ja:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]
+  * [[ja:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]
+  * [[ja:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]
+  * [[ja:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]
+  * [[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]
+
+
+===== イベント =====
+
+==== beforeStart ====
+
+コンポーネントがドキュメントツリーにアタッチされた後の初期化中に発生します。
+
+==== afterStart ====
+
+コンポーネントの初期化処理の終了付近で発生します。
+
+==== beforeSetup ====
+
+setup()メソッドが呼びされた際に発生します。
+
+====doSetup ====
+
+beforeSetupイベントの後に発生します。
+
+==== afterSetup ====
+
+doSetupイベントの後に発生します。
+
+====afterAppend====
+
+switchTemplate()メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合、このイベントは発生しません。
+
+====beforeRefresh====
+
+refresh()メソッドが呼ばれた際に発生します。
+
+====doTarget====
+
+beforeRefreshイベントの後に発生します。
+
+====beforeFetch====
+
+fetch()メソッドが呼ばれた際に発生します。
+
+====doFetch====
+
+beforeFetchイベントの後に発生します。
+
+====afterFetch====
+
+doFetchイベントの後に発生します。
+
+====doRefresh====
+
+doTargetイベントの後に発生します。
+
+====afterRefresh====
+
+doRefreshイベントの後に発生します。
+
+==== beforeStop ====
+
+コンポーネントがドキュメントツリーから切り離された後の終了処理中に発生します。
+
+====doStop ====
+
+beforeStopイベントの後に発生します。
+
+==== afterStop ====
+
+doStopイベントの後に発生します。
+
+
+
+===== プロパティ =====
+
+==== name ====
+
+''get'' ''Type:String''
+
+コンポーネントの名前です。デフォルトではコンストラクタ名になります。
+
+==== uniqueId ====
+
+''get'' ''Type:String''
+
+コンポーネントのインスタンスごとに割り当てられるユニークなIDです。自動的に生成されます。
+
+==== rootElement ====
+
+''get'' ''Type:HTMLElement''
+
+コンポーネントのルートとなるHTML要素です。通常は”this”と同じです。
+
+===== メソッド =====
+
+==== start(settings) ====
+
+''非同期''
+
+コンポーネントの初期化を開始します。タグがインスタンス化されるときに自動的に呼び出されるため、通常は呼び出す必要はありません。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|settings  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeStart
+  * afterStart
+
+==== stop(options) ====
+
+''非同期''
+
+コンポーネントの終了処理を行います。タグが切り離された時に自動的に呼び出されるため、通常は呼び出す必要はありません。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeStop
+  * doStop
+  * afterStop
+
+==== setup(options) ====
+
+''非同期''
+
+コンポーネントをセットアップします。設定を変更した場合などに呼び出します。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeSetup
+  * doSetup
+  * afterSetup
+
+
+==== switchTemplate(templateName, options) ====
+
+''非同期''
+
+テンプレートHTMLを切り替えます。HTMLファイルがまだロードされてない場合は、自動的にロードされます。ロードされたHTMLファイルは自身の内部にアタッチされます。
+
+追加された後、テンプレート内にオートロードの必要があるタグがある場合は、さらにそれらをロードします。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|templateName|String|切り替え先のテンプレート名。|
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * afterAppend
+
+
+
+==== refresh(options) ====
+
+''非同期''
+
+コンポーネントを再描画します。autoFetchオプションがTrueの場合はfetch()メソッドを、autoFillオプションがTrueの場合はfill()メソッドを自動的に呼び出します。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * beforeRefresh
+  * doRefresh
+  * afterRefresh
+
+==== fetch(options) ====
+
+''非同期''
+
+コンポーネントに必要なデータを取得します。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+undefined
+
+=== 発生させるイベント ===
+
+  * beforeFetch
+  * doFetch
+  * afterFetch
+
+
+==== fill(options) ====
+
+''非同期''
+
+コンポーネントに値を埋め込みます。 実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+==== clear(options) ====
+
+''非同期''
+
+このコンポーネントをクリアします。実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options  \\ ''Optional''|Object|An object holding options.|
+
+=== 戻り値 ===
+
+undefined
+

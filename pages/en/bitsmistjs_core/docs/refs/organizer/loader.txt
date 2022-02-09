@@ -1,0 +1,34 @@
+====== LoaderOrganizer ======
+
+''Inherit:Organizer''
+
+=====Overview=====
+
+LoaderOrganizer handles loading component files that need to be autoloaded. It starts loading files for the page when DOMs are loaded. If the organizer is attached to a component, it starts loading files inside its own inner HTML after the HTML is appended to a node.
+
+=====Organizing=====
+
+At the organizing stage, it loads files for tags that need to be loaded from the net when the component's inner HTML is attached.
+
+===Timings===
+
+  * afterAppend
+
+=====Global Settings=====
+
+====Format====
+
+<WRAP listtable>
+  * "LoaderOrganizer": {
+    * "settings": {
+      * "autoLoadOnStartup": <autoLoadOnStartup>
+    * }
+  * }
+</WRAP>
+
+====Description====
+
+^Item^Type^Description^
+|autoLoadOnStartup|Boolean|Start loading tags on DOMContentLoaded if true.|
+
+

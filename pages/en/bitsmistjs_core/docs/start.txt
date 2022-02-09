@@ -1,0 +1,38 @@
+====== BitsmistJS Documents ======
+
+** GENERAL **
+
+  * [[en:bitsmistjs_core:docs:general:overview|Overview]]
+  * [[en:bitsmistjs_core:docs:general:sample|Create a sample component]]
+
+** COMPONENT **
+
+  * [[en:bitsmistjs_core:docs:component:loading|Loading]]
+  * [[en:bitsmistjs_core:docs:component:settings|Settings]]
+  * [[en:bitsmistjs_core:docs:component:events|Events]]
+  * [[en:bitsmistjs_core:docs:component:organizers|Extend with organizers]]
+
+** REFERENCE - COMPONENT **
+
+  * [[en:bitsmistjs_core:docs:refs:component:component|Component]]
+
+** REFERENCE - ORGANIZER **
+
+  * [[en:bitsmistjs_core:docs:refs:organizer:component|ComponentOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]
+  * [[en:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]
+
+** REFERENCE - STORE **
+
+  * [[en:bitsmistjs_core:docs:refs:util:store|Store]]
+  * [[en:bitsmistjs_core:docs:refs:util:chainableStore|ChainableStore]]
+
+** REFERENCE - UTILITY **
+
+  * [[en:bitsmistjs_core:docs:refs:util:ajax-util|AjaxUtil]]
+  * [[en:bitsmistjs_core:docs:refs:util:class-util|ClassUtil]]
+  * [[en:bitsmistjs_core:docs:refs:util:util|Util]]

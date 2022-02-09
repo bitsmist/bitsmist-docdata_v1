@@ -1,0 +1,99 @@
+====== 概要 ======
+
+===== 特徴 =====
+
+BitsmistJSはWeb ComponentsをベースとしたJavascriptのフレームワークです。
+
+  * **独立した素のHTMLファイル:** JSXは使いません。ウェブデザイナーにとっても扱いやすいです。
+  * **コンポーネント:** コンポーネントベース。全てのコンポーネントはカスタムエレメントとして実装されます。
+  * **オートローディング:** 必要な時に必要なファイルがロードされます。
+  * **イベントドリヴン:** イベントハンドラがどこにあるのか一目瞭然です。
+
+===== インストール =====
+
+==== CDN ====
+
+HTMLファイルの中でBitsmistJSをCDNからインポートしてください。
+
+<code html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.9.19/dist/bitsmist-js_v1.min.js"></script>
+</code>
+
+==== ダウンロード ====
+
+BitsmistJSをダウンロードしてdistフォルダの中の''bitsmist-js_v1.min.js''をあなたのWebサイトに配置し、HTMLファイルの中からインポートして下さい。
+
+<code html>
+<script type="text/javascript" src="/js/bitsmist-js_v1.min.js"></script>
+</code>
+
+===== index.htmlのサンプル =====
+
+BitmistJSではコンポーネント（カスタムエレメント）を作り、それらを組み合わせることでサイトを構築していきます。動作が必要なくインターフェースだけのHTMLのみのコンポーネント、インターフェースと動作が必要なHTML+Javascriptのコンポーネント、またインターフェースがなく動作だけのJavascriptのみのコンポーネントを作ることができます。
+====HTMLのみのコンポーネント====
+
+<html><img class="screenwide" src="https://bitsmist.com/images/ja/bitsmistjs_htmlonly_ja.png"></html>
+
+<file html index.html>
+<html>
+<head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.9.19/dist/bitsmist-js_v1.min.js"></script>
+</head>
+<body>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</body>
+</html>
+</file>
+
+<file html pad-hello.html>
+<h1>Hello, World!</h1>
+</file>
+
+==== HTMLとJavascriptから成るコンポーネント ====
+
+<html><img class="screenwide" src="https://bitsmist.com/images/ja/bitsmistjs_htmlandjs_ja.png"></html>
+
+<file html index.html>
+<html>
+<head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.9.19/dist/bitsmist-js_v1.min.js"></script>
+<title>BitsmisJS Sample</title>
+</head>
+<body>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</body>
+</html>
+</file>
+
+<file html pad-hello.html>
+<h1>Hello Component</h1>
+<button id="btn-greet">Greet</button>
+</file>
+
+<file javascript pad-hello.js>
+class PadHello extends BITSMIST.v1.Component
+{
+    _getSettings()
+    {
+        return {
+            "settings": {
+                "name": "PadHello"
+            },
+            "events": {
+                "btn-greet": {
+                    "handlers": {
+                        "click": "onBtnGreet_Click"
+                    }
+                }
+            }
+        };
+    }
+
+    onBtnGreet_Click(sender, e, ex)
+    {
+        alert("Hello, world!");
+    }
+}
+
+customElements.define("pad-hello", PadHello);
+</file>

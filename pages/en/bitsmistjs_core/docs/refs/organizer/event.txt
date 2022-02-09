@@ -1,0 +1,297 @@
+====== EventOrganizer ======
+
+''Inherit:Organizer''
+=====Overview=====
+
+EventOrganizer handles the management of events such as settings event handlers or triggering events. Loads settings from the "events" section and sets event handlers to the component and elements inside.
+
+=====Organizing=====
+
+EventOrganizer loads settings from the "events" section and sets event handlers. At the "beforeStart" timing, only the component events are set since elements inside the component are not loaded yet. After an HTML file is attached to the component, it sets the event handlers for elements inside the component.
+
+===Sections===
+
+  * events
+
+===Timings===
+
+  * beforeStart
+  * afterAppend
+
+=====Settings=====
+
+Event settings are placed in the "events" section.
+
+====Syntax====
+
+<WRAP listtable>
+  * "events": {
+    * <elementName>: {
+      * "rootNode": <rootNode>
+      * "handlers": {
+        * <eventName>: [ Array of ] <handlerInfo> {
+          * "handler":  <handler>
+          * "listenerOptions": <listenerOptions>
+          * "options": <options>
+          * "order": <order>
+        * }
+      * }
+    * }
+  * }
+</WRAP>
+
+====Description====
+
+^Item^Type^Description^
+|elementName|String|An element name. If the ”rootNode“ is not specified, this value is treated as the element's id. As an exception, if the value is "this", this refers to the component itself. If the "rootNode" is specified, this value is nothing meaningful, just make sure it's a unique string.|
+|rootNode \\ ''optional''|String|A selector string that points to target nodes to which the event handlers are attached. This value is passed to the querySelectorAll(). The same event handler is set to all the elements returned by querySelectorAll().|
+|eventName|String|An event name. Valid events are BitsmistJS events or Javascript original events.|
+| handlerInfo|String/ \\ Function/ \\ Object|An event handler info or an event handler. An event handler can be a function object or a string. If a string is specified it is treated as the name of the event handler. A method that has this name in the component is used as the event handler. The event handler will be bound to the component (unless specified in addEventHandler() parameter), so "this" points to the component itself. If this value is an object, the handler and options are retrieved from the handler info object.|
+|handler|String/ \\ Function|An event handler. Can be a string or a function object. Refere to handlerInfo also.|
+| options \\ ''optional''|Object|An object that passed to event handlers via the "ex" parameter of event handlers.|
+| order \\ ''optional'' \\ ''Default:0''|Number |A priority of an event handler. This value controls the order event handlers are executed when one element has several event handlers on one event. The greater the number, the higher the priority.|
+|listenerOptions \\ ''optional''|Object|An options passed to Javascript native API addEventListener().|
+
+=====Examples=====
+
+
+====Specifying elements====
+
+In this section, we explain how to specify target elements. It can be divided into whether it is a component itself or elements inside the component.
+
+===Targetting a component itself===
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+Since <elementName> is ”this”, the event handler is set to the component itself.
+
+<code javascript>
+"events": {
+    "bar-header": {
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+Assuming this component's tag name is "bar-header", you can set "bar-header" instead of "this".
+
+They can be placed in "rootNode", also. In this case, the elementName "myself" is just a meaningless (to the library) string but should be a unique one.
+
+<code javascript>
+"events": {
+    "myself": {
+        "rootNode": "bar-header" or ”this”
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+===Elements inside a component===
+
+If an element has an id, you can specify it in <elementName>
+
+<code javascript>
+"events": {
+    "btn-menu": {
+        "handlers": {
+            "click": this.onBtnMenu_Click
+        }
+    }
+}
+</code>
+
+In the above example, the event handler is set to an element that has id "btn-menu".
+
+You can use a selector string in "rootNode".
+
+<code javascript>
+"events": {
+    "btn-menu": {
+        "rootNode": ".buttons"
+        "handlers": {
+            "click": this.onBtnMenu_Click
+        }
+    }
+}
+</code>
+
+It is no problem resulting in more than one element. Each event handler is set to all the elements matched.
+
+====Specifying event handlers====
+
+We will show you how to specify an event handler.
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+In the above example, a function object is specified as the event handler for the "doRefresh" event.
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": "onDoRefresh"
+        }
+    }
+}
+</code>
+
+In this example, a string is set as the event handler. In this case, the method that has the name "onDoRefresh" is searched from the components method, that is, this.onDoRefresh method.
+
+<WRAP admonition note>
+If a function object is set, the function needs to exist at the time of specifying it in the settings, while it needs to exist at the time of adding the event handler if a string is set.
+</WRAP>
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": ["onDoRefresh1", this.onDoRefresh2]
+        }
+    }
+}
+</code>
+
+In the above example, two event handlers are specified to one event. You can mix function objects and strings.
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": {
+                "handler": this.onDoRefresh,
+                "options": {"value":"1"}
+             }
+        }
+    }
+}
+</code>
+
+In the next example, both an event handler and options are set at the same time. The options can be accessed from "ex" parameter of the event handler.
+
+<code javascript>
+onDoRefresh(sender, e, ex)
+{
+    console.log("value =", ex.value); // console displays "value = 1"
+}
+</code>
+
+In the next example, two handlers with each option are specified.
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": [
+                {
+                    "handler": this.onDoRefresh1,
+                    "options": {"value":"1"}
+                 },
+                {
+                    "handler": "onDoRefresh2",
+                    "options": {"value":"2"}
+                 },
+             ]
+        }
+    }
+}
+</code>
+
+=====Extended method=====
+
+==== initEvents(elementName, handlerInfo, rootNode) ====
+
+''Inject:Component''
+
+Installs event handlers to elements as specified in handler info passed.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|elementName|Object|An element name. Refer to [[en:bitsmistjs_core:docs:refs:organizer:event#description|Settings#elementName]].|
+|handlerInfo|Object|An object that contains handler info which is explained in [[en:bitsmistjs_core:docs:refs:organizer:event#description|Settings#handlerInfo]]. If not specified, the object will be retrieved from the "events" section using the value passed to the elementName parameter as the key.|
+|rootNode \\ ''optional'' \\ ''Default:(see desc)''|String|A root node for searching for target elements. Default is the component itself.|
+
+===Return value===
+
+undefined
+
+==== addEventHandler(eventName, handlerInfo, element, bindTo) ====
+
+''Inject:Component''
+
+Sets event handlers to elements.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|eventName|String|An event name.|
+|handlerInfo|Object|An hander info. Refer to [[#description|Settings#handlerInfo]] for details.|
+|element \\ ''optional'' \\ ''Default:(see desc)''|HTMLElement|An element to set event handlers. Default is the component itself.|
+|bindTo \\ ''optional'' \\ ''Default:(see desc)''|Object|Binds event handlers to this object. This value becomes "this" in the event handlers. Default is the component itself.|
+
+===Return value===
+
+undefined
+
+==== trigger(eventName, sender, options, element) ====
+
+''Asynchronous'' ''Inject:Component''
+
+Triggers an event on an element. If the element has several event handlers on the event, functions are called one by one, waiting for the previous handler to finish and the next.
+
+<WRAP admonition note>
+An event handler can wait for the previous handler only if the previous event handler returns a promise and resolve/reject at appropriate timing.
+</WRAP>
+
+===Parameters===
+
+^Parameter^Type^Description^
+|eventName|String|An event name to trigger.|
+|sender \\ ''optional''|Component|A component that triggered the event.|
+|options \\ ''optional''|Object|Options. Can be accessed from the event handlers.|
+|element \\ ''optional'' \\ ''Default:(see desc)''|HTMLElement|An element on which event triggers. Default is the component.|
+
+===Return value===
+
+undefined
+
+==== triggerAsync(eventName, sender, options, element) ====
+
+''Asynchronous'' ''Inject:Component''
+
+Triggers an event. The difference between trigger() method is the triggerAsync() doesn't wait for the previous event handler to finish. Refer to [[#trigger_eventname_sender_options_element|trigger()]] for other details.
+==== getEventHandler(handlerInfo) ====
+
+''Inject:Component''
+
+Returns an event handler function object from the handlerInfo.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|handlerInfo|Object|An object that holds handler info. Refer to [[#description|Settings#handlerInfo]] for details.|
+
+===Return value===
+
+A Function object or undefined if a handler does not exist.
+

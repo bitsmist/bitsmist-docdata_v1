@@ -1,0 +1,3 @@
+** Languages **
+  * [[en:bitsmist_frameworks:docs:start|English]]
+  * [[ja:bitsmist_frameworks:docs:start|日本語]]

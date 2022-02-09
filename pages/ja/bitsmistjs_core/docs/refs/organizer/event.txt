@@ -1,0 +1,300 @@
+====== EventOrganizer ======
+
+''Inherit:Organizer''
+===== 概要 =====
+
+EventOrganizerはイベントハンドラの追加やイベントの発生など、イベント関連の処理を担当します。”events"設定を読み込み、その内容にしたがってイベントハンドラをセットします。
+
+===== オーガナイズ処理 =====
+
+"events"セクションから設定を読み込み、イベントハンドラを追加します。beforeStartのタイミングではまだHTMLファイルがロードされてないため、コンポーネント本体のイベントのみがセットされます。HTMLファイルがノードにアタッチされた後のafterAppendのタイミングで、コンポーネント内の各要素のイベントハンドラがセットされます。
+
+=== セクション ===
+
+  * events
+
+=== 処理タイミング ===
+
+  * beforeStart
+  * afterAppend
+
+===== 設定 =====
+
+イベント設定は"events"セクションに記述します。
+
+====書式====
+
+<WRAP listtable>
+  * "events": {
+    * <elementName>: {
+      * "rootNode": <rootNode>
+      * "handlers": {
+        * <eventName>: [ Array of ] <handlerInfo> {
+          * "handler":  <handler>
+          * "listenerOptions": <listenerOptions>
+          * "options": <options>
+          * "order": <order>
+        * }
+      * }
+    * }
+  * }
+</WRAP>
+
+====説明====
+
+^名前^型^説明^
+|elementName|String|次の”rootNode“を指定しない場合、この値を要素のIDとみなします。ただし特殊なケースとして、この値が”this“の場合、コンポーネント自身を表します。”rootNode“に指定がある場合はこの値は特に意味は持ちません（ただし一意な値にしてください）。|
+|rootNode \\ ''optional''|String|イベントハンドラをセットする対象の要素のノードを表すセレクター文字列です。ここで指定された値を引数にquerySelectorAll()が呼び出されます。複数の要素が該当する場合、全ての要素に対して同じイベントハンドラがセットされます。|
+|eventName|String|イベントハンドラを登録したいイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。|
+| handlerInfo|String/ \\ Function/ \\ Object|イベントハンドラの情報、またはイベントハンドラを指定します。イベントハンドラは文字列、またはFunctionオブジェクトを指定できます。文字列を指定した場合は、イベントハンドラの関数名と判断されます。この場合、コンポーネントのメソッドの中から同名の関数がセットされます。Functionオブジェクトを指定した場合はイベントハンドラそのものと判断されます。いずれの場合もハンドラはコンポーネントにbindされ、”this”はコンポーネント自身を指すようになります（addEventHandler()の引数で指定されてない場合）。オブジェクトを指定した場合はイベントハンドラ情報と判断され、オブジェクト内の項目からハンドラやオプションを取得します。|
+|handler|String/ \\ Function|このイベントに対するイベントハンドラを指定します。イベントハンドラは文字列またはFunctionオブジェクトを指定します。前述のhandlerInfoの項目も参照してください。|
+| options \\ ''optional''|Object|イベントハンドラに渡すオプションのオブジェクトを指定します。イベントハンドラの引数”ex”からアクセスできます。|
+| order \\ ''optional'' \\ ''Default:0''|Number |同じ要素の同じイベントに複数のイベントハンドラがある場合の実行順を制御します。数値が高いほど先に実行されます。指定がない場合は0です。|
+|listenerOptions \\ ''optional''|Object|JavascriptネイティブのaddEventListener()関数に渡すオプションを指定します。|
+
+=====設定例=====
+
+ここでは様々な設定例を紹介します。
+
+====要素の指定方法====
+
+どの要素に対してなのかを指定する例を紹介します。大きく分けると、コンポーネント自身なのか、コンポーネント内部の要素なのか、に別れます。
+
+===コンポーネント自身===
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+<elementName>が”this”なので、コンポーネント自身に対してセットします。
+
+<code javascript>
+"events": {
+    "bar-header": {
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+仮にこのコンポーネントのタグ名が”bar-header”なら”this”の代わりに”bar-header”と記述することもできます。
+
+”rootNode”に指定することもできます。その場合<elementName>は、特に意味を持ちません。
+
+<code javascript>
+"events": {
+    "myself": {
+        "rootNode": "bar-header" （または”this”）
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+===コンポーネント内の要素===
+
+要素を指定する場合、要素がIDを持っていれば<elementName>にそれを指定することができます。
+
+<code javascript>
+"events": {
+    "btn-menu": {
+        "handlers": {
+            "click": this.onBtnMenu_Click
+        }
+    }
+}
+</code>
+
+上記の場合、btn-menuというIDを持つ要素に、イベントハンドラがセットされます。
+
+”rootNode”に指定する場合、querySelectorAll()に指定可能な文字列を使用できます。
+
+<code javascript>
+"events": {
+    "btn-menu": {
+        "rootNode": ".buttons"
+        "handlers": {
+            "click": this.onBtnMenu_Click
+        }
+    }
+}
+</code>
+
+その結果、複数の要素になっても構いません。全ての要素に同じイベントハンドラがセットされます。
+
+====ハンドラの指定方法====
+
+次にイベントハンドラの指定方法の例を示します。
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": this.onDoRefresh
+        }
+    }
+}
+</code>
+
+”doRefresh”イベントに対して、Functionオブジェクトを指定しています。
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": "onDoRefresh"
+        }
+    }
+}
+</code>
+
+この例では、”doRefresh”イベントに対して、文字列を指定しています。この場合はこのコンポーネントのメソッドの中から同名の関数がセットされます。つまりthis.onDoRefresh()メソッドがセットされます。
+
+<WRAP admonition note>
+Functionオブジェクトを指定する場合は、設定の時点でそのFunctionオブジェクトが存在する必要があります。対して文字列の場合はイベントハンドラをセットする時に存在する必要があります。
+</WRAP>
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": ["onDoRefresh1", this.onDoRefresh2]
+        }
+    }
+}
+</code>
+
+この例では1つのイベントに、2つのイベントハンドラを指定しています。文字列とFunctionオブジェクトを組み合わせても構いません。
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": {
+                "handler": this.onDoRefresh,
+                "options": {"value":"1"}
+             }
+        }
+    }
+}
+</code>
+
+この例ではイベントハンドラと同時にオプションも指定しています。このオプションは以下のように、イベントハンドラのexパラメータからアクセス可能です。
+
+<code javascript>
+onDoRefresh(sender, e, ex)
+{
+    console.log("value =", ex.value); // console displays "value = 1"
+}
+</code>
+
+
+次の例では、複数のハンドラを指定しています。それぞれのハンドラに別のオプションを渡しています。
+
+<code javascript>
+"events": {
+    "this": {
+        "handlers": {
+            "doRefresh": [
+                {
+                    "handler": this.onDoRefresh1,
+                    "options": {"value":"1"}
+                 },
+                {
+                    "handler": "onDoRefresh2",
+                    "options": {"value":"2"}
+                 },
+             ]
+        }
+    }
+}
+</code>
+
+===== 拡張メソッド =====
+
+==== initEvents(elementName, handlerInfo, rootNode) ====
+
+''Inject:Component''
+
+引数で指定された名前の要素に対し、設定に従ってイベントハンドラを設定します。
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|elementName|Object|要素名を指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のelementName]]の説明も参照してください。|
+|handlerInfo|Object|ハンドラ情報を格納したオブジェクトを指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のhandlerInfo]]で説明されています。指定がない場合は、コンポーネントの”events”設定からelementName引数に指定された値を取得して使用します。|
+|rootNode \\ ''optional'' \\ ''Default:（説明参照）''|String|要素の検索対象となるルートノードを指定します。指定がない場合はコンポーネント自身になります。|
+
+=== 戻り値 ===
+
+なし。
+
+==== addEventHandler(eventName, handlerInfo, element, bindTo) ====
+
+''Inject:Component''
+
+要素にイベントハンドラをセットします。
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|eventName|String|イベント名です。|
+|handlerInfo|Object|イベントハンドラ情報です。これは[[#設定|設定のhandlerInfo]]と同じものです。|
+|element \\ ''optional'' \\ ''Default:（説明参照）''|HTMLElement|イベントハンドラをセットする要素です。指定がない場合は、コンポーネント自身となります。|
+|bindTo \\ ''optional'' \\ ''Default:（説明参照）''|Object|イベントハンドラをこのオブジェクトにbindします。つまりこの引数がハンドラ内でthisとなります。指定がない場合はコンポーネント自身にbindされます。|
+
+=== 戻り値 ===
+
+なし。
+
+==== trigger(eventName, sender, options, element) ====
+
+''非同期'' ''Inject:Component''
+
+イベントを発生させます。同じイベントに複数のイベントハンドラがセットされている場合、前のイベントハンドラの実行が完了してから、次のイベントハンドラを呼び出します。
+
+<WRAP admonition note>
+イベントハンドラがPromiseを返し、正しいタイミングでresolve/rejectしている場合のみ、前のイベントハンドラを待つことができます。
+</WRAP>
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|eventName|String|発生させるイベント名です。|
+|sender \\ ''optional''|Component|イベントを発生させたコンポーネントを指定します。|
+|options \\ ''optional''|Object|イベントのオプションです。イベントハンドラからアクセスできます。|
+|element \\ ''optional'' \\ ''Default:（説明参照）''|HTMLElement|イベントを発生させる要素です。指定がない場合は、コンポーネント自身となります。|
+
+=== 戻り値 ===
+
+なし。
+
+==== triggerAsync(eventName, sender, options, element) ====
+
+''非同期'' ''Inject:Component''
+
+trigger()メソッドと同じくイベントを発生させますが、trigger()と違い、一つ前のハンドラの終了を待たずに次のハンドラを呼び出します。その他の説明に関しては[[#trigger_eventname_sender_options_element|trigger()]]を参照してください。
+
+==== getEventHandler(handlerInfo) ====
+
+''Inject:Component''
+
+ハンドラ情報からイベントハンドラを取得します。
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|handlerInfo|Object|ハンドラ情報です。これは[[#説明|設定のhandlerInfo]]と同じものです。|
+
+=== 戻り値 ===
+
+イベントハンドラとなるFunctionオブジェクトを返します。存在しない場合はundefinedとなります。
+

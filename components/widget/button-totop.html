@@ -1,0 +1,56 @@
+<!-- -------------------------------------------------------------------------->
+<!-- ButtonTotop (HTML)                                                      -->
+<!-- -------------------------------------------------------------------------->
+
+<div>
+	<nav class="button-totop">
+		<span><i class="fas fa-caret-up"></i></span>
+	</nav>
+</div>
+
+<!-- -------------------------------------------------------------------------->
+<!-- ButtonTotop (Styles)                                                    -->
+<!-- -------------------------------------------------------------------------->
+
+<style>
+button-totop {
+	bottom: 20px;
+	height: 40px;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	position: fixed;
+	right: 0;
+}
+
+button-totop.nonactive {
+	opacity: 0;
+	transition: all ease 0.5s;
+}
+
+button-totop.active {
+	opacity: 1;
+	transition: all ease 0.5s;
+}
+
+button-totop nav {
+	align-items: center;
+	background: #777;
+	border-radius: 50%;
+	@bottom: 40px;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	font-size: 25px;
+	font-weight: bold;
+	height: 40px;
+    justify-content: center;
+	margin-left: auto;
+	margin-right: 0.8em;
+	opacity: 0.5;
+	pointer-events: auto;
+	text-align: center; /* Workaround for IE11 */
+	width: 40px;
+	z-index: 999;
+}
+</style>

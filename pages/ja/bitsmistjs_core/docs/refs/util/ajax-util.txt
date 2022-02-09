@@ -1,0 +1,77 @@
+====== AjaxUtil ======
+
+===== 概要 =====
+
+XMLHttpRequestを使用してAjaxリクエストを行う、ユーティリティークラスです。
+
+===== メソッド =====
+
+==== ajaxRequest(options) ====
+
+''非同期'' ''Static''
+
+Ajaxリクエストを行います。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|options|Object|Ajaxのオプションを指定します。以下のキーがあります。|
+|  "url"|String|アクセスするUrlを指定します。|
+|  "method"|String|HTTPメソッド（GET, POST, PUT等）を指定します。|
+|  "data"|Object|送信するデータを指定します。|
+|  "headers"|Object|送信するヘッダーを格納したオブジェクトです。それぞれの項目がXMLHttpRequestのsetRequestHeader()に渡されます。|
+|  "options"|Object|Ajaxのオプションを格納したオブジェクトです。XMLHttpRequestへのオプションとして使用されます。|
+
+=== 戻り値 ===
+
+XHRオブジェクトを返します。
+
+=== 使用例 ===
+
+== GET ==
+
+<code javascript>
+let url = "https://api.example.com/members/1/"
+let method = "GET";
+
+BITSMIST.v1.AjaxUtil.ajaxRequest({url:url, method:method}).then((xhr) => {
+    console.log(xhr.responseText);
+});
+</code>
+
+== POST ==
+
+<code javascript>
+let url = "https://api.example.com/members/"
+let method = "POST";
+let item =  {"id":2, "name":"John"};
+let headers = {
+    "Content-Type":"application/json",
+    "X-From": "www.example.com"
+};
+let options = {"withCredentials":true};
+
+BITSMIST.v1.AjaxUtil.ajaxRequest({
+    url:url, 
+    method:method, 
+    data:item, 
+    headers:headers, 
+    options:options
+}).then((xhr) => {
+    console.log(xhr.responseText);
+});
+</code>
+==== loadScript(url) ====
+
+''非同期'' ''Static''
+
+スクリプトファイルをロードします。スクリプトは現在のページに挿入されます。
+
+=== 引数===
+
+^Parameter^Type^Description^
+|url|String|スクリプトファイルのURLを指定します。|
+
+=== 戻り値 ===
+
+なし。

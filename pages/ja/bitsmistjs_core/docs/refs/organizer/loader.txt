@@ -1,0 +1,71 @@
+====== LoaderOrganizer ======
+
+''Inherit:Organizer''
+
+=====概要=====
+
+LoaderOrganizerはオートロードが必要なタグのファイルを読み込みます。グローバルな処理として、全てのDOMが読み込まれたタイミングでオートロードが必要なタグのファイルをロードします。各コンポーネントにアタッチされた場合、自身のタグの中からオートロードが必要なタグのファイルを読み込みます。
+
+
+=====オーガナイズ処理=====
+
+コンポーネントの中身のHTMLがアタッチされた際、そのHTMLからオートロードが必要なタグのファイルをロードします。
+
+===処理タイミング===
+
+  * afterAppend
+
+=====グローバル設定=====
+
+====書式====
+
+<WRAP listtable>
+  * "LoaderOrganizer": {
+    * "settings": {
+      * "autoLoadOnStartup": <autoLoadOnStartup>
+    * }
+  * }
+</WRAP>
+
+====説明====
+
+^項目^型^説明^
+|autoLoadOnStartup|Boolean|Trueの場合、DOMが読み込まれた時点でオートロード処理を開始します。|
+
+
+=====メソッド=====
+
+==== loadTags() ====
+
+''非同期'' ''Inject:Component''
+
+bm-autoload/bm-automorph属性を持つタグのコンポーネントをロードします。ロード開始後、該当タグにはbm-autoloaded属性を付加し、2重読込を防止します。
+
+=== パラメータ ===
+
+なし。
+
+=== 戻り値 ===
+
+なし。
+
+====タグ属性====
+
+^属性^説明^
+|bm-classname \\ ''optional''|コンポーネントのクラス名を指定します。設定の”className”と同じです。|
+|bm-path \\ ''optional''|コンポーネントやテンプレートHTMLをロードするパスを指定します。設定の”path”と同じです。|
+|bm-split \\ ''optional''|この属性があると、分割コンポーネントであるとみなされます。値は不要です。設定の”splitComponent”と同じです。|
+|bm-autoload \\ ''optional''|コンポーネントを自動的にロードします。値にはコンポーネントをロードするURLを指定します。値がない場合はデフォルトの場所からロードされます。|
+|bm-automorph \\ ''optional''|デフォルトのHTMLファイルからコンポーネントを生成します。値は不要です。|
+
+=== 参照する設定 ===
+
+  * system.appBaseUrl
+  * system.componentPath
+  * system.autoLoad/settings.autoLoad
+  * system.splitComponent/settings.splitComponent
+  * settings.path
+  * settings.className
+  * settings.tagName
+  * settings.rootNode
+  * settings.sync

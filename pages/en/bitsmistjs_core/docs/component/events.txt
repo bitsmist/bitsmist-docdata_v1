@@ -1,0 +1,214 @@
+====== Events ======
+
+=====Overview=====
+
+One of the main features of BitsmistJS is event-driven. Each component triggers events at a particular time. When an event occurs the library prepares for parameters and call registered event handlers for the event. You build the component actions by adding code to event handlers. We will explain events here.
+
+<WRAP admonition tip links>
+The events are handled by EventOrganizer.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:refs:organizer:event| Reference - Organizer:EventOrganizer]]
+</WRAP>
+
+=====Event types=====
+
+There are two types of events in BitsmistJS. One is Javascript original events such as "click" and the other is custom events only available to BitsmistjS library such as "doSetup".
+
+The custom events are implemented using standard CustomEvent and you don't need to distinguish these two types most of the time.
+
+====BitsmistJS custom event====
+
+This is a list of the BitsmistJS events:
+
+^Component^Event^Description^
+|Component|beforeStart|Before component begin its initialization.|
+|:::|afterStart |After component is initialized.|
+|:::|beforeStop|After component is detached from node.|
+|:::|doStop|After beforeStop event.|
+|:::|afterStop|After doStop event.|
+|:::|beforeSetup|When setup() method is called.|
+|:::|doSetup|After beforeSetup event.|
+|:::|afterSetup|After doSetup event.|
+|Pad|beforeOpen|When open() method is called.|
+|:::|doOpen|After beforeOpen event.|
+|:::|afterOpen|After doOpen event.|
+|:::|beforeClose|When close() method is called.|
+|:::|doClose|After beforeClose event.|
+|:::|afterClose|After doClose event.|
+|:::|beforeRefresh|When refresh() is called.|
+|:::|doRefresh|After beforeRefresh event.|
+|:::|afterRefresh|After doRefresh event.|
+|:::|afterAppend|After HTML is attached to node.|
+
+===== Event handler syntax =====
+
+Every event handler has a common function signature. Both Javascript original events and BitsmistJS custom events use the same format.
+
+<code javascript>
+onDoOpen(sender, e, ex)
+{
+}
+</code>
+
+Each event handler has three parameters set by the BitsmistJS library.
+
+===sender===
+
+The component that triggered the event. Ex. It is an HTMLElement clicked on "click" event, the component itself on "doSetup" event at the initialization process (since setup() method is called by the component itself).
+
+===e===
+
+The Event info. It will be native event info in the case of Javascript original event. Ex. MouseEvent object for "click" event. While it is an object set by the component that triggered the event on BitsmistJS custom events.
+
+===ex===
+
+The object that set when adding an event handler as a handler option.
+
+=====Specifying event handlers=====
+
+Specify which and when the event handlers are called in the "events" section in settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarMain",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": this.onDoSetup
+                }
+            },
+            "btn-menu": {
+                "handlers": {
+                    "click": this.onBtnMenu_Click
+                }
+            }
+        }
+    }
+}
+</code>
+
+In this example, this.onDoSetup() method is called on "doSetup" event of an element "this" ("this" means component itself, i.e. "BarMain"). Also this.onBtnMenu_Click is called when an element that has an ID of "btn-menu" is "click"ed.
+
+Refer to [[en:bitsmistjs_core:docs:refs:organizer:event#settings|EventOrganizer reference]] for more details.
+
+=====Notes=====
+
+====Event handlers order====
+
+If an element has several event handlers on an event, they are called in order as it is registered.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarHeader",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": [
+                        {
+                            "handler": this.onDoSetup1
+                        },
+                        {
+                            "handler": this.onDoSetup2,
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+</code>
+
+In above example,  this.onDoSetup1() is called first then this.onDoSetup2().
+
+
+You can manage the order by setting a number value to the "order" option in the settings. The higher the value, the sooner the handler will be executed. The order is 0 on default.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarHeader",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": [
+                        {
+                            "handler": this.onDoSetup1
+                        },
+                        {
+                            "handler": this.onDoSetup2,
+                            "order": 10
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+</code>
+
+In above example, this.onDoSetup2() is called first, then  this.onDoSetup1().
+====Event handlers are executed asynchronously====
+
+Each event handler is called asynchronously. By returning a promise and calling resolve()/reject() can make the next event handler suspend until the event handler is finished.
+
+<code javascript>
+onDoOpen1(sender, e, ex)
+{
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("open1");
+            resolve();
+        }, 2000);
+    });
+}
+
+onDoOpen2(sender, e, ex)
+{
+    console.log("open2");
+}
+</code>
+
+When the above two event handlers are registered on the doOpen event, the messages are displayed in order as you expect.
+
+<code>
+open1
+open2
+</code>
+
+What if the first handler doesn't return a promise?
+
+<code javascript>
+onDoOpen1(sender, e, ex)
+{
+    setTimeout(() => {
+        console.log("open1");
+    }, 2000);
+}
+
+onDoOpen2(sender, e, ex)
+{
+    console.log("open2");
+}
+</code>
+
+<code>
+open2
+open1
+</code>
+
+The message "open2" is displayed first on a console.
+
+This was the case that one event handler has several handlers. The same is true for events that are triggered sequentially. Ex. Calling open() method triggers beforeOpen, doOpen, afterOpen events sequentially. If beforeOpen event handler doesn't return a promise, then doOpen event handler will be executed before beforeOpen handler finishes its process. Return a promise whenever you want to synchronize the processes.

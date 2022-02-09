@@ -1,0 +1,216 @@
+====== イベント ======
+
+===== 概要　=====
+
+BitsmistJSの特徴のひとつが、イベントドリブンです。各コンポーネントでは様々なタイミングでイベントが発生します。イベントが発生すると、BitmistJSが引数を準備し、登録されているイベントハンドラを呼び出します。各イベントに対するイベントハンドラ内に処理を記述することで、コンポーネントの動作を作成していきます。ここではイベントについて説明します。
+
+<WRAP admonition tip links>
+イベントはイベントオーガナイザによって処理されます。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:organizer:event| リファレンス - オーガナイザ:EventOrganizer]]
+</WRAP>
+
+=====イベントの種類=====
+
+発生するイベントには、”click”イベントのようなJavascriptネイティブのイベントと、”doSetup”のようなBitsmistJSの独自のイベントがあります。
+
+独自イベントはJavascript標準のカスタムイベントを使って実装されています。そのため、多くの場合JavascriptネイティブなのかBitmistJSオリジナルなのかを意識せずに使えるようになっています。
+
+====BitsmistJSオリジナルイベント====
+
+ここではComponentとPadコンポーネントが発生させるイベントの一覧を紹介します。
+
+^コンポーネント名^イベント^説明^
+|Component|beforeStart|コンポーネントが初期化される直前に発生します。|
+|:::|afterStart |コンポーネントが初期化された後に発生します。|
+|:::|beforeStop|コンポーネントがノードから切り離された時に発生します。|
+|:::|doStop|beforeStopの次に発生します。|
+|:::|afterStop|doStopの次に発生します。|
+|:::|beforeSetup|setup()メソッドが呼ばれた時に発生します。|
+|:::|doSetup|beforeSetupの次に発生します。|
+|:::|afterSetup|doSetupの次に発生します。|
+|Pad|beforeOpen|open()メソッドが呼ばれた時に発生します。|
+|:::|doOpen|beforeOpenの次に発生します。|
+|:::|afterOpen|doOpenの次に発生します。|
+|:::|beforeClose|close()メソッドが呼ばれた時に発生します。|
+|:::|doClose|beforeCloseの次に発生します。|
+|:::|afterClose|doCloseの次に発生します。|
+|:::|beforeRefresh|refresh()メソッドが呼ばれた時に発生します。|
+|:::|doRefresh|beforeRefreshの次に発生します。|
+|:::|afterRefresh|doRefreshの次に発生します。|
+|:::|afterAppend|switchTemplate()メソッドが呼ばれ、HTMLファイルがノードにアタッチされた後に発生します。|
+
+===== イベントハンドラの書き方 =====
+
+
+各イベントハンドラは共通の引数を持っています。[[#イベントの種類]]で記したJavascriptネイティブなイベント、BitsmistJSオリジナルなイベント、いずれもこのイベントハンドラの形式で対応します。
+
+<code javascript>
+onDoOpen(sender, e, ex)
+{
+}
+</code>
+
+イベントハンドラには3つの引数があります。この3つの引数はBitsmistJSによってセットされます。
+
+===sender===
+
+senderにはこのイベントを発生させたオブジェクトが渡されます。例えば、クリックイベントの場合はクリックした要素、doSetup()の場合はコンポーネント自身が入っています。
+
+===e===
+
+Javascriptネイティブなイベントの場合、ここにはイベントリスナーに渡されるイベント情報がそのまま渡されます。例えばclickイベントの場合は、MouseEventオブジェクトが渡されます。BitmistJSオリジナルなイベントの場合は、イベントを発生させたコンポーネントが渡すイベント情報が入ります。
+
+===ex===
+
+この引数はイベントハンドラをセットする際にセットするオプションが渡されます。
+===== イベントハンドラの指定方法 =====
+
+どの要素のどのイベント時にどのイベントハンドラを使用するかは、設定の”events”セクションに記述します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarMain",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": this.onDoSetup
+                }
+            },
+            "btn-menu": {
+                "handlers": {
+                    "click": this.onBtnMenu_Click
+                }
+            }
+        }
+    }
+}
+</code>
+
+この例では”this”（コンポーネント自身、この場合はBarMain）のdoSetupイベントでonDoSetup()メソッドを呼び出すように指定しています。またメニューボタンがクリックされた際には、onBtnMenu_Click()メソッドを呼び出すようにも指定しています。
+
+要素の指定の仕方、ハンドラの指定の仕方など、詳細は[[ja:bitsmistjs_core:docs:refs:organizer:event#設定|イベントオーガナイザのリファレンス]]をご覧ください。
+
+=====捕捉事項=====
+
+====イベントハンドラの順番====
+
+同じ要素の同じイベントに複数のイベントハンドラがある場合、基本的には登録された順番に実行されます。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarHeader",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": [
+                        {
+                            "handler": this.onDoSetup1
+                        },
+                        {
+                            "handler": this.onDoSetup2,
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+</code>
+
+上記の場合、this.onDoSetup1()→this.onDoSetup2()の順に実行されます。
+
+
+
+ただし、ハンドラ情報の”order”に数値を指定すると、順番を制御することができます。より高い数値のイベントハンドラが先に実行されます。指定がない場合は0となります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarHeader",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": [
+                        {
+                            "handler": this.onDoSetup1
+                        },
+                        {
+                            "handler": this.onDoSetup2,
+                            "order": 10
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+</code>
+
+上記の場合は、this.onDoSetup2()→this.onDoSetup1()の順になります。
+==== イベントハンドラの実行は非同期 ====
+
+各イベントハンドラは非同期で実行されます。Promiseを返し適切なタイミングでresolve/rejectすることで、次の処理はこのイベントハンドラの終了を”待つ”ようになります。
+
+<code javascript>
+onDoOpen1(sender, e, ex)
+{
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("open1");
+            resolve();
+        }, 2000);
+    });
+}
+
+onDoOpen2(sender, e, ex)
+{
+    console.log("open2");
+}
+</code>
+
+上記の2つのイベントハンドラがコンポーネントのdoOpenイベントに登録されていた場合、
+
+<code>
+open1
+open2
+</code>
+
+と順番に表示されます。もしPromiseを返さない場合はどうなるでしょうか？
+
+<code javascript>
+onDoOpen1(sender, e, ex)
+{
+    setTimeout(() => {
+        console.log("open1");
+    }, 2000);
+}
+
+onDoOpen2(sender, e, ex)
+{
+    console.log("open2");
+}
+</code>
+
+<code>
+open2
+open1
+</code>
+
+open2が先に表示されます。
+
+これは同じイベントに複数のイベントハンドラが存在する場合の例でしたが、違うイベントが続けて発生する場合も同じことが言えます。例えばコンポーネントのopen()メソッドを呼び出すと、beforeOpen→doOpen→afterOpenという流れでイベントが発生しますが、beforeOpenのイベントハンドラでPromiseを返さない場合は、beforeOpenの処理の終了を待たずに、doOpenの処理が走ります。後続の処理が待つ必要がある場合は、常にPromiseを返してください。
+

@@ -1,0 +1,238 @@
+======Settings======
+
+=====Overview=====
+
+Each component has its own settings. We explain the settings here. Also, we explain the global settings that are shared between all components.
+
+Settings are written in JSON format. Each component behaves according to those settings.
+
+
+=====Specifying settings=====
+
+There are four locations to specify settings.
+
+  * In an object returned from a setting function.
+  * In an independent external file.
+  * In a tag attribute.
+  * In global settings.
+
+Let's see the details.
+
+====In an object returned from a setting function====
+
+Every BitsmistJS component inherits a base component. The base component has a function called _getSettings(). Overriding the function and returning an object that contains the settings configures the component.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "BarMain",
+            "path": "common",
+        },
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": this.onDoSetup
+                }
+            }
+        }
+    }
+}
+</code>
+
+This is the most general way of configuring a component.
+
+====In an independent external file====
+
+Prepare an independent settings file and specify a URL to the file in bm-settingref attribute. The settings must be written in JSON format.
+
+<code html>
+<bar-header bm-settingref="https://example.com/settings/bar-header.settings.js"></bar-header>
+</code>
+
+<file javascript bar-header.setting.js>
+{
+    "settings": {
+        "name": "BarMain",
+        "path": "common"
+    },
+    "events": {
+        "this": {
+            "handlers": {
+                "doSetup": "onDoSetup"
+            }
+        }
+    }
+}
+</file>
+
+In this case, a component loads the file during its initialization process. The component stops processing until it finishes loading the settings file.
+
+====In tag attribute====
+
+Write settings in bm-settings attribute in JSON format.
+
+<code html>
+<button-link bm-settings='{"title":"BitsmistJS"}'></button-link>
+</code>
+
+You can specify instance-specific settings with this method, while the first two methods share the same settings among each instance.
+
+Some organizer has their own tag attribute settings. For example, ComponentOrganizer has "bm-path" attribute that specifies a path from where a component is loaded.
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+====In global settings====
+
+Global settings are settings that are shared among all components. By default, BitsmistJS Component settings are linked to the global settings,  that is, the settings referred to do not exist in the component settings, the settings are automatically fetched from the global settings.
+
+<WRAP admonition note links>
+For the details of the global settings, please refer to the dedicated section.
+  *  <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:settings#global_settings|#Global settings]]
+</WRAP>
+=====Priority=====
+
+The three methods explained above can be mixed. If the same settings exist on different methods, the settings will be overwritten by higher priority settings. 
+
+The priority is (the upper the higher):
+
+  - Tag attribute
+  - External file
+  - _getSettings() function
+
+One typical way is to configure the basic settings in _getSettings() function and specify instance-specific settings in the tag attribute that override the basic settings.
+
+=====Sections=====
+
+In BitsmistJS library, the actual processing is done by organizers. So what settings are available depends on what organizers the component is using.
+
+<WRAP admonition tip links>
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:organizers| Component:Extend with organizers]]
+</WRAP>
+
+We show a list of settings sections of each organizer in the core library. Please refer to the link for details.
+
+^Section^Organizer^Description^
+|settings|[[ja:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]|Basic settings such as component name and path.|
+|events|[[ja:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]|Event handler settings.|
+|organizers|[[ja:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]|Settings describing which organizer is applied.|
+|waitFor|[[ja:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]|Settings to wait for other componens to become a specific state.|
+|templates|[[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]|Settings to set an HTML string as a template.|
+|components|[[ja:bitsmistjs_core:docs:refs:organizer:component|ComponentOrganizer]]|Settings for loading additional components.|
+
+Also, we introduce the "system" section that is referenced by some organizers. These settings are basically written in [[#the_global_settings|the global settings]] we explain later since they affect the whole system.
+
+^Section^Item^Description^
+|system|appBaseUr|A base URL for the application.|
+|:::|componentPath|A base component path.|
+|:::|templatePath|A base HTML template path.|
+
+<WRAP admonition note>
+The global settings can be overridden by writing the same settings in the component settings.
+</WRAP>
+
+=====Accessing settings=====
+
+To access settings, use the settings property every component has.
+
+<code javascript>
+this.settings.set("value", 1);
+console.log(this.settings.get("value")); // console displays 1
+</code>
+
+. (period) can be used for sections.
+
+<code javascript>
+this.settings.set("mysection.value", 1);
+console.log(this.settings.get("value")); // console displays "undefined"
+console.log(this.settings.get("mysection.value")); // console displays 1
+</code>
+
+<WRAP admonition tip links>
+The settings property is a Store class.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:refs:util:store| REFERENCE - UTILITY:Store]]
+</WRAP>
+=====Global settings====
+
+Most of the settings are component-specific. However, you might want to share some settings among all components. We will explain the application global settings.
+
+====Specifying global settings====
+
+Loading BitsmistJS library automatically creates a component called SettingManager. By setting the values to SettingManager settings, the settings will be shared globally. You can access SettingManager in BITSMIST.v1.settings global variable. 
+
+In the next example, we are merging some settings to the global settings using the merge() method of settings property.
+
+<code javascript>
+BITSMIST.v1.settings.merge({
+    "system": {
+        "appBaseUrl":"https://example.com",
+        "componentPath":"/components/",
+    },
+});
+</code>
+
+<WRAP admonition note>
+We recommend using merge() instead of set() so that we do not remove existing settings that might be already set somewhere else.
+</WRAP>
+
+====Loading global settings====
+
+Since global settings affect the whole application, you might want to load them as early as you can, before any components are loaded.
+
+One way to load global settings earlier is to put those settings in a file, say "settings.js", and import the file in the HEAD using script tag (Make sure it is **after** BitsmistJS library).
+
+<code html>
+<script type='text/javascript' src='/js/settings.js'></script>
+</code>
+
+By loading the global settings this way, they are available before any components begin to load.
+
+====Chaining to global settings====
+
+The "settings" property has the ability to chain to another "settings" property. By default, each component's setting property is chained to the global settings, that is, SettingManager's setting property explained in the earlier section.
+
+When a settings property is chained to another settings property, the setting value will be retrieved from the chained settings if the property doesn't have the item. By accessing the component local settings, you are automatically accessing the global settings (if the item exists in the global settings).
+
+<code javascript>
+BITSMIST.v1.settings.set("myValue", 1) // global setting
+
+console.log(this.settings.get("myValue")); // console displays 1
+</code>
+
+This chaining happens if "settings.useGlobalSettings" is set to True (It defaults to True). If you don't want to chain, set this value to false.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "settings": {
+            "name": "bar-header",
+            "useGlobalSettings": false
+        }
+    };
+}
+</code>
+
+====Overriding global settings====
+
+If a component has the same settings as the global settings, the component local settings will be returned. By specifying the same settings that are specified in the global settings, you can override the global settings.
+
+<code javascript>
+BITSMIST.v1.settings.set("myValue", 1)
+
+this.settings.set("myValue", 2)
+console.log(this.settings.get("myValue")); // console displays 2
+</code>
+
+There might be the case that you don't want to use the site global settings. For example, the components in a site follow the global settings like "system.appBaseUrl", but the third-party component that delivered from another server might want to have its own "system.appBaseUrl" setting.
+
+====Accessing global settings====
+
+You can access the global settings explicitly by accessing SettingsManager's settings property.
+
+<code javascript>
+console.log(BITSMIST.v1.settings.get("myValue"));
+</code>

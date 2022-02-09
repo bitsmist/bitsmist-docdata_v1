@@ -1,0 +1,249 @@
+/* Basic */
+
+select
+{
+    appearance: none;
+    -moz-appearance: none;
+	-webkit-appearance: none;
+}
+
+table td
+{
+	line-height: 24px;
+}
+
+/* Mobile Header */
+
+/*
+#mobileheader
+{
+	display: none;
+}
+*/
+
+/* Page */
+
+.page.group h1:not(:first-child),h2,h3,h4,h5,h6
+{
+	display: inline-block; /* To prevent margin collapse */
+	width: 100%;
+}
+
+.page.group h2
+{
+	border-bottom: solid 2px __background_theme__;
+	margin: 1.5em 0 2em 0;
+}
+
+.page.group h3
+{
+	border-bottom: dotted 1px lightgray;
+	margin-top: .5em;
+}
+
+.page.group h4
+{
+	border: solid 1px lightgray;
+	border-radius: 5px;
+	font-size: 100%;
+	padding: 5px 10px;
+	width: auto;
+}
+
+.page.group h5
+{
+	font-size: 100%;
+	text-decoration: underline;
+}
+
+#dokuwiki__content img.screenwide
+{
+	box-shadow: 1px 1px 3px 3px rgb(150,150,150,50%);
+	padding: 10px;
+	width: 100%;
+}
+
+/* Sidebar */
+
+#dokuwiki__aside
+{
+	padding-top: 90px;
+}
+
+#sidebarheader
+{
+	align-items: center;
+	display: flex;
+	flex-direction: column-reverse;
+	height: 92px;
+	left: 0;
+	padding: .8em 1.5em;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#sidebarheader > div.home
+{
+	display: none;
+}
+
+#sidebarheader > form
+{
+	width: 100%;
+}
+
+#sidebarfooter
+{
+	background-color: dimgray;
+	text-align: right;
+}
+
+/* Sidebar TOC */
+
+#dokuwiki__aside #dw__toc ul > li.level3 > div.li > a,
+{
+	padding-left: 3.8em;
+	font-size: 75%;
+}
+
+#dokuwiki__aside #dw__toc ul > li.level4 > div.li > a,
+{
+	padding-left: 4.6em;
+	font-size: 75%;
+}
+
+#dokuwiki__aside #dw__toc ul > li.level5 > div.li > a
+{
+	padding-left: 5.4em;
+	font-size: 75%;
+}
+
+/* List table */
+
+#dokuwiki__content div.listtable
+{
+	border: solid 1px __border__;
+	margin-bottom: 24px;
+}
+
+#dokuwiki__content .listtable ul
+{
+	margin-bottom: 0;
+}
+
+#dokuwiki__content .listtable li
+{
+	border-top: solid 1px __border__;
+	list-style: none;
+	margin-left: 0;
+}
+
+#dokuwiki__content .listtable div.li
+{
+	line-height: 36px;
+}
+
+#dokuwiki__content .listtable .level1 > div.li
+{
+	margin-left: 24px;
+}
+
+#dokuwiki__content .listtable .level2 > div.li
+{
+	background-color: #f3f6f6;
+	margin-left: 48px;
+}
+
+#dokuwiki__content .listtable .level3 > div.li
+{
+	margin-left: 72px;
+}
+
+#dokuwiki__content .listtable .level4 > div.li
+{
+	background-color: #f3f6f6;
+	margin-left: 96px;
+}
+
+#dokuwiki__content .listtable .level5 > div.li
+{
+	margin-left: 120px;
+}
+
+#dokuwiki__content .listtable .level6 > div.li
+{
+	background-color: #f3f6f6;
+	margin-left: 144px;
+}
+
+/* Admonition */
+
+.admonition.links ul li
+{
+	list-style: none;
+}
+
+/* Misc */
+
+[data-id="en:start"] .dokuwiki a.urlextern,
+[data-id="ja:start"] .dokuwiki a.urlextern
+{
+	background-image: unset;
+	padding: 0;
+}
+
+/* Google Fonts */
+
+/* lato-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../webfonts/lato-v22-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../webfonts/lato-v22-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* lato-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+       url('../webfonts/lato-v22-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../webfonts/lato-v22-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* lato-700italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 700;
+  src: local(''),
+       url('../webfonts/lato-v22-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../webfonts/lato-v22-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* roboto-slab-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../webfonts/roboto-slab-v22-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../webfonts/roboto-slab-v22-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-slab-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+       url('../webfonts/roboto-slab-v22-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../webfonts/roboto-slab-v22-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}

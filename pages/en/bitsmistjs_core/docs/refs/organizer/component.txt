@@ -1,0 +1,103 @@
+====== ComponentOrganizer ======
+
+''Inherit:Organizer''
+
+=====Overview=====
+
+ComponetOrganizer handles the management of components such as loading and adding components.
+
+=====Organizing=====
+
+ComponentOrganizer loads settings from "molds", "components" sections and adds components to the parent component. The components in the "molds" section are loaded sequentially in order. ComponentOrganizer starts loading a component and waits for the component to finish loading, then starts loading the next one. After finishing all the components in the "molds" section, it starts loading the "components" section. Unlike the "molds" section, ComponentOrganizer doesn't wait for the previous component to finish loading for the components in the "components" section.  It starts loading them one after another and might be resulting in the components finish loading out of order, even though they start loading in the order they are in the settings.
+
+===Sections===
+
+  * molds
+  * components
+
+===Timings===
+
+  * afterAppend
+  * afterSpecLoad
+=====Settings=====
+
+Extra components settings are placed in the "components" or "molds" section. There are also some settings that can be set in tag attributes.
+
+
+====Syntax====
+
+<WRAP listtable>
+  * "components"/"molds": {
+    * <componentName>: <componentInfo>
+  * }
+</WRAP>
+
+
+
+====Description====
+
+^Item^Type^Description^
+|componentName |String|A name of the component. If there are no "className" option in "componentInfo", this value also becomes a class name of the component.|
+|componentInfo|Object|[[en:bitsmistjs_core:docs:component:settings|Component settings]]. This is the settings that will be returned in Component._getSettings().|
+
+====Tag attributes====
+
+^Attributes^Description^
+|bm-classname \\ ''optional''|A class name of the component. Same as "className" in settings.|
+|bm-path \\ ''optional''|A path that is used for loading components and templates. Same as "path" in settings.|
+|bm-split \\ ''optional''|Indicates a component file is split. No value needed.|
+|bm-autoload \\ ''optional''|Indicates to load a component automatically. Specify a URL to the component as the value. If the value is empty the component is loaded using the default paths.|
+|bm-automorph \\ ''optional''|Inicates to load an HTML file from the default path. No value needed.|
+=====Extended properties=====
+
+==== components ====
+
+''get'' ''Type:Object'' ''Inject:component''
+
+Returns the object holding child components that are added to the component. The components in this property are the same as instances you can get using querySelector().
+
+=====Extended methods=====
+
+==== loadTags() ====
+
+''Asynchronous'' ''Inject:Component''
+
+Loads tags that have bm-autoload/bm-automorph attribute. The loader adds "bm-autoloaded" attribute to the tag right after start loading it to prevent loading twice.
+
+===Parameters===
+
+None.
+
+===Return value===
+
+undefined
+
+==== addComponent(componentName, settings, sync) ====
+
+''Asynchronous'' ''Inject:component''
+
+Adds a child component to the component. The added component instance is added to the "components" property.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|componentName|String|A name of the component to add. If no "className" setting in the settings parameter, this value is also used as the class name.|
+|settings|Object|Component settings.|
+|sync \\ ''optional'' \\ ''Default:false''|Object|Whether to return a promise that is resolved after finish loading the component.|
+
+===Return value===
+
+undefined
+
+===Referenced settings===
+
+  * system.appBaseUrl
+  * system.componentPath
+  * system.autoLoad/settings.autoLoad
+  * system.splitComponent/settings.splitComponent
+  * settings.path
+  * settings.className
+  * settings.tagName
+  * settings.rootNode
+  * settings.sync
+

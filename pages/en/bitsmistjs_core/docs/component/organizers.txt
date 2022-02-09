@@ -1,0 +1,100 @@
+======Extending with organizers======
+
+=====Overview=====
+
+The core component of BitsmistJS library "Component" and "Pad" are quite simple components and have very limited functions. The components can be extended by applying organizers.
+
+In [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]], we set the component's name and event handlers in the settings. These settings are loaded and handled by SettingOrganizer and EventOrganizer each.
+
+Organizers have two main jobs:
+
+  * Do processes (we call it to organize) at particular times.
+  * Add methods/properties to a component instance or to a prototype.
+
+These organizers are applied on default:
+
+^Component^Organizer^
+|Component|OrganizerOrganizer|
+|:::|SettingOrganizer|
+|:::|StateOraganizer|
+|Pad|TemplateOrganizer|
+
+=====Applying organizers=====
+
+To apply organizers to a component, you need to specify them in the component settings. There two ways to do so:
+
+  * Specify them in the "organizers" section (Manual-loading)
+  * Use sections that are linked to organizers (Auto-loading)
+
+
+====Specify in "organizers" section (Manual-loading)====
+
+Specify organizers in the "organizers" section of component settings. In the next example, EventOrganizer is applied to a component.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "organizers": {
+            "EventOrganizer":
+        }
+    };
+}
+</code>
+====Use sections that are linked to organizers (Auto-loading)====
+
+Using a section that is linked to an organizer automatically applies the organizer to the component.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "events": {
+            "this": {
+                "click": "onClick"
+            }
+        }
+    };
+}
+</code>
+
+Since the "events" section is linked to EventOrganizer, EventOrganizer will be applied to the component automatically. Refer to [[en:bitsmistjs_core:docs:component:settings#sections|COMPONENT:Settings#Sections]] for which sections are linked to which organizers. 
+=====Organizing=====
+
+Each component calls organizers at particular times. By applying organizers to components, the organizers will be called and execute their processes. For example, ComponentOrganizer loads additional components on the "afterAppend" event that occurs after the HTML file is attached to the node.
+
+This is a list of organizing timings:
+
+^Timing^Organizer^Description^
+|beforeStart|ComponentOrganizer|Before initialization starts.|
+|:::|EventOrganizer|:::|
+|:::|SettingOrganizer|:::|
+|:::|TemplateOrganizer|:::|
+|afterStart|  |After initialization finished.|
+|afterAppend|ComponentOrganizer|After an HTML file is attached to a node.|
+|:::|EventOrganizer|:::|
+|:::|StateOrganizer|:::|
+
+=====Extended methods/properties ====
+
+Organizers can add methods and properties to component prototype (available to all components) and/or to component instances (available only to the instance).
+
+This is a list of extended methods/properties in the core library. Please refer to each link for more details.
+
+^Organizer^Property/Method^
+|ComponentOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:component#components|components]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:component#loadtags|loadTags()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:component#addcomponent_componentname_settings_sync|addComponent()]]|
+|EventOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:event#addeventhandler_element_eventname_handlerinfo_bindto|addEventHandler()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#trigger_eventname_sender_options_element|trigger()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#triggerasync_eventname_sender_options_element|triggerAsync()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#geteventhandler_component_handlerinfo_bindto_eventname|getEventHandler()]]|
+|OrganizerOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#initorganizers_settings|initOrganizers()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#callorganizers_condition_settings|callOrganizers()]]|
+|StateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:state#changestate_newstate|changeState()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#isinitialized|isInitialized()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#waitfor_waitlist_timeout|waitFor()]]|
+|TemplateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:template#addtemplate_templatename_options|addTemplate()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#clonetemplate_templatename|cloneTemplate()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#isactivetemplate_templatename|isActiveTemplate()]]|
+

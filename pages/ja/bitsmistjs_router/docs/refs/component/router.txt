@@ -1,0 +1,42 @@
+====== Router ======
+
+''Inherit:Component''
+
+===== 概要 =====
+
+BitsmistJS用のルータコンポーネントです。<bm-router>タグをHTMLに配置することで利用できます。
+
+URLに応じたルート情報はコンポーネント設定に記載します。Componentクラスを継承しているため、設定情報はComponent同様に外部設定ファイルに記述するか、Routerクラスを継承して_getSettings()をオーバーライドすることで可能です。
+
+<WRAP admonition note links>
+  *  <html><i class="fas fa-link"></i></html> [[ja:bitsmistjs_core:docs:component:settings#設定の読込|BitsmistJS Core:コンポーネント:設定#設定の読込]]
+</WRAP>
+
+
+===== オーガナイザ =====
+
+Routerは以下のオーガナイザをアタッチしています。
+
+  *  [[ja:bitsmistjs_router:docs:refs:organizer:route|RouteOrganizer]]
+===== メソッド =====
+
+==== start(settings) ====
+
+''非同期''
+
+コンポーネントの初期化を開始します。タグがインスタンス化されるときに自動的に呼び出されるため、通常は呼び出す必要はありません。
+
+”bm-specpath”属性があればそれを”system.specPath”に設定し、スペックファイルをそこから読み込むようになります。
+
+=== 引数 ===
+
+^Parameter^Type^Description^
+|settings  \\ ''Optional''|Object|設定。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 発生させるイベント ===
+
+  * afterSpecLoad

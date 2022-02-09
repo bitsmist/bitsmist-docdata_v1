@@ -1,0 +1,103 @@
+======オーガナイザによる拡張======
+
+===== 概要 =====
+
+BitsmistJSの核であるComponent、Padコンポーネントはごく単純な機能しか持ちません。各コンポーネントはオーガナイザを適用することで、機能を拡張できます。
+
+例えば[[ja:bitsmistjs_core:docs:general:sample|サンプルのハローコンポーネント]]では、コンポーネントの名前とイベントハンドラを設定でセットしましたが、これらはそれぞれSettingOrganizerとEventOrganizerによって設定が読み込まれ、処理がされています。
+
+オーガナイザには次の機能があります
+
+  * コンポーネントの処理中の決められたタイミングで処理を行う（オーガナイズ処理と呼びます）。
+  * コンポーネントのインスタンスやプロトタイプにメソッド/プロパティを追加する。
+
+デフォルトでは以下のオーガナイザが適用されています。
+
+^コンポーネント^オーガナイザ^
+|Component|OrganizerOrganizer|
+|:::|SettingOrganizer|
+|:::|StateOraganizer|
+|Pad|TemplateOrganizer|
+
+=====オーガナイザの適用=====
+
+オーガナイザを適用するには、各コンポーネントの設定に記述する必要があります。その記述方法には2つあります。
+
+  * "organizers"設定に記述する
+  * オーガナイザが担当する設定を記述する（オートロード）
+
+===="organizers"設定に記述する====
+
+設定の”organizers”セクションに、適用したいオーガナイザーのクラス名を記述します。
+
+次の例ではEventOrganizerを適用しています。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "organizers": {
+            "EventOrganizer":
+        }
+    };
+}
+</code>
+====オーガナイザが担当する設定を記述する（オートロード）====
+
+設定内にオーガナイザに紐づいているセクションを使用することで、自動的に担当するオーガナイザが適用されます。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "events": {
+            "this": {
+                "click": "onClick"
+            }
+        }
+    };
+}
+</code>
+
+”events”というセクション名はEventOrganizerに紐づいているため、自動的にEventOrganizerが適用されます。どのセクションにどのオーガナイザが紐づいているかは、[[ja:bitsmistjs_core:docs:component:settings#設定内容|コンポーネントについて:設定#設定内容]]をご覧ください。
+=====オーガナイズ処理=====
+
+各コンポーネントは特定のタイミングでオーガナイザを呼び出す機能が備わっています。各コンポーネントにオーガナイザを適用することで、そのタイミングでオーガナイザの処理が実行されます。
+
+例えばComponentOrganizerは、テンプレートHTMLがノードに追加された後の”afterAppend”のタイミングで、設定内容を元に追加コンポーネントをロードします。
+
+以下にオーガナイザが適用されるタイミングを示します。
+
+^タイミング^オーガナイザ^説明^
+|beforeStart|ComponentOrganizer|初期化をする前のタイミングです。|
+|:::|EventOrganizer|:::|
+|:::|SettingOrganizer|:::|
+|:::|TemplateOrganizer|:::|
+|afterStart|  |初期化が完了した後のタイミングです。|
+|afterAppend|ComponentOrganizer|テンプレートHTMLがコンポーネントにアタッチされた直後のタイミングです。|
+|:::|EventOrganizer|:::|
+|:::|StateOrganizer|:::|
+
+=====拡張メソッド/プロパティ ====
+
+オーガナイザはコンポーネントのプロトタイプや各インスタンスに、プロパティやメソッドを追加する機能も持ちます。
+
+以下にコアライブラリのオーガナイザの拡張プロパティ/メソッドの一覧を示します。詳細は各オーガナイザの説明をご覧ください。
+
+^オーガナイザ^拡張プロパティ/メソッド^
+|ComponentOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:component#components|components]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:component#loadtags|loadTags()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:component#addcomponent_componentname_settings_sync|addComponent()]]|
+|EventOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:event#addeventhandler_element_eventname_handlerinfo_bindto|addEventHandler()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#trigger_eventname_sender_options_element|trigger()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#triggerasync_eventname_sender_options_element|triggerAsync()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#geteventhandler_component_handlerinfo_bindto_eventname|getEventHandler()]]|
+|OrganizerOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#initorganizers_settings|initOrganizers()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#callorganizers_condition_settings|callOrganizers()]]|
+|StateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:state#changestate_newstate|changeState()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#isinitialized|isInitialized()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#waitfor_waitlist_timeout|waitFor()]]|
+|TemplateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:template#addtemplate_templatename_options|addTemplate()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#clonetemplate_templatename|cloneTemplate()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#isactivetemplate_templatename|isActiveTemplate()]]|
+

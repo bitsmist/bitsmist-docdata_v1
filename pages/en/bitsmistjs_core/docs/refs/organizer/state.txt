@@ -1,0 +1,119 @@
+====== StateOrganizer ======
+
+''Inherit:Organizer''
+
+=====Overview=====
+
+StateOrganizer handles components' state. It also has a function to wait for other components to become the specific states.
+
+=====Organizing=====
+
+StateOrganizer waits for other components to become the specific states. There are also some settings that can be set in tag attributes.
+
+===Sections===
+
+  * waitFor
+
+===Timings===
+
+  * afterAppend
+
+=====Settings=====
+
+Settings are placed in "waitFor" section. There are also some settings that can be set in tag attributes.
+
+====Syntax====
+<WRAP listtable>
+  * "waitFor":  {
+    * <eventName>: {
+      * Array of <waitInfo> {
+        * "id": <id>
+        * "name": <name>
+        * "rootNode": <rootNode>
+        * "state": <state>
+      * }
+    * }
+  * }
+</WRAP>
+
+====Description====
+
+^Item^Type^Description^
+|eventName|String|An event name. Valid events are BitsmistJS events or Javascript original events.|
+|waitInfo|Array of Object|An array of objects that hold wait info. The valid keys for wait info are "id", "name", "rootNode", "state". Specify one of name, id, or rootNode to target a component, and specify the state to wait. |
+|id \\ ''optional''|String|A unique id. A unique id can get from the component's uniqueId property.|
+|name \\ ''optional''|String|A component name.|
+|rootNode \\ ''optional''|String|A selector string that points to a node. Use syntax that is valid to querySelector().|
+|state \\ ''optional''  \\ ''default:"opened"''|String|A state. It waits for the component to become this state. For the list of valid states, refer to [[#state|"Extended properties#state"]].|
+
+====Tag attributes====
+
+^Attribute^Description^
+|bm-waitfor \\ ''optional''|A component name to wait. Same as specifying a name in wait info.|
+|bm-waitfornode \\ ''optional''|A node to wait. Same as specifying a rootNode in wait info.|
+
+=====Extended properties=====
+
+==== state ====
+
+''get'' ''set'' ''Type:String'' ''Inject:component''
+
+Returns a string that describes a component's current state. Valid strings are:
+
+^Component^State^
+|Component|starting|
+|:::|started|
+|:::|stopping|
+|:::|stopped|
+|Pad|opening|
+|:::|opened|
+|:::|closing|
+|:::|closed|
+
+
+=====Extended methods=====
+
+==== changeState(newState) ====
+
+''Inject:Component''
+
+Change a component state to the specified state.
+
+===Paramters===
+
+^Parameter^Type^Description^
+|state|String|A string that describes a state of the component. Refer to [[#state|"Extended properties#state"]] for valid strings. It throws an exception if the state passed can not be changed from the current state. Ex. set ”closing” when "opening".|
+
+===Return value===
+
+undefined
+
+==== isInitialized() ====
+
+''Inject:Component''
+
+Returns if a component is alredy initialized or not.
+
+===Parameters===
+
+None.
+
+===Return value===
+
+True if already initialized.
+
+==== waitFor(waitList, timeout) ====
+
+''Asynchronous'' ''Inject:Component''
+
+Waits for other components to become specific states.
+
+===Paramaters===
+
+^Parameter^Type^Description^
+|waitList|Array of Object|An array of objects that contain wait info. Refer to [[#settings|waitInfo]] for details.|
+|timeout \\ ''optional'' \\ ''Default:10000''|Number|A timeout period in milliseconds. Throws an error if the component does not become the state within this timeout value.|
+
+===Return value===
+
+undefined

@@ -1,0 +1,222 @@
+====== RouteOrganizer ======
+
+''Inherit:Organizer''
+
+===== 概要 =====
+
+RouteOrganizerはアプリケーションのルーティングに関する処理を担当します。例えばこのURLの場合には、特定の処理をするといった用途に利用します。
+
+このオーガナイザを利用する場合、どのようなルートが存在するかを設定の”routes”セクションに設定します。このルート情報と現在のURLを元に現在のルートが決定されます。以下は設定例です。
+
+<code javascript>
+"routes": [
+  {
+    "name": "list",
+    "path": "/:resource/list/",
+    "specName": "{{:resource}}",
+    "componentName": "PadList"
+  },
+  {
+    "name": "top",
+    "path":　"/",
+    "specName": "top",
+    "componentName": "PadTop"
+  }
+]
+</code>
+
+ルート情報配列の先頭から順番に、以下の方法で最初に一致したものが、現在のルートとして採用されます。
+
+  - （originの指定がある場合）originと一致する。
+  - （pathの指定がある場合）URLとpathが正規表現で一致する
+
+RouteOrganizerは各ルート固有の設定ファイルを追加で読み込むことができます。その追加で読み込む設定ファイルは、スペックファイル（Spec file）と呼ばれます。スペックファイルに記述される内容は、通常のコンポーネントの設定ファイルと同じです。
+
+ブラウザの”戻る”、”進む”ボタンなどでpopstateイベントが発生した場合、RouteOrganizerがデフォルトの処理を行います。イベント発生時には、その新しいルートに対するopen()処理を行うことで、通常のロードと同じ流れの処理が行われます。またスペックファイルに記述されているコンポーネントに対し、”beforePopstate”、”afterPopstate”イベントをトリガーするので、コンポーネント側でイベントハンドラを記述することで、popstateイベント時に独自の処理も行うことができます。
+===== オーガナイズ処理 =====
+
+”routes”セクションからルーティング情報に関する設定を読み込み、現在保持しているルーティング情報に追加します。これらの処理は設定情報が読み込まれた直後の”beforeStart”と、スペックファイルが読み込まれた直後の”afterSpecLoad”のタイミングで行われます。
+
+=== セクション ===
+
+  * routes
+
+=== 処理タイミング ===
+
+  * beforeStart
+  * afterSpecLoad
+
+===== 設定 =====
+
+ルーティング情報は設定の"routes"セクションに記述します。
+====書式====
+
+<WRAP listtable>
+  * "routes": Array of  <rootInfo> {
+    * "name": <name>
+    * "origin": <origin>
+    * "path": <path>
+    * "specName": <specName>
+    * "componentName": <componentName>
+  * }
+</WRAP>
+
+====説明====
+
+^ 項目^型^説明^
+|routeInfo|Object|ルート情報を格納したオブジェクトです。ルート情報には以下の内容が含まれます。|
+|name \\ ''optional''|String|ルートの名前を指定します。|
+|origin \\ ''optional''|String|ルートのオリジンを指定します。|
+|path \\ ''optional''|String|ルートのパスを指定します。[[https://github.com/pillarjs/path-to-regexp|path-to-regexp]]で使用可能な正規表現を指定できます。パスの指定がない場合は、全てのURLが合致することになります。|
+|specName \\ ''optional''|String|ルートのスペックファイル名を指定します。合致したルートのこのファイル名のファイルが、追加で読み込まれます。”path”のパラメータを使用することが可能です。|
+|componentName \\ ''optional''|String|ルートのメインコンポーネント名を指定します。再描画時にこのコンポーネントのrefresh()メソッドが呼びされます。|
+
+=====設定例=====
+
+ここでは様々な設定例を紹介します。
+
+===== イベント =====
+
+==== afterSpecLoad ====
+
+スペックファイルをロードした直後に発生します。
+
+=== Extra Info ===
+
+^パラメータ^型^説明^
+|spec|Object|ロードしたスペックファイルをObjectに変換したものです。|
+
+==== beforePopstate ====
+
+ルータによってopen()メソッドが呼ばれ、画面が再描画される前に発生します。
+
+==== afterPopstate ====
+
+ルータによってopen()メソッドが呼ばれ、画面が再描画された後に発生します。
+===== 拡張プロパティ =====
+
+==== routeInfo ====
+
+''get'' ''Type:Object'' ''Inject:component''
+
+現在のルートに関する情報を保持するオブジェクトです。
+
+^ 項目^型^説明^
+|name|String|ルートの名前です。|
+|specName|String|ルートのスペックファイル名です。|
+|componentName|String|ルートのメインコンポーネント名です。|
+|url|String|URLです。|
+|path|String|URLのパスです。ホスト名やクエリーパラメータを含みません。|
+|query|String|URLのクエリー部です。|
+|parsedUrl|Object|現在のURLから生成されたURLクラスです。|
+|routeParameters|Object|パスのパラメータを保持するオブジェクトです。例えばルーティング設定のパスに”/:person”と指定されていた場合に%%”https://example.com/john”%%にアクセスした場合、{"person":"John"}というオブジェクトになります。|
+|queryParameters|Object|URLのクエリーパラメータをオブジェクトに変換したものです。|
+
+==== spec ====
+
+''get'' ''Type:Object'' ''Inject:component''
+
+現在のルート固有の追加設定を保持するオブジェクトです。
+
+=====  拡張メソッド =====
+
+==== loadParameters() ====
+
+''Inject:component''
+
+現在のURLのクエリーパラメータをもとにオブジェクトを生成します。例えばURLのクエリ部が”?limit=10&offset=30”の場合、以下のオブジェクトを返します。
+
+<code javascript>
+{
+  "limit": 10,
+  "offset": 30
+}
+</code>
+
+=== パラメータ ===
+
+なし。
+
+=== 戻り値 ===
+
+なし。
+
+==== openRoute(routeInfo, options) ====
+
+''Inject:component''
+
+パラメータに渡されたルート情報に応じたルートへ遷移します。遷移先のルート情報と現在のルート情報をもとに、jumpRoute()、updateRoute()、refreshRoute()のいずれかが呼び出されます。
+
+現在のルート情報と遷移先のルート情報の”name”が違う場合はjumpRoute()、”specName”が違う場合はupdateRoute()、いずれも同じ場合はrefreshRoute()が呼び出されます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|遷移先のルート情報です。|
+|options|Object|遷移時のオプションです。以下のキーを持ちます。|
+|  "pushState" \\ ''default:True''|Boolean|新しいルートをpushState()するかを指定します。pushState()すると、ブラウザの履歴に追加されます。|
+|  "jump"|String|遷移先のルートへ遷移する際に、ページロードを発生させます。|
+
+=== 戻り値 ===
+
+なし。
+
+==== replaceRoute(routeInfo) ====
+
+''Inject:component''
+
+パラメータに渡されたルート情報に応じたルートへ上書きします。ブラウザの履歴を残すことなく、現在のURLを置き換えます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|遷移先のルート情報です。|
+
+=== 戻り値 ===
+
+なし。
+
+==== updateRoute(routeInfo) ====
+
+''Inject:component''
+
+パラメータに渡されたルート情報に応じたルートへ遷移します。ページロードを発生させずに、コンポーネントなどの読み込みなどを行います。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|遷移先のルート情報です。|
+
+=== 戻り値 ===
+
+なし。
+
+==== jumpRoute(routeInfo) ====
+
+''Inject:component''
+
+パラメータに渡されたルート情報に応じたルートへ遷移します。ページロードを発生させます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|遷移先のルート情報です。|
+
+=== 戻り値 ===
+
+なし。
+
+==== refreshRoute(routeInfo) ====
+
+''Inject:component''
+
+現在のルートを再描画します。再描画はルート情報の”componentName”で指定されたコンポーネントのrefresh()メソッドを呼び出すことで行われます。コンポーネントはこのオーガナイザがアタッチされたコンポーネントが保持している必要があります。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|再描画のルート情報です。|
+
+=== 戻り値 ===
+
+なし。

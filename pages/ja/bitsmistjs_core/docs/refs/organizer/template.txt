@@ -1,0 +1,103 @@
+====== TemplateOrganizer ======
+
+''Inherit:Organizer''
+
+===== 概要 =====
+
+TemplateOrganizerはコンポーネントのHTMLテンプレートのロードとノードへのアタッチなど、HTMLファイル関係の処理を担当します。
+
+===== オーガナイズ処理 =====
+
+初期化時には、コンポーネントの”settings.templateName”オプションがセットされてない場合、タグ名をデフォルトのテンプレート名としてセットします。また”settings.autoOpen”と”settings.autoClose”が設定されてない場合、それぞれをTrueにセットします。
+
+オーガナイズ処理時には、コンポーネントのテンプレートHTMLが指定されていれば、それをコンポーネントのテンプレートとして設定します。
+
+=== セクション ===
+
+  * templates
+
+=== タイミング ===
+
+  * beforeStart
+
+
+===== 設定 =====
+
+テンプレート設定は"templates"セクションに記述します。
+
+====書式====
+
+<WRAP listtable>
+  * "templates":　{
+    * <templateName>: <template>
+  * }
+</WRAP>
+
+====説明====
+
+^項目^型^説明^
+|templateName|String|テンプレートの名前を指定します。デフォルトはタグ名です。|
+|template|String|HTMLを指定します。**HTMLファイル名ではなく、HTMLそのもの**を記述します。|
+
+=====  イベント =====
+
+==== afterLoadTemplate ====
+
+addTemplate()メソッドを呼び出し、初めてテンプレートHTMLをロードしたときに発生します。既にロードされているテンプレートをロードしても発生しません。
+=====  拡張メソッド =====
+
+==== addTemplate(templateName, options) ====
+
+''Inject:Pad''
+
+コンポーネントにテンプレートHTMLをロードし、ノードにアタッチします。既にロード済みの場合は、ロードされません。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|templateName|String|対象となるテンプレート名です。これに”.html"をつけたものがファイル名となります。|
+|options|Object|現在は使われていません。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 参照する設定 ===
+
+  * system.appBaseUrl
+  * system.templatePath
+  * settings.path
+  * settings.templateNode
+
+==== cloneTemplate(templateName) ====
+
+''Inject:Component''
+
+テンプレートHTMLを複製します。複製された時点では、まだドキュメントツリーにはアタッチされていません。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|templateName|String|複製するテンプレート名です。|
+
+=== 戻り値 ===
+
+複製されたエレメントです。
+
+==== isActiveTemplate(templateName) ====
+
+''Inject:Component''
+
+指定されたテンプレートが現在コンポーネントで使われているかを返します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|templateName|String|チェックするテンプレート名です。|
+
+=== 戻り値 ===
+
+Trueなら現在使用中です。
+
+
+

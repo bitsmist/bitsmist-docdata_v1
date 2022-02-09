@@ -1,0 +1,103 @@
+====== TemplateOrganizer ======
+
+''Inherit:Organizer''
+
+=====Overview=====
+
+TemplateOrganizer handles the management of HTML such as loading HTML files and appending the files to nodes.
+
+=====Organizing=====
+
+At the initialization stage, it sets "settings.templateName" to a tag name as the default template name if it is not specified. It also sets "settings.autoOpen" and "settings.autoClose" to true if they are not set yet.
+
+At the organizing stage, it loads an HTML string from the “template” section and sets the HTML string as a component template.
+
+===Sections===
+
+  * templates
+
+===Timings===
+
+  * beforeStart
+
+
+=====Settings=====
+
+Template settings are placed in "templates" section.
+
+====Syntax====
+
+<WRAP listtable>
+  * "templates":　{
+    * <templateName>: <template>
+  * }
+</WRAP>
+
+====Description====
+
+^Item^Type^Description^
+|templateName|String|A template name. By default, the template name is the same as the tag name.|
+|template|String|An HTML string. **Not an HTML filename, but HTML**.|
+
+=====Events=====
+
+==== afterLoadTemplate ====
+
+Triggered after finishing loading a template HTML file for the first time. It doesn't trigger after loading an already loaded template HTML.
+
+=====Extended method=====
+
+==== addTemplate(templateName) ====
+
+''Inject:Pad''
+
+Loads a template file and attaches it to the component. It will not load if the template is already loaded.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|templateName|String|A template name to load. The filename will be this value + ".html".|
+
+===Return value===
+
+undefined
+
+===Referenced settings===
+
+  * system.appBaseUrl
+  * system.templatePath
+  * settings.path
+  * settings.templateNode
+
+==== cloneTemplate(templateName) ====
+
+''Inject:Component''
+
+Clones a template HTML. It is not attached to any document tree at the point of cloning.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|templateName|String|A template name to clone.|
+
+===Return value===
+
+An element cloned from the template.
+
+==== isActiveTemplate(templateName) ====
+
+''Inject:Component''
+
+Returns if the specified template is currently active.
+
+===Paramters===
+
+^Paramter^Type^Description^
+|templateName|String|A template name to check.|
+
+===Return value===
+
+True if active.
+
+
+
