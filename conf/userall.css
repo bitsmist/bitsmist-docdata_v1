@@ -7,9 +7,25 @@ select
 	-webkit-appearance: none;
 }
 
+table thead
+{
+	color: #404040;
+}
+
+table th
+{
+	background-color: #eeeeee;
+	padding: 8px 16px;
+}
+
 table td
 {
 	line-height: 24px;
+}
+
+code
+{
+	color: cadetblue
 }
 
 /* Mobile Header */
@@ -37,16 +53,19 @@ table td
 
 .page.group h3
 {
-	border-bottom: dotted 1px lightgray;
+	/* border-bottom: dotted 1px lightgray; */
 	margin-top: .5em;
 }
 
 .page.group h4
 {
+	/*
 	border: solid 1px lightgray;
 	border-radius: 5px;
+	*/
 	font-size: 100%;
-	padding: 5px 10px;
+	/* padding: 5px 10px; */
+	padding: 5px 0;
 	width: auto;
 }
 
