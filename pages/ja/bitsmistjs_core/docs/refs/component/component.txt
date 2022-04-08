@@ -1,14 +1,12 @@
 ====== Component ======
 
-''Inherit:HTMLElement''
+''継承:HTMLElement''
 
 ===== 概要 =====
 
-BitsmistJSの核となるコンポーネントオブジェクトです。HTMLElementを継承しているため、通常のHTML要素の機能を引き継いでいます。
+BitsmistJSの核となるコンポーネントオブジェクトです。HTMLElementを継承しているため、通常のHTML要素の機能を引き継いでいます。自分のコンポーネントを作成する場合は、このComponentを継承して作成します。
 
-===== オーガナイザ =====
-
- Componentは以下のオーガナイザをアタッチしています。
+Componentはデフォルトで以下のオーガナイザをアタッチしています。
 
   * [[ja:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]
   * [[ja:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]
@@ -18,91 +16,225 @@ BitsmistJSの核となるコンポーネントオブジェクトです。HTMLEle
   * [[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]
 
 
+===== 設定 =====
+
+Componentの設定は”settings”セクションに記述します。
+==== autoRestart ====
+''型:Boolean'' ''デフォルト:false''
+
+Trueの場合、コンポーネントがドキュメントツリーにアタッチされた際に、たとえ初期化済みであっても再度[[#start_settings|start()]]メソッドを呼び出します。
+
+==== autoStop ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、コンポーネントがドキュメントツリーから切り離された際に、[[#stop_options|stop()]]メソッドを実行します。
+
+==== autoFetch ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的に[[#fetch_options|fetch()]]メソッドも呼び出されます。
+
+==== autoFill ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的に[[#fill_options|fill()]]メソッドも呼び出されます。
+
+==== autoPostStart ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、初期化の後部処理を自動的に呼び出します。主にコンポーネントを継承した際に、使用されます。
+
+==== autoRefresh ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、初期化終了時に自動的に[[#refresh_options|refresh()]]メソッドが呼び出されます。
+
+==== autoSetup ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、自動的に[[#setup_options|setup()]]メソッドが呼び出されます。
+
+==== hasTemplate ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_options|switchTemplate()]]が呼び出されます。
+
+==== name ====
+''型:String'' ''デフォルト:<クラス名>''
+
+コンポーネント名を指定します。
+
+==== useGlobalSettings ====
+''型:Boolean'' ''デフォルト:true''
+
+グローバル設定を反映させるかを指定します。Trueの場合、コンポーネントの設定がグローバル設定に連結されます。
+
+<WRAP admonition tip links>
+設定の連結機能は、ChainableStoreクラスを使って実装されています。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:util:chainablestore|リファレンス - ストア - ChainableStore]]
+</WRAP>
 ===== イベント =====
 
 ==== beforeStart ====
 
-コンポーネントがドキュメントツリーにアタッチされた後の初期化中に発生します。
+[[#start_settings|start()]]メソッドが呼び出された時に発生します。コンポーネントがドキュメントツリーにアタッチされた時（connectedCallbackイベント発生時）に[[#start_settings|start()]]メソッドが自動的に呼び出されます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#start_settings|start()]]メソッドに渡されたoptions引数です。|
 
 ==== afterStart ====
 
 コンポーネントの初期化処理の終了付近で発生します。
 
-==== beforeSetup ====
+=== パラメータ ===
 
-setup()メソッドが呼びされた際に発生します。
-
-====doSetup ====
-
-beforeSetupイベントの後に発生します。
-
-==== afterSetup ====
-
-doSetupイベントの後に発生します。
-
-====afterAppend====
-
-switchTemplate()メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合、このイベントは発生しません。
-
-====beforeRefresh====
-
-refresh()メソッドが呼ばれた際に発生します。
-
-====doTarget====
-
-beforeRefreshイベントの後に発生します。
-
-====beforeFetch====
-
-fetch()メソッドが呼ばれた際に発生します。
-
-====doFetch====
-
-beforeFetchイベントの後に発生します。
-
-====afterFetch====
-
-doFetchイベントの後に発生します。
-
-====doRefresh====
-
-doTargetイベントの後に発生します。
-
-====afterRefresh====
-
-doRefreshイベントの後に発生します。
+^パラメータ^型^説明^
+|options|Object|[[#start_settings|start()]]メソッドに渡されたoptions引数です。|
 
 ==== beforeStop ====
 
-コンポーネントがドキュメントツリーから切り離された後の終了処理中に発生します。
+[[#stop_options|stop()]]メソッドが呼び出された時に発生します。デフォルトではコンポーネントがドキュメントツリーから切り離された時（disconnectedCallback発生時）に[[#stop_options|stop()]]メソッドが自動的に呼び出されます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
 
 ====doStop ====
 
 beforeStopイベントの後に発生します。
 
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
+
 ==== afterStop ====
 
 doStopイベントの後に発生します。
 
+=== パラメータ ===
 
+^パラメータ^型^説明^
+|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
+
+==== beforeSetup ====
+
+[[#setup_options|setup()]]メソッドが呼びされた際に発生します。デフォルトでは初期化中に[[#setup_options|setup()]]メソッドが自動的に呼び出されます。コンポーネントがテンプレートHTMLを持っている場合、テンプレートHTMLがノードにアタッチされた後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+====doSetup ====
+
+beforeSetupイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+==== afterSetup ====
+
+doSetupイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+====afterAppend====
+
+[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合（[[#hastemplate|”settings.hasTemplate”]]オプションがfalseの場合）、このイベントは発生しません。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#switchtemplate_templatename_options|switchTemplate()]]メソッドに渡されたoptions引数です。|
+
+====beforeRefresh====
+
+[[#refresh_options|refresh()]]メソッドが呼ばれた際に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+
+====doTarget====
+
+beforeRefreshイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+
+====doRefresh====
+
+doTargetイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+
+====afterRefresh====
+
+doRefreshイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+
+====beforeFetch====
+
+[[#fetch_options|fetch()]]メソッドが呼ばれた際に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
+
+====doFetch====
+
+beforeFetchイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
+
+====afterFetch====
+
+doFetchイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
 
 ===== プロパティ =====
 
 ==== name ====
 
-''get'' ''Type:String''
+''型:String'' ''デフォルト:<クラス名>'' ''get''
 
-コンポーネントの名前です。デフォルトではコンストラクタ名になります。
+コンポーネントの名前です。設定の[[#name|”settings.name”]]で指定可能です。
 
 ==== uniqueId ====
 
-''get'' ''Type:String''
+''型:String'' ''get''
 
 コンポーネントのインスタンスごとに割り当てられるユニークなIDです。自動的に生成されます。
-
 ==== rootElement ====
 
-''get'' ''Type:HTMLElement''
+''型:HTMLElement'' ''デフォルト:this'' ''get''
 
 コンポーネントのルートとなるHTML要素です。通常は”this”と同じです。
 
@@ -110,86 +242,95 @@ doStopイベントの後に発生します。
 
 ==== start(settings) ====
 
-''非同期''
+''型:undefined'' ''非同期''
 
-コンポーネントの初期化を開始します。タグがインスタンス化されるときに自動的に呼び出されるため、通常は呼び出す必要はありません。
+コンポーネントの初期化を開始します。タグがインスタンス化されるときに自動的に呼び出されるため、通常は呼び出す必要はありません。初期化時に自身の属性に”bm-powered”を追加します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|settings  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|settings|Object|設定情報です。|
 
 === 戻り値 ===
 
 なし。
 
-=== 発生させるイベント ===
+=== イベント ===
+
+  * [[#beforestart|beforeStart]]
+  * [[#afterstart|afterStart]]
+
+=== オーガナイザイベント ===
 
   * beforeStart
   * afterStart
 
 ==== stop(options) ====
 
-''非同期''
+''型:undefined'' ''非同期''
 
 コンポーネントの終了処理を行います。タグが切り離された時に自動的に呼び出されるため、通常は呼び出す必要はありません。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|options  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
 
 === 戻り値 ===
 
 なし。
 
-=== 発生させるイベント ===
+=== イベント ===
 
-  * beforeStop
-  * doStop
-  * afterStop
+  * [[#beforestop|beforeStop]]
+  * [[#dostop|doStop]]
+  * [[#afterstop|afterStop]]
 
 ==== setup(options) ====
 
-''非同期''
+''型:undefined'' ''非同期''
 
 コンポーネントをセットアップします。設定を変更した場合などに呼び出します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|options  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
 
 === 戻り値 ===
 
 なし。
 
-=== 発生させるイベント ===
+=== イベント ===
 
-  * beforeSetup
-  * doSetup
-  * afterSetup
+  * [[#beforesetup|beforeSetup]]
+  * [[#dosetup|doSetup]]
+  * [[#aftersetup|afterSetup]]
 
 
 ==== switchTemplate(templateName, options) ====
 
-''非同期''
+''型:undefined'' ''非同期''
 
-テンプレートHTMLを切り替えます。HTMLファイルがまだロードされてない場合は、自動的にロードされます。ロードされたHTMLファイルは自身の内部にアタッチされます。
+テンプレートHTMLを切り替えます。HTMLファイルがまだロードされてない場合は、自動的にロードされます。ロードされたHTMLファイルは自身にアタッチされます。追加された後、テンプレート内にオートロードの必要があるタグがある場合は、さらにそれらをロードします。
 
-追加された後、テンプレート内にオートロードの必要があるタグがある場合は、さらにそれらをロードします。
+[[#autosetup|”settings.autoSetup”]]オプションがTrueの場合、テンプレートHTMLのアタッチ後に[[#setup_options|setup()]]メソッドを呼び出します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|templateName|String|切り替え先のテンプレート名。|
-|options  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|templateName \\ ''必須''|String|切り替え先のテンプレート名です。|
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
 
 === 戻り値 ===
 
 なし。
 
-=== 発生させるイベント ===
+=== イベント ===
+
+  * [[#afterappend|afterAppend]]
+
+=== オーガナイザイベント ===
 
   * afterAppend
 
@@ -197,57 +338,61 @@ doStopイベントの後に発生します。
 
 ==== refresh(options) ====
 
-''非同期''
+''型:undefined'' ''非同期''
 
-コンポーネントを再描画します。autoFetchオプションがTrueの場合はfetch()メソッドを、autoFillオプションがTrueの場合はfill()メソッドを自動的に呼び出します。
+コンポーネントを再描画します。[[#autofetch|”settings.autoFetch”]]オプションがTrueの場合は[[#fetch_options|fetch()]]メソッドを、[[#autofill|”settings.autoFill”]]オプションがTrueの場合は[[#fill_options|fill()]]メソッドを自動的に呼び出します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|options  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
 
 === 戻り値 ===
 
 なし。
 
-=== 発生させるイベント ===
+=== イベント ===
 
-  * beforeRefresh
-  * doRefresh
-  * afterRefresh
+  * [[#beforerefresh|beforeRefresh]]
+  * [[#dotarget|doTarget]]
+  * [[#dorefresh|doRefresh]]
+  * [[#afterrefresh|afterRefresh]]
 
 ==== fetch(options) ====
 
-''非同期''
+''型:undefined'' ''非同期''
 
 コンポーネントに必要なデータを取得します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|options  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
 
 === 戻り値 ===
 
-undefined
+なし。
 
-=== 発生させるイベント ===
+=== イベント ===
 
-  * beforeFetch
+  * [[#beforefetch|beforeFetch]]
+  * [[#dofetch|doFetch]]
+  * [[#afterfetch|afterFetch]]
+
+=== オーガナイザイベント ===
+
   * doFetch
-  * afterFetch
-
 
 ==== fill(options) ====
 
-''非同期''
+''型:undefined''
 
 コンポーネントに値を埋め込みます。 実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|options  \\ ''Optional''|Object|設定。|
+^パラメータ^型^説明^
+|options|Object|設定情報です。|
 
 === 戻り値 ===
 
@@ -255,16 +400,30 @@ undefined
 
 ==== clear(options) ====
 
-''非同期''
+''型:undefined''
 
 このコンポーネントをクリアします。実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|options  \\ ''Optional''|Object|An object holding options.|
+^パラメータ^型^説明^
+|options|Object|設定情報です。|
 
 === 戻り値 ===
 
-undefined
+なし。
 
+==== scopedSelectorAll(query) ====
+
+''型:NodeList''
+
+自身の配下にある、指定されたクエリーに合致するHTML要素を返します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|query \\ ''必須''|String|検索クエリーです。document.querySelectorAll()と同じ書式を使います。|
+
+=== 戻り値 ===
+
+クエリーに合致するHTML要素のNodeListです。
