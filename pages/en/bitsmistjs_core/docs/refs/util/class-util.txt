@@ -8,7 +8,7 @@ ClassUtil is a utility class that handles class-related tasks such as creating n
 
 ==== newComponent(superClass, settings, tagName, className) ====
 
-''Static''
+''Type:Component'' ''Static''
 
 Creates a new Function object. Note that the created object **is not an instance**. The component is instantiated by placing a tag specified in the parameter in the HTML file. 
 
@@ -19,13 +19,13 @@ This function exists for older browser support. You can use the class notation f
 ===Parameters===
 
 ^Parameter^Type^Description^
-|superClass|Function|The Super class to inherit.|
-|settings|Object|A component settings object. This settings will be returned in Component._getSettings().|
-|tagName|String|A tag name for this component.|
-|className \\ ''optional'' \\ ''Default:(see desc)''|String|A class name for this component. It is guessed from a tag name if this parameter is missing.|
+|superClass \\ ''required''|Function|The Super class to inherit.|
+|settings \\ ''required''|Object|A component settings object. This settings will be returned in Component._getSettings().|
+|tagName \\ ''required''|String|A tag name for this component.|
+|className \\ ''Default:(see desc)''|String|A class name for this component. It is guessed from a tag name if this parameter is missing.|
 ||||
 
-===Return value===
+===Return Value===
 
 A created function object.
 
@@ -58,46 +58,46 @@ PadSearch.prototype.search = function(keyword)
 </code>
 ==== inherit(subClass, superClass) ====
 
-''Static''
+''Type:undefined'' ''Static''
 
 Inherits the subclass from the super class.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|subClass|Function|A class that inherits the super class.|
-|superClass|Function|A super class.|
+|subClass \\ ''required''|Function|A class that inherits the super class.|
+|superClass \\ ''required''|Function|A super class.|
 
-===Return value===
+===Return Value===
 
 undefined
 
 ==== createObject(className, ...args) ====
 
-''Static''
+''Type:Object'' ''Static''
 
 Instantiates a class.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|className|Function|A class name to instantiate.|
-|...args \\ ''optional''| |Arguments to the class constructor.|
+|className \\ ''required''|Function|A class name to instantiate.|
+|...args| |Arguments to the class constructor.|
 
-===Return value===
+===Return Value===
 
 A created instance.
 
 ==== getClass(className) ====
 
-''Static''
+''Type:Function'' ''Static''
 
 Returns the Function object that has the specified class name.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|className|Function|A class name.|
+|className \\ ''required''|Function|A class name.|
 
 ===Return value===
 

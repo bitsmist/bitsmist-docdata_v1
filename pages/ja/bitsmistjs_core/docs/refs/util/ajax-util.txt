@@ -8,13 +8,13 @@ XMLHttpRequestを使用してAjaxリクエストを行う、ユーティリテ�
 
 ==== ajaxRequest(options) ====
 
-''非同期'' ''Static''
+''型:XMLHttpRequest'' ''非同期'' ''Static''
 
 Ajaxリクエストを行います。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
+^パラメータ^型^説明^
 |options|Object|Ajaxのオプションを指定します。以下のキーがあります。|
 |  "url"|String|アクセスするUrlを指定します。|
 |  "method"|String|HTTPメソッド（GET, POST, PUT等）を指定します。|
@@ -63,13 +63,13 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 </code>
 ==== loadScript(url) ====
 
-''非同期'' ''Static''
+''型:undefined'' ''非同期'' ''Static''
 
 スクリプトファイルをロードします。スクリプトは現在のページに挿入されます。
 
-=== 引数===
+=== パラメータ===
 
-^Parameter^Type^Description^
+^パラメータ^型^説明^
 |url|String|スクリプトファイルのURLを指定します。|
 
 === 戻り値 ===

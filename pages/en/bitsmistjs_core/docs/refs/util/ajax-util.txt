@@ -8,7 +8,7 @@ AjaxUtil is a utility class that uses XMLHttpRequest to send an ajax request to 
 
 ==== ajaxRequest(options) ====
 
-''Asynchronous'' ''Static''
+''Type:XMLHttpRequest'' ''Asynchronous'' ''Static''
 
 Sends an ajax request to a server.
 
@@ -22,7 +22,7 @@ Sends an ajax request to a server.
 |  "headers"|Object|An object that contains headers to send with the request. Each item is passed to XMLHttpRequest.setRequestHeader().|
 |  "options"|Object|Ajax options. Passed to XMLHttpRequest.|
 
-===Return value===
+===Return Value===
 
 XHR Object.
 
@@ -63,7 +63,7 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 </code>
 ==== loadScript(url) ====
 
-''Asynchronous'' ''Static''
+''Type:undefined'' ''Asynchronous'' ''Static''
 
 Loads a script file from the server and append it to the current page.
 
@@ -72,6 +72,6 @@ Loads a script file from the server and append it to the current page.
 ^Parameter^Type^Description^
 |url|String|The URL of the file.|
 
-===Return value===
+===Return Value===
 
 undefined

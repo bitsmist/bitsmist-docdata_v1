@@ -8,17 +8,17 @@
 
 ==== newComponent(superClass, settings, tagName, className) ====
 
-''Static''
+''型:Component'' ''Static''
 
 新しいコンポーネントの**定義（Functionオブジェクト）**を作成します。インスタンスを作成するのではないことに注意してください。HTMLファイルに引数で指定したタグ名を挿入することで、インスタンス化されます。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|superClass|Function|他のクラスを継承する場合は、ここにスーパークラスを指定します。|
-|settings|Object|作成するコンポーネントの設定を指定します。ここで指定された値が、Component._getSettings()で返されます。|
-|tagName|String|このコンポーネントのタグ名を指定します。|
-|className \\ ''optional'' \\ ''Default:（説明参照）''|String|クラス名を指定します。指定されない場合は、タグ名から生成されます。|
+^パラメータ^型^説明^
+|superClass \\ ''必須''|Function|他のクラスを継承する場合は、ここにスーパークラスを指定します。|
+|settings \\ ''必須''|Object|作成するコンポーネントの設定を指定します。ここで指定された値が、Component._getSettings()で返されます。|
+|tagName \\ ''必須''|String|このコンポーネントのタグ名を指定します。|
+|className \\ ''Default:（説明参照）''|String|クラス名を指定します。指定されない場合は、タグ名から生成されます。|
 ||||
 
 === 戻り値 ===
@@ -54,15 +54,15 @@ PadSearch.prototype.search = function(keyword)
 </code>
 ==== inherit(subClass, superClass) ====
 
-''Static''
+''型:undefined'' ''Static''
 
 指定されたsubClassをsuperClassから継承させます。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|subClass|Function|継承されるクラスを指定します。|
-|superClass|Function|継承するスーパークラスを指定します。|
+^パラメータ^型^説明^
+|subClass \\ ''必須''|Function|継承されるクラスを指定します。|
+|superClass \\ ''必須''|Function|継承するスーパークラスを指定します。|
 
 === 戻り値 ===
 
@@ -70,15 +70,15 @@ PadSearch.prototype.search = function(keyword)
 
 ==== createObject(className, ...args) ====
 
-''Static''
+''型:Object'' ''Static''
 
 コンポーネントをインスタンス化します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|className|Function|インスタンス化するクラスを指定します。|
-|...args \\ ''optional''| |コンストラクタに渡す引数を指定します。|
+^パラメータ^型^説明^
+|className \\ ''必須''|Function|インスタンス化するクラスを指定します。|
+|...args| |コンストラクタに渡す引数を指定します。|
 
 === 戻り値 ===
 
@@ -86,14 +86,14 @@ PadSearch.prototype.search = function(keyword)
 
 ==== getClass(className) ====
 
-''Static''
+''型:Function'' ''Static''
 
 指定されたクラス名のFunctionオブジェクトを返します。
 
-=== 引数 ===
+=== パラメータ ===
 
-^Parameter^Type^Description^
-|className|Function|クラス名を指定します。|
+^パラメータ^型^説明^
+|className \\ ''必須''|Function|クラス名を指定します。|
 
 === 戻り値 ===
 
