@@ -12,17 +12,17 @@ On this page, only the difference from the parent class is explained.
 
 ==== items ====
 
-''set'' ''get'' ''Type:Object''
+''Type:Object'' ''get/set'' 
 
-Returns the object that contains all items in the Store. It also contains items in a chained Store object If chained.
+Returns the object that contains all items in the Store. It also contains items in a chained Store object if chained.
 
-When set it stores items in the store itself. It doesn't affect the chained store.
+When set it stores items in its own store. It doesn't affect the chained store.
 
 ==== localItems ====
 
-''get'' ''Type:Object''
+''Type:Object'' ''get''
 
-Returns the object that contains items in the Store. It doesn't contain items in a chained Store.
+Returns the object that contains items in its own Store. It doesn't contain items in a chained Store.
 =====Constructor=====
 
 ==== Constructor(settings) ====
@@ -30,7 +30,7 @@ Returns the object that contains items in the Store. It doesn't contain items in
 ===Parameters===
 
 ^Parameter^Type^Description^
-|settings \\ ''optional''|Object|An object to initialize the Store. In addition to the keys available to the parent class, new keys are:|
+|settings|Object|An object to initialize the Store. In addition to the keys available to the parent class, new keys are:|
 |  "chain"|Store|A store object to chain.|
 |  "writeThrough"|Boolean|If True, then it modifies a chained store when set()/merge().|
 
@@ -38,18 +38,22 @@ Returns the object that contains items in the Store. It doesn't contain items in
 
 ==== chain(store) ====
 
+''Type:undefined''
+
 Chains to another ChainableStore object. When a ChainableStore is chained, if a nonexistent item is requested by get() method it tries to retrieve the item from the chained store. Only one ChainableStore can be chained. If you call chain() several times, it is overwritten by the latter one, thus only the latest one is valid.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|store|ChainableStore|A ChainableStore object to chain.|
+|store \\ ''Required''|ChainableStore|A ChainableStore object to chain.|
 
-===Return value===
+===Return Value===
 
 undefined
 
 ==== clone() ====
+
+''Type:Object''
 
 Returns a deep copy of items. When the store is chained to another store it contains all the items in the chained store.
 
@@ -57,11 +61,13 @@ Returns a deep copy of items. When the store is chained to another store it cont
 
 none
 
-===Return value===
+===Return Value===
 
 A copy of items in the store.
 
 ==== get(key, defaultValue) ====
+
+''Type:*''
 
 Returns a value specified by the key parameter. Returns a default value if the key doesn't exist. If chained to another store, then the item will be searched in order:
   - Local value
@@ -72,28 +78,32 @@ Returns undefined if none exists.
 ===Parameters===
 
 ^Parameter^Type^Description^
-|key|String|A key of an item.|
-|defaultValue \\ ''optional''|*|A　default value returned when the key doesn't exist.|
+|key \\ ''Required''|String|A key of an item.|
+|defaultValue|*|A　default value returned when the key doesn't exist.|
 
-===Return value===
+===Return Value===
 
 A value specified by the key.
 
 ==== merge(newItems, merger) ====
+
+''Type:undefined''
 
 Merges new items into current items. If the store is chained to another store, by default it merges with its own store items, however "writeThrough" option is set to True in the constructor's option then it merges with items in the chained store.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|newItems|Object/ \\ Array of objects|An object to merge or an array of objects. If the newItems parameter is an array, all objects in the array will be merged.|
-|merger \\ ''optional''|Function|A function for merging objects. This parameter has a higher priority than merger property.|
+|newItems \\ ''Required''|Object/ \\ Array of objects|An object to merge or an array of objects. If the newItems parameter is an array, all objects in the array will be merged.|
+|merger|Function|A function for merging objects. This parameter has a higher priority than merger property.|
 
-===Return value===
+===Return Value===
 
 undefined
 
 ==== set(key, value) ====
+
+''Type:undefined''
 
 Set a value to an item specified by the key parameter. If the key does not exist, it will be automatically created. If the item already exists in a store and it is an object, the value will be merged with the current item.
 
@@ -110,9 +120,9 @@ If the item does not exist, then it will be created automatically. In the above 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|key|String|Key of the item.|
-|value|*|A value to set.|
+|key \\ ''Required''|String|Key of the item.|
+|value \\ ''Required''|*|A value to set.|
 
-===Return value===
+===Return Value===
 
 Undefined
