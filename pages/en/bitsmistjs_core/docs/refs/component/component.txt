@@ -19,20 +19,11 @@ The Component class attaches organizers below by default.
 
 The component's settings are placed in the "settings" section.
 
-==== autoRestart ====
-''Type:Boolean'' ''Default:false''
-
-When set to True, [[#start_settings|start()]] method will be called even though the component is already initialized when it is re-attached to the document tree.
-
-==== autoStop ====
-''Type:Boolean'' ''Default:true''
-
-When set to True, [[#stop_options|stop()]] method will be called when the component is detached from the document tree.
-
 ==== autoFetch ====
 ''Type:Boolean'' ''Default:true''
 
 When set to True, [[#fetch_options|fetch()]] method will be called automatically inside [[#refresh_options|refresh()]] method.
+
 ==== autoFill ====
 ''Type:Boolean'' ''Default:true''
 
@@ -48,10 +39,30 @@ When set to True, the late-stage initialization process will be run automaticall
 
 When set to True, [[#refresh_options|refresh()]] method will be called automatically after initialization is finished.
 
+==== autoRestart ====
+''Type:Boolean'' ''Default:false''
+
+When set to True, [[#start_settings|start()]] method will be called even though the component is already initialized when it is re-attached to the document tree.
+
 ==== autoSetup ====
 ''Type:Boolean'' ''Default:true''
 
 When set to True, [[#setup_options|setup()]] method will be called automatically in the initialization process.
+
+==== autoStop ====
+''Type:Boolean'' ''Default:true''
+
+When set to True, [[#stop_options|stop()]] method will be called when the component is detached from the document tree.
+
+==== className ====
+''Type:String'' ''Default:<Component Name>''
+
+A class name of the component. If not specified, the component name is used as the class name.
+
+==== fileName ====
+''Type:String'' ''Default:''
+
+A filename of the component.
 
 ==== hasTemplate ====
 ''Type:Boolean'' ''Default:true''
@@ -63,30 +74,181 @@ Specifies whether the component has template HTML files. When set to True, [[#sw
 
 Specifies the component name.
 
+==== overwrite ====
+''Type:Boolean'' ''Default:False''
+
+Specified whether to overwrite a parent node. If set to True, the parent node will be replaced by the component.
+
+==== rootNode ====
+''Type:String'' ''Default:''
+
+A node to which the component attaches.
+
+==== splitComponent ====
+''Type:Boolean'' ''Default:False''
+
+Specifies whether a component file is split. If set to True, the loader will load two files.
+
+==== sync ====
+''Type:String/Boolean'' ''Default:''
+
+If a string is set, it waits for an added component to become the specified state. If set to True, it waits for the “started” state.
+
+==== tag ====
+''Type:String'' ''Default:<Empty>''
+
+A tag for the component. This tag is inserted into the document tree as a component. Unlike "tagName", you can specify attributes and classes also.
+
+==== tagName ====
+''Type:String'' ''Default:<See desc>''
+
+A tag name of the component. If not specified, it will be generated from the class name. Assuming the class name is a pascal case, the class name is divided into two words from the second capital letter of the class name, then those two words will be concatenated with '-'.
+
+==== templateName ====
+''Type:String'' ''Default:<tag name>''
+
+A template name without an extension. The extension ".html" will be appended when retrieving the template files.
+
 ==== useGlobalSettings ====
 ''Type:Boolean'' ''Default:true''
 
 Specifies whether to apply global settings to the component. When set to True, the application global settings will be chained to the component settings.
 
-<WRAP admonition tip links>
+<WRAP admonition note links>
 The chain of settings is implemented by ChainableStore class.
   * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:refs:util:chainablestore|Reference - Store - ChainableStore]]
 </WRAP>
 
+===== Tag Attributes =====
+
+Some component's settings can be specified in tag attributes. Tag attributes have higher priority than settings.
+
+====bm-autoload====
+
+''Type:String''
+
+Indicates to load a component automatically. Specify a URL to the component as the value. If the value is empty the component is loaded using the default paths.
+
+====bm-automorph====
+
+''Type:Boolean''
+
+Indicates to load an HTML file from the default path. No value is needed.
+
+====bm-classname====
+
+''Type:String''
+
+A class name of the component. Same as "className" in settings.
+
+====bm-path====
+
+''Type:String''
+
+A path that is used for loading components and templates. Same as "path" in settings.
+
+====bm-settingref====
+''Type:String''
+
+A URL to the component setting file. The setting file will be loaded asynchronously.
+
+====bm-settings====
+''Type:String''
+
+Settings in JSON format. These settings are merged into the component's settings as if they are placed in the "settings" section.
+
+====bm-split====
+
+''Type:Boolean''
+
+Indicates a component file is split. No value is needed.
+
 =====Events=====
 
-==== beforeStart ====
+====afterAppend====
 
-Triggered when [[#start_settings|start()]] method is called. [[#start_settings|start()]] method is called automatically when the component is attached to to documen tree, in other words when native connectedCallback() is called.
+Triggered after a template HTML is attached to a component when [[#switchtemplate_templatename_options|switchTemplate()]] method is called. If the component doesn't have template HTML files ([[#hastemplate|”settings.hasTemplate”]] option is set to False), this event is not triggered.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#switchtemplate_templatename_options|switchTemplate()]] method.|
+
+====afterFetch====
+
+Triggered after doFetch event.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#fetch_options|fetch()]] method.|
+
+====afterRefresh====
+
+Triggered after doRefresh event.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#refresh_options|refresh()]] method.|
+
+==== afterSetup ====
+
+Triggered after doSetup event.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#setup_options|setup()]] method.|
+
+==== afterStart ====
+
+Triggered during the latter stage of a component initialization.
 
 === Parameters ===
 
 ^Parameter^Type^Description^
 |options|Object|The options argument passed to [[#start_settings|start()]] method.|
 
-==== afterStart ====
+==== afterStop ====
 
-Triggered during the latter stage of a component initialization.
+Triggered after doStop event.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#stop_options|stop()]] method.|
+
+====beforeFetch====
+
+Triggered when [[#fetch_options|fetch()]] method is called.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#fetch_options|fetch()]] method.|
+
+====beforeRefresh====
+
+Triggered when [[#refresh_options|refresh()]] method is called.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#refresh_options|refresh()]] method.|
+
+==== beforeSetup ====
+
+Triggered when [[#setup_options|setup()]] method is called. By default, [[#setup_options|setup()]] is called automatically in the initialization process. If the component has template HTML files, the event will be triggered after the template HTML is attached to the component.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#setup_options|setup()]] method.|
+
+==== beforeStart ====
+
+Triggered when [[#start_settings|start()]] method is called. [[#start_settings|start()]] method is called automatically when the component is attached to to documen tree, in other words when native connectedCallback() is called.
 
 === Parameters ===
 
@@ -102,75 +264,14 @@ Triggered when [[#stop_options|stop()]] method is called. By default, [[#stop_op
 ^Parameter^Type^Description^
 |options|Object|The options argument passed to [[#stop_options|stop()]] method.|
 
-====doStop ====
+====doFetch====
 
-Triggered after beforeStop event.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#stop_options|stop()]] method.|
-
-==== afterStop ====
-
-Triggered after doStop event.
+Triggered after beforeFetch event.
 
 === Parameters ===
 
 ^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#stop_options|stop()]] method.|
-==== beforeSetup ====
-
-Triggered when [[#setup_options|setup()]] method is called. By default, [[#setup_options|setup()]] is called automatically in the initialization process. If the component has template HTML files, the event will be triggered after the template HTML is attached to the component.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#setup_options|setup()]] method.|
-====doSetup ====
-
-Triggered after beforeSetup event.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#setup_options|setup()]] method.|
-
-==== afterSetup ====
-
-Triggered after doSetup event.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#setup_options|setup()]] method.|
-
-====afterAppend====
-
-Triggered after a template HTML is attached to a component when [[#switchtemplate_templatename_options|switchTemplate()]] method is called. If the component doesn't have template HTML files ([[#hastemplate|”settings.hasTemplate”]] option is set to False), this event is not triggered.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#switchtemplate_templatename_options|switchTemplate()]] method.|
-
-====beforeRefresh====
-
-Triggered when [[#refresh_options|refresh()]] method is called.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#refresh_options|refresh()]] method.|
-
-====doTarget====
-
-Triggered after beforeRefresh event.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#refresh_options|refresh()]] method.|
+|options|Object|The options argument passed to [[#fetch_options|fetch()]] method.|
 
 ====doRefresh====
 
@@ -181,41 +282,37 @@ Triggered after doTarget event.
 ^Parameter^Type^Description^
 |options|Object|The options argument passed to [[#refresh_options|refresh()]] method.|
 
-====afterRefresh====
+====doSetup ====
 
-Triggered after doRefresh event.
+Triggered after beforeSetup event.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#setup_options|setup()]] method.|
+
+====doStop ====
+
+Triggered after beforeStop event.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#stop_options|stop()]] method.|
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|options|Object|The options argument passed to [[#stop_options|stop()]] method.|
+
+====doTarget====
+
+Triggered after beforeRefresh event.
 
 === Parameters ===
 
 ^Parameter^Type^Description^
 |options|Object|The options argument passed to [[#refresh_options|refresh()]] method.|
-
-====beforeFetch====
-
-Triggered when [[#fetch_options|fetch()]] method is called.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#fetch_options|fetch()]] method.|
-
-====doFetch====
-
-Triggered after beforeFetch event.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#fetch_options|fetch()]] method.|
-
-====afterFetch====
-
-Triggered after doFetch event.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#fetch_options|fetch()]] method.|
 
 =====Properties=====
 
@@ -225,19 +322,134 @@ Triggered after doFetch event.
 
 Returns the component name. Can be specified in [[#name|"settings.name"]] setting.
 
-==== uniqueId ====
-
-''Type:String'' ''get''
-
-Returns the automatically created unique id assigned to each component.
-
 ==== rootElement ====
 
 ''Type:HTMLElement'' ''Default:this'' ''get''
 
 Returns the root node of the component. By default, it refers to "this", the component itself.
 
+==== uniqueId ====
+
+''Type:String'' ''get''
+
+Returns the automatically created unique id assigned to each component.
+
 ===== Methods =====
+
+==== clear(options) ====
+
+''Type:undefined''
+
+Clears a component. It does nothing in the Component base class and you need to override this function.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|An object holding options.|
+
+===Return Value===
+
+undefined
+
+==== fetch(options) ====
+
+''Type:undefined'' ''Asynchronous''
+
+Fetches data.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|An object holding options.|
+
+===Return Value===
+
+undefined
+
+===Events===
+
+  * [[#beforefetch|beforeFetch]]
+  * [[#dofetch|doFetch]]
+  * [[#afterfetch|afterFetch]]
+
+
+=== Organizer Events ===
+
+  * doFetch
+
+==== fill(options) ====
+
+''Type:undefined''
+
+Fills a component with values. It does nothing in the Component base class and you need to override this function.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|An object holding options.|
+
+===Return Value===
+
+undefined
+
+==== refresh(options) ====
+
+''Type:undefined'' ''Asynchronous''
+
+Redraws a component. If [[#autofetch|"settings.autoFetch"]] option is set to True then [[#fetch_options|fetch()]] method is called, and if [[#autofill|"settings.autoFill"]] option is set to True then [[#fill_options|fill()]] method is called during refreshing.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|An object holding options.|
+
+===Return Value===
+
+undefined
+
+===Events===
+
+  * [[#beforerefresh|beforeRefresh]]
+  * [[#dotarget|doTarget]]
+  * [[#dorefresh|doRefresh]]
+  * [[#afterrefresh|afterRefresh]]
+
+==== scopedSelectorAll(query) ====
+
+''Type:NodeList''
+
+Returns HTML elements that match the given query under the component.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|query \\ ''Required''|String|A search query. The query format is same as document.querySelectorAll().|
+
+=== Return Value ===
+
+Node list of HTML elements.
+
+
+==== setup(options) ====
+
+''Type:undefined'' ''Asynchronous''
+
+Sets up a component. Call it when you changed settings and apply them.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|An object holding options.|
+
+===Return Value===
+
+undefined
+
+===Events===
+
+  * [[#beforesetup|beforeSetup]]
+  * [[#dosetup|doSetup]]
+  * [[#aftersetup|afterSetup]]
 
 ==== start(settings) ====
 
@@ -285,26 +497,6 @@ undefined
   * [[#dostop|doStop]]
   * [[#afterstop|afterStop]]
 
-==== setup(options) ====
-
-''Type:undefined'' ''Asynchronous''
-
-Sets up a component. Call it when you changed settings and apply them.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|options|Object|An object holding options.|
-
-===Return Value===
-
-undefined
-
-===Events===
-
-  * [[#beforesetup|beforeSetup]]
-  * [[#dosetup|doSetup]]
-  * [[#aftersetup|afterSetup]]
 
 ==== switchTemplate(templateName, options) ====
 
@@ -331,97 +523,3 @@ undefined
 ===Organizer Event===
 
   * afterAppend
-
-==== refresh(options) ====
-
-''Type:undefined'' ''Asynchronous''
-
-Redraws a component. If [[#autofetch|"settings.autoFetch"]] option is set to True then [[#fetch_options|fetch()]] method is called, and if [[#autofill|"settings.autoFill"]] option is set to True then [[#fill_options|fill()]] method is called during refreshing.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|options|Object|An object holding options.|
-
-===Return Value===
-
-undefined
-
-===Events===
-
-  * [[#beforerefresh|beforeRefresh]]
-  * [[#dotarget|doTarget]]
-  * [[#dorefresh|doRefresh]]
-  * [[#afterrefresh|afterRefresh]]
-==== fetch(options) ====
-
-''Type:undefined'' ''Asynchronous''
-
-Fetches data.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|options|Object|An object holding options.|
-
-===Return Value===
-
-undefined
-
-===Events===
-
-  * [[#beforefetch|beforeFetch]]
-  * [[#dofetch|doFetch]]
-  * [[#afterfetch|afterFetch]]
-
-
-=== Organizer Events ===
-
-  * doFetch
-
-
-
-==== fill(options) ====
-
-''Type:undefined''
-
-Fills a component with values. It does nothing in the Component base class and you need to override this function.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|options|Object|An object holding options.|
-
-===Return Value===
-
-undefined
-
-==== clear(options) ====
-
-''Type:undefined''
-
-Clears a component. It does nothing in the Component base class and you need to override this function.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|options|Object|An object holding options.|
-
-===Return Value===
-
-undefined
-
-==== scopedSelectorAll(query) ====
-
-''Type:NodeList''
-
-Returns HTML elements that match the given query under the component.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|query \\ ''Required''|String|A search query. The query format is same as document.querySelectorAll().|
-
-=== Return Value ===
-
-Node list of HTML elements.

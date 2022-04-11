@@ -19,15 +19,6 @@ Componentはデフォルトで以下のオーガナイザをアタッチして�
 ===== 設定 =====
 
 Componentの設定は”settings”セクションに記述します。
-==== autoRestart ====
-''型:Boolean'' ''デフォルト:false''
-
-Trueの場合、コンポーネントがドキュメントツリーにアタッチされた際に、たとえ初期化済みであっても再度[[#start_settings|start()]]メソッドを呼び出します。
-
-==== autoStop ====
-''型:Boolean'' ''デフォルト:true''
-
-Trueの場合、コンポーネントがドキュメントツリーから切り離された際に、[[#stop_options|stop()]]メソッドを実行します。
 
 ==== autoFetch ====
 ''型:Boolean'' ''デフォルト:true''
@@ -42,28 +33,80 @@ Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的�
 ==== autoPostStart ====
 ''型:Boolean'' ''デフォルト:true''
 
-Trueの場合、初期化の後部処理を自動的に呼び出します。主にコンポーネントを継承した際に、使用されます。
+Trueの場合、初期化の後部処理を自動的に呼び出します。主にコンポーネントを継承した際に、初期化フローをコントロールするために使用されます。
 
 ==== autoRefresh ====
 ''型:Boolean'' ''デフォルト:true''
 
 Trueの場合、初期化終了時に自動的に[[#refresh_options|refresh()]]メソッドが呼び出されます。
 
+==== autoRestart ====
+''型:Boolean'' ''デフォルト:false''
+
+Trueの場合、コンポーネントがドキュメントツリーにアタッチされた際に、たとえ初期化済みであっても再度[[#start_settings|start()]]メソッドを呼び出します。
+
 ==== autoSetup ====
 ''型:Boolean'' ''デフォルト:true''
 
 Trueの場合、自動的に[[#setup_options|setup()]]メソッドが呼び出されます。
 
+==== autoStop ====
+''型:Boolean'' ''デフォルト:true''
+
+Trueの場合、コンポーネントがドキュメントツリーから切り離された際に、[[#stop_options|stop()]]メソッドを実行します。
+
+==== className ====
+''型:String'' ''デフォルト:<コンポーネント名>''
+
+コンポーネントのクラス名を指定します。指定がない場合は、コンポーネント名がクラス名になります。
+
+==== fileName ====
+''型:String'' ''デフォルト:''
+
+コンポーネントのファイル名を指定します。
 ==== hasTemplate ====
 ''型:Boolean'' ''デフォルト:true''
 
-Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_options|switchTemplate()]]が呼び出されます。
+コンポーネントがテンプレートHTMLを持つかを指定します。Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_options|switchTemplate()]]が呼び出され、テンプレートHTMLの読み込みと差し込みが行われます。
 
 ==== name ====
 ''型:String'' ''デフォルト:<クラス名>''
 
 コンポーネント名を指定します。
 
+==== overwrite ====
+''型:Boolean'' ''デフォルト:False''
+
+Specified whether to overwrite a parent node. If set to True, the parent node will be replaced by the component.
+
+==== rootNode ====
+''型:String'' ''デフォルト:''
+
+このコンポーネントがアタッチするノードを指定します。
+
+==== splitComponent ====
+''型:Boolean'' ''デフォルト:False''
+
+コンポーネントのファイルが分割されているかを指定します。Trueの場合、ローダーは2つのファイルを読み込みます。
+
+==== sync ====
+''型:String/Boolean'' ''デフォルト:''
+
+文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、”started”になるのを待ちます。
+==== tag ====
+''型:String'' ''デフォルト:<Empty>''
+
+コンポーネントのタグを指定します。この値でHTMLに挿入されます。tagNameと違い、属性やクラスも指定できます。
+
+==== tagName ====
+''型:String'' ''デフォルト:<See desc>''
+
+このコンポーネントのタグの名前を指定します。指定されてない場合、タグ名はクラス名から生成されます。クラス名はパスカルケースと仮定し、2つ目の大文字の文字を境に2つの単語に区切られ、ハイフンで連結されます。
+
+==== templateName ====
+''型:String'' ''デフォルト:<tag name>''
+
+テンプレートファイル名を拡張子なしで指定します。ファイル取得時に拡張子”.html”を追加したファイル名を取得します。
 ==== useGlobalSettings ====
 ''型:Boolean'' ''デフォルト:true''
 
@@ -73,20 +116,138 @@ Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_
 設定の連結機能は、ChainableStoreクラスを使って実装されています。
   * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:util:chainablestore|リファレンス - ストア - ChainableStore]]
 </WRAP>
+
+===== タグ属性 =====
+
+いくつかのコンポーネントの設定は、タグ属性に指定することもできます。タグ属性は設定より高い優先度を持っています。
+
+====bm-autoload====
+
+''型:String''
+
+コンポーネントを自動的にロードするかを指定します。値としてコンポーネントのURLを指定します。もし値がセットされてない場合、デフォルトのパスからコンポーネントがロードされます。
+
+====bm-automorph====
+
+''型:Boolean''
+
+Indicates to load an HTML file from the default path. No value is needed.
+
+====bm-classname====
+
+''型:String''
+
+コンポーネントのクラス名を指定します。設定の”className”と同じです。
+
+====bm-path====
+
+''型:String''
+
+コンポーネントやテンプレートHTMLをロードするパスを指定します。この値が”settings.path”にセットされます。
+
+====bm-settingref====
+''型:String''
+
+設定ファイルへのURLを指定します。この設定ファイルは非同期に読み込まれます。
+
+====bm-settings====
+''型:String''
+
+設定をjson形式で指定します。ここで指定した設定は”settings”セクション内に記述されたものとみなされ、現在の設定にマージされます。
+
+====bm-split====
+
+''型:Boolean''
+
+この属性が存在する場合、コンポーネントが分割形式とみなします。値は不要です。
+
+
 ===== イベント =====
 
-==== beforeStart ====
+====afterAppend====
 
-[[#start_settings|start()]]メソッドが呼び出された時に発生します。コンポーネントがドキュメントツリーにアタッチされた時（connectedCallbackイベント発生時）に[[#start_settings|start()]]メソッドが自動的に呼び出されます。
+[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合（[[#hastemplate|”settings.hasTemplate”]]オプションがfalseの場合）、このイベントは発生しません。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#switchtemplate_templatename_options|switchTemplate()]]メソッドに渡されたoptions引数です。|
+
+====afterFetch====
+
+doFetchイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
+
+====afterRefresh====
+
+doRefreshイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+
+==== afterSetup ====
+
+doSetupイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+==== afterStart ====
+
+コンポーネントの初期化処理の終了付近で発生します。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
 |options|Object|[[#start_settings|start()]]メソッドに渡されたoptions引数です。|
 
-==== afterStart ====
+==== afterStop ====
 
-コンポーネントの初期化処理の終了付近で発生します。
+doStopイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
+
+====beforeFetch====
+
+[[#fetch_options|fetch()]]メソッドが呼ばれた際に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
+
+====beforeRefresh====
+
+[[#refresh_options|refresh()]]メソッドが呼ばれた際に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+
+==== beforeSetup ====
+
+[[#setup_options|setup()]]メソッドが呼びされた際に発生します。デフォルトでは初期化中に[[#setup_options|setup()]]メソッドが自動的に呼び出されます。コンポーネントがテンプレートHTMLを持っている場合、テンプレートHTMLがノードにアタッチされた後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+==== beforeStart ====
+
+[[#start_settings|start()]]メソッドが呼び出された時に発生します。コンポーネントがドキュメントツリーにアタッチされた時（connectedCallbackイベント発生時）に[[#start_settings|start()]]メソッドが自動的に呼び出されます。
 
 === パラメータ ===
 
@@ -102,77 +263,14 @@ Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_
 ^パラメータ^型^説明^
 |options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
 
-====doStop ====
+====doFetch====
 
-beforeStopイベントの後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
-
-==== afterStop ====
-
-doStopイベントの後に発生します。
+beforeFetchイベントの後に発生します。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
-
-==== beforeSetup ====
-
-[[#setup_options|setup()]]メソッドが呼びされた際に発生します。デフォルトでは初期化中に[[#setup_options|setup()]]メソッドが自動的に呼び出されます。コンポーネントがテンプレートHTMLを持っている場合、テンプレートHTMLがノードにアタッチされた後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
-
-====doSetup ====
-
-beforeSetupイベントの後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
-
-==== afterSetup ====
-
-doSetupイベントの後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
-
-====afterAppend====
-
-[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合（[[#hastemplate|”settings.hasTemplate”]]オプションがfalseの場合）、このイベントは発生しません。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#switchtemplate_templatename_options|switchTemplate()]]メソッドに渡されたoptions引数です。|
-
-====beforeRefresh====
-
-[[#refresh_options|refresh()]]メソッドが呼ばれた際に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
-
-====doTarget====
-
-beforeRefreshイベントの後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
+|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
 
 ====doRefresh====
 
@@ -183,41 +281,32 @@ doTargetイベントの後に発生します。
 ^パラメータ^型^説明^
 |options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
 
-====afterRefresh====
+====doSetup ====
 
-doRefreshイベントの後に発生します。
+beforeSetupイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+====doStop ====
+
+beforeStopイベントの後に発生します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|[[#stop_options|stop()]]メソッドに渡されたoptions引数です。|
+
+====doTarget====
+
+beforeRefreshイベントの後に発生します。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
 |options|Object|[[#refresh_options|refresh()]]メソッドに渡されたoptions引数です。|
-
-====beforeFetch====
-
-[[#fetch_options|fetch()]]メソッドが呼ばれた際に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
-
-====doFetch====
-
-beforeFetchイベントの後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
-
-====afterFetch====
-
-doFetchイベントの後に発生します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|[[#fetch_options|fetch()]]メソッドに渡されたoptions引数です。|
 
 ===== プロパティ =====
 
@@ -227,18 +316,133 @@ doFetchイベントの後に発生します。
 
 コンポーネントの名前です。設定の[[#name|”settings.name”]]で指定可能です。
 
-==== uniqueId ====
-
-''型:String'' ''get''
-
-コンポーネントのインスタンスごとに割り当てられるユニークなIDです。自動的に生成されます。
 ==== rootElement ====
 
 ''型:HTMLElement'' ''デフォルト:this'' ''get''
 
 コンポーネントのルートとなるHTML要素です。通常は”this”と同じです。
 
+
+==== uniqueId ====
+
+''型:String'' ''get''
+
+コンポーネントのインスタンスごとに割り当てられるユニークなIDです。自動的に生成されます。
+
 ===== メソッド =====
+
+==== clear(options) ====
+
+''型:undefined''
+
+このコンポーネントをクリアします。実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|設定情報です。|
+
+=== 戻り値 ===
+
+なし。
+
+==== fetch(options) ====
+
+''型:undefined'' ''非同期''
+
+コンポーネントに必要なデータを取得します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
+
+=== 戻り値 ===
+
+なし。
+
+=== イベント ===
+
+  * [[#beforefetch|beforeFetch]]
+  * [[#dofetch|doFetch]]
+  * [[#afterfetch|afterFetch]]
+
+=== オーガナイザイベント ===
+
+  * doFetch
+
+==== fill(options) ====
+
+''型:undefined''
+
+コンポーネントに値を埋め込みます。 実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|設定情報です。|
+
+=== 戻り値 ===
+
+なし。
+
+==== refresh(options) ====
+
+''型:undefined'' ''非同期''
+
+コンポーネントを再描画します。[[#autofetch|”settings.autoFetch”]]オプションがTrueの場合は[[#fetch_options|fetch()]]メソッドを、[[#autofill|”settings.autoFill”]]オプションがTrueの場合は[[#fill_options|fill()]]メソッドを自動的に呼び出します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
+
+=== 戻り値 ===
+
+なし。
+
+=== イベント ===
+
+  * [[#beforerefresh|beforeRefresh]]
+  * [[#dotarget|doTarget]]
+  * [[#dorefresh|doRefresh]]
+  * [[#afterrefresh|afterRefresh]]
+
+==== scopedSelectorAll(query) ====
+
+''型:NodeList''
+
+自身の配下にある、指定されたクエリーに合致するHTML要素を返します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|query \\ ''必須''|String|検索クエリーです。document.querySelectorAll()と同じ書式を使います。|
+
+=== 戻り値 ===
+
+クエリーに合致するHTML要素のNodeListです。
+
+==== setup(options) ====
+
+''型:undefined'' ''非同期''
+
+コンポーネントをセットアップします。設定を変更した場合などに呼び出します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
+
+=== 戻り値 ===
+
+なし。
+
+=== イベント ===
+
+  * [[#beforesetup|beforeSetup]]
+  * [[#dosetup|doSetup]]
+  * [[#aftersetup|afterSetup]]
 
 ==== start(settings) ====
 
@@ -286,28 +490,6 @@ doFetchイベントの後に発生します。
   * [[#dostop|doStop]]
   * [[#afterstop|afterStop]]
 
-==== setup(options) ====
-
-''型:undefined'' ''非同期''
-
-コンポーネントをセットアップします。設定を変更した場合などに呼び出します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
-
-=== 戻り値 ===
-
-なし。
-
-=== イベント ===
-
-  * [[#beforesetup|beforeSetup]]
-  * [[#dosetup|doSetup]]
-  * [[#aftersetup|afterSetup]]
-
-
 ==== switchTemplate(templateName, options) ====
 
 ''型:undefined'' ''非同期''
@@ -333,97 +515,3 @@ doFetchイベントの後に発生します。
 === オーガナイザイベント ===
 
   * afterAppend
-
-
-
-==== refresh(options) ====
-
-''型:undefined'' ''非同期''
-
-コンポーネントを再描画します。[[#autofetch|”settings.autoFetch”]]オプションがTrueの場合は[[#fetch_options|fetch()]]メソッドを、[[#autofill|”settings.autoFill”]]オプションがTrueの場合は[[#fill_options|fill()]]メソッドを自動的に呼び出します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
-
-=== 戻り値 ===
-
-なし。
-
-=== イベント ===
-
-  * [[#beforerefresh|beforeRefresh]]
-  * [[#dotarget|doTarget]]
-  * [[#dorefresh|doRefresh]]
-  * [[#afterrefresh|afterRefresh]]
-
-==== fetch(options) ====
-
-''型:undefined'' ''非同期''
-
-コンポーネントに必要なデータを取得します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|設定情報です。トリガするイベントにオプションとして渡されます。|
-
-=== 戻り値 ===
-
-なし。
-
-=== イベント ===
-
-  * [[#beforefetch|beforeFetch]]
-  * [[#dofetch|doFetch]]
-  * [[#afterfetch|afterFetch]]
-
-=== オーガナイザイベント ===
-
-  * doFetch
-
-==== fill(options) ====
-
-''型:undefined''
-
-コンポーネントに値を埋め込みます。 実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|設定情報です。|
-
-=== 戻り値 ===
-
-なし。
-
-==== clear(options) ====
-
-''型:undefined''
-
-このコンポーネントをクリアします。実際にはこのベースクラスでは何もしないため、オーバーライドする必要があります。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|options|Object|設定情報です。|
-
-=== 戻り値 ===
-
-なし。
-
-==== scopedSelectorAll(query) ====
-
-''型:NodeList''
-
-自身の配下にある、指定されたクエリーに合致するHTML要素を返します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|query \\ ''必須''|String|検索クエリーです。document.querySelectorAll()と同じ書式を使います。|
-
-=== 戻り値 ===
-
-クエリーに合致するHTML要素のNodeListです。
