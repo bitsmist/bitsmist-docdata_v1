@@ -6,6 +6,53 @@
 
 ===== メソッド =====
 
+==== createObject(className, ...args) ====
+
+''型:Object'' ''Static''
+
+コンポーネントをインスタンス化します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|className \\ ''必須''|Function|インスタンス化するクラスを指定します。|
+|...args| |コンストラクタに渡す引数を指定します。|
+
+=== 戻り値 ===
+
+作成したインスタンスを返します。
+
+==== getClass(className) ====
+
+''型:Function'' ''Static''
+
+指定されたクラス名のFunctionオブジェクトを返します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|className \\ ''必須''|Function|クラス名を指定します。|
+
+=== 戻り値 ===
+
+Functionオブジェクトを返します。
+
+==== inherit(subClass, superClass) ====
+
+''型:undefined'' ''Static''
+
+指定されたsubClassをsuperClassから継承させます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|subClass \\ ''必須''|Function|継承されるクラスを指定します。|
+|superClass \\ ''必須''|Function|継承するスーパークラスを指定します。|
+
+=== 戻り値 ===
+
+なし。
+
 ==== newComponent(superClass, settings, tagName, className) ====
 
 ''型:Component'' ''Static''
@@ -52,49 +99,3 @@ PadSearch.prototype.search = function(keyword)
 </body>
 </html>
 </code>
-==== inherit(subClass, superClass) ====
-
-''型:undefined'' ''Static''
-
-指定されたsubClassをsuperClassから継承させます。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|subClass \\ ''必須''|Function|継承されるクラスを指定します。|
-|superClass \\ ''必須''|Function|継承するスーパークラスを指定します。|
-
-=== 戻り値 ===
-
-なし。
-
-==== createObject(className, ...args) ====
-
-''型:Object'' ''Static''
-
-コンポーネントをインスタンス化します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|className \\ ''必須''|Function|インスタンス化するクラスを指定します。|
-|...args| |コンストラクタに渡す引数を指定します。|
-
-=== 戻り値 ===
-
-作成したインスタンスを返します。
-
-==== getClass(className) ====
-
-''型:Function'' ''Static''
-
-指定されたクラス名のFunctionオブジェクトを返します。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|className \\ ''必須''|Function|クラス名を指定します。|
-
-=== 戻り値 ===
-
-Functionオブジェクトを返します。

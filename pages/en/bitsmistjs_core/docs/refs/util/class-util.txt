@@ -6,6 +6,53 @@ ClassUtil is a utility class that handles class-related tasks such as creating n
 
 =====Methods=====
 
+==== createObject(className, ...args) ====
+
+''Type:Object'' ''Static''
+
+Instantiates a class.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|className \\ ''required''|Function|A class name to instantiate.|
+|...args| |Arguments to the class constructor.|
+
+===Return Value===
+
+A created instance.
+
+==== getClass(className) ====
+
+''Type:Function'' ''Static''
+
+Returns the Function object that has the specified class name.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|className \\ ''required''|Function|A class name.|
+
+===Return value===
+
+A Function object.
+
+==== inherit(subClass, superClass) ====
+
+''Type:undefined'' ''Static''
+
+Inherits the subclass from the super class.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|subClass \\ ''required''|Function|A class that inherits the super class.|
+|superClass \\ ''required''|Function|A super class.|
+
+===Return Value===
+
+undefined
+
 ==== newComponent(superClass, settings, tagName, className) ====
 
 ''Type:Component'' ''Static''
@@ -56,49 +103,3 @@ PadSearch.prototype.search = function(keyword)
 </body>
 </html>
 </code>
-==== inherit(subClass, superClass) ====
-
-''Type:undefined'' ''Static''
-
-Inherits the subclass from the super class.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|subClass \\ ''required''|Function|A class that inherits the super class.|
-|superClass \\ ''required''|Function|A super class.|
-
-===Return Value===
-
-undefined
-
-==== createObject(className, ...args) ====
-
-''Type:Object'' ''Static''
-
-Instantiates a class.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|className \\ ''required''|Function|A class name to instantiate.|
-|...args| |Arguments to the class constructor.|
-
-===Return Value===
-
-A created instance.
-
-==== getClass(className) ====
-
-''Type:Function'' ''Static''
-
-Returns the Function object that has the specified class name.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|className \\ ''required''|Function|A class name.|
-
-===Return value===
-
-A Function object.
