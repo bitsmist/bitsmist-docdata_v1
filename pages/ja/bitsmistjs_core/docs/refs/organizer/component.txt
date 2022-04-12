@@ -1,6 +1,6 @@
 ====== ComponentOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
 
 ===== 概要 =====
 
@@ -8,7 +8,7 @@ ComponentOrganizerは設定の内容に応じて、コンポーネントを動�
 
 ===== オーガナイズ処理 =====
 
-”molds”、”components”セクションから設定を読み込み、コンポーネントを追加します。どちらのセクションもコンポーネントを追加するという意味では同じですが、大きな違いはデフォルトで同期するかどうかです。molds”セクションに書かれているコンポーネントの場合は、前のコンポーネントの追加を待ってから次のコンポーネントを追加します。”molds”の全ての処理が完了後、”components”に記載されているコンポーネントの追加を開始します。こちらは前のコンポーネントの追加を待たずに、次のコンポーネントの追加に取り掛かります（ただし、syncオプションをセットすることで同期することは可能です）。そのためロードの開始は順番通りに行われますが、ロードの終了は順番通りにならない可能性があります。
+”molds”、”components”セクションから設定を読み込み、コンポーネントを追加します。どちらのセクションもコンポーネントを追加するという意味では同じですが、大きな違いはデフォルトで同期するかどうかです。molds”セクションに書かれているコンポーネントの場合は、前のコンポーネントの追加を待ってから次のコンポーネントを追加します。”molds”の全ての処理が完了後、”components”に記載されているコンポーネントの追加を開始します。こちらは前のコンポーネントの追加を待たずに、次のコンポーネントの追加に取り掛かります。そのためロードの開始は順番通りに行われますが、ロードの終了は順番通りにならない可能性があります。
 
 === セクション ===
 
@@ -22,45 +22,69 @@ ComponentOrganizerは設定の内容に応じて、コンポーネントを動�
 ===== 設定 =====
 
 追加コンポーネント設定は"components"または”molds”セクションに記述します。
-====書式====
 
-<WRAP listtable>
-  * "components"/"molds": {
-    * <componentName>: <componentInfo>
-  * }
-</WRAP>
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "molds": {
+        <componentName>: <componentInfo>
+    },
+    "components": {
+        <componentName>: <componentInfo>
+    },
+}
+</code>
 
+<WRAP legend>例:</WRAP>
+<code javascript>
+{
+    "molds": {
+        "PadSearch": {
+            "className": "PadSearch"
+        }
+    },
+    "components": {
+        "PadSetting": {
+            "className": "PadSetting"
+        }
+    }
+}
+</code>
+====componentName====
 
+''Type:String''
 
-====説明====
+コンポーネントの名前を指定します。次のcomponentInfoでクラス名の指定がない場合、この値がクラス名となります。
 
-^ 項目^型^説明^
-|componentName |String|コンポーネントの名前を指定します。次のcomponentInfoでクラス名の指定がない場合、この値がクラス名となります。|
-|componentInfo|Object|コンポーネントの[[ja:bitsmistjs_core:docs:component:settings|設定]]を指定します。Component._getSettings()で返される中身となります。|
+====componentInfo====
 
+''Type:Object''
+
+コンポーネントの[[ja:bitsmistjs_core:docs:component:settings|設定]]を指定します。Component._getSettings()で返される中身となります。
 
 ===== 拡張プロパティ =====
 
 ==== components ====
 
-''get'' ''Type:Object'' ''Inject:component''
+''Type:Object'' ''Inject:component'' ''get''
 
 このコンポーネントに追加されたコンポーネントを保持するオブジェクトです。
+
 =====  拡張メソッド =====
 
 
 ==== addComponent(componentName, settings, sync) ====
 
-''Inject:component''
+''型:undefined'' ''非同期'' ''Inject:component''
 
 コンポーネント内に新たなコンポーネントを追加します。追加したコンポーネントのインスタンスは、componentsプロパティに追加されます。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|componentName|String|追加するコンポーネント名です。設定で指定がない場合は、これがクラス名となります。|
-|settings|Object|追加するコンポーネントの設定情報です。|
-|sync \\ ''optional'' \\ ''Default:false''|Object|Trueならコンポーネントのロード完了を待ちます。|
+|componentName \\ ''必須''|String|追加するコンポーネント名です。設定で指定がない場合は、これがクラス名となります。|
+|settings \\ ''必須''|Object|追加するコンポーネントの設定情報です。|
+|sync \\ ''Default:false''|Object|Trueならコンポーネントのロード完了を待ちます。|
 
 === 戻り値 ===
 
@@ -68,6 +92,9 @@ ComponentOrganizerは設定の内容に応じて、コンポーネントを動�
 
 === 参照する設定 ===
 
-  * system.splitComponent/settings.splitComponent
-  * settings.sync
-
+  * [[ja:bitsmistjs_core:docs:refs:component:component#classname|settings.className]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#rootnode|settings.rootNode]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#splitcomponent|settings.splitComponent/system.splitComponent]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#sync|settings.sync]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#tag|settings.tag]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#tagname|settings.tagName]]
