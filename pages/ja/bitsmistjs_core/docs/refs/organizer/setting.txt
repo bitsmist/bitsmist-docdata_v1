@@ -24,6 +24,6 @@ SettingOrganizerはコンポーネントの名前やパスなど、基本的な�
 
 ==== settings ====
 
-''get'' ''Type:Store'' ''Inject:Component''
+''Type:Store'' ''Inject:Component'' ''get''
 
 このコンポーネントの基本設定を保持する、[[ja:bitsmistjs_core:docs:refs:util:store|Storeオブジェクト]]です。

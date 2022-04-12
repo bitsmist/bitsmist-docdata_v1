@@ -26,6 +26,6 @@ At the organizing stage, it loads settings passed via parameters and stores them
 
 ==== settings ====
 
-''get'' ''Type:Store'' ''Inject:Component''
+''Type:Store'' ''Inject:Component'' ''get''
 
 Returns a [[en:bitsmistjs_core:docs:refs:util:store|Store class]] that holds settings for the component.
