@@ -363,9 +363,9 @@ beforeRefreshイベントの後に発生します。
 
 === イベント ===
 
+  * [[#afterfetch|afterFetch]]
   * [[#beforefetch|beforeFetch]]
   * [[#dofetch|doFetch]]
-  * [[#afterfetch|afterFetch]]
 
 === オーガナイザイベント ===
 
@@ -403,11 +403,15 @@ beforeRefreshイベントの後に発生します。
 
 === イベント ===
 
-  * [[#beforerefresh|beforeRefresh]]
-  * [[#dotarget|doTarget]]
-  * [[#dorefresh|doRefresh]]
   * [[#afterrefresh|afterRefresh]]
+  * [[#beforerefresh|beforeRefresh]]
+  * [[#dorefresh|doRefresh]]
+  * [[#dotarget|doTarget]]
 
+===参照する設定===
+
+  * [[#autofetch|settings.autoFetch]]
+  * [[#autofill|settings.autoFill]]
 ==== scopedSelectorAll(query) ====
 
 ''型:NodeList''
@@ -440,9 +444,9 @@ beforeRefreshイベントの後に発生します。
 
 === イベント ===
 
+  * [[#aftersetup|afterSetup]]
   * [[#beforesetup|beforeSetup]]
   * [[#dosetup|doSetup]]
-  * [[#aftersetup|afterSetup]]
 
 ==== start(settings) ====
 
@@ -461,13 +465,23 @@ beforeRefreshイベントの後に発生します。
 
 === イベント ===
 
-  * [[#beforestart|beforeStart]]
   * [[#afterstart|afterStart]]
+  * [[#beforestart|beforeStart]]
 
 === オーガナイザイベント ===
 
-  * beforeStart
   * afterStart
+  * beforeStart
+
+===参照する設定===
+
+  * [[#automorph|settings.autoMorph]]
+  * [[#autopoststart|settings.autoPostStart]]
+  * [[#autorefresh|settings.autoRefresh]]
+  * [[#autosetup|settings.autoSetup]]
+  * [[#hastemplate|settings.hasTemplate]]
+  * [[#name|settings.name]]
+  * [[#rootelement|settings.rootElement]]
 
 ==== stop(options) ====
 
@@ -515,3 +529,7 @@ beforeRefreshイベントの後に発生します。
 === オーガナイザイベント ===
 
   * afterAppend
+
+===参照する設定===
+
+  * [[#autosetup|settings.autoSetup]]

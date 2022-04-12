@@ -368,9 +368,9 @@ undefined
 
 ===Events===
 
+  * [[#afterfetch|afterFetch]]
   * [[#beforefetch|beforeFetch]]
   * [[#dofetch|doFetch]]
-  * [[#afterfetch|afterFetch]]
 
 
 === Organizer Events ===
@@ -409,11 +409,15 @@ undefined
 
 ===Events===
 
-  * [[#beforerefresh|beforeRefresh]]
-  * [[#dotarget|doTarget]]
-  * [[#dorefresh|doRefresh]]
   * [[#afterrefresh|afterRefresh]]
+  * [[#beforerefresh|beforeRefresh]]
+  * [[#dorefresh|doRefresh]]
+  * [[#dotarget|doTarget]]
 
+===Referencing Settings===
+
+  * [[#autofetch|settings.autoFetch]]
+  * [[#autofill|settings.autoFill]]
 ==== scopedSelectorAll(query) ====
 
 ''Type:NodeList''
@@ -447,9 +451,9 @@ undefined
 
 ===Events===
 
+  * [[#aftersetup|afterSetup]]
   * [[#beforesetup|beforeSetup]]
   * [[#dosetup|doSetup]]
-  * [[#aftersetup|afterSetup]]
 
 ==== start(settings) ====
 
@@ -468,13 +472,23 @@ undefined
 
 ===Events===
 
-  * [[#beforestart|beforeStart]]
   * [[#afterstart|afterStart]]
+  * [[#beforestart|beforeStart]]
 
 === Organizer Events ===
 
-  * beforeStart
   * afterStart
+  * beforeStart
+
+===Referencing Settings===
+
+  * [[#automorph|settings.autoMorph]]
+  * [[#autopoststart|settings.autoPostStart]]
+  * [[#autorefresh|settings.autoRefresh]]
+  * [[#autosetup|settings.autoSetup]]
+  * [[#hastemplate|settings.hasTemplate]]
+  * [[#name|settings.name]]
+  * [[#rootelement|settings.rootElement]]
 
 ==== stop(options) ====
 
@@ -493,9 +507,9 @@ undefined
 
 ===Events===
 
+  * [[#afterstop|afterStop]]
   * [[#beforestop|beforeStop]]
   * [[#dostop|doStop]]
-  * [[#afterstop|afterStop]]
 
 
 ==== switchTemplate(templateName, options) ====
@@ -523,3 +537,7 @@ undefined
 ===Organizer Event===
 
   * afterAppend
+
+===Referencing Settings===
+
+  * [[#autosetup|settings.autoSetup]]
