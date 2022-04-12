@@ -212,6 +212,12 @@ code
 	padding: 0;
 }
 
+#dokuwiki__content .page .legend p {
+	font-size: 90%;
+	font-weight: bold;
+	margin: 0;
+}
+
 /* Google Fonts */
 
 /* lato-regular - latin */
