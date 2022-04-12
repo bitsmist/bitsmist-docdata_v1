@@ -1,71 +1,138 @@
 ====== LoaderOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
 
 =====概要=====
 
-LoaderOrganizerはオートロードが必要なタグのファイルを読み込みます。グローバルな処理として、全てのDOMが読み込まれたタイミングでオートロードが必要なタグのファイルをロードします。各コンポーネントにアタッチされた場合、自身のタグの中からオートロードが必要なタグのファイルを読み込みます。
+LoaderOrganizerはオートロードが必要なタグのファイルをローダーのメソッドを使って読み込みます。全てのDOMが読み込まれたタイミングでオートロードが必要なタグのファイルをロードします。各コンポーネントにアタッチされた場合、自身のタグの中からオートロードが必要なタグのファイルを読み込みます。
 
 
 =====オーガナイズ処理=====
 
-コンポーネントの中身のHTMLがアタッチされた際、そのHTMLからオートロードが必要なタグのファイルをロードします。
+DOMがロードされた時に、ページ全体のタグのロードを開始します。また特定のコンポーネントにアタッチされている場合、テンプレートHTMLがノードにアタッチされた際、そのHTMLからオートロードが必要なタグのファイルをロードします。
 
 ===処理タイミング===
 
+  * DOMContentLoaded (Native event)
   * afterAppend
 
-=====グローバル設定=====
+=====設定=====
 
-====書式====
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "organizers": {
+        "LoaderOrganizer": {
+            "settings": {
+                “autoLoadOnStartup”: <autoLoadOnStartup>
+            }
+        }
+    }
+}
+</code>
 
-<WRAP listtable>
-  * "LoaderOrganizer": {
-    * "settings": {
-      * "autoLoadOnStartup": <autoLoadOnStartup>
-    * }
-  * }
-</WRAP>
+====autoLoadOnStartup====
+''型:Boolean'' ''Default''
 
-====説明====
-
-^項目^型^説明^
-|autoLoadOnStartup|Boolean|Trueの場合、DOMが読み込まれた時点でオートロード処理を開始します。|
+Trueの場合、DOMが読み込まれた時点でオートロード処理を開始します。
 
 
 =====メソッド=====
 
-==== loadTags() ====
+====getLoader(loaderName)====
+''型:Function'' ''Inject:Component''
 
-''非同期'' ''Inject:Component''
+指定された名前のローダを返します。名前が指定されてない場合は、デフォルトのローダ（DefaultLoader）を返します。
 
-bm-autoload/bm-automorph属性を持つタグのコンポーネントをロードします。ロード開始後、該当タグにはbm-autoloaded属性を付加し、2重読込を防止します。
+===パラメータ===
 
-=== パラメータ ===
+^パラメータ^型^説明^
+|loaderName \\ ''Default:DefaultLoader''|String|取得するローダの名称です。|
+
+===戻り値===
+
+ローダオブジェクト。
+
+====loadComponent(...args)====
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+現在のローダのloadComponent()メソッドを呼び出します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|...args|*|ローダのメソッドへの引数です。|
+
+===戻り値===
 
 なし。
 
-=== 戻り値 ===
+====loadTag(...args)====
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+現在のローダのloadTag()メソッドを呼び出します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|...args|*|ローダのメソッドへの引数です。|
+
+===戻り値===
 
 なし。
 
-====タグ属性====
+==== loadTags(...args) ====
+''型:undefined'' ''Inject:Component'' ''非同期''
 
-^属性^説明^
-|bm-classname \\ ''optional''|コンポーネントのクラス名を指定します。設定の”className”と同じです。|
-|bm-path \\ ''optional''|コンポーネントやテンプレートHTMLをロードするパスを指定します。設定の”path”と同じです。|
-|bm-split \\ ''optional''|この属性があると、分割コンポーネントであるとみなされます。値は不要です。設定の”splitComponent”と同じです。|
-|bm-autoload \\ ''optional''|コンポーネントを自動的にロードします。値にはコンポーネントをロードするURLを指定します。値がない場合はデフォルトの場所からロードされます。|
-|bm-automorph \\ ''optional''|デフォルトのHTMLファイルからコンポーネントを生成します。値は不要です。|
+現在のローダのloadTags()メソッドを呼び出します。
 
-=== 参照する設定 ===
+===パラメータ===
 
-  * system.appBaseUrl
-  * system.componentPath
-  * system.autoLoad/settings.autoLoad
-  * system.splitComponent/settings.splitComponent
-  * settings.path
-  * settings.className
-  * settings.tagName
-  * settings.rootNode
-  * settings.sync
+^パラメータ^型^説明^
+|...args|*|ローダのメソッドへの引数です。|
+
+===戻り値===
+
+なし。
+
+====loadSetting(...args)====
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+現在のローダのloadSetting()メソッドを呼び出します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|...args|*|ローダのメソッドへの引数です。|
+
+===戻り値===
+
+なし。
+
+====loadSettingFile(...args)====
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+現在のローダのloadSettingFile()メソッドを呼び出します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|...args|*|ローダのメソッドへの引数です。|
+
+===戻り値===
+
+なし。
+
+====loadTemplate(...args)====
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+現在のローダのloadTemplate()メソッドを呼び出します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|...args|*|ローダのメソッドへの引数です。|
+
+===戻り値===
+
+なし。

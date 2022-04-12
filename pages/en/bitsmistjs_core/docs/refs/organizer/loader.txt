@@ -4,31 +4,133 @@
 
 =====Overview=====
 
-LoaderOrganizer handles loading component files that need to be autoloaded. It starts loading files for the page when DOMs are loaded. If the organizer is attached to a component, it starts loading files inside its own inner HTML after the HTML is appended to a node.
+LoaderOrganizer handles loading component files that need to be autoloaded by calling loader methods. It starts loading files for the page when DOMs are loaded. If the organizer is attached to a component, it starts loading files inside its own inner HTML after the HTML is appended to a node.
 
 =====Organizing=====
 
-At the organizing stage, it loads files for tags that need to be loaded from the net when the component's inner HTML is attached.
+It starts loading files for the page when DOMs are loaded. When attached to the specific component, it loads files for tags that need to be loaded from the net when the component's inner HTML is attached.
 
 ===Timings===
 
+  * DOMContentLoaded (Native event)
   * afterAppend
 
-=====Global Settings=====
+=====Settings=====
 
-====Format====
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "organizers": {
+        "LoaderOrganizer": {
+            "settings": {
+                “autoLoadOnStartup”: <autoLoadOnStartup>
+            }
+        }
+    }
+}
+</code>
 
-<WRAP listtable>
-  * "LoaderOrganizer": {
-    * "settings": {
-      * "autoLoadOnStartup": <autoLoadOnStartup>
-    * }
-  * }
-</WRAP>
+====autoLoadOnStartup====
+''Type:Boolean'' ''Default''
 
-====Description====
+Start loading tags on DOMContentLoaded if True.
 
-^Item^Type^Description^
-|autoLoadOnStartup|Boolean|Start loading tags on DOMContentLoaded if true.|
+=====Extended Methods=====
 
+====getLoader(loaderName)====
+''Type:Function'' ''Inject:Component''
 
+Returns specified loader. If the loader name is not specified, then default loader (DefaultLoader) will be returned.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|loaderName \\ ''Default:DefaultLoader''|String|Name of the loader to get.|
+
+===Return Value===
+
+Loader Object
+
+====loadComponent(...args)====
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Calls current loader's loadComponent() method.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|...args|*|Arguments to the loader method.|
+
+===Return Value===
+
+undefined
+
+====loadTag(...args)====
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Calls current loader's loadTag() method.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|...args|*|Arguments to the loader method.|
+
+===Return Value===
+
+undefined
+==== loadTags(...args) ====
+
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Calls current loader's loadTags() method.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|...args|*|Arguments to the loader method.|
+
+===Return Value===
+
+undefined
+
+====loadSetting(...args)====
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Calls current loader's loadSetting() method.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|...args|*|Arguments to the loader method.|
+
+===Return Value===
+
+undefined
+
+====loadSettingFile(...args)====
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Calls current loader's loadSettingFile() method.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|...args|*|Arguments to the loader method.|
+
+===Return Value===
+
+undefined
+
+====loadTemplate(...args)====
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Calls current loader's loadTemplate() method.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|...args|*|Arguments to the loader method.|
+
+===Return Value===
+
+undefined
