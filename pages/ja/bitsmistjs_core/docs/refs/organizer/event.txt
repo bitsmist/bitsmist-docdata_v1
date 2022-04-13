@@ -1,6 +1,7 @@
 ====== EventOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
+
 ===== 概要 =====
 
 EventOrganizerはイベントハンドラの追加やイベントの発生など、イベント関連の処理を担当します。”events"設定を読み込み、その内容にしたがってイベントハンドラをセットします。
@@ -22,35 +23,72 @@ EventOrganizerはイベントハンドラの追加やイベントの発生など
 
 イベント設定は"events"セクションに記述します。
 
-====書式====
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "events": {
+        <elementName>: {
+            "rootNode": <rootNode>,
+            "handlers": {
+                <eventName>: {
+                    "handler": <handler>,
+                    "listerOptions": <listnerOptions>,
+                    "options": <options>,
+                    "order": <order>,
+                }
+            }
+        }
+    },
+}
+</code>
 
-<WRAP listtable>
-  * "events": {
-    * <elementName>: {
-      * "rootNode": <rootNode>
-      * "handlers": {
-        * <eventName>: [ Array of ] <handlerInfo> {
-          * "handler":  <handler>
-          * "listenerOptions": <listenerOptions>
-          * "options": <options>
-          * "order": <order>
-        * }
-      * }
-    * }
-  * }
-</WRAP>
+<WRAP legend>書式 (短縮形):</WRAP>
+<code javascript>
+{
+    "events": {
+        <elementName>: {
+            "rootNode": <rootNode>,
+            "handlers": {
+                <eventName>: <handler>
+            }
+        }
+    },
+}
+</code>
 
-====説明====
+====elementName====
+''Type:String''
 
-^名前^型^説明^
-|elementName|String|次の”rootNode“を指定しない場合、この値を要素のIDとみなします。ただし特殊なケースとして、この値が”this“の場合、コンポーネント自身を表します。”rootNode“に指定がある場合はこの値は特に意味は持ちません（ただし一意な値にしてください）。|
-|rootNode \\ ''optional''|String|イベントハンドラをセットする対象の要素のノードを表すセレクター文字列です。ここで指定された値を引数にquerySelectorAll()が呼び出されます。複数の要素が該当する場合、全ての要素に対して同じイベントハンドラがセットされます。|
-|eventName|String|イベントハンドラを登録したいイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。|
-| handlerInfo|String/ \\ Function/ \\ Object|イベントハンドラの情報、またはイベントハンドラを指定します。イベントハンドラは文字列、またはFunctionオブジェクトを指定できます。文字列を指定した場合は、イベントハンドラの関数名と判断されます。この場合、コンポーネントのメソッドの中から同名の関数がセットされます。Functionオブジェクトを指定した場合はイベントハンドラそのものと判断されます。いずれの場合もハンドラはコンポーネントにbindされ、”this”はコンポーネント自身を指すようになります（addEventHandler()の引数で指定されてない場合）。オブジェクトを指定した場合はイベントハンドラ情報と判断され、オブジェクト内の項目からハンドラやオプションを取得します。|
-|handler|String/ \\ Function|このイベントに対するイベントハンドラを指定します。イベントハンドラは文字列またはFunctionオブジェクトを指定します。前述のhandlerInfoの項目も参照してください。|
-| options \\ ''optional''|Object|イベントハンドラに渡すオプションのオブジェクトを指定します。イベントハンドラの引数”ex”からアクセスできます。|
-| order \\ ''optional'' \\ ''Default:0''|Number |同じ要素の同じイベントに複数のイベントハンドラがある場合の実行順を制御します。数値が高いほど先に実行されます。指定がない場合は0です。|
-|listenerOptions \\ ''optional''|Object|JavascriptネイティブのaddEventListener()関数に渡すオプションを指定します。|
+要素名を指定します。次の”rootNode“を指定しない場合、この値を要素のIDとみなします。ただし特殊なケースとして、この値が”this“の場合、コンポーネント自身を表します。”rootNode“に指定がある場合はこの値は特に意味は持ちません（ただし一意な値にしてください）。
+
+====rootNode====
+''Type:String''
+
+イベントハンドラをセットする対象の要素のノードを表すセレクター文字列です。ここで指定された値を引数にquerySelectorAll()が呼び出されます。複数の要素が該当する場合、全ての要素に対して同じイベントハンドラがセットされます。
+
+====eventName====
+''Type:String''
+
+イベントハンドラを登録したいイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。
+
+
+====handler====
+''Type:String/Function''
+
+このイベントに対するイベントハンドラを指定します。イベントハンドラは文字列またはFunctionオブジェクトを指定します。文字列を指定した場合は、イベントハンドラの関数名と判断されます。この場合、コンポーネントのメソッドの中から同名の関数がセットされます。Functionオブジェクトを指定した場合はイベントハンドラそのものと判断されます。いずれの場合もハンドラはコンポーネントにbindされ、”this”はコンポーネント自身を指すようになります（addEventHandler()の引数で指定されてない場合）。
+
+====options====
+''Type:Object''
+
+イベントハンドラに渡すオプションのオブジェクトを指定します。イベントハンドラの引数”ex”からアクセスできます。
+====order====
+''Type:Number'' ''Default:0''
+
+同じ要素の同じイベントに複数のイベントハンドラがある場合の実行順を制御します。数値が高いほど先に実行されます。指定がない場合は0です。
+====listenerOptions====
+''Type:Object''
+
+JavascriptネイティブのaddEventListener()関数に渡すオプションを指定します。
 
 =====設定例=====
 
@@ -218,74 +256,37 @@ onDoRefresh(sender, e, ex)
 }
 </code>
 
-===== 拡張メソッド =====
+=====拡張プロパティ=====
 
-==== initEvents(elementName, handlerInfo, rootNode) ====
+====eventResult====
 
-''Inject:Component''
+''Type:Array of Object'' ''get''
 
-引数で指定された名前の要素に対し、設定に従ってイベントハンドラを設定します。
+イベントの処理結果を含むオブジェクトです。
 
-===  パラメータ ===
-
-^パラメータ^型^説明^
-|elementName|Object|要素名を指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のelementName]]の説明も参照してください。|
-|handlerInfo|Object|ハンドラ情報を格納したオブジェクトを指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のhandlerInfo]]で説明されています。指定がない場合は、コンポーネントの”events”設定からelementName引数に指定された値を取得して使用します。|
-|rootNode \\ ''optional'' \\ ''Default:（説明参照）''|String|要素の検索対象となるルートノードを指定します。指定がない場合はコンポーネント自身になります。|
-
-=== 戻り値 ===
-
-なし。
+=====拡張メソッド=====
 
 ==== addEventHandler(eventName, handlerInfo, element, bindTo) ====
 
-''Inject:Component''
+''型:undefined'' ''Inject:Component''
 
 要素にイベントハンドラをセットします。
 
 ===  パラメータ ===
 
 ^パラメータ^型^説明^
-|eventName|String|イベント名です。|
-|handlerInfo|Object|イベントハンドラ情報です。これは[[#設定|設定のhandlerInfo]]と同じものです。|
-|element \\ ''optional'' \\ ''Default:（説明参照）''|HTMLElement|イベントハンドラをセットする要素です。指定がない場合は、コンポーネント自身となります。|
-|bindTo \\ ''optional'' \\ ''Default:（説明参照）''|Object|イベントハンドラをこのオブジェクトにbindします。つまりこの引数がハンドラ内でthisとなります。指定がない場合はコンポーネント自身にbindされます。|
+|eventName \\ ''Required''|String|イベント名です。|
+|handlerInfo \\ ''Required''|Object|イベントハンドラ情報です。これは[[#設定|設定のhandlerInfo]]と同じものです。|
+|element \\ ''Default:（説明参照）''|HTMLElement|イベントハンドラをセットする要素です。指定がない場合は、コンポーネント自身となります。|
+|bindTo \\ ''Default:（説明参照）''|Object|イベントハンドラをこのオブジェクトにbindします。つまりこの引数がハンドラ内でthisとなります。指定がない場合はコンポーネント自身にbindされます。|
 
 === 戻り値 ===
 
 なし。
-
-==== trigger(eventName, sender, options, element) ====
-
-''非同期'' ''Inject:Component''
-
-イベントを発生させます。同じイベントに複数のイベントハンドラがセットされている場合、前のイベントハンドラの実行が完了してから、次のイベントハンドラを呼び出します。
-
-<WRAP admonition note>
-イベントハンドラがPromiseを返し、正しいタイミングでresolve/rejectしている場合のみ、前のイベントハンドラを待つことができます。
-</WRAP>
-
-===  パラメータ ===
-
-^パラメータ^型^説明^
-|eventName|String|発生させるイベント名です。|
-|sender \\ ''optional''|Component|イベントを発生させたコンポーネントを指定します。|
-|options \\ ''optional''|Object|イベントのオプションです。イベントハンドラからアクセスできます。|
-|element \\ ''optional'' \\ ''Default:（説明参照）''|HTMLElement|イベントを発生させる要素です。指定がない場合は、コンポーネント自身となります。|
-
-=== 戻り値 ===
-
-なし。
-
-==== triggerAsync(eventName, sender, options, element) ====
-
-''非同期'' ''Inject:Component''
-
-trigger()メソッドと同じくイベントを発生させますが、trigger()と違い、一つ前のハンドラの終了を待たずに次のハンドラを呼び出します。その他の説明に関しては[[#trigger_eventname_sender_options_element|trigger()]]を参照してください。
 
 ==== getEventHandler(handlerInfo) ====
 
-''Inject:Component''
+''型:Function'' ''Inject:Component''
 
 ハンドラ情報からイベントハンドラを取得します。
 
@@ -298,3 +299,64 @@ trigger()メソッドと同じくイベントを発生させますが、trigger(
 
 イベントハンドラとなるFunctionオブジェクトを返します。存在しない場合はundefinedとなります。
 
+
+==== initEvents(elementName, handlerInfo, rootNode) ====
+
+''型:undefined'' ''Inject:Component''
+
+引数で指定された名前の要素に対し、設定に従ってイベントハンドラを設定します。
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|elementName \\ ''Required''|Object|要素名を指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のelementName]]の説明も参照してください。|
+|handlerInfo \\ ''Required''|Object|ハンドラ情報を格納したオブジェクトを指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のhandlerInfo]]で説明されています。指定がない場合は、コンポーネントの”events”設定からelementName引数に指定された値を取得して使用します。|
+|rootNode \\ ''Default:（説明参照）''|String|要素の検索対象となるルートノードを指定します。指定がない場合はコンポーネント自身になります。|
+
+=== 戻り値 ===
+
+なし。
+
+==== removeEventHandler(elementName, handlerInfo, element) ====
+
+''型:undefined'' ''Inject:Component''
+
+要素からイベントハンドラを取り除きます。
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|eventName \\ ''Required''|String|イベント名です。|
+|handlerInfo \\ ''Required''|Object|イベントハンドラ情報です。これは[[#設定|設定のhandlerInfo]]と同じものです。|
+|element \\ ''Default:（説明参照）''|HTMLElement|イベントハンドラを取り除く要素です。指定がない場合は、コンポーネント自身となります。|
+
+=== 戻り値 ===
+
+なし。
+
+==== trigger(eventName, options, element) ====
+
+''型:undefined'' ''非同期'' ''Inject:Component''
+
+イベントを発生させます。同じイベントに複数のイベントハンドラがセットされている場合、前のイベントハンドラの実行が完了してから、次のイベントハンドラを呼び出します。
+
+<WRAP admonition note>
+イベントハンドラがPromiseを返し、正しいタイミングでresolve/rejectしている場合のみ、前のイベントハンドラを待つことができます。
+</WRAP>
+
+===  パラメータ ===
+
+^パラメータ^型^説明^
+|eventName \\ ''Required''|String|発生させるイベント名です。|
+|options|Object|イベントのオプションです。イベントハンドラからアクセスできます。|
+|element \\ ''Default:（説明参照）''|HTMLElement|イベントを発生させる要素です。指定がない場合は、コンポーネント自身となります。|
+
+=== 戻り値 ===
+
+なし。
+
+==== triggerAsync(eventName, options, element) ====
+
+''型:undefined'' ''非同期'' ''Inject:Component''
+
+trigger()メソッドと同じくイベントを発生させますが、trigger()と違い、一つ前のハンドラの終了を待たずに次のハンドラを呼び出します。その他の説明に関しては[[#trigger_eventname_sender_options_element|trigger()]]を参照してください。
