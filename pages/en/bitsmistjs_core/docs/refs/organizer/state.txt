@@ -4,11 +4,11 @@
 
 =====Overview=====
 
-StateOrganizer handles components' state. It also has a function to wait for other components to become the specific states.
+StateOrganizer handles components' state.
 
 =====Organizing=====
 
-StateOrganizer waits for other components to become the specific states. There are also some settings that can be set in tag attributes.
+StateOrganizer waits for other components to become the specific states.
 
 ===Sections===
 
@@ -16,104 +16,151 @@ StateOrganizer waits for other components to become the specific states. There a
 
 ===Timings===
 
-  * afterAppend
+  * all
 
 =====Settings=====
 
-Settings are placed in "waitFor" section. There are also some settings that can be set in tag attributes.
+Settings are placed in "waitFor" section.
 
-====Syntax====
-<WRAP listtable>
-  * "waitFor":  {
-    * <eventName>: {
-      * Array of <waitInfo> {
-        * "id": <id>
-        * "name": <name>
-        * "rootNode": <rootNode>
-        * "state": <state>
-      * }
-    * }
-  * }
-</WRAP>
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "waitFor": {
+        <eventName>: [{
+            "id": <id>,
+            "name": <name>,
+            "rootNode": <rootNode>,
+            "state": <state>
+        }]
+    },
+}
+</code>
 
-====Description====
 
-^Item^Type^Description^
-|eventName|String|An event name. Valid events are BitsmistJS events or Javascript original events.|
-|waitInfo|Array of Object|An array of objects that hold wait info. The valid keys for wait info are "id", "name", "rootNode", "state". Specify one of name, id, or rootNode to target a component, and specify the state to wait. |
-|id \\ ''optional''|String|A unique id. A unique id can get from the component's uniqueId property.|
-|name \\ ''optional''|String|A component name.|
-|rootNode \\ ''optional''|String|A selector string that points to a node. Use syntax that is valid to querySelector().|
-|state \\ ''optional''  \\ ''default:"opened"''|String|A state. It waits for the component to become this state. For the list of valid states, refer to [[#state|"Extended properties#state"]].|
+====eventName====
+''Type:String''
 
-====Tag attributes====
+An event name. Valid events are BitsmistJS events or Javascript original events.
 
-^Attribute^Description^
-|bm-waitfor \\ ''optional''|A component name to wait. Same as specifying a name in wait info.|
-|bm-waitfornode \\ ''optional''|A node to wait. Same as specifying a rootNode in wait info.|
+====id====
+''Type:String''
 
-=====Extended properties=====
+A component's unique id. The unique id can get from the component's uniqueId property.
+
+====name====
+''Type:String''
+
+A component name.
+
+====rootNode====
+''Type:String''
+
+A selector string that points to a node. Use syntax that is valid to querySelector().
+
+====state====
+''Type:String'' ''default:"started"''
+
+A state. It waits for the component to become this state. For the list of valid states, refer to [[#state1|"Extended Properties - state"]].
+
+=====Tag attributes=====
+
+====bm-waitfor====
+''Type:String''
+
+A component name to wait. Same as specifying a name in settings.
+
+====bm-waitfornode====
+''Type:String''
+
+A node to wait. Same as specifying a rootNode in settings.
+
+=====Extended Properties=====
 
 ==== state ====
 
-''get'' ''set'' ''Type:String'' ''Inject:component''
+''Type:String'' ''Inject:component'' ''get/set'' 
 
-Returns a string that describes a component's current state. Valid strings are:
+Returns a string that describes a component's current state. Valid states are:
 
-^Component^State^
-|Component|starting|
-|:::|started|
-|:::|stopping|
-|:::|stopped|
-|Pad|opening|
-|:::|opened|
-|:::|closing|
-|:::|closed|
+  * "starting"
+  * "started"
+  * "stopping"
+  * "stopped"
 
-
-=====Extended methods=====
+=====Extended Methods=====
 
 ==== changeState(newState) ====
 
-''Inject:Component''
+''Type:undefined'' ''Inject:Component''
 
 Change a component state to the specified state.
 
 ===Paramters===
 
 ^Parameter^Type^Description^
-|state|String|A string that describes a state of the component. Refer to [[#state|"Extended properties#state"]] for valid strings. It throws an exception if the state passed can not be changed from the current state. Ex. set ”closing” when "opening".|
+|state  \\ ''Required''|String|A string that describes a state of the component. Refer to [[#state1|"Extended Properties - state"]] for valid strings.|
 
-===Return value===
+===Return Value===
 
 undefined
 
-==== isInitialized() ====
+==== resume(state) ====
 
-''Inject:Component''
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Returns if a component is alredy initialized or not.
+Resume a component.
 
-===Parameters===
+===Paramters===
 
-None.
+^Parameter^Type^Description^
+|state  \\ ''Required''|String|A string that describes a state of the component. Refer to [[#state1|"Extended Properties - state"]] for valid strings.|
 
-===Return value===
+===Return Value===
 
-True if already initialized.
+undefined
+
+==== pause(state) ====
+
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Pause a component.
+
+===Paramters===
+
+^Parameter^Type^Description^
+|state  \\ ''Required''|String|A string that describes a state of the component. Refer to [[#state1|"Extended Properties - state"]] for valid strings.|
+
+===Return Value===
+
+undefined
+
+==== suspend(state) ====
+
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Suspend a component.
+
+===Paramters===
+
+^Parameter^Type^Description^
+|state  \\ ''Required''|String|A string that describes a state of the component. Refer to [[#state1|"Extended Properties - state"]] for valid strings.|
+
+===Return Value===
+
+undefined
 
 ==== waitFor(waitList, timeout) ====
 
-''Asynchronous'' ''Inject:Component''
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Waits for other components to become specific states.
+Waits for other components to become a specific state.
 
 ===Paramaters===
 
 ^Parameter^Type^Description^
-|waitList|Array of Object|An array of objects that contain wait info. Refer to [[#settings|waitInfo]] for details.|
-|timeout \\ ''optional'' \\ ''Default:10000''|Number|A timeout period in milliseconds. Throws an error if the component does not become the state within this timeout value.|
+|waitList \\ ''Required''|Array of Object|An array of objects that contain wait info. This is the same value as the value for [[#settings|<eventName> in settings]].|
+|timeout \\ ''Default:10000''|Number|A timeout period in milliseconds. Throws an error if the component does not become the state within this timeout value.|
 
-===Return value===
+===Return Value===
 
 undefined

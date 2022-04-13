@@ -1,11 +1,10 @@
 ====== StateOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
 
 ===== 概要 =====
 
-StateOrganizerはコンポーネントの状態を管理します。また、他のコンポーネントが特定の状態になるのを”待つ”機能があります。
-
+StateOrganizerはコンポーネントの状態を管理します。
 ===== オーガナイズ処理 =====
 
 設定内容に応じて、他のコンポーネントが指定された状態になるまで待機します。タグにbm-waitfor属性があれば、そこからも設定を読み込みます。
@@ -16,104 +15,153 @@ StateOrganizerはコンポーネントの状態を管理します。また、他
 
 === 処理タイミング ===
 
-  * afterAppend
+  * 全て
 
 ===== 設定 =====
 
 
-他のコンポーネントを待つ機能は"waitFor"セクションに記述します。また、タグの属性に指定できる設定もあります。
+他のコンポーネントを待つ機能は"waitFor"セクションに記述します。
 
-====Syntax====
-<WRAP listtable>
-  * "waitFor":  {
-    * <eventName>: {
-      * Array of <waitInfo> {
-        * "id": <id>
-        * "name": <name>
-        * "rootNode": <rootNode>
-        * "state": <state>
-      * }
-    * }
-  * }
-</WRAP>
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "waitFor": {
+        <eventName>: [{
+            "id": <id>,
+            "name": <name>,
+            "rootNode": <rootNode>,
+            "state": <state>
+        }]
+    },
+}
+</code>
 
-====説明====
+====eventName====
+''型:String''
 
-^項目^型^説明^
-|eventName|String|待つタイミングのイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。|
-|waitInfo|Object|待つ対象のコンポーネントの情報が入ったObjectです。name、id、rootNodeはいずれか一つを指定します。複数指定した場合、id、 name、rootNodeの優先順で、優先順位の低いもの（より右にあるもの）は無視されます。|
-|id \\ ''optional''|String|待つ対象のコンポーネントのユニークIDです。コンポーネントのuniqueIDプロパティの値を指定します。|
-|name \\ ''optional''|String|待つ対象のコンポーネント名です。コンポーネント名は通常はクラス名と同じです。|
-|rootNode \\ ''optional''|String|待つ対象のノードを指定します。querySelector()で使える書式が有効です。|
-|state \\ ''optional'' \\ ''Default:"opened"''|String|待つ対象の状態です。コンポーネントがこの状態になるのを待ちます。指定がない場合は”opened”になるのを待ちます。状態の一覧については[[#state|stateプロパティの説明]]をご覧ください。|
+待つタイミングのイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。
 
-====タグ属性====
 
-^属性^説明^
-|bm-waitfor \\ ''optional''|待つ対象のコンポーネント名を指定します。waitInfoでnameを指定するのと同じです。|
-|bm-waitfornode \\ ''optional''|待つ対象のノード名を指定します。waitInfoでrootNodeを指定するのと同じです。|
+====id====
+''型:String''
+
+待つ対象のコンポーネントのユニークIDです。コンポーネントのuniqueIDプロパティの値を指定します。
+
+====name====
+''型:String''
+
+待つ対象のコンポーネント名です。コンポーネント名は通常はクラス名と同じです。
+
+====rootNode====
+''型:String''
+
+待つ対象のノードを指定します。querySelector()で使える書式が有効です。
+
+====state====
+''型:String'' ''Default:"started"''
+
+待つ対象の状態です。コンポーネントがこの状態になるのを待ちます。指定がない場合は”opened”になるのを待ちます。状態の一覧については[[#state1|stateプロパティの説明]]をご覧ください。
+
+=====タグ属性=====
+
+====bm-waitfor====
+''型:String''
+
+待つ対象のコンポーネント名を指定します。設定でnameを指定するのと同じです。
+
+====bm-waitfornode====
+''型:String''
+
+待つ対象のノード名を指定します。設定でrootNodeを指定するのと同じです。
 
 ===== 拡張プロパティ =====
 
 ==== state ====
 
-''get'' ''set'' ''Type:String'' ''Inject:component''
+''型:String'' ''Inject:component'' ''get/set'' 
 
 このコンポーネントの現在の状態です。有効な状態は以下の通りです。
 
-^コンポーネント^状態^
-|Component|starting|
-|:::|started|
-|:::|stopping|
-|:::|stopped|
-|Pad|opening|
-|:::|opened|
-|:::|closing|
-|:::|closed|
+  * "starting"
+  * "started"
+  * "stopping"
+  * "stopped"
+
 
 
 =====  拡張メソッド =====
 
-==== changeState(newState) ====
+====changeState(state)====
 
-''Inject:Component''
+''型:undefined'' ''Inject:Component''
 
 コンポーネントのステータスを変更します。
 
-=== パラメータ ===
+===パラメータ===
 
 ^パラメータ^型^説明^
-|state|String|コンポーネントの状態を表す文字列です。有効な文字列については、[[#state|拡張プロパティ:state]]を参照してください。遷移不可能な状態を指定した場合（例えば”opening”→”closing”）、例外が発生します。|
+|state|String|コンポーネントの状態を表す文字列です。有効な文字列については、[[#state1|拡張プロパティ - state]]を参照してください|
 
-=== 戻り値 ===
-
-なし。
-
-==== isInitialized() ====
-
-''Inject:Component''
-
-コンポーネントの初期化が完了しているかを返します。
-
-=== パラメータ ===
+===戻り値===
 
 なし。
 
+====resume(state)====
+
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+コンポーネントを再開させます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|state  \\ ''必須''|String|コンポーネントのステートを指定します。ステートの一覧は[[#state1|"拡張プロパティ - state"]]を参照してください。|
+
+===戻り値===
+
+undefined
+
+====pause(state)====
+
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+コンポーネントを一時停止します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|state  \\ ''必須''|String|コンポーネントのステートを指定します。ステートの一覧は[[#state1|"拡張プロパティ - state"]]を参照してください。|
+
+===戻り値===
+
+undefined
+
+==== suspend(state) ====
+
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+コンポーネントをサスペンドします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|state  \\ ''必須''|String|コンポーネントのステートを指定します。ステートの一覧は[[#state1|"拡張プロパティ - state"]]を参照してください。|
+
 === 戻り値 ===
 
-Trueなら初期化完了済みです。
+undefined
 
 ==== waitFor(waitList, timeout) ====
 
-''非同期'' ''Inject:Component''
+''型:undefined'' ''Inject:Component'' ''非同期''
 
 引数で指定された情報に従って、他のコンポーネントが特定の状態になるのを待ちます。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|waitList|Array of Object|待つ対象のコンポーネントの情報の配列です。内容に関しては[[#設定|設定のwaitInfo]]を参照してください。|
-|timeout \\ ''optional'' \\ ''Default:10000''|Number|タイムアウトをミリ秒で指定します。ここで指定された時間がたってもコンポーネントが指定の状態にならない場合、例外が発生します。|
+|waitList \\ ''Required''|Array of Object|待つ対象のコンポーネントの情報の配列です。[[#設定|設定の<eventName>の値]]と同じ内容です。|
+|timeout ''Default:10000''|Number|タイムアウトをミリ秒で指定します。ここで指定された時間がたってもコンポーネントが指定の状態にならない場合、例外が発生します。|
 === 戻り値 ===
 
 なし。
