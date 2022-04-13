@@ -8,9 +8,7 @@ OrganizerOrganizer manages organizers. It applies organizers and initializes the
 
 =====Organizing=====
 
-At the initialization stage, it loads settings from the "organizers" section and applies organizers to the component. Also, it applies organizers that are linked to the sections in the settings.
-
-At the organizing stage, it first calls SettingOrganizer to load settings then starts initializing and applying organizers. Finally, it calls each organizer one by one.
+At the initialization stage, it loads settings from the "organizers" section and applies organizers to the component. Also, it applies organizers that are linked to the section name in the settings.
 
 ===Sections===
 
@@ -24,66 +22,70 @@ At the organizing stage, it first calls SettingOrganizer to load settings then s
 
 Organizer settings are placed in the "organizers" section.
 
-====Syntax====
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "organizers": {
+        <organizerName>: {
+            "attach": <attach>
+        }
+    },
+}
+</code>
 
-<WRAP listtable>
-  * "organizers": {
-    * <organizerName>: {
-      * "attach": <attach>
-    * }
-  * }
-</WRAP>
-====Description====
 
-^Item^Type^Description^
-|organizerName|String|An organizer name. This is the same as organizer's class name.|
-|attach|Boolean|Attached to a component if True.|
+====organizerName====
+''Type:String''
 
-=====Extended properties=====
+An organizer name. This is the same as the organizer's class name.
+
+====attach====
+''Type:Boolean''
+
+Attached to a component if True.
+
+=====Extended Properties=====
 
 ==== organizers ====
 
-''get'' ''Type:OrganizerStore'' ''Inject:Component''
+''Type:Object'' ''Inject:Component'' ''get''
 
-Returns an OrganizerStore class that holds organizers applied to the component.
+Returns an object that holds organizers attached to the component.
 
-=====Extended method=====
+=====Extended Method=====
 
-==== initOrganizers(settings) ====
-
-''Asynchronous'' ''Inject:Component''
-
-Loads organizers and initializes them. First, it initializes SettingOrganizer, then it starts to load and initialize other organizers according to the settings given.
-
-Each organizer is initialized synchronously, it waits for the preceding organizer to finish initializing then starts the next one.
-
-You don't need to call this method explicitly since it is called internally by the library.
-
-=== Parameters ===
-
-^Parameter^Type^Description^
-|settings|Object|New settings passed to each organizer for initialization.|
-
-===Return value===
-
-undefined
 
 ==== callOrganizers(condition, settings) ====
 
-''Asynchronous'' ''Inject:Component''
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Calls organizers that are applied to the component to start organizing. It is assured that SettingOrganizer is called first, then OrganizerOrganizer, and finally the rest of the organizers in order of priority.
+Calls organizers applied to a component to start organizing.
 
-Each organizer is called synchronously, it waits for the preceding organizer to finish organizing then starts the next one.
-
-You don't need to call this method explicitly since it is called internally by the library.
+Each organizer is called synchronously, it waits for the preceding organizer to finish organizing and then starts the next one.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|condition|String|A string that describes a timing this organizer is called. Ex. ”afterStart”、”afterAppend”, etc.|
-|settings|Object|Settings that are passed to each organizer for ogranizing.|
+|condition|String|A string that describes the timing this organizer is called. Ex. ”afterStart”、”afterAppend”, etc.|
+|settings|Object|Settings that will be passed to each organizer.|
 
-===Return value===
+===Return Value===
+
+undefined
+
+==== initOrganizers(settings) ====
+
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Loads organizers and initializes them according to the settings given.
+
+Each organizer is initialized synchronously, it waits for the preceding organizer to finish initializing then starts the next one.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|settings|Object|Settings used to attach organizers. Also passed to each organizer for their initialization.|
+
+===Return Value===
 
 undefined

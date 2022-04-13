@@ -1,6 +1,6 @@
 ====== OrganizerOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
 
 ===== 概要 =====
 
@@ -9,8 +9,6 @@ OrganizerOrganizerはオーガナイザの管理をします。各オーガナ�
 ===== オーガナイズ処理 =====
 
 初期化時には”organizers”セクションから設定を読み込み、オーガナイザを追加します。また、設定で使用されているセクション名に紐づくオーガナイザも自動的に追加します。
-
-オーガナイズ処理時には、まずSettingOrganizerを呼び出し設定を読み込みます。それから必要ならオーガナイザの追加と初期化を行い、最後に各オーガナイザーのオーガナイズ処理を順番に呼び出します。
 
 === セクション ===
 
@@ -24,67 +22,72 @@ OrganizerOrganizerはオーガナイザの管理をします。各オーガナ�
 
 オーガナイザ設定は"organizers"セクションに記述します。
 
-====書式====
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "organizers": {
+        <organizerName>: {
+            "attach": <attach>
+        }
+    },
+}
+</code>
 
-<WRAP listtable>
-  * "organizers": {
-    * <organizerName>: {
-      * "attach": <attach>
-    * }
-  * }
-</WRAP>
-====説明====
 
-^項目^型^説明^
-|organizerName|String|オーガナイザの名前を指定します。これはオーガナイザのクラス名になります。|
-|attach|Boolean|Trueの場合、コンポーネントにアタッチされます。|
+====organizerName====
+''型:String''
+
+オーガナイザの名前を指定します。これはオーガナイザのクラス名になります。
+
+====attach====
+''型:Boolean''
+
+Trueの場合、コンポーネントにアタッチされます。
+
 
 
 ===== 拡張プロパティ =====
 
 ==== organizers ====
 
-''get'' ''Type:OrganizerStore'' ''Inject:Component''
+''Type:Object'' ''Inject:Component'' ''get''
 
-このコンポーネントに適用されたオーガナイザを保持するOrganizerStoreクラスです。
+このコンポーネントに適用されたオーガナイザを保持するオブジェクトです。
 
 =====  拡張メソッド =====
 
-==== initOrganizers(settings) ====
-
-''非同期'' ''Inject:Component''
-
-オーガナイザを初期化します。まずSettingOrganizerが最初に初期化されます。そして引数で渡された設定に応じて、必要なオーガナイザを追加・初期化します。
-
-各オーガナイザは前のオーガナイザの初期化が終わってから、次のオーガナイザの初期化が行われます。
-
-このメソッドはコンポーネントによって自動的に呼び出されるため、通常は使う必要はありません。
-
-=== パラメータ ===
-
-^パラメータ^型^説明^
-|settings|Object|各オーガナイザに渡す、新たな設定情報です。|
-
-=== 戻り値 ===
-
-なし。
-
 ==== callOrganizers(condition, settings) ====
 
-''非同期'' ''Inject:Component''
+''型:undefined'' ''Inject:Component'' ''非同期''
 
-コンポーネントに適用されているオーガナイザを呼び出し、オーガナイズ処理を行います。必ずSettingOrganizerが最初に呼び出され、次にOrganizerOrganizer、そして適用されている各オーガナイザが優先度順に呼び出されます。
+コンポーネントに適用されているオーガナイザを呼び出し、オーガナイズ処理を行います。
 
 各オーガナイザは前のオーガナイザの処理が終わってから、次のオーガナイザが呼び出されます。
 
-このメソッドはコンポーネントによって自動的に呼び出されるため、通常は使う必要はありません。
-
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|condition|String|オーガナイザを呼び出す条件名です。タイミングを表す文字列です。例）”afterStart”、”afterAppend”等|
-|settings|Object|各オーガナイザに渡す、新たな設定情報です。|
+|condition|String|オーガナイザを呼び出す条件名で、タイミングを表す文字列です。例）”afterStart”、”afterAppend”等|
+|settings|Object|各オーガナイザに渡す、設定情報です。|
 
 === 戻り値 ===
 
 なし。
+
+==== initOrganizers(settings) ====
+
+''型:undefined'' ''Inject:Component'' ''非同期''
+
+引数で渡された設定に応じて、必要なオーガナイザを追加・初期化します。
+
+各オーガナイザは前のオーガナイザの初期化が終わってから、次のオーガナイザの初期化が行われます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|settings|Object|オーガナイザを適用するのに使用する設定です。また各オーガナイザに渡され、それぞれの初期化にも使われます。|
+
+=== 戻り値 ===
+
+なし。
+
