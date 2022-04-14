@@ -1,6 +1,6 @@
 ====== TemplateOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
 
 ===== 概要 =====
 
@@ -8,9 +8,9 @@ TemplateOrganizerはコンポーネントのHTMLテンプレートのロード�
 
 ===== オーガナイズ処理 =====
 
-初期化時には、コンポーネントの”settings.templateName”オプションがセットされてない場合、タグ名をデフォルトのテンプレート名としてセットします。また”settings.autoOpen”と”settings.autoClose”が設定されてない場合、それぞれをTrueにセットします。
+初期化時には、コンポーネントの”settings.templateName”オプションがセットされてない場合、デフォルトの値をセットします。デフォルトの値は”settings.fileName”が設定されていればそれを、されていなければタグ名です。
 
-オーガナイズ処理時には、コンポーネントのテンプレートHTMLが指定されていれば、それをコンポーネントのテンプレートとして設定します。
+オーガナイズ処理時にはテンプレートHTMLをロードし、ノードにアタッチします。”beforeStart”のタイミングではタイプが”html”、”url”のみを対象にします。”afterAppend”ではタイプが”node”のみを対象とします。
 
 === セクション ===
 
@@ -19,85 +19,146 @@ TemplateOrganizerはコンポーネントのHTMLテンプレートのロード�
 === タイミング ===
 
   * beforeStart
+  * afterAppend
 
 
 ===== 設定 =====
 
 テンプレート設定は"templates"セクションに記述します。
 
-====書式====
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "templates": {
+        <templateName>: {
+            "type": <type>,
+            "rootNode": <rootNode>
+        }
+    },
+}
+</code>
 
-<WRAP listtable>
-  * "templates":　{
-    * <templateName>: <template>
-  * }
-</WRAP>
+====templateName====
+''型:String''
 
-====説明====
+テンプレート名を指定します。
 
-^項目^型^説明^
-|templateName|String|テンプレートの名前を指定します。デフォルトはタグ名です。|
-|template|String|HTMLを指定します。**HTMLファイル名ではなく、HTMLそのもの**を記述します。|
+====type====
+''型:String''
 
-=====  イベント =====
+HTMLテンプレートのタイプを指定します。タイプは”html”、”url”、”node”のいずれかです。
 
-==== afterLoadTemplate ====
+====rootNode====
+''型:String''
 
-addTemplate()メソッドを呼び出し、初めてテンプレートHTMLをロードしたときに発生します。既にロードされているテンプレートをロードしても発生しません。
-=====  拡張メソッド =====
+特定のノードを指し示すセレクタ文字列を指定します。書式はquerySelector()と同じです。そのノードがテンプレートとして利用されます。
 
-==== addTemplate(templateName, options) ====
+====template====
+''型:String''
 
-''Inject:Pad''
+HTMLの文字列を指定します。これは**HTMLであって、HTMLのファイル名ではありません**。
 
-コンポーネントにテンプレートHTMLをロードし、ノードにアタッチします。既にロード済みの場合は、ロードされません。
 
-=== パラメータ ===
+
+=====拡張プロパティ=====
+
+
+====activeTemplateName====
+''型:String''
+
+現在有効なテンプレートの名前です。
+
+====templates====
+''型:Object''
+
+テンプレート情報を保持するオブジェクトです。それぞれのアイテムは以下のキーを持っています。
+
+^キー^Type^Description^
+|name|String|テンプレート名です。|
+|html|String|テンプレートのHTMLです。|
+|isLoaded|Boolean|テンプレートがすでにロードされているかを示すフラグです。|
+
+=====拡張メソッド=====
+
+====addTemplate(templateName, options)====
+
+''型:undefined'' ''Inject:Component''
+
+コンポーネントにテンプレートHTMLをロードします。ロードするのみでノードにはアタッチしません。既にロード済みの場合は、ロードされません。
+
+実際のロード作業はローダのloadTemplate()メソッドを呼び出すことで行われます。
+
+===パラメータ===
 
 ^パラメータ^型^説明^
-|templateName|String|対象となるテンプレート名です。これに”.html"をつけたものがファイル名となります。|
-|options|Object|現在は使われていません。|
+|templateName \\ ''必須''|String|対象となるテンプレート名です。これに”.html"をつけたものがファイル名となります。|
 
-=== 戻り値 ===
+===戻り値===
 
 なし。
 
-=== 参照する設定 ===
+====applyTemplate(templateName)====
 
-  * system.appBaseUrl
-  * system.templatePath
-  * settings.path
-  * settings.templateNode
+''型:undefined'' ''Inject:Component''
 
-==== cloneTemplate(templateName) ====
+コンポーネントのinnerHTMLプロパティにテンプレートのHTMLをセットすることで、テンプレートを適用します。指定されたテンプレートが既にアクティブの場合、何もしません。テンプレートが適用されると、アクティブなテンプレート名はこのテンプレート名にセットされます。
 
-''Inject:Component''
+指定されたテンプレートがまだロードされてない場合、例外が発生します。
 
-テンプレートHTMLを複製します。複製された時点では、まだドキュメントツリーにはアタッチされていません。
-
-=== パラメータ ===
+===パラメータ===
 
 ^パラメータ^型^説明^
-|templateName|String|複製するテンプレート名です。|
+|templateName \\ ''必須''|String|適用するテンプレートの名前です。|
+
+===戻り値===
+
+undefined
+====cloneTemplate(templateName)====
+
+''型:HTMLElement'' ''Inject:Component''
+
+テンプレートをもとにHTML要素を作成します。複製された時点では、まだドキュメントツリーにはアタッチされていません。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|templateName|String|複製するテンプレート名です。指定がない場合は、デフォルトのテンプレート名が使われます。|
 
 === 戻り値 ===
 
-複製されたエレメントです。
+複製されたHTML要素です。
 
-==== isActiveTemplate(templateName) ====
+====hideConditionalElements()====
 
-''Inject:Component''
+''型:undefined'' ''Inject:Component''
 
-指定されたテンプレートが現在コンポーネントで使われているかを返します。
+"bm-visible"属性を持つ全ての要素に”display:none”をセットして、非表示にします。
 
-=== パラメータ ===
+===パラメータ===
+
+なし。
+
+===戻り値===
+
+なし。
+
+====showConditionalElements(item)====
+
+''型:undefined'' ''Inject:Component''
+
+”bm-visible”属性を持つ要素（条件付要素）を、条件に応じて表示・非表示にします。
+
+注意点として、このメソッドは”display”スタイルを削除することによって要素を表示します。デフォルトではテンプレートが適用された時に、[[#hideconditionalelements|hideConditionalElement()]]が呼び出され、全ての条件付要素に”display:none”を追加して非表示にします。その”display:none”を削除することで、要素が表示状態になります。
+
+条件に合わない要素は、”display:none”をセットすることで非表示にします。
+
+表示条件は”bm-visible”の値にセットします。条件の中では、item引数のそれぞれの値に、キー名でアクセスすることができます。
+
+===パラメータ===
 
 ^パラメータ^型^説明^
-|templateName|String|チェックするテンプレート名です。|
+|item|Object|条件判断に使用されるパラメータです。|
 
-=== 戻り値 ===
+===戻り値===
 
-Trueなら現在使用中です。
-
-
-
+なし。

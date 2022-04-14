@@ -8,9 +8,9 @@ TemplateOrganizer handles the management of HTML such as loading HTML files and 
 
 =====Organizing=====
 
-At the initialization stage, it sets "settings.templateName" to a tag name as the default template name if it is not specified. It also sets "settings.autoOpen" and "settings.autoClose" to true if they are not set yet.
+At the initialization stage, it sets "settings.templateName" to the default template name if it is not specified. The default template name is  "settings.fileName" if specified or tag name if not specified.
 
-At the organizing stage, it loads an HTML string from the “template” section and sets the HTML string as a component template.
+At the organizing stage, it loads an HTML file and attaches it to the node. On "beforeStart" it treats only "html", "url" type, while only "node" type on "afterAppend".
 
 ===Sections===
 
@@ -19,85 +19,142 @@ At the organizing stage, it loads an HTML string from the “template” section
 ===Timings===
 
   * beforeStart
-
+  * afterAppend
 
 =====Settings=====
 
 Template settings are placed in "templates" section.
 
-====Syntax====
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "templates": {
+        <templateName>: {
+            "type": <type>,
+            "rootNode": <rootNode>
+        }
+    },
+}
+</code>
 
-<WRAP listtable>
-  * "templates":　{
-    * <templateName>: <template>
-  * }
-</WRAP>
+====templateName====
+''Type:String''
 
-====Description====
+The template name.
 
-^Item^Type^Description^
-|templateName|String|A template name. By default, the template name is the same as the tag name.|
-|template|String|An HTML string. **Not an HTML filename, but HTML**.|
+====type====
+''Type:String''
 
-=====Events=====
+A type of HTML template. The types are "html", "url" or "node".
 
-==== afterLoadTemplate ====
+====rootNode====
+''Type:String''
 
-Triggered after finishing loading a template HTML file for the first time. It doesn't trigger after loading an already loaded template HTML.
+The selector string that points to a node. The syntax is the same as querySelector(). The node is used as a template.
 
-=====Extended method=====
+====template====
+''Type:String''
+
+An HTML string. **Not an HTML filename, but HTML**.
+
+=====Extended Properties=====
+
+====activeTemplateName====
+''Type:String''
+
+The template name is currently active.
+
+====templates====
+
+''Type:Object''
+
+An object that holds templates information. Each item has the following keys.
+
+^Key^Type^Description^
+|name|String|The template name.|
+|html|String|The template html.|
+|isLoaded|Boolean|A flag whether the template file is already loaded or not.|
+
+=====Extended Method=====
 
 ==== addTemplate(templateName) ====
 
-''Inject:Pad''
+''Type:undefined'' ''Inject:Component''
 
-Loads a template file and attaches it to the component. It will not load if the template is already loaded.
+Loads a template file. It only loads and doesn't attach to the node. It will not load if the template is already loaded.
+
+Actual loading will be done by calling the loader's loadTemplate() method.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|templateName|String|A template name to load. The filename will be this value + ".html".|
+|templateName \\ ''Required''|String|A template name to load. The filename will be this value + ".html".|
 
-===Return value===
+===Return Value===
 
 undefined
 
-===Referenced settings===
+==== applyTemplate(templateName) ====
 
-  * system.appBaseUrl
-  * system.templatePath
-  * settings.path
-  * settings.templateNode
+''Type:undefined'' ''Inject:Component''
 
-==== cloneTemplate(templateName) ====
+Apply the template HTML to the component by setting the innerHTML property of the component to the template HTML. It does nothing if the template is already active. After the template is applied, the active template name is set to this template name.
 
-''Inject:Component''
-
-Clones a template HTML. It is not attached to any document tree at the point of cloning.
+The specified template needs to be already loaded or the exception will be raised.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|templateName|String|A template name to clone.|
+|templateName \\ ''Required''|String|A template name to apply.|
 
-===Return value===
+===Return Value===
 
-An element cloned from the template.
+undefined
+====cloneTemplate(templateName)====
 
-==== isActiveTemplate(templateName) ====
+''Type:HTMLElement'' ''Inject:Component''
 
-''Inject:Component''
+Creates an HTML element from the template. It is not attached to any document tree at the point of cloning.
 
-Returns if the specified template is currently active.
+===Parameters===
 
-===Paramters===
+^Parameter^Type^Description^
+|templateName|String|A template name to clone. If not specified, the default template name will be used.|
 
-^Paramter^Type^Description^
-|templateName|String|A template name to check.|
+===Return Value===
 
-===Return value===
+An HTML element cloned from the template.
 
-True if active.
+====hideConditionalElements()====
 
+''Type:undefined'' ''Inject:Component''
 
+Hide all the elements that have "bm-visible" attributes by setting "display:none" to the element.
 
+===Parameters===
+
+none
+
+===Return Value===
+
+undefined
+====showConditionalElements(item)====
+
+''Type:undefined'' ''Inject:Component''
+
+Show or hide elements that have "bm-visible" attributes depending on the condition. 
+
+Note it shows an element by removing the "display" style if the condition matches. By default, [[#hideconditionalelements|hideConditionalElement()]] method is called to hide all the conditional elements by adding "diplay:none" when template is applied. Removing the "display" style removes the "display:none" added by hideConditionalElements() and thus revealing the elements. 
+
+It sets "display:none" to the element when the condition doesn't match.
+
+Specify the condition as the value of the "bm-visible" attribute. Each value in the item parameter can be accessed in the condition by the key.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|item|Object|Parameters used to judge condition.|
+
+===Return Value===
+
+undefined
