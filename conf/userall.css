@@ -198,9 +198,19 @@ code
 
 /* Admonition */
 
+#dokuwiki__content .page .admonition.links ul
+{
+	margin-bottom: 12px;
+}
+
 .admonition.links ul li
 {
 	list-style: none;
+}
+
+.admonition.links ul li i
+{
+	margin-right: 5px;
 }
 
 /* Misc */
