@@ -20,6 +20,35 @@ Componentはデフォルトで以下のオーガナイザをアタッチして�
 
 Componentの設定は"settings"セクションに記述します。
 
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "settings": {
+        "autoFetch": <autoFetch>,
+        "autoFill": <autoFill>,
+        "autoMorph": <autoMorph>,
+        "autoPostStart": <autoPostStart>,
+        "autoRefresh": <autoRefresh>,
+        "autoRestart": <autoRestart>,
+        "autoSetup": <autoSetup>,
+        "autoStop": <autoStop>,
+        "className": <className>,
+        "fileName": <fileName>,
+        "hasTemplate": <hasTemplate>,
+        "loaderName": <loaderName>,
+        "name": <name>,
+        "overwrite": <overwrite>,
+        "path": <path>,
+        "rootNode": <rootNode>,
+        "splitComponent": <splitComponent>,
+        "sync": <sync>,
+        "tag": <tag>,
+        "tagName": <tagName>,
+        "templateName": <templateName>,
+        "useGlobalSettings": <useGlobalSettings>,
+    },
+}
+</code>
 ==== autoFetch ====
 ''型:Boolean'' ''デフォルト:true''
 
