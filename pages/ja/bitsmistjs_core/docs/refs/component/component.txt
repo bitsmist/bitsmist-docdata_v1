@@ -30,6 +30,11 @@ Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的�
 
 Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的に[[#fill_options|fill()]]メソッドも呼び出されます。
 
+==== autoMorph ====
+''型:String/Boolean'' ''Default:"BITSMIST.v1.Component"''
+
+タグをインスタンス化する際、クラスのJSファイルをロードせずに、指定された既に存在するクラスを使用します。
+
 ==== autoPostStart ====
 ''型:Boolean'' ''デフォルト:true''
 
@@ -61,13 +66,18 @@ Trueの場合、コンポーネントがドキュメントツリーから切り�
 コンポーネントのクラス名を指定します。指定がない場合は、コンポーネント名がクラス名になります。
 
 ==== fileName ====
-''型:String'' ''デフォルト:''
+''型:String'' ''デフォルト:<クラス名>''
 
-コンポーネントのファイル名を指定します。
+コンポーネントのファイル名を指定します。指定がない場合は、クラス名がファイル名となります。
 ==== hasTemplate ====
 ''型:Boolean'' ''デフォルト:true''
 
 コンポーネントがテンプレートHTMLを持つかを指定します。Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_options|switchTemplate()]]が呼び出され、テンプレートHTMLの読み込みと差し込みが行われます。
+
+====loaderName====
+''型:String'' ''Default:"DefaultLoader"''
+
+使用するローダの名前を指定します。ローダはクラスのJSファイルやテンプレートHTMLなどをロードするのに使われます。
 
 ==== name ====
 ''型:String'' ''デフォルト:<クラス名>''
@@ -75,42 +85,47 @@ Trueの場合、コンポーネントがドキュメントツリーから切り�
 コンポーネント名を指定します。
 
 ==== overwrite ====
-''型:Boolean'' ''デフォルト:False''
+''型:Boolean'' ''デフォルト:false''
 
-Specified whether to overwrite a parent node. If set to True, the parent node will be replaced by the component.
+親ノードを上書きするかを指定します。Trueの場合、親ノードはコンポーネントで上書きされます。
+
+====path====
+''型:String''
+
+コンポーネントのパスを指定します。
 
 ==== rootNode ====
-''型:String'' ''デフォルト:''
+''型:String'' ''デフォルト:<空>''
 
 このコンポーネントがアタッチするノードを指定します。
 
 ==== splitComponent ====
-''型:Boolean'' ''デフォルト:False''
+''型:Boolean'' ''デフォルト:false''
 
 コンポーネントのファイルが分割されているかを指定します。Trueの場合、ローダーは2つのファイルを読み込みます。
 
 ==== sync ====
-''型:String/Boolean'' ''デフォルト:''
+''型:String/Boolean'' ''デフォルト:false''
 
 文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、”started”になるのを待ちます。
 ==== tag ====
-''型:String'' ''デフォルト:<Empty>''
+''型:String'' ''デフォルト:<空>''
 
 コンポーネントのタグを指定します。この値でHTMLに挿入されます。tagNameと違い、属性やクラスも指定できます。
 
 ==== tagName ====
-''型:String'' ''デフォルト:<See desc>''
+''型:String'' ''デフォルト:<説明参照>''
 
 このコンポーネントのタグの名前を指定します。指定されてない場合、タグ名はクラス名から生成されます。クラス名はパスカルケースと仮定し、2つ目の大文字の文字を境に2つの単語に区切られ、ハイフンで連結されます。
 
 ==== templateName ====
-''型:String'' ''デフォルト:<tag name>''
+''型:String'' ''デフォルト:<タグ名>''
 
 テンプレートファイル名を拡張子なしで指定します。ファイル取得時に拡張子”.html”を追加したファイル名を取得します。
 ==== useGlobalSettings ====
 ''型:Boolean'' ''デフォルト:true''
 
-グローバル設定を反映させるかを指定します。Trueの場合、コンポーネントの設定がグローバル設定に連結されます。
+グローバル設定をコンポーネントに反映させるかを指定します。Trueの場合、コンポーネントの設定がグローバル設定に連結されます。
 
 <WRAP admonition tip links>
 設定の連結機能は、ChainableStoreクラスを使って実装されています。
@@ -129,21 +144,21 @@ Specified whether to overwrite a parent node. If set to True, the parent node wi
 
 ====bm-automorph====
 
-''型:Boolean''
+''型:(なし)''
 
-Indicates to load an HTML file from the default path. No value is needed.
+Indicates to load an HTML file from the default path. No value is needed. 設定の[[#automorph|"settings.autoMorph"]]と同じです。
 
 ====bm-classname====
 
 ''型:String''
 
-コンポーネントのクラス名を指定します。設定の”className”と同じです。
+コンポーネントのクラス名を指定します。設定の[[#classname|"settings.className"]]と同じです。
 
 ====bm-path====
 
 ''型:String''
 
-コンポーネントやテンプレートHTMLをロードするパスを指定します。この値が”settings.path”にセットされます。
+コンポーネントやテンプレートHTMLをロードするパスを指定します。設定の[[#path|"settings.path"]]と同じです。
 
 ====bm-settingref====
 ''型:String''
@@ -157,9 +172,9 @@ Indicates to load an HTML file from the default path. No value is needed.
 
 ====bm-split====
 
-''型:Boolean''
+''型:(なし)''
 
-この属性が存在する場合、コンポーネントが分割形式とみなします。値は不要です。
+この属性が存在する場合、コンポーネントが分割形式とみなします。設定の[[#splitcomponent|"settings.splitComponent"]]と同じです。値は不要です。
 
 
 ===== イベント =====
@@ -392,6 +407,13 @@ beforeRefreshイベントの後に発生します。
 
 コンポーネントを再描画します。[[#autofetch|”settings.autoFetch”]]オプションがTrueの場合は[[#fetch_options|fetch()]]メソッドを、[[#autofill|”settings.autoFill”]]オプションがTrueの場合は[[#fill_options|fill()]]メソッドを自動的に呼び出します。
 
+条件付要素（"bm-visible"属性を持つ要素）は条件に合致すれば、このタイミングで表示されます。
+
+<WRAP admonition tip links>
+これはTemplateOrganizerのshowConditionalElements()拡張メソッドを呼び出すことで、行われます。
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:refs:organizer:template#showconditionalelements_item|Reference - organizer - TemplateOrganizer.showConditionalElements()]]
+</WRAP>
+
 === パラメータ ===
 
 ^パラメータ^型^説明^
@@ -452,7 +474,7 @@ beforeRefreshイベントの後に発生します。
 
 ''型:undefined'' ''非同期''
 
-コンポーネントの初期化を開始します。タグがインスタンス化されるときに自動的に呼び出されるため、通常は呼び出す必要はありません。初期化時に自身の属性に”bm-powered”を追加します。
+コンポーネントの初期化を開始します。タグがインスタンス化されるときに自動的に呼び出されるため、通常は呼び出す必要はありません。
 
 === パラメータ ===
 
@@ -509,6 +531,14 @@ beforeRefreshイベントの後に発生します。
 ''型:undefined'' ''非同期''
 
 テンプレートHTMLを切り替えます。HTMLファイルがまだロードされてない場合は、自動的にロードされます。ロードされたHTMLファイルは自身にアタッチされます。追加された後、テンプレート内にオートロードの必要があるタグがある場合は、さらにそれらをロードします。
+
+テンプレートHTMLがアタッチされた際、bm-visible属性をもつ要素は、全て一旦非表示になります。
+
+<WRAP admonition tip links>
+これはTemplateOrganizerのhideConditionalElements()拡張メソッドを呼び出すことで行われます。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:organizer:template#hideconditionalelements|リファレンス - オーガナイザ - TemplateOrganizer.hideConditionalElements()]]
+</WRAP>
+非表示になった要素は画面の再描画時（refresh()メソッドが呼ばれた時）に、条件に応じて表示されます。
 
 [[#autosetup|”settings.autoSetup”]]オプションがTrueの場合、テンプレートHTMLのアタッチ後に[[#setup_options|setup()]]メソッドを呼び出します。
 
