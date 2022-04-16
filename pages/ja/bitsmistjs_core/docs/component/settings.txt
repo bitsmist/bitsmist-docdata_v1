@@ -78,7 +78,7 @@ bm-settings属性にJSON形式で記述します。
 
 先ほどの2つの記述方法では、同じコンポーネントの場合は全て同じ設定となりますが、こちらは同じコンポーネントでもタグごとに違う設定が可能です。
 
-また、オーガナイザによっては、独自の属性から設定を読み込みます。例えばComponentOrganizerでは”bm-path”という属性で、コンポーネントを読み込むパスを指定できます。
+また、オーガナイザによっては、独自の属性から設定を読み込みます。例えばComponentOrganizerでは"bm-path"という属性で、コンポーネントを読み込むパスを指定できます。
 
 <code html>
 <bar-header bm-autoload bm-path="common"></bar-header>
@@ -120,7 +120,7 @@ BitmistJSではコンポーネントの設定内容に応じた実際の処理�
 |templates|[[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]|固定のHTMLテンプレートを指定するための設定です。|
 |components|[[ja:bitsmistjs_core:docs:refs:organizer:component|ComponentOrganizer]]|追加コンポーネントのロードを管理します。|
 
-また、上記とは別に、様々なオーガナイザから参照される”system”セクションについても紹介します。これらはシステム全体に影響を与えるため、基本的には後に紹介する[[#グローバル設定|グローバル設定]]に記述します。
+また、上記とは別に、様々なオーガナイザから参照される"system"セクションについても紹介します。これらはシステム全体に影響を与えるため、基本的には後に紹介する[[#グローバル設定|グローバル設定]]に記述します。
 
 ^セクション^設定^説明^
 |system|appBaseUr|アプリのベースとなるURLを指定します。|
@@ -197,7 +197,7 @@ BITSMIST.v1.settings.set("myValue", 1) // global setting
 console.log(this.settings.get("myValue")); // console displays 1
 </code>
 
-このグローバル設定との連結は、”settings.useGlobalSettings”がTrueにセットされていると行われます（デフォルトはTrueです）。もし連結させたくない場合は、次の例のように、この値をFalseにセットしてください。
+このグローバル設定との連結は、"settings.useGlobalSettings"がTrueにセットされていると行われます（デフォルトはTrueです）。もし連結させたくない場合は、次の例のように、この値をFalseにセットしてください。
 
 <code javascript>
 _getSettings()

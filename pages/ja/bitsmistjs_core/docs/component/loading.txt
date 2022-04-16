@@ -23,7 +23,7 @@
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
 </code>
 
-カスタムタグの”bm-autoload”属性にJavascriptファイルへのURLを記述します。するとBitsmistJSライブラリが指定されたURLからファイルを自動的にダウンロードします。その後コンポーネントが初期化され、インターフェースのHTMLファイルがロードされて画面に表示されます。
+カスタムタグの"bm-autoload"属性にJavascriptファイルへのURLを記述します。するとBitsmistJSライブラリが指定されたURLからファイルを自動的にダウンロードします。その後コンポーネントが初期化され、インターフェースのHTMLファイルがロードされて画面に表示されます。
 
 <WRAP admonition note links>
 この例では相対パスを使っていますが、絶対パスでも構いません。ただし、XMLHttpRequestを使用して取得しているため、絶対パスを使って別のオリジンからロードする場合は、サーバー側でAccess-Control-Allow-Originヘッダーを付加する必要があります。
@@ -52,7 +52,7 @@ bm-autoload属性の値にURLを指定しない場合は、デフォルトのパ
 <pad-hello bm-autoload></pad-hello>
 </code>
 
-と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた”pad-hello.js”となります。例えばhttps://example.com/index.htmlを表示している場合、https://example.com/pad-hello.jsが読み込まれます。
+と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた"pad-hello.js"となります。例えばhttps://example.com/index.htmlを表示している場合、https://example.com/pad-hello.jsが読み込まれます。
 
 <WRAP admonition tip links>
 デフォルトのパスは設定で変更することが可能です。
@@ -67,7 +67,7 @@ HTMLのみの場合は、bm-automorph属性を使用します。
 <pad-hello bm-automorph></pad-hello>
 </code>
 
-と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた”pad-hello.html”となります。
+と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた"pad-hello.html"となります。
 
 ====<script>タグでインポートする====
 
@@ -101,7 +101,7 @@ HTMLのみのコンポーネントの場合、このロード方法は使用で�
   * コンポーネントフォルダ （system.componentPath）
   * パス （settings.path）
 
-上記3つの要素を繋げたフォルダからファイルがダウンロードされます。いずれも初期値は””（空文字列）です。
+上記3つの要素を繋げたフォルダからファイルがダウンロードされます。いずれも初期値は""（空文字列）です。
 
 例として以下のように設定したとします。
 
@@ -110,7 +110,7 @@ HTMLのみのコンポーネントの場合、このロード方法は使用で�
 |コンポーネントパス|components|
 |パス|common|
 
-ヘッダーコンポーネント”bar-header”が以下のようにHTMLファイルに指定したあった場合、
+ヘッダーコンポーネント"bar-header"が以下のようにHTMLファイルに指定したあった場合、
 
 <code html>
 <bar-header bm-autoload></bar-header>
@@ -161,10 +161,10 @@ _getSettings()
 </code>
 
 <WRAP admonition note links>
-bm-autoload属性にURLを指定した場合、その値に応じてコンポーネントの”system.appBaseUrl”、”system.componentPath”、”system.templatePath”、”settings.path”が自動的にセットされます。
+bm-autoload属性にURLを指定した場合、その値に応じてコンポーネントの"system.appBaseUrl"、"system.componentPath"、"system.templatePath"、"settings.path"が自動的にセットされます。
   * [[ja:bitsmistjs_core:docs:refs:organizer:setting#タグ属性|SettingOrganizer#タグ属性]]
 </WRAP>
 =====デフォルトのファイル名について=====
 
 BitsmistJSが使用するJavascriptファイルやHTMLファイルはbm-autoload属性での指定がない場合、デフォルトのファイル名が使われます。
-HTMLファイル、Javascriptファイル、いずれもタグ名がデフォルトのファイル名となり、それぞれ拡張子”.html”、”.js”が付加されます。
+HTMLファイル、Javascriptファイル、いずれもタグ名がデフォルトのファイル名となり、それぞれ拡張子".html"、".js"が付加されます。

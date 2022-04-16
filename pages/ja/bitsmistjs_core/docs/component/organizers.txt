@@ -28,7 +28,7 @@ BitsmistJSの核であるComponent、Padコンポーネントはごく単純な�
 
 ===="organizers"設定に記述する====
 
-設定の”organizers”セクションに、適用したいオーガナイザーのクラス名を記述します。
+設定の"organizers"セクションに、適用したいオーガナイザーのクラス名を記述します。
 
 次の例ではEventOrganizerを適用しています。
 
@@ -59,12 +59,12 @@ _getSettings()
 }
 </code>
 
-”events”というセクション名はEventOrganizerに紐づいているため、自動的にEventOrganizerが適用されます。どのセクションにどのオーガナイザが紐づいているかは、[[ja:bitsmistjs_core:docs:component:settings#設定内容|コンポーネントについて:設定#設定内容]]をご覧ください。
+"events"というセクション名はEventOrganizerに紐づいているため、自動的にEventOrganizerが適用されます。どのセクションにどのオーガナイザが紐づいているかは、[[ja:bitsmistjs_core:docs:component:settings#設定内容|コンポーネントについて:設定#設定内容]]をご覧ください。
 =====オーガナイズ処理=====
 
 各コンポーネントは特定のタイミングでオーガナイザを呼び出す機能が備わっています。各コンポーネントにオーガナイザを適用することで、そのタイミングでオーガナイザの処理が実行されます。
 
-例えばComponentOrganizerは、テンプレートHTMLがノードに追加された後の”afterAppend”のタイミングで、設定内容を元に追加コンポーネントをロードします。
+例えばComponentOrganizerは、テンプレートHTMLがノードに追加された後の"afterAppend"のタイミングで、設定内容を元に追加コンポーネントをロードします。
 
 以下にオーガナイザが適用されるタイミングを示します。
 

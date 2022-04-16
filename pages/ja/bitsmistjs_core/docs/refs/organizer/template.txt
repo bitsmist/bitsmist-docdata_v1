@@ -8,9 +8,9 @@ TemplateOrganizerはコンポーネントのHTMLテンプレートのロード�
 
 ===== オーガナイズ処理 =====
 
-初期化時には、コンポーネントの”settings.templateName”オプションがセットされてない場合、デフォルトの値をセットします。デフォルトの値は”settings.fileName”が設定されていればそれを、されていなければタグ名です。
+初期化時には、コンポーネントの"settings.templateName"オプションがセットされてない場合、デフォルトの値をセットします。デフォルトの値は"settings.fileName"が設定されていればそれを、されていなければタグ名です。
 
-オーガナイズ処理時にはテンプレートHTMLをロードし、ノードにアタッチします。”beforeStart”のタイミングではタイプが”html”、”url”のみを対象にします。”afterAppend”ではタイプが”node”のみを対象とします。
+オーガナイズ処理時にはテンプレートHTMLをロードし、ノードにアタッチします。"beforeStart"のタイミングではタイプが"html"、"url"のみを対象にします。"afterAppend"ではタイプが"node"のみを対象とします。
 
 === セクション ===
 
@@ -46,7 +46,7 @@ TemplateOrganizerはコンポーネントのHTMLテンプレートのロード�
 ====type====
 ''型:String''
 
-HTMLテンプレートのタイプを指定します。タイプは”html”、”url”、”node”のいずれかです。
+HTMLテンプレートのタイプを指定します。タイプは"html"、"url"、"node"のいずれかです。
 
 ====rootNode====
 ''型:String''
@@ -91,7 +91,7 @@ HTMLの文字列を指定します。これは**HTMLであって、HTMLのファ
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|templateName \\ ''必須''|String|対象となるテンプレート名です。これに”.html"をつけたものがファイル名となります。|
+|templateName \\ ''必須''|String|対象となるテンプレート名です。これに".html"をつけたものがファイル名となります。|
 
 ===戻り値===
 
@@ -132,7 +132,7 @@ undefined
 
 ''型:undefined'' ''Inject:Component''
 
-"bm-visible"属性を持つ全ての要素に”display:none”をセットして、非表示にします。
+"bm-visible"属性を持つ全ての要素に"display:none"をセットして、非表示にします。
 
 ===パラメータ===
 
@@ -146,13 +146,13 @@ undefined
 
 ''型:undefined'' ''Inject:Component''
 
-”bm-visible”属性を持つ要素（条件付要素）を、条件に応じて表示・非表示にします。
+"bm-visible"属性を持つ要素（条件付要素）を、条件に応じて表示・非表示にします。
 
-注意点として、このメソッドは”display”スタイルを削除することによって要素を表示します。デフォルトではテンプレートが適用された時に、[[#hideconditionalelements|hideConditionalElement()]]が呼び出され、全ての条件付要素に”display:none”を追加して非表示にします。その”display:none”を削除することで、要素が表示状態になります。
+注意点として、このメソッドは"display"スタイルを削除することによって要素を表示します。デフォルトではテンプレートが適用された時に、[[#hideconditionalelements|hideConditionalElement()]]が呼び出され、全ての条件付要素に"display:none"を追加して非表示にします。その"display:none"を削除することで、要素が表示状態になります。
 
-条件に合わない要素は、”display:none”をセットすることで非表示にします。
+条件に合わない要素は、"display:none"をセットすることで非表示にします。
 
-表示条件は”bm-visible”の値にセットします。条件の中では、item引数のそれぞれの値に、キー名でアクセスすることができます。
+表示条件は"bm-visible"の値にセットします。条件の中では、item引数のそれぞれの値に、キー名でアクセスすることができます。
 
 ===パラメータ===
 

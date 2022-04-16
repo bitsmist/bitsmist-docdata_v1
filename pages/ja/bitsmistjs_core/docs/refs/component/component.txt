@@ -18,7 +18,7 @@ Componentはデフォルトで以下のオーガナイザをアタッチして�
 
 ===== 設定 =====
 
-Componentの設定は”settings”セクションに記述します。
+Componentの設定は"settings"セクションに記述します。
 
 ==== autoFetch ====
 ''型:Boolean'' ''デフォルト:true''
@@ -107,7 +107,7 @@ Trueの場合、コンポーネントがドキュメントツリーから切り�
 ==== sync ====
 ''型:String/Boolean'' ''デフォルト:false''
 
-文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、”started”になるのを待ちます。
+文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、"started"になるのを待ちます。
 ==== tag ====
 ''型:String'' ''デフォルト:<空>''
 
@@ -121,7 +121,7 @@ Trueの場合、コンポーネントがドキュメントツリーから切り�
 ==== templateName ====
 ''型:String'' ''デフォルト:<タグ名>''
 
-テンプレートファイル名を拡張子なしで指定します。ファイル取得時に拡張子”.html”を追加したファイル名を取得します。
+テンプレートファイル名を拡張子なしで指定します。ファイル取得時に拡張子".html"を追加したファイル名を取得します。
 ==== useGlobalSettings ====
 ''型:Boolean'' ''デフォルト:true''
 
@@ -168,7 +168,7 @@ Indicates to load an HTML file from the default path. No value is needed. 設定
 ====bm-settings====
 ''型:String''
 
-設定をjson形式で指定します。ここで指定した設定は”settings”セクション内に記述されたものとみなされ、現在の設定にマージされます。
+設定をjson形式で指定します。ここで指定した設定は"settings"セクション内に記述されたものとみなされ、現在の設定にマージされます。
 
 ====bm-split====
 
@@ -181,7 +181,7 @@ Indicates to load an HTML file from the default path. No value is needed. 設定
 
 ====afterAppend====
 
-[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合（[[#hastemplate|”settings.hasTemplate”]]オプションがfalseの場合）、このイベントは発生しません。
+[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合（[[#hastemplate|"settings.hasTemplate"]]オプションがfalseの場合）、このイベントは発生しません。
 
 === パラメータ ===
 
@@ -329,13 +329,13 @@ beforeRefreshイベントの後に発生します。
 
 ''型:String'' ''デフォルト:<クラス名>'' ''get''
 
-コンポーネントの名前です。設定の[[#name|”settings.name”]]で指定可能です。
+コンポーネントの名前です。設定の[[#name|"settings.name"]]で指定可能です。
 
 ==== rootElement ====
 
 ''型:HTMLElement'' ''デフォルト:this'' ''get''
 
-コンポーネントのルートとなるHTML要素です。通常は”this”と同じです。
+コンポーネントのルートとなるHTML要素です。通常は"this"と同じです。
 
 
 ==== uniqueId ====
@@ -405,7 +405,7 @@ beforeRefreshイベントの後に発生します。
 
 ''型:undefined'' ''非同期''
 
-コンポーネントを再描画します。[[#autofetch|”settings.autoFetch”]]オプションがTrueの場合は[[#fetch_options|fetch()]]メソッドを、[[#autofill|”settings.autoFill”]]オプションがTrueの場合は[[#fill_options|fill()]]メソッドを自動的に呼び出します。
+コンポーネントを再描画します。[[#autofetch|"settings.autoFetch"]]オプションがTrueの場合は[[#fetch_options|fetch()]]メソッドを、[[#autofill|"settings.autoFill"]]オプションがTrueの場合は[[#fill_options|fill()]]メソッドを自動的に呼び出します。
 
 条件付要素（"bm-visible"属性を持つ要素）は条件に合致すれば、このタイミングで表示されます。
 
@@ -540,7 +540,7 @@ beforeRefreshイベントの後に発生します。
 </WRAP>
 非表示になった要素は画面の再描画時（refresh()メソッドが呼ばれた時）に、条件に応じて表示されます。
 
-[[#autosetup|”settings.autoSetup”]]オプションがTrueの場合、テンプレートHTMLのアタッチ後に[[#setup_options|setup()]]メソッドを呼び出します。
+[[#autosetup|"settings.autoSetup"]]オプションがTrueの場合、テンプレートHTMLのアタッチ後に[[#setup_options|setup()]]メソッドを呼び出します。
 
 === パラメータ ===
 

@@ -4,7 +4,7 @@
 
 ===== 概要 =====
 
-EventOrganizerはイベントハンドラの追加やイベントの発生など、イベント関連の処理を担当します。”events"設定を読み込み、その内容にしたがってイベントハンドラをセットします。
+EventOrganizerはイベントハンドラの追加やイベントの発生など、イベント関連の処理を担当します。"events"設定を読み込み、その内容にしたがってイベントハンドラをセットします。
 
 ===== オーガナイズ処理 =====
 
@@ -59,7 +59,7 @@ EventOrganizerはイベントハンドラの追加やイベントの発生など
 ====elementName====
 ''Type:String''
 
-要素名を指定します。次の”rootNode“を指定しない場合、この値を要素のIDとみなします。ただし特殊なケースとして、この値が”this“の場合、コンポーネント自身を表します。”rootNode“に指定がある場合はこの値は特に意味は持ちません（ただし一意な値にしてください）。
+要素名を指定します。次の"rootNode“を指定しない場合、この値を要素のIDとみなします。ただし特殊なケースとして、この値が"this“の場合、コンポーネント自身を表します。"rootNode“に指定がある場合はこの値は特に意味は持ちません（ただし一意な値にしてください）。
 
 ====rootNode====
 ''Type:String''
@@ -75,12 +75,12 @@ EventOrganizerはイベントハンドラの追加やイベントの発生など
 ====handler====
 ''Type:String/Function''
 
-このイベントに対するイベントハンドラを指定します。イベントハンドラは文字列またはFunctionオブジェクトを指定します。文字列を指定した場合は、イベントハンドラの関数名と判断されます。この場合、コンポーネントのメソッドの中から同名の関数がセットされます。Functionオブジェクトを指定した場合はイベントハンドラそのものと判断されます。いずれの場合もハンドラはコンポーネントにbindされ、”this”はコンポーネント自身を指すようになります（addEventHandler()の引数で指定されてない場合）。
+このイベントに対するイベントハンドラを指定します。イベントハンドラは文字列またはFunctionオブジェクトを指定します。文字列を指定した場合は、イベントハンドラの関数名と判断されます。この場合、コンポーネントのメソッドの中から同名の関数がセットされます。Functionオブジェクトを指定した場合はイベントハンドラそのものと判断されます。いずれの場合もハンドラはコンポーネントにbindされ、"this"はコンポーネント自身を指すようになります（addEventHandler()の引数で指定されてない場合）。
 
 ====options====
 ''Type:Object''
 
-イベントハンドラに渡すオプションのオブジェクトを指定します。イベントハンドラの引数”ex”からアクセスできます。
+イベントハンドラに渡すオプションのオブジェクトを指定します。イベントハンドラの引数"ex"からアクセスできます。
 ====order====
 ''Type:Number'' ''Default:0''
 
@@ -110,7 +110,7 @@ JavascriptネイティブのaddEventListener()関数に渡すオプションを�
 }
 </code>
 
-<elementName>が”this”なので、コンポーネント自身に対してセットします。
+<elementName>が"this"なので、コンポーネント自身に対してセットします。
 
 <code javascript>
 "events": {
@@ -122,14 +122,14 @@ JavascriptネイティブのaddEventListener()関数に渡すオプションを�
 }
 </code>
 
-仮にこのコンポーネントのタグ名が”bar-header”なら”this”の代わりに”bar-header”と記述することもできます。
+仮にこのコンポーネントのタグ名が"bar-header"なら"this"の代わりに"bar-header"と記述することもできます。
 
-”rootNode”に指定することもできます。その場合<elementName>は、特に意味を持ちません。
+"rootNode"に指定することもできます。その場合<elementName>は、特に意味を持ちません。
 
 <code javascript>
 "events": {
     "myself": {
-        "rootNode": "bar-header" （または”this”）
+        "rootNode": "bar-header" （または"this"）
         "handlers": {
             "doRefresh": this.onDoRefresh
         }
@@ -153,7 +153,7 @@ JavascriptネイティブのaddEventListener()関数に渡すオプションを�
 
 上記の場合、btn-menuというIDを持つ要素に、イベントハンドラがセットされます。
 
-”rootNode”に指定する場合、querySelectorAll()に指定可能な文字列を使用できます。
+"rootNode"に指定する場合、querySelectorAll()に指定可能な文字列を使用できます。
 
 <code javascript>
 "events": {
@@ -182,7 +182,7 @@ JavascriptネイティブのaddEventListener()関数に渡すオプションを�
 }
 </code>
 
-”doRefresh”イベントに対して、Functionオブジェクトを指定しています。
+"doRefresh"イベントに対して、Functionオブジェクトを指定しています。
 
 <code javascript>
 "events": {
@@ -194,7 +194,7 @@ JavascriptネイティブのaddEventListener()関数に渡すオプションを�
 }
 </code>
 
-この例では、”doRefresh”イベントに対して、文字列を指定しています。この場合はこのコンポーネントのメソッドの中から同名の関数がセットされます。つまりthis.onDoRefresh()メソッドがセットされます。
+この例では、"doRefresh"イベントに対して、文字列を指定しています。この場合はこのコンポーネントのメソッドの中から同名の関数がセットされます。つまりthis.onDoRefresh()メソッドがセットされます。
 
 <WRAP admonition note>
 Functionオブジェクトを指定する場合は、設定の時点でそのFunctionオブジェクトが存在する必要があります。対して文字列の場合はイベントハンドラをセットする時に存在する必要があります。
@@ -310,7 +310,7 @@ onDoRefresh(sender, e, ex)
 
 ^パラメータ^型^説明^
 |elementName \\ ''Required''|Object|要素名を指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のelementName]]の説明も参照してください。|
-|handlerInfo \\ ''Required''|Object|ハンドラ情報を格納したオブジェクトを指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のhandlerInfo]]で説明されています。指定がない場合は、コンポーネントの”events”設定からelementName引数に指定された値を取得して使用します。|
+|handlerInfo \\ ''Required''|Object|ハンドラ情報を格納したオブジェクトを指定します。[[ja:bitsmistjs_core:docs:refs:organizer:event#説明|設定のhandlerInfo]]で説明されています。指定がない場合は、コンポーネントの"events"設定からelementName引数に指定された値を取得して使用します。|
 |rootNode \\ ''Default:（説明参照）''|String|要素の検索対象となるルートノードを指定します。指定がない場合はコンポーネント自身になります。|
 
 === 戻り値 ===

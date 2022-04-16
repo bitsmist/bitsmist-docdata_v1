@@ -24,7 +24,7 @@ DOMがロードされた時に、ページ全体のタグのロードを開始�
     "organizers": {
         "LoaderOrganizer": {
             "settings": {
-                “autoLoadOnStartup”: <autoLoadOnStartup>
+                "autoLoadOnStartup": <autoLoadOnStartup>
             }
         }
     }
