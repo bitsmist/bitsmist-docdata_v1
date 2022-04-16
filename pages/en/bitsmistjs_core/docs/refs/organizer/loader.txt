@@ -4,7 +4,7 @@
 
 =====Overview=====
 
-LoaderOrganizer handles loading component files that need to be autoloaded by calling loader methods. It starts loading files for the page when DOMs are loaded. If the organizer is attached to a component, it starts loading files inside its own inner HTML after the HTML is appended to a node.
+LoaderOrganizer handles the loading of class files, setting files, and template HTML files. Note actual loading process is handled by loaders and LoaderOrganizer does its job by calling them. 
 
 =====Organizing=====
 
