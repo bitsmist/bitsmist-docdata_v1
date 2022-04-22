@@ -51,7 +51,7 @@ Extra components settings are placed in the "components" or "molds" section.
 {
     "molds"/"components": {
         <componentName>: {
-            "settings": {
+            "loadings": {
                 "autoMorph": <autoMorph>,
                 "className": <className>,
                 "fileName": <fileName>,
