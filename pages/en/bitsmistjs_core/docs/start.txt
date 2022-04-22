@@ -18,7 +18,6 @@
 
 ** REFERENCE - ORGANIZER **
 
-  * [[en:bitsmistjs_core:docs:refs:organizer:component|ComponentOrganizer]]
   * [[en:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]
   * [[en:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]
   * [[en:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]

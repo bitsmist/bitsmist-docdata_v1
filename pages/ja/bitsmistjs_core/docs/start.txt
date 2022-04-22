@@ -18,7 +18,6 @@
 
 ** リファレンス - オーガナイザ **
 
-  * [[ja:bitsmistjs_core:docs:refs:organizer:component|ComponentOrganizer]]
   * [[ja:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]
   * [[ja:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]
   * [[ja:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]

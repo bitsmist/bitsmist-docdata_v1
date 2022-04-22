@@ -8,14 +8,21 @@ LoaderOrganizerはクラスファイル・設定ファイル・テンプレー�
 
 =====オーガナイズ処理=====
 
-DOMがロードされた時に、ページ全体のタグのロードを開始します。また特定のコンポーネントにアタッチされている場合、テンプレートHTMLがノードにアタッチされた際、そのHTMLからオートロードが必要なタグのファイルをロードします。
+全体の処理として、DOMがロードされた時にページ内のロードが必要なタグのファイルを読み込みます。
 
-===処理タイミング===
+特定のコンポーネントにアタッチされた場合、"molds"/"components"セクションから設定を読み込みコンポーネントを追加します。どちらのセクションもコンポーネントを追加するという意味では同じですが、大きな違いはデフォルトで同期するかどうかです。molds"セクションに書かれているコンポーネントの場合は、前のコンポーネントの追加を待ってから次のコンポーネントを追加します。"molds"の全ての処理が完了後、"components"に記載されているコンポーネントの追加を開始します。こちらは前のコンポーネントの追加を待たずに、次のコンポーネントの追加に取り掛かります。そのためロードの開始は順番通りに行われますが、ロードの終了は順番通りにならない可能性があります。
+
+=== セクション ===
+
+  * molds
+  * components
+
+=== 処理タイミング ===
 
   * DOMContentLoaded (Native event)
-  * afterAppend
+  * afterStart
 
-=====設定=====
+=====設定 (グローバル)=====
 
 <WRAP legend>書式:</WRAP>
 <code javascript>
@@ -35,8 +42,152 @@ DOMがロードされた時に、ページ全体のタグのロードを開始�
 
 Trueの場合、DOMが読み込まれた時点でオートロード処理を開始します。
 
+===== 設定 =====
 
-=====メソッド=====
+追加コンポーネント設定は"components"または"molds"セクションに記述します。
+
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "molds"/"components": {
+        <componentName>: {
+            "loaings": {
+                "autoMorph": <autoMorph>,
+                "className": <className>,
+                "fileName": <fileName>,
+                "loaderName": <loaderName>,
+                "overwrite": <overwrite>,
+                "path": <path>,
+                "rootNode": <rootNode>,
+                "splitComponent": <splitComponent>,
+                "sync": <sync>,
+                "tag": <tag>,
+                "tagName": <tagName>,
+            }
+        }
+    },
+}
+</code>
+
+<componentName>の値として設定するオブジェクトは、追加するコンポーネントに対する設定となります。ここでは追加時のみに有効な設定を記載していますが、その他のコンポーネント設定も同様にここで設定することができます。
+
+<WRAP legend>例:</WRAP>
+<code javascript>
+{
+    "molds": {
+        "PadSearch": {
+            "loadings": {
+                "className": "PadSearch"
+            }
+        }
+    },
+    "components": {
+        "PadSetting": {
+            "loadings": {
+                "className": "PadSetting"
+            }
+        }
+    }
+}
+</code>
+
+==== autoMorph ====
+''型:String/Boolean'' ''Default:"BITSMIST.v1.Component"''
+
+タグをインスタンス化する際、クラスのJSファイルをロードせずに、指定された既に存在するクラスを使用します。
+
+====componentName====
+
+''Type:String''
+
+コンポーネントの名前を指定します。次のcomponentInfoでクラス名の指定がない場合、この値がクラス名となります。
+
+
+==== className ====
+''型:String'' ''デフォルト:<コンポーネント名>''
+
+コンポーネントのクラス名を指定します。指定がない場合は、コンポーネント名がクラス名になります。
+
+==== fileName ====
+''型:String'' ''デフォルト:<クラス名>''
+
+コンポーネントのファイル名を指定します。指定がない場合は、クラス名がファイル名となります。
+
+====loaderName====
+''型:String'' ''Default:"DefaultLoader"''
+
+使用するローダの名前を指定します。ローダはクラスのJSファイルやテンプレートHTMLなどをロードするのに使われます。
+
+==== overwrite ====
+''型:Boolean'' ''デフォルト:false''
+
+親ノードを上書きするかを指定します。Trueの場合、親ノードはコンポーネントで上書きされます。
+
+====path====
+''型:String''
+
+コンポーネントのファイルをロードするパスを指定します。
+
+==== rootNode ====
+''型:String'' ''デフォルト:<空>''
+
+このコンポーネントがアタッチするノードを指定します。
+
+==== splitComponent ====
+''型:Boolean'' ''デフォルト:false''
+
+コンポーネントのファイルが分割されているかを指定します。Trueの場合、ローダーは2つのファイルを読み込みます。
+
+==== sync ====
+''型:String/Boolean'' ''デフォルト:false''
+
+文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、"started"になるのを待ちます。
+==== tag ====
+''型:String'' ''デフォルト:<空>''
+
+コンポーネントのタグを指定します。この値でHTMLに挿入されます。tagNameと違い、属性やクラスも指定できます。
+
+==== tagName ====
+''型:String'' ''デフォルト:<説明参照>''
+
+このコンポーネントのタグの名前を指定します。指定されてない場合、タグ名はクラス名から生成されます。クラス名はパスカルケースと仮定し、2つ目の大文字の文字を境に2つの単語に区切られ、ハイフンで連結されます。
+
+===== 拡張プロパティ =====
+
+==== components ====
+
+''Type:Object'' ''Inject:component'' ''get''
+
+このコンポーネントに追加されたコンポーネントを保持するオブジェクトです。
+
+=====  拡張メソッド =====
+
+
+==== addComponent(componentName, settings, sync) ====
+
+''型:undefined'' ''非同期'' ''Inject:component''
+
+コンポーネント内に新たなコンポーネントを追加します。追加したコンポーネントのインスタンスは、componentsプロパティに追加されます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|componentName \\ ''必須''|String|追加するコンポーネント名です。設定で指定がない場合は、これがクラス名となります。|
+|settings \\ ''必須''|Object|追加するコンポーネントの設定情報です。|
+|sync \\ ''Default:false''|Object|Trueならコンポーネントのロード完了を待ちます。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 参照する設定 ===
+
+  * [[ja:bitsmistjs_core:docs:refs:component:component#classname|settings.className]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#rootnode|settings.rootNode]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#splitcomponent|settings.splitComponent/system.splitComponent]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#sync|settings.sync]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#tag|settings.tag]]
+  * [[ja:bitsmistjs_core:docs:refs:component:component#tagname|settings.tagName]]
 
 ====getLoader(loaderName)====
 ''型:Function'' ''Inject:Component''

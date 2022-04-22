@@ -26,24 +26,13 @@ Componentの設定は"settings"セクションに記述します。
     "settings": {
         "autoFetch": <autoFetch>,
         "autoFill": <autoFill>,
-        "autoMorph": <autoMorph>,
         "autoPostStart": <autoPostStart>,
         "autoRefresh": <autoRefresh>,
         "autoRestart": <autoRestart>,
         "autoSetup": <autoSetup>,
         "autoStop": <autoStop>,
-        "className": <className>,
-        "fileName": <fileName>,
         "hasTemplate": <hasTemplate>,
-        "loaderName": <loaderName>,
         "name": <name>,
-        "overwrite": <overwrite>,
-        "path": <path>,
-        "rootNode": <rootNode>,
-        "splitComponent": <splitComponent>,
-        "sync": <sync>,
-        "tag": <tag>,
-        "tagName": <tagName>,
         "templateName": <templateName>,
         "useGlobalSettings": <useGlobalSettings>,
     },
@@ -59,10 +48,7 @@ Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的�
 
 Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的に[[#fill_options|fill()]]メソッドも呼び出されます。
 
-==== autoMorph ====
-''型:String/Boolean'' ''Default:"BITSMIST.v1.Component"''
 
-タグをインスタンス化する際、クラスのJSファイルをロードせずに、指定された既に存在するクラスを使用します。
 
 ==== autoPostStart ====
 ''型:Boolean'' ''デフォルト:true''
@@ -89,63 +75,15 @@ Trueの場合、自動的に[[#setup_options|setup()]]メソッドが呼び出�
 
 Trueの場合、コンポーネントがドキュメントツリーから切り離された際に、[[#stop_options|stop()]]メソッドを実行します。
 
-==== className ====
-''型:String'' ''デフォルト:<コンポーネント名>''
-
-コンポーネントのクラス名を指定します。指定がない場合は、コンポーネント名がクラス名になります。
-
-==== fileName ====
-''型:String'' ''デフォルト:<クラス名>''
-
-コンポーネントのファイル名を指定します。指定がない場合は、クラス名がファイル名となります。
 ==== hasTemplate ====
 ''型:Boolean'' ''デフォルト:true''
 
 コンポーネントがテンプレートHTMLを持つかを指定します。Trueの場合、初期化の途中で自動的に[[#switchtemplate_templatename_options|switchTemplate()]]が呼び出され、テンプレートHTMLの読み込みと差し込みが行われます。
 
-====loaderName====
-''型:String'' ''Default:"DefaultLoader"''
-
-使用するローダの名前を指定します。ローダはクラスのJSファイルやテンプレートHTMLなどをロードするのに使われます。
-
 ==== name ====
 ''型:String'' ''デフォルト:<クラス名>''
 
 コンポーネント名を指定します。
-
-==== overwrite ====
-''型:Boolean'' ''デフォルト:false''
-
-親ノードを上書きするかを指定します。Trueの場合、親ノードはコンポーネントで上書きされます。
-
-====path====
-''型:String''
-
-コンポーネントのパスを指定します。
-
-==== rootNode ====
-''型:String'' ''デフォルト:<空>''
-
-このコンポーネントがアタッチするノードを指定します。
-
-==== splitComponent ====
-''型:Boolean'' ''デフォルト:false''
-
-コンポーネントのファイルが分割されているかを指定します。Trueの場合、ローダーは2つのファイルを読み込みます。
-
-==== sync ====
-''型:String/Boolean'' ''デフォルト:false''
-
-文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、"started"になるのを待ちます。
-==== tag ====
-''型:String'' ''デフォルト:<空>''
-
-コンポーネントのタグを指定します。この値でHTMLに挿入されます。tagNameと違い、属性やクラスも指定できます。
-
-==== tagName ====
-''型:String'' ''デフォルト:<説明参照>''
-
-このコンポーネントのタグの名前を指定します。指定されてない場合、タグ名はクラス名から生成されます。クラス名はパスカルケースと仮定し、2つ目の大文字の文字を境に2つの単語に区切られ、ハイフンで連結されます。
 
 ==== templateName ====
 ''型:String'' ''デフォルト:<タグ名>''
@@ -160,51 +98,6 @@ Trueの場合、コンポーネントがドキュメントツリーから切り�
 設定の連結機能は、ChainableStoreクラスを使って実装されています。
   * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:util:chainablestore|リファレンス - ストア - ChainableStore]]
 </WRAP>
-
-===== タグ属性 =====
-
-いくつかのコンポーネントの設定は、タグ属性に指定することもできます。タグ属性は設定より高い優先度を持っています。
-
-====bm-autoload====
-
-''型:String''
-
-コンポーネントを自動的にロードするかを指定します。値としてコンポーネントのURLを指定します。もし値がセットされてない場合、デフォルトのパスからコンポーネントがロードされます。
-
-====bm-automorph====
-
-''型:(なし)''
-
-Indicates to load an HTML file from the default path. No value is needed. 設定の[[#automorph|"settings.autoMorph"]]と同じです。
-
-====bm-classname====
-
-''型:String''
-
-コンポーネントのクラス名を指定します。設定の[[#classname|"settings.className"]]と同じです。
-
-====bm-path====
-
-''型:String''
-
-コンポーネントやテンプレートHTMLをロードするパスを指定します。設定の[[#path|"settings.path"]]と同じです。
-
-====bm-settingref====
-''型:String''
-
-設定ファイルへのURLを指定します。この設定ファイルは非同期に読み込まれます。
-
-====bm-settings====
-''型:String''
-
-設定をjson形式で指定します。ここで指定した設定は"settings"セクション内に記述されたものとみなされ、現在の設定にマージされます。
-
-====bm-split====
-
-''型:(なし)''
-
-この属性が存在する場合、コンポーネントが分割形式とみなします。設定の[[#splitcomponent|"settings.splitComponent"]]と同じです。値は不要です。
-
 
 ===== イベント =====
 

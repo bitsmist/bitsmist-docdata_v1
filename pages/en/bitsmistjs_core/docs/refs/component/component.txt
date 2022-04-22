@@ -25,24 +25,13 @@ The component's settings are placed in the "settings" section.
     "settings": {
         "autoFetch": <autoFetch>,
         "autoFill": <autoFill>,
-        "autoMorph": <autoMorph>,
         "autoPostStart": <autoPostStart>,
         "autoRefresh": <autoRefresh>,
         "autoRestart": <autoRestart>,
         "autoSetup": <autoSetup>,
         "autoStop": <autoStop>,
-        "className": <className>,
-        "fileName": <fileName>,
         "hasTemplate": <hasTemplate>,
-        "loaderName": <loaderName>,
         "name": <name>,
-        "overwrite": <overwrite>,
-        "path": <path>,
-        "rootNode": <rootNode>,
-        "splitComponent": <splitComponent>,
-        "sync": <sync>,
-        "tag": <tag>,
-        "tagName": <tagName>,
         "templateName": <templateName>,
         "useGlobalSettings": <useGlobalSettings>,
     },
@@ -58,10 +47,7 @@ When set to True, [[#fetch_options|fetch()]] method will be called automatically
 
 When set to True, [[#fill_options|fill()]] method will be called automatically inside [[#refresh_options|refresh()]] method.
 
-==== autoMorph ====
-''Type:String/Boolean'' ''Default:"BITSMIST.v1.Component"''
 
-Instead of loading class JS files, it uses the specified existing class when instantiating a tag.
 ==== autoPostStart ====
 ''Type:Boolean'' ''Default:true''
 
@@ -87,64 +73,15 @@ When set to True, [[#setup_options|setup()]] method will be called automatically
 
 When set to True, [[#stop_options|stop()]] method will be called when the component is detached from the document tree.
 
-==== className ====
-''Type:String'' ''Default:<Component Name>''
-
-A class name of the component. If not specified, the component name is used as the class name.
-
-==== fileName ====
-''Type:String'' ''Default:<Class Name>''
-
-A filename of the component. If not specified, the class name is used as the file name.
-
 ==== hasTemplate ====
 ''Type:Boolean'' ''Default:true''
 
 Specifies whether the component has template HTML files. When set to True, [[#switchtemplate_templatename_options|switchTemplate()]] method will be called in the initialization process to load and insert template HTML in the component.
 
-====loaderName====
-''Type:String'' ''Default:"DefaultLoader"''
-
-Specifies a loader name to use. The loader is used to load resources like class js files and template HTML files.
-
 ==== name ====
 ''Type:String'' ''Default:<Class Name>''
 
 Specifies the component name.
-
-====overwrite====
-''Type:Boolean'' ''Default:False''
-
-Specifies whether to overwrite a parent node. If set to True, the parent node will be replaced by the component.
-
-====path====
-''Type:String''
-
-Specifies a path of the component.
-==== rootNode ====
-''Type:String'' ''Default:<Empty>''
-
-A node to which the component attaches.
-
-==== splitComponent ====
-''Type:Boolean'' ''Default:false''
-
-Specifies whether a component file is split. If set to True, the loader will load two files.
-
-==== sync ====
-''Type:String/Boolean'' ''Default:false''
-
-If a string is set, it waits for an added component to become the specified state. If set to True, it waits for the “started” state.
-
-==== tag ====
-''Type:String'' ''Default:<Empty>''
-
-A tag for the component. This tag is inserted into the document tree as a component. Unlike "tagName", you can specify attributes and classes also.
-
-==== tagName ====
-''Type:String'' ''Default:<see desc>''
-
-A tag name of the component. If not specified, it will be generated from the class name. Assuming the class name is a pascal case, the class name is divided into two words from the second capital letter of the class name, then those two words will be concatenated with '-'.
 
 ==== templateName ====
 ''Type:String'' ''Default:<tag name>''
@@ -160,50 +97,6 @@ Specifies whether to apply global settings to the component. When set to True, t
 The chain of settings is implemented by ChainableStore class.
   * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:refs:util:chainablestore|Reference - Store - ChainableStore]]
 </WRAP>
-
-===== Tag Attributes =====
-
-Some component's settings can be specified in tag attributes. Tag attributes have higher priority than settings.
-
-====bm-autoload====
-
-''Type:String''
-
-Indicates to load a component automatically. Specify a URL to the component as the value. If the value is empty the component is loaded using the default paths.
-
-====bm-automorph====
-
-''Type:Boolean''
-
-Indicates to load an HTML file from the default path. No value is needed. Same as [[#automorph|"settings.autoMorph"]].
-
-====bm-classname====
-
-''Type:String''
-
-A class name of the component. Same as [[#classname|"settings.className"]].
-
-====bm-path====
-
-''Type:String''
-
-A path that is used for loading components and templates. Same as [[#path|"settings.path"]].
-
-====bm-settingref====
-''Type:String''
-
-A URL to the component setting file. The setting file will be loaded asynchronously.
-
-====bm-settings====
-''Type:String''
-
-Settings in JSON format. These settings are merged into the component's settings as if they are placed in the "settings" section.
-
-====bm-split====
-
-''Type:(none)''
-
-Indicates a component file is split. No value is needed. Same as [[#splitcomponent|"settings.splitComponent"]].
 
 =====Events=====
 
