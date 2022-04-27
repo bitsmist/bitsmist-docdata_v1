@@ -10,7 +10,7 @@ LoaderOrganizerはクラスファイル・設定ファイル・テンプレー�
 
 全体の処理として、DOMがロードされた時にページ内のロードが必要なタグのファイルを読み込みます。
 
-特定のコンポーネントにアタッチされた場合、"molds"/"components"セクションから設定を読み込みコンポーネントを追加します。どちらのセクションもコンポーネントを追加するという意味では同じですが、大きな違いはデフォルトで同期するかどうかです。molds"セクションに書かれているコンポーネントの場合は、前のコンポーネントの追加を待ってから次のコンポーネントを追加します。"molds"の全ての処理が完了後、"components"に記載されているコンポーネントの追加を開始します。こちらは前のコンポーネントの追加を待たずに、次のコンポーネントの追加に取り掛かります。そのためロードの開始は順番通りに行われますが、ロードの終了は順番通りにならない可能性があります。
+特定のコンポーネントにアタッチされた場合、"molds"/"components"セクションから設定を読み込み、コンポーネントを追加します。どちらのセクションもコンポーネントを追加するという意味では同じですが、大きな違いはデフォルトで同期するかどうかです。"molds"セクションに書かれているコンポーネントの場合は、前のコンポーネントの追加を待ってから次のコンポーネントを追加します。"molds"の全ての処理が完了後、"components"に記載されているコンポーネントの追加を開始します。こちらは前のコンポーネントの追加を待たずに、次のコンポーネントの追加に取り掛かります。そのためロードの開始は順番通りに行われますが、ロードの終了は順番通りにならない可能性があります。
 
 === セクション ===
 
@@ -27,6 +27,13 @@ LoaderOrganizerはクラスファイル・設定ファイル・テンプレー�
 <WRAP legend>書式:</WRAP>
 <code javascript>
 {
+    "system": {
+        "appBaseUrl": <appBaseUrl>,
+        "componentPath": <componentPath>,
+        "loaderName": <loaderName>,
+        "templatePath": <templatePath>,
+        "splitComponent": <splitComponent>
+    },
     "organizers": {
         "LoaderOrganizer": {
             "settings": {
@@ -37,10 +44,35 @@ LoaderOrganizerはクラスファイル・設定ファイル・テンプレー�
 }
 </code>
 
+====appBaseUrl====
+''型:String'' ''デフォルト:""''
+
+アプリケーションのベースとなるURLを指定します。
+
 ====autoLoadOnStartup====
-''型:Boolean'' ''Default''
+''型:Boolean'' ''デフォルト:True''
 
 Trueの場合、DOMが読み込まれた時点でオートロード処理を開始します。
+
+====componentPath====
+''型:String'' ''デフォルト:""''
+
+コンポーネントの共通のパスを指定します。
+
+====loaderName====
+''型:String'' ''デフォルト:"DefaultLoader"''
+
+コンポーネントをロードするローダの名前を指定します。
+
+====templatePath====
+''型:String'' ''デフォルト:""''
+
+コンポーネントのテンプレートの共通のパスを指定します。
+
+====splitComponent====
+''型:String'' ''デフォルト:False''
+
+コンポーネントのファイルが分割されているかを指定します。Trueの場合、ローダーは2つのファイルを読み込みます。
 
 ===== 設定 =====
 
@@ -51,7 +83,7 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 {
     "molds"/"components": {
         <componentName>: {
-            "loaings": {
+            "loadings": {
                 "autoMorph": <autoMorph>,
                 "className": <className>,
                 "fileName": <fileName>,
@@ -69,22 +101,30 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 }
 </code>
 
-<componentName>の値として設定するオブジェクトは、追加するコンポーネントに対する設定となります。ここでは追加時のみに有効な設定を記載していますが、その他のコンポーネント設定も同様にここで設定することができます。
+<componentName>の値として設定するオブジェクトは、追加するコンポーネントに対する設定となります。ここで記述された値は、そのコンポーネントの設定にマージされます。ここではLoaderOrganizerによって処理される"loadings"セクションのみ接召しますが、その他のセクションも同様にここで設定することができます。
 
 <WRAP legend>例:</WRAP>
 <code javascript>
 {
     "molds": {
-        "PadSearch": {
+        "PadSidebar": {
             "loadings": {
-                "className": "PadSearch"
+                "className": "PadSidebar",
+                "rootNode": "#content"
+            },
+            "settings": {
+                "name": "PadSidebar"
             }
         }
     },
     "components": {
         "PadSetting": {
             "loadings": {
-                "className": "PadSetting"
+                "className": "PadSetting",
+                "rootNode": "#main"
+            },
+            "settings": {
+                "name": "PadSetting"
             }
         }
     }
@@ -92,15 +132,15 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 </code>
 
 ==== autoMorph ====
-''型:String/Boolean'' ''Default:"BITSMIST.v1.Component"''
+''型:String/True'' ''Default:"BITSMIST.v1.Component"''
 
-タグをインスタンス化する際、クラスのJSファイルをロードせずに、指定された既に存在するクラスを使用します。
+HTMLのみのコンポーネントをインスタンス化する際に使用するクラス名を指定します。
 
 ====componentName====
 
-''Type:String''
+''型:String''
 
-コンポーネントの名前を指定します。次のcomponentInfoでクラス名の指定がない場合、この値がクラス名となります。
+コンポーネントの名前を指定します。"className"オプションの指定がない場合、この値がクラス名となります。
 
 
 ==== className ====
@@ -109,17 +149,19 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 コンポーネントのクラス名を指定します。指定がない場合は、コンポーネント名がクラス名になります。
 
 ==== fileName ====
-''型:String'' ''デフォルト:<クラス名>''
+''型:String'' ''デフォルト:<タグ名>''
 
-コンポーネントのファイル名を指定します。指定がない場合は、クラス名がファイル名となります。
+コンポーネントのファイル名を拡張しなしで指定します。指定がない場合は、タグ名がファイル名となります。
+
+
 
 ====loaderName====
-''型:String'' ''Default:"DefaultLoader"''
+''型:String'' ''デフォルト:"DefaultLoader"''
 
-使用するローダの名前を指定します。ローダはクラスのJSファイルやテンプレートHTMLなどをロードするのに使われます。
+コンポーネントをロードするローダの名前を指定します。
 
-==== overwrite ====
-''型:Boolean'' ''デフォルト:false''
+====overwrite====
+''型:Boolean'' ''デフォルト:False''
 
 親ノードを上書きするかを指定します。Trueの場合、親ノードはコンポーネントで上書きされます。
 
@@ -152,11 +194,57 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 
 このコンポーネントのタグの名前を指定します。指定されてない場合、タグ名はクラス名から生成されます。クラス名はパスカルケースと仮定し、2つ目の大文字の文字を境に2つの単語に区切られ、ハイフンで連結されます。
 
+===== タグ属性 =====
+
+いくつかの設定はタグの属性に指定することもできます。タグ属性は他の設定より高い優先順位を持っています。
+
+====bm-autoload====
+
+''型:String''
+
+コンポーネントに必要なファイルを自動的にロードすることを示します。値としてコンポーネントのJSファイルへのURLを指定することができます。指定がない場合は、デフォルトのパスとファイル名が使用されます。
+
+====bm-automorph====
+
+''型:String/(none)''
+
+タグをインスタンス化する際、クラスのJSファイルをロードせずに、指定された既に存在するクラスを使用します。[[#automorph|"loadings.autoMorph"]]と同じです。
+
+====bm-classname====
+
+''型:String''
+
+コンポーネントのクラス名を指定します。[[#classname|"loadings.className"]]と同じです。
+
+====bm-filename====
+
+''型:String''
+
+コンポーネントのファイル名を指定します。拡張子は不要です。[[#filename|"loadings.fileName"]]と同じです。
+
+====bm-loadername====
+
+''型:String'' ''デフォルト:"DefaultLoader"''
+
+コンポーネントをロードするローダを指定します。[[#loadername|"loadings.loaderName"]]と同じです。
+
+====bm-path====
+
+''型:String''
+
+コンポーネントのファイルをロードするパスを指定します。 [[#path|"loadings.path"]]と同じです。
+
+====bm-split====
+
+''型:(none)''
+
+コンポーネントのファイルが分割されているかを指定します。値は不要です。[[#splitcomponent|"loadings.splitComponent"]]と同じです。
+
 ===== 拡張プロパティ =====
 
 ==== components ====
 
-''Type:Object'' ''Inject:component'' ''get''
+''型:Object'' ''Inject:component'' ''get''
 
 このコンポーネントに追加されたコンポーネントを保持するオブジェクトです。
 
@@ -173,7 +261,7 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 
 ^パラメータ^型^説明^
 |componentName \\ ''必須''|String|追加するコンポーネント名です。設定で指定がない場合は、これがクラス名となります。|
-|settings \\ ''必須''|Object|追加するコンポーネントの設定情報です。|
+|settings|Object|追加するコンポーネントの設定情報です。|
 |sync \\ ''Default:false''|Object|Trueならコンポーネントのロード完了を待ちます。|
 
 === 戻り値 ===
@@ -182,12 +270,12 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 
 === 参照する設定 ===
 
-  * [[ja:bitsmistjs_core:docs:refs:component:component#classname|settings.className]]
-  * [[ja:bitsmistjs_core:docs:refs:component:component#rootnode|settings.rootNode]]
-  * [[ja:bitsmistjs_core:docs:refs:component:component#splitcomponent|settings.splitComponent/system.splitComponent]]
-  * [[ja:bitsmistjs_core:docs:refs:component:component#sync|settings.sync]]
-  * [[ja:bitsmistjs_core:docs:refs:component:component#tag|settings.tag]]
-  * [[ja:bitsmistjs_core:docs:refs:component:component#tagname|settings.tagName]]
+  * [[#classname|loadings.className]]
+  * [[#overwrite|loadings.overwrite]]
+  * [[#rootnode|loadings.rootNode]]
+  * [[#sync|loadings.sync]]
+  * [[#tag|loadings.tag]]
+  * [[#tagname|loadings.tagName]]
 
 ====getLoader(loaderName)====
 ''型:Function'' ''Inject:Component''
@@ -197,92 +285,123 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|loaderName \\ ''Default:DefaultLoader''|String|取得するローダの名称です。|
+|loaderName \\ ''デフォルト:"DefaultLoader"''|String|取得するローダの名称です。|
 
 ===戻り値===
 
 ローダオブジェクト。
 
-====loadComponent(...args)====
+====loadComponent(className, settings, loadOptions, tagName)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-現在のローダのloadComponent()メソッドを呼び出します。
+コンポーネントのファイルをロードします。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|...args|*|ローダのメソッドへの引数です。|
+|className \\ ''必須''|String|コンポーネントのクラス名です。|
+|settings|Object|コンポーネントの設定です。|
+|loadOptions|Object|ロードする際のオプションです。有効なキーは以下です。|
+|  "path"|String|ロードするコンポーネントのパスを指定します。|
+|tagName \\ ''必須''|Object|コンポーネントに紐づけるタグ名です。|
 
 ===戻り値===
 
 なし。
 
-====loadTag(...args)====
+=== 参照する設定 ===
+
+  * [[#automorph|loadings.autoMorph]]
+  * [[#filename|loadings.fileName]]
+  * [[#path|loadings.path]]
+  * [[#splitComponent|loadings.splitComponent]]
+  * [[#lsystem.appBaseUrl]]
+  * [[#|system.componentPath]]
+  * [[#splitComponent|system.splitComponent]]
+
+==== loadTags(rootNode, options) ====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-現在のローダのloadTag()メソッドを呼び出します。
+指定されたrootNode配下にある、ロードが必要なコンポーネントをロードします。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|...args|*|ローダのメソッドへの引数です。|
+|rootNode \\ ''必須''|HTMLElement|ロード対象の基点となるノードです。|
+|options|Object|ロードのオプションです。|
 
 ===戻り値===
 
 なし。
 
-==== loadTags(...args) ====
+=== 参照する設定 ===
+
+  * [[#bm-autoload|bm-autoload]]
+  * [[#bm-automorph|bm-automorph]]
+  * [[#bm-classname|bm-classname]]
+  * [[#bm-filename|bm-filename]]
+  * [[#bm-loadername|bm-loadername]]
+  * [[#bm-path|bm-path]]
+  * [[#bm-split|bm-split]]
+ 
+====loadSetting(settingName, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-現在のローダのloadTags()メソッドを呼び出します。
+コンポーネントの設定ファイルをロードします。ロードした設定は、コンポーネントの設定にマージされます。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|...args|*|ローダのメソッドへの引数です。|
+|settingName \\ ''必須''|String|設定ファイルの名前です。拡張子は不要です。|
+|loadOptions|Object|ロードする際のオプションです。有効なキーは以下です。|
+|  "path"|String|ロードする設定のパスを指定します。|
 
 ===戻り値===
 
 なし。
 
-====loadSetting(...args)====
+=== 参照する設定 ===
+
+  * [[#|system.appBaseUrl]]
+  * [[#|system.componentPath]]
+  * [[#path|loadings.path]]
+
+====loadSettingFile(settingName, path, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-現在のローダのloadSetting()メソッドを呼び出します。
+設定ファイルをロードします。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|...args|*|ローダのメソッドへの引数です。|
+|settingName \\ ''必須''|String|設定ファイルの名前です。拡張子は不要です。|
+|path|String|設定ファイルへのパスです。|
+|loadOptions|Object|ロードする際のオプションです。有効なキーは以下です。|
+|  "type" \\ ''デフォルト:"js"''|String|ロードする設定の種類を指定します。"json"または"js"です。種類が"js"の場合、スクリプトの中身が実行されます。|
+|  "bindTo"|Object|"type"が"js"の場合に、スクリプトを実行する際にバインドされるオブジェクトを指定します。|
 
 ===戻り値===
 
 なし。
 
-====loadSettingFile(...args)====
+====loadTemplate(templateName, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-現在のローダのloadSettingFile()メソッドを呼び出します。
+テンプレートHTMLファイルをロードします。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
-|...args|*|ローダのメソッドへの引数です。|
+|templateName \\ ''必須''|String|テンプレートのファイル名です。拡張子は不要です。|
+|loadOptions|Object|ロードする際のオプションです。有効なキーは以下です。|
+|  "path"|String|ロードするテンプレートのパスを指定します。|
 
 ===戻り値===
 
 なし。
 
-====loadTemplate(...args)====
-''型:undefined'' ''Inject:Component'' ''非同期''
+=== 参照する設定 ===
 
-現在のローダのloadTemplate()メソッドを呼び出します。
-
-===パラメータ===
-
-^パラメータ^型^説明^
-|...args|*|ローダのメソッドへの引数です。|
-
-===戻り値===
-
-なし。
+  * [[#|system.appBaseUrl]]
+  * [[#|system.templatePath]]
+  * [[#path|loadings.path]]

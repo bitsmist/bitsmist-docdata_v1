@@ -20,7 +20,19 @@ At the organizing stage, it loads settings passed via parameters and stores them
 
   * beforeStart
 
+===== Tag Attributes =====
 
+Some component settings can be specified in tag attributes. Tag attributes have higher priority than settings.
+
+====bm-settingref====
+''Type:String''
+
+A URL to the component setting file. The setting file will be loaded asynchronously.
+
+====bm-settings====
+''Type:String''
+
+Settings in JSON format. These settings are merged into the component's settings as if they are placed in the "settings" section.
 
 =====Extended properties=====
 

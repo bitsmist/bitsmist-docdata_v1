@@ -27,6 +27,13 @@ When it is attached to a component, it loads settings from "molds", and "compone
 <WRAP legend>Syntax:</WRAP>
 <code javascript>
 {
+    "system": {
+        "appBaseUrl": <appBaseUrl>,
+        "componentPath": <componentPath>,
+        "loaderName": <loaderName>,
+        "templatePath": <templatePath>,
+        "splitComponent": <splitComponent>
+    },
     "organizers": {
         "LoaderOrganizer": {
             "settings": {
@@ -37,10 +44,37 @@ When it is attached to a component, it loads settings from "molds", and "compone
 }
 </code>
 
-====autoLoadOnStartup====
-''Type:Boolean'' ''Default''
 
-Start loading tags on DOMContentLoaded if True.
+====appBaseUrl====
+''Type:String'' ''Default:""''
+
+Specifies the application's base URL.
+
+====autoLoadOnStartup====
+''Type:Boolean'' ''Default:True''
+
+If True, it starts loading tags on the DOMContentLoaded event.
+
+====componentPath====
+''Type:String'' ''Default:""''
+
+Specifies a path to the component common path.
+
+====loaderName====
+''Type:String'' ''Default:"DefaultLoader"''
+
+Specifies a loader name to load components.
+
+====templatePath====
+''Type:String'' ''Default:""''
+
+Specifies a path to the template common path.
+
+====splitComponent====
+''Type:String'' ''Default:False''
+
+Specifies whether a component file is split. If set to True, the loader will load two files.
+
 
 =====Settings=====
 
@@ -69,22 +103,30 @@ Extra components settings are placed in the "components" or "molds" section.
 }
 </code>
 
-An object set as the value for <componentName> is setting for an adding component. We only explain the settings valid only for adding a component here, however, any other component settings can be set in the object.
+An object set as the value for <componentName> is setting for an adding component. Those settings will be merged into the adding component settings. Though we only explain the "loadings" section that is handled by LoaderOrganizer here, any other sections can exist in this settings.
 
 <WRAP legend>Example:</WRAP>
 <code javascript>
 {
     "molds": {
-        "PadSearch": {
+        "PadSidebar": {
             "loadings": {
-                "className": "PadSearch"
+                "className": "PadSidebar",
+                "rootNode": "#content"
+            },
+            "settings": {
+                "name": "PadSidebar"
             }
         }
     },
     "components": {
         "PadSetting": {
             "loadings": {
-                "className": "PadSetting"
+                "className": "PadSetting",
+                "rootNode": "#main"
+            },
+            "settings": {
+                "name": "PadSetting"
             }
         }
     }
@@ -92,15 +134,15 @@ An object set as the value for <componentName> is setting for an adding componen
 </code>
 
 ==== autoMorph ====
-''Type:String/Boolean'' ''Default:"BITSMIST.v1.Component"''
+''Type:String/True'' ''Default:"BITSMIST.v1.Component"''
 
-Instead of loading class JS files, it uses the specified existing class when instantiating a tag.
+Specifies a class name to use for instantiating an HTML-only component.
 
 ====componentName====
 
 ''Type:String''
 
-The name of the component. If there is no "className" option in settgins, this value also becomes a class name of the component.
+The name of the component. If there is no "className" option in settings, this value also becomes a class name of the component.
 
 
 ==== className ====
@@ -109,14 +151,15 @@ The name of the component. If there is no "className" option in settgins, this v
 A class name of the component. If not specified, the component name is used as the class name.
 
 ==== fileName ====
-''Type:String'' ''Default:<Class Name>''
+''Type:String'' ''Default:<Tag Name>''
 
-A filename of the component. If not specified, the class name is used as the file name.
+A filename of the component without extension. If not specified, the tag name is used as the file name.
+
 
 ====loaderName====
 ''Type:String'' ''Default:"DefaultLoader"''
 
-Specifies a loader name to use. The loader is used to load resources like class js files and template HTML files.
+Specifies a loader name to load the component.
 
 ====overwrite====
 ''Type:Boolean'' ''Default:False''
@@ -155,7 +198,7 @@ A tag name of the component. If not specified, it will be generated from the cla
 
 ===== Tag Attributes =====
 
-Some component's settings can be specified in tag attributes. Tag attributes have higher priority than settings.
+Some settings can be specified in tag attributes. Tag attributes have higher priority than settings.
 
 ====bm-autoload====
 
@@ -165,9 +208,9 @@ Indicates to load a component automatically. Specify a URL to the component as t
 
 ====bm-automorph====
 
-''Type:Boolean''
+''Type:String/(none)''  ''Default:"BITSMIST.v1.Component"''
 
-Indicates to load an HTML file from the default path. No value is needed. Same as [[#automorph|"loadings.autoMorph"]].
+Specifies an existing class name to use when instantiating the component. Same as [[#automorph|"loadings.autoMorph"]].
 
 ====bm-classname====
 
@@ -175,21 +218,25 @@ Indicates to load an HTML file from the default path. No value is needed. Same a
 
 A class name of the component. Same as [[#classname|"loadings.className"]].
 
+====bm-filename====
+
+''Type:String''
+
+A filename of the component without extension. Same as [[#filename|"loadings.fileName"]].
+
+====bm-loadername====
+
+''Type:String'' ''Default:"DefaultLoader"''
+
+A loader name to load the component. Same as [[#loadername|"loadings.loaderName"]].
+
 ====bm-path====
 
 ''Type:String''
 
 A path that is used for loading components and templates. Same as [[#path|"loadings.path"]].
 
-====bm-settingref====
-''Type:String''
 
-A URL to the component setting file. The setting file will be loaded asynchronously.
-
-====bm-settings====
-''Type:String''
-
-Settings in JSON format. These settings are merged into the component's settings as if they are placed in the "settings" section.
 
 ====bm-split====
 
@@ -218,7 +265,7 @@ Adds a child component to the component. The added component instance is added t
 
 ^Parameter^Type^Description^
 |componentName \\ ''Required''|String|A name of the component to add. If no "className" setting in the settings parameter, this value is also used as the class name.|
-|settings \\ ''Required''|Object|Component settings.|
+|settings|Object|Component settings.|
 |sync \\ ''Default:false''|Object|Whether to return a promise that is resolved after finish loading the component.|
 
 ===Return Value===
@@ -228,8 +275,8 @@ undefined
 ===Referencing Settings===
 
   * [[#classname|loadings.className]]
+  * [[#overwrite|loadings.overwrite]]
   * [[#rootnode|loadings.rootNode]]
-  * [[#splitcomponent|loadings.splitComponent/system.splitComponent]]
   * [[#sync|loadings.sync]]
   * [[#tag|loadings.tag]]
   * [[#tagname|loadings.tagName]]
@@ -237,97 +284,130 @@ undefined
 ====getLoader(loaderName)====
 ''Type:Function'' ''Inject:Component''
 
-Returns specified loader. If the loader name is not specified, then default loader (DefaultLoader) will be returned.
+Returns specified loader. If the loader name is not specified, then the default loader (DefaultLoader) will be returned.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|loaderName \\ ''Default:DefaultLoader''|String|Name of the loader to get.|
+|loaderName \\ ''Default:"DefaultLoader"''|String|A name of the loader to get.|
 
 ===Return Value===
 
 Loader Object
 
-====loadComponent(...args)====
+====loadComponent(className, settings, loadOptions, tagName)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Calls current loader's loadComponent() method.
+Load component files.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|...args|*|Arguments to the loader method.|
+|className \\ ''Required''|String|A name of component class.|
+|settings|Object|Component settings.|
+|loadOptions|Object|Options for loading. Valid keys are below.|
+|  "path"|String|A path to the component to load.|
+|tagName \\ ''Required''|Object|A tag name of the component.|
 
 ===Return Value===
 
 undefined
 
-====loadTag(...args)====
+=== Referencing Settings ===
+
+  * [[#automorph|loadings.autoMorph]]
+  * [[#filename|loadings.fileName]]
+  * [[#path|loadings.path]]
+  * [[#splitComponent|loadings.splitComponent]]
+  * [[#lsystem.appBaseUrl]]
+  * [[#|system.componentPath]]
+  * [[#splitComponent|system.splitComponent]]
+
+==== loadTags(rootNode, options) ====
+
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Calls current loader's loadTag() method.
+Load tags under the root node specified.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|...args|*|Arguments to the loader method.|
-
-===Return Value===
-
-undefined
-==== loadTags(...args) ====
-
-''Type:undefined'' ''Inject:Component'' ''Asynchronous''
-
-Calls current loader's loadTags() method.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|...args|*|Arguments to the loader method.|
-
-===Return Value===
-
-undefined
-
-====loadSetting(...args)====
-''Type:undefined'' ''Inject:Component'' ''Asynchronous''
-
-Calls current loader's loadSetting() method.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|...args|*|Arguments to the loader method.|
+|rootNode \\ ''Required''|HTMLElement|A base node to load components.|
+|options|Object|Options.|
 
 ===Return Value===
 
 undefined
 
-====loadSettingFile(...args)====
+===Referencing Settings===
+
+  * [[#bm-autoload|bm-autoload]]
+  * [[#bm-automorph|bm-automorph]]
+  * [[#bm-classname|bm-classname]]
+  * [[#bm-filename|bm-filename]]
+  * [[#bm-loadername|bm-loadername]]
+  * [[#bm-path|bm-path]]
+  * [[#bm-split|bm-split]]
+
+====loadSetting(settingName, loadOptions)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Calls current loader's loadSettingFile() method.
+Load a component setting file and merge settings in the file into component settings.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|...args|*|Arguments to the loader method.|
+|settingName \\ ''Required''|String|A name of the setting file without extension.|
+|loadOptions|Object|Options for loading. Valid keys are below.|
+|  "path"|String|A path to the setting file.|
 
 ===Return Value===
 
 undefined
 
-====loadTemplate(...args)====
+===Referencing Settings===
+
+  * [[#|system.appBaseUrl]]
+  * [[#|system.componentPath]]
+  * [[#path|loadings.path]]
+
+====loadSettingFile(settingName, path, loadOptions)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Calls current loader's loadTemplate() method.
+Load a setting file.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|...args|*|Arguments to the loader method.|
+|settingName \\ ''Required''|String|A name of the setting file without extension.|
+|path|String|A path to the setting file.|
+|loadOptions|Object|Options for loading. Valid keys are below.|
+|  "type" \\ ''Default:"js"''|String|A type of the setting. The types are "json" or "js". If the type is "js" then the script will be executed on loading.|
+|  "bindTo"|Object|An object to bind when executing a script if the "type" is "js".|
 
 ===Return Value===
 
 undefined
+
+====loadTemplate(templateName, loadOptions)====
+''Type:undefined'' ''Inject:Component'' ''Asynchronous''
+
+Load a template HTML file.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|templateName \\ ''Required''|String|A name of template file without extension.|
+|loadOptions|Object|Options for loading. Valid keys are below.|
+|  "path"|String|A path to the template file.|
+
+===Return Value===
+
+undefined
+
+===Referencing Settings===
+
+  * [[#|system.appBaseUrl]]
+  * [[#|system.templatePath]]
+  * [[#path|loadings.path]]
+
