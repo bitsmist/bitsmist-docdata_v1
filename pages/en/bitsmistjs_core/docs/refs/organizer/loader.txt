@@ -46,17 +46,17 @@ When it is attached to a component, it loads settings from "molds", and "compone
 
 
 ====appBaseUrl====
-''Type:String'' ''Default:""''
+''Type:String''
 
 Specifies the application's base URL.
 
 ====autoLoadOnStartup====
-''Type:Boolean'' ''Default:True''
+''Type:Boolean'' ''Default:true''
 
 If True, it starts loading tags on the DOMContentLoaded event.
 
 ====componentPath====
-''Type:String'' ''Default:""''
+''Type:String''
 
 Specifies a path to the component common path.
 
@@ -66,12 +66,12 @@ Specifies a path to the component common path.
 Specifies a loader name to load components.
 
 ====templatePath====
-''Type:String'' ''Default:""''
+''Type:String''
 
 Specifies a path to the template common path.
 
 ====splitComponent====
-''Type:String'' ''Default:False''
+''Type:String'' ''Default:false''
 
 Specifies whether a component file is split. If set to True, the loader will load two files.
 
@@ -162,7 +162,7 @@ A filename of the component without extension. If not specified, the tag name is
 Specifies a loader name to load the component.
 
 ====overwrite====
-''Type:Boolean'' ''Default:False''
+''Type:Boolean'' ''Default:false''
 
 Specifies whether to overwrite a parent node. If set to True, the parent node will be replaced by the component.
 
@@ -172,7 +172,7 @@ Specifies whether to overwrite a parent node. If set to True, the parent node wi
 Specifies a path of the component files.
 
 ==== rootNode ====
-''Type:String'' ''Default:<Empty>''
+''Type:String''
 
 A node to which the component attaches.
 
@@ -187,12 +187,12 @@ Specifies whether a component file is split. If set to True, the loader will loa
 If a string is set, it waits for an added component to become the specified state. If set to True, it waits for the “started” state.
 
 ==== tag ====
-''Type:String'' ''Default:<Empty>''
+''Type:String''
 
 A tag for the component. This tag is inserted into the document tree as a component. Unlike "tagName", you can specify attributes and classes also.
 
 ==== tagName ====
-''Type:String'' ''Default:<see desc>''
+''Type:String'' ''Default:(see desc)''
 
 A tag name of the component. If not specified, it will be generated from the class name. Assuming the class name is a pascal case, the class name is divided into two words from the second capital letter of the class name, then those two words will be concatenated with '-'.
 
