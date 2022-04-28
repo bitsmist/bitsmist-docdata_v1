@@ -18,6 +18,24 @@ StateOrganizer waits for other components to become the specific states.
 
   * all
 
+
+=====Settings (Global)=====
+
+<WRAP legend>Syntax:</WRAP>
+<code javascript>
+{
+    "system": {
+        "waitForTimeout": <waitForTimeout>,
+    },
+}
+</code>
+
+====waitForTimeout====
+''Type:Number''
+
+Specifies a default timeout in milliseconds to wait for other components when organizing.
+
+
 =====Settings=====
 
 Settings are placed in "waitFor" section.
