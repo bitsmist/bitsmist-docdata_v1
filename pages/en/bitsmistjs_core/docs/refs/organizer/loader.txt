@@ -318,10 +318,11 @@ undefined
   * [[#automorph|loadings.autoMorph]]
   * [[#filename|loadings.fileName]]
   * [[#path|loadings.path]]
-  * [[#splitComponent|loadings.splitComponent]]
+  * [[#splitcomponent1|loadings.splitComponent]]
+  * [[#tagName|loadings.tagName]]
   * [[#lsystem.appBaseUrl]]
   * [[#|system.componentPath]]
-  * [[#splitComponent|system.splitComponent]]
+  * [[#splitcomponent|system.splitComponent]]
 
 ==== loadTags(rootNode, options) ====
 
