@@ -6,46 +6,44 @@ BitsmistJSの特徴のひとつが、イベントドリブンです。各コン�
 
 <WRAP admonition tip links>
 イベントはイベントオーガナイザによって処理されます。
-  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:organizer:event| リファレンス - オーガナイザ:EventOrganizer]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:organizer:event| リファレンス - オーガナイザ - EventOrganizer]]
 </WRAP>
 
 =====イベントの種類=====
 
 発生するイベントには、"click"イベントのようなJavascriptネイティブのイベントと、"doSetup"のようなBitsmistJSの独自のイベントがあります。
 
-独自イベントはJavascript標準のカスタムイベントを使って実装されています。そのため、多くの場合JavascriptネイティブなのかBitmistJSオリジナルなのかを意識せずに使えるようになっています。
+独自イベントはJavascript標準のカスタムイベントを使って実装されています。そのため多くの場合、JavascriptネイティブなのかBitmistJSオリジナルなのか、を意識せずに使えるようになっています。
 
 ====BitsmistJSオリジナルイベント====
 
-ここではComponentとPadコンポーネントが発生させるイベントの一覧を紹介します。
+ここではComponentコンポーネントが発生させるイベントの一覧を紹介します。BitsmistJSイベントは1つのイベントに対し、基本的にbefore/do/afterで始まるイベントの3セットになっています（そうでないものもあります）。doで始まるイベントでメインとなる処理を行い、before/afterで始まるイベントでは、その前処理/後処理を行います。
 
-^コンポーネント名^イベント^説明^
-|Component|beforeStart|コンポーネントが初期化される直前に発生します。|
-|:::|afterStart |コンポーネントが初期化された後に発生します。|
-|:::|beforeStop|コンポーネントがノードから切り離された時に発生します。|
-|:::|doStop|beforeStopの次に発生します。|
-|:::|afterStop|doStopの次に発生します。|
-|:::|beforeSetup|setup()メソッドが呼ばれた時に発生します。|
-|:::|doSetup|beforeSetupの次に発生します。|
-|:::|afterSetup|doSetupの次に発生します。|
-|Pad|beforeOpen|open()メソッドが呼ばれた時に発生します。|
-|:::|doOpen|beforeOpenの次に発生します。|
-|:::|afterOpen|doOpenの次に発生します。|
-|:::|beforeClose|close()メソッドが呼ばれた時に発生します。|
-|:::|doClose|beforeCloseの次に発生します。|
-|:::|afterClose|doCloseの次に発生します。|
-|:::|beforeRefresh|refresh()メソッドが呼ばれた時に発生します。|
-|:::|doRefresh|beforeRefreshの次に発生します。|
-|:::|afterRefresh|doRefreshの次に発生します。|
-|:::|afterAppend|switchTemplate()メソッドが呼ばれ、HTMLファイルがノードにアタッチされた後に発生します。|
+^イベント^説明^
+|beforeStart|初期化時の処理を行います。|
+|afterStart|:::|
+|beforeStop|終了時の処理を行います。|
+|doStop|:::|
+|afterStop|:::|
+|beforeSetup|コンポーネントに設定を反映する処理を行います。|
+|doSetup|:::|
+|afterSetup|:::|
+|afterAppend|HTMLテンプレートが追加された後の処理を行います。|
+|beforeRefresh|画面描画時の処理を行います。|
+|doRefresh|:::|
+|afterRefresh|:::|
+|doTarget|取得するデータを決定する処理を行います。|
+|beforeFetch|データ取得時の処理を行います。|
+|doFetch|:::|
+|afterFetch|:::|
 
 ===== イベントハンドラの書き方 =====
 
 
-各イベントハンドラは共通の引数を持っています。[[#イベントの種類]]で記したJavascriptネイティブなイベント、BitsmistJSオリジナルなイベント、いずれもこのイベントハンドラの形式で対応します。
+各イベントハンドラは共通の引数を持っています。Javascriptネイティブなイベント、BitsmistJSオリジナルなイベント、いずれもこのイベントハンドラの形式で対応します。
 
 <code javascript>
-onDoOpen(sender, e, ex)
+onDoSetup(sender, e, ex)
 {
 }
 </code>
@@ -65,7 +63,7 @@ Javascriptネイティブなイベントの場合、ここにはイベントリ�
 この引数はイベントハンドラをセットする際にセットするオプションが渡されます。
 ===== イベントハンドラの指定方法 =====
 
-どの要素のどのイベント時にどのイベントハンドラを使用するかは、設定の"events"セクションに記述します。
+どの要素のどのイベント時にどのイベントハンドラを使用するかを、設定の"events"セクションに記述します。
 
 <code javascript>
 _getSettings()
@@ -73,7 +71,6 @@ _getSettings()
     return {
         "settings": {
             "name": "BarMain",
-            "path": "common",
         },
         "events": {
             "this": {
@@ -95,9 +92,8 @@ _getSettings()
 
 要素の指定の仕方、ハンドラの指定の仕方など、詳細は[[ja:bitsmistjs_core:docs:refs:organizer:event#設定|イベントオーガナイザのリファレンス]]をご覧ください。
 
-=====捕捉事項=====
 
-====イベントハンドラの順番====
+=====イベントハンドラの順番=====
 
 同じ要素の同じイベントに複数のイベントハンドラがある場合、基本的には登録された順番に実行されます。
 
@@ -161,7 +157,7 @@ _getSettings()
 </code>
 
 上記の場合は、this.onDoSetup2()→this.onDoSetup1()の順になります。
-==== イベントハンドラの実行は非同期 ====
+===== イベントハンドラの実行を同期する =====
 
 各イベントハンドラは非同期で実行されます。Promiseを返し適切なタイミングでresolve/rejectすることで、次の処理はこのイベントハンドラの終了を"待つ"ようになります。
 

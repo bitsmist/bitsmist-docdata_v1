@@ -26,9 +26,11 @@ BitsmistJSのコンポーネントを作成する場合は、既存のコンポ�
 _getSettings()
 {
     return {
+        "loadings": {
+            "path": "common",
+        },
         "settings": {
             "name": "BarMain",
-            "path": "common",
         },
         "events": {
             "this": {
@@ -53,9 +55,11 @@ _getSettings()
 
 <file javascript bar-header.setting.js>
 {
+    "loadings": {
+        "path": "common"
+    },
     "settings": {
         "name": "BarMain",
-        "path": "common"
     },
     "events": {
         "this": {
@@ -67,7 +71,9 @@ _getSettings()
 }
 </file>
 
-外部設定ファイルの指定がある場合、コンポーネントの初期化中に該当のファイルがロードされます。ファイルのロードが完了するまで、初期化は中断されます。
+外部設定ファイルの指定がある場合、コンポーネントの初期化中に該当のファイルがロードされ、コンポーネントの設定にマージされます。ファイルのロードが完了するまで、初期化は中断されます。
+
+この方法を使うと、同じコンポーネントでもタグ（インスタンス）ごとに違う設定を読み込ませることが可能です。
 ==== タグの属性に記述する ====
 
 bm-settings属性にJSON形式で記述します。
@@ -76,9 +82,9 @@ bm-settings属性にJSON形式で記述します。
 <button-link bm-settings='{"title":"BitsmistJS"}'></button-link>
 </code>
 
-先ほどの2つの記述方法では、同じコンポーネントの場合は全て同じ設定となりますが、こちらは同じコンポーネントでもタグごとに違う設定が可能です。
+この方法の場合、外部ファイルを読む場合と同じく、同じコンポーネントでもタグごとに違う設定が可能です。
 
-また、オーガナイザによっては、独自の属性から設定を読み込みます。例えばComponentOrganizerでは"bm-path"という属性で、コンポーネントを読み込むパスを指定できます。
+また、オーガナイザによっては、独自の属性から設定を読み込みます。例えばLoaderOrganizerでは"bm-path"という属性で、コンポーネントを読み込むパスを指定できます。
 
 <code html>
 <bar-header bm-autoload bm-path="common"></bar-header>
@@ -90,15 +96,16 @@ bm-settings属性にJSON形式で記述します。
 
 <WRAP admonition note links>
 グローバル設定についての詳細は、専用のセクションを参考にしてください。
-  *  <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:component:settings#グローバル設定|#グローバル設定]]
+  *  <html><i class="fas fa-link"></i></html>[[#グローバル設定|グローバル設定]]
 </WRAP>
 ===== 設定の優先度 =====
 
-3つの記述方法は複数組み合わせて使うこともできます。その際、同じ設定が存在する場合は優先順位の高い方で上書きされます。優先度は以下のようになります。上の方がより優先度が高くなります。
+4つの設定の記述方法は、複数組み合わせて使うこともできます。その際、同じ設定が存在する場合は優先順位の高い方で上書きされます。優先度は以下のようになります。上の方がより優先度が高くなります。
 
   - タグの属性
   - 外部ファイル
   - _getSettings()関数
+  - グローバル設定
 
 基本的な設定を_getSettings()関数に記述しておき、ページによって変わる設定内容をタグの属性で記述しておく、といった使い方も可能です。
 
@@ -107,20 +114,20 @@ bm-settings属性にJSON形式で記述します。
 BitmistJSではコンポーネントの設定内容に応じた実際の処理は、オーガナイザによって行われます。そのため、どのような設定が存在するかは、どのオーガナイザを適用するかによって変わってきます。
 
 <WRAP admonition tip links>
-  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:component:organizers| コンポーネントについて:オーガナイザによる拡張]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:component:organizers| コンポーネントについて - オーガナイザによる拡張]]
 </WRAP>
 
-ここでは、コアライブラリに含まれる各オーガナイザが担当する設定の一覧を示します。設定内容についてはリンク先の各オーガナイザーの説明をご覧ください。
+ここでは、コアライブラリに含まれる各オーガナイザが担当する設定の一覧を示します。設定内容についてはリンク先の各オーガナイザーの説明をご覧ください。基本的には設定のセクションによって、使用されるオーガナイザが決まります。
 
 ^セクション^担当オーガナイザ^説明^
 |settings|[[ja:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]|基本的な設定を管理します。|
+|loadings \\ molds \\ components|[[ja:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]|コンポーネントやテンプレートHTMLのローディングを管理します。|
 |events|[[ja:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]|イベントハンドラ関係を管理します。|
 |organizers|[[ja:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]|どのオーガナイザをコンポーネントに適用するか管理します。|
 |waitFor|[[ja:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]|他のコンポーネントが特定の状態になるのを待つための設定です。|
 |templates|[[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]|固定のHTMLテンプレートを指定するための設定です。|
-|components|[[ja:bitsmistjs_core:docs:refs:organizer:component|ComponentOrganizer]]|追加コンポーネントのロードを管理します。|
 
-また、上記とは別に、様々なオーガナイザから参照される"system"セクションについても紹介します。これらはシステム全体に影響を与えるため、基本的には後に紹介する[[#グローバル設定|グローバル設定]]に記述します。
+また、上記とは別に、様々なオーガナイザから参照される"system"セクションについても紹介します。これらはシステム全体に影響を与えるため、後に紹介する[[#グローバル設定|グローバル設定]]に記述します。
 
 ^セクション^設定^説明^
 |system|appBaseUr|アプリのベースとなるURLを指定します。|
@@ -149,11 +156,13 @@ console.log(this.settings.get("mysection.value")); // console displays 1
 
 <WRAP admonition tip links>
 このsettingsプロパティはStoreオブジェクトを使用しています。
-  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:util:store| リファレンス - ユーティリティ:Store]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:util:store| リファレンス - ユーティリティ - Store]]
 </WRAP>
+
+
 =====グローバル設定====
 
-基本的に設定は各コンポーネントに固有なものですが、全体で共有したい設定もあります。ここでは全コンポーネント間で共有できる、グローバル設定について説明します。
+ここでは全コンポーネント間で共有できる、グローバル設定について説明します。
 
 ====グローバル設定の設定方法====
 
@@ -187,9 +196,9 @@ BITSMIST.v1.settings.merge({
 こうすると、コンポーネントのオートロードが始まる前に、グローバル設定が有効になります。
 ====グローバル設定の連結====
 
-settingsプロパティには他の設定と連結させる機能があります。各コンポーネントの設定は、デフォルトではグローバルな設定と連結しています。
+settingsプロパティには他の設定と連結させる機能があります。各コンポーネントの設定は、デフォルトではグローバルな設定（BITSMIST.v1.settings）と連結しています。
 
-グローバル設定と連結していると、コンポーネント内にその設定が存在しない場合、連結されている設定から取得されます。そのため通常の設定のアクセス方法と同じようにアクセスすることで、（グローバル設定にその設定が存在するのであれば）自動的にグローバルな設定が取得されます。
+グローバル設定と連結していると、コンポーネント内にその設定が存在しない場合、連結されている設定から取得されます。そのため通常の設定のアクセス方法と同じようにアクセスすることで、グローバル設定にその設定が存在するのであれば、自動的にグローバルな設定が取得されます。
 
 <code javascript>
 BITSMIST.v1.settings.set("myValue", 1) // global setting
@@ -197,7 +206,7 @@ BITSMIST.v1.settings.set("myValue", 1) // global setting
 console.log(this.settings.get("myValue")); // console displays 1
 </code>
 
-このグローバル設定との連結は、"settings.useGlobalSettings"がTrueにセットされていると行われます（デフォルトはTrueです）。もし連結させたくない場合は、次の例のように、この値をFalseにセットしてください。
+このグローバル設定との連結は、設定で"settings.useGlobalSettings"がTrueにセットされていると行われます（デフォルトはTrueです）。もし連結させたくない場合は、次の例のように、この値をFalseにセットしてください。
 
 <code javascript>
 _getSettings()
@@ -212,7 +221,7 @@ _getSettings()
 </code>
 ====グローバル設定の上書き====
 
-仮にグローバルな設定と同じ設定がコンポーネント内にあると、そちらが優先されます。そのため、**あえてグローバルとは違う設定を使いたい**コンポーネントに対しては、コンポーネントに同じ項目の設定をすることで、連結されたグローバルな設定を取得しないようになります。
+グローバルな設定と同じ設定がコンポーネント内にあると、そちらが優先されます。そのため、**あえてグローバルとは違う設定を使いたい**コンポーネントに対しては、コンポーネントに同じ項目の設定をすることで、連結されたグローバルな設定を取得しないようになります。
 
 <code javascript>
 BITSMIST.v1.settings.set("myValue", 1)

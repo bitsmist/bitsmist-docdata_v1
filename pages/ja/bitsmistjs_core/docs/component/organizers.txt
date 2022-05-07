@@ -2,23 +2,23 @@
 
 ===== 概要 =====
 
-BitsmistJSの核であるComponent、Padコンポーネントはごく単純な機能しか持ちません。各コンポーネントはオーガナイザを適用することで、機能を拡張できます。
+BitsmistJSの核であるComponentコンポーネントはごく単純な機能しか持ちません。各コンポーネントはオーガナイザを適用することで、機能を拡張できます。
 
 例えば[[ja:bitsmistjs_core:docs:general:sample|サンプルのハローコンポーネント]]では、コンポーネントの名前とイベントハンドラを設定でセットしましたが、これらはそれぞれSettingOrganizerとEventOrganizerによって設定が読み込まれ、処理がされています。
 
 オーガナイザには次の機能があります
 
-  * コンポーネントの処理中の決められたタイミングで処理を行う（オーガナイズ処理と呼びます）。
+  * コンポーネントの処理中の決められたタイミングで処理を行う（オーガナイズ処理）。
   * コンポーネントのインスタンスやプロトタイプにメソッド/プロパティを追加する。
 
 デフォルトでは以下のオーガナイザが適用されています。
 
-^コンポーネント^オーガナイザ^
-|Component|OrganizerOrganizer|
-|:::|SettingOrganizer|
-|:::|StateOraganizer|
-|Pad|TemplateOrganizer|
-
+  * EventOrganizer
+  * LoaderOrganizer
+  * OrganizerOrganizer
+  * SettingOrganizer
+  * StateOraganizer
+  * TemplateOrganizer
 =====オーガナイザの適用=====
 
 オーガナイザを適用するには、各コンポーネントの設定に記述する必要があります。その記述方法には2つあります。
@@ -28,7 +28,7 @@ BitsmistJSの核であるComponent、Padコンポーネントはごく単純な�
 
 ===="organizers"設定に記述する====
 
-設定の"organizers"セクションに、適用したいオーガナイザーのクラス名を記述します。
+設定の"organizers"セクションに、適用したいオーガナイザーのクラス名を記述し、"attach"設定をTrueにします。
 
 次の例ではEventOrganizerを適用しています。
 
@@ -37,7 +37,11 @@ _getSettings()
 {
     return {
         "organizers": {
-            "EventOrganizer":
+            "EventOrganizer": {
+                "settings": {
+                    "attach": true
+                }
+            }
         }
     };
 }
@@ -59,45 +63,61 @@ _getSettings()
 }
 </code>
 
-"events"というセクション名はEventOrganizerに紐づいているため、自動的にEventOrganizerが適用されます。どのセクションにどのオーガナイザが紐づいているかは、[[ja:bitsmistjs_core:docs:component:settings#設定内容|コンポーネントについて:設定#設定内容]]をご覧ください。
+"events"というセクション名はEventOrganizerに紐づいているため、自動的にEventOrganizerが適用されます。
+
+<WRAP admonition tip links>
+どのセクションにどのオーガナイザが紐づいているかは、以下をご覧ください。
+  * [[ja:bitsmistjs_core:docs:component:settings#設定内容|コンポーネントについて - 設定 - 設定内容]]
+</WRAP>
 =====オーガナイズ処理=====
 
-各コンポーネントは特定のタイミングでオーガナイザを呼び出す機能が備わっています。各コンポーネントにオーガナイザを適用することで、そのタイミングでオーガナイザの処理が実行されます。
+各コンポーネントは特定のタイミング（オーガナイザイベント）でオーガナイザを呼び出す機能が備わっています。オーガナイザイベントは基本的に通常のユーザイベントと同じ名前がつけられ、同じタイミングにトリガーされます。ただし、通常はオーガナイザイベントの方がユーザイベントよりも先に発生するように設計されています。各コンポーネントにオーガナイザを適用することで、そのタイミングでオーガナイザの処理が実行されます。
 
-例えばComponentOrganizerは、テンプレートHTMLがノードに追加された後の"afterAppend"のタイミングで、設定内容を元に追加コンポーネントをロードします。
+例えばLoaderOrganizerは、テンプレートHTMLがノードに追加された後の"afterAppend"のタイミングで、設定内容の"molds"/"components"セクションを参照して、追加コンポーネントをロードします。
 
-以下にオーガナイザが適用されるタイミングを示します。
+以下にどのオーガナイザがどのオーガナイザイベントで呼びだされるかを示します。各オーガナイザでどのような処理を行われるかについては、各リンク先を参照ください。
 
-^タイミング^オーガナイザ^説明^
-|beforeStart|ComponentOrganizer|初期化をする前のタイミングです。|
-|:::|EventOrganizer|:::|
-|:::|SettingOrganizer|:::|
-|:::|TemplateOrganizer|:::|
-|afterStart|  |初期化が完了した後のタイミングです。|
-|afterAppend|ComponentOrganizer|テンプレートHTMLがコンポーネントにアタッチされた直後のタイミングです。|
-|:::|EventOrganizer|:::|
-|:::|StateOrganizer|:::|
+^イベント^オーガナイザ^説明^
+|beforeStart|[[ja:bitsmistjs_core:docs:refs:organizer:event#オーガナイズ処理|EventOrganizer]]|初期化をする前のタイミングです。|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:setting#オーガナイズ処理|SettingOrganizer]]|:::|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#オーガナイズ処理|TemplateOrganizer]]|:::|
+|afterStart|[[ja:bitsmistjs_core:docs:refs:organizer:loader#オーガナイズ処理|LoaderOrganizer]]|初期化が完了した後のタイミングです。|
+|afterAppend|[[ja:bitsmistjs_core:docs:refs:organizer:event#オーガナイズ処理|EventOrganizer]]|テンプレートHTMLがコンポーネントにアタッチされた直後のタイミングです。|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#オーガナイズ処理|TemplateOrganizer]]|:::|
+|(全て)|[[ja:bitsmistjs_core:docs:refs:organizer:state#オーガナイズ処理|StateOrganizer]]|全てのオーガナイザイベントで実行されます。|
 
 =====拡張メソッド/プロパティ ====
 
-オーガナイザはコンポーネントのプロトタイプや各インスタンスに、プロパティやメソッドを追加する機能も持ちます。
+オーガナイザはコンポーネントのプロトタイプや各インスタンスに、プロパティやメソッドを追加する機能も持ちます。追加されたプロパティやメソッドは、それぞれ拡張プロパティ/拡張メソッドと呼びます。
 
 以下にコアライブラリのオーガナイザの拡張プロパティ/メソッドの一覧を示します。詳細は各オーガナイザの説明をご覧ください。
 
 ^オーガナイザ^拡張プロパティ/メソッド^
-|ComponentOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:component#components|components]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:component#loadtags|loadTags()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:component#addcomponent_componentname_settings_sync|addComponent()]]|
-|EventOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:event#addeventhandler_element_eventname_handlerinfo_bindto|addEventHandler()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#trigger_eventname_sender_options_element|trigger()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#triggerasync_eventname_sender_options_element|triggerAsync()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#geteventhandler_component_handlerinfo_bindto_eventname|getEventHandler()]]|
-|OrganizerOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#initorganizers_settings|initOrganizers()]]|
+|EventOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:event#addeventhandler_eventname_handlerinfo_element_bindto|addEventHandler()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#geteventhandler_handlerinfo|getEventHandler()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#initevents_elementname_handlerinfo_rootnode|initEvents()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#removeeventhandler_elementname_handlerinfo_element|removeEventHandler()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#trigger_eventname_options_element|trigger()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#triggerasync_eventname_options_element|triggerAsync()]]|
+|LoaderOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:loader#components|components]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#addcomponent_componentname_settings_sync|addComponent()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#getloader_loadername|getLoader()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#loadcomponent_classname_settings_loadoptions_tagname|loadComponent()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#loadtags_rootnode_options|loadTags()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#loadsetting_settingname_loadoptions|loadSetting()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#loadsettingfile_settingname_path_loadoptions|loadSettingFile()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:loader#loadtemplate_templatename_loadoptions|loadTemplate()]]|
+|OrganizerOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#organizers|organizers]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#callorganizers_condition_settings|callOrganizers()]]|
-|StateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:state#changestate_newstate|changeState()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#isinitialized|isInitialized()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:organizer#initorganizers_settings|initOrganizers()]]|
+|StateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:state#state|state]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#changestate_state|changeState()]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:state#waitfor_waitlist_timeout|waitFor()]]|
-|TemplateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:template#addtemplate_templatename_options|addTemplate()]]|
+|TemplateOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:template#activetemplatename|activeTemplateName]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#templates|templates]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#addtemplate_templatename_options|addTemplate()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#applytemplate_templatename|applyTemplate()]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#clonetemplate_templatename|cloneTemplate()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#isactivetemplate_templatename|isActiveTemplate()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#hideconditionalelements|hideConditionalElements()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:template#showconditionalelements_item|showConditionalElements()]]|
 

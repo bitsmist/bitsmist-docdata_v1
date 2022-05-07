@@ -2,38 +2,38 @@
 
 =====Overview=====
 
-The components Javascript files and HTML files need to be loaded to a browser. Here we will show you how to specify where these files come from. Also, we will explain how to organize component paths and file names when those are not explicitly specified.
+The component's Javascript files and HTML files need to be loaded to a browser. Here we will show you how to specify where these files come from. Also, we will explain how to organize component paths and file names.
 
 
 =====Loading=====
 
-There are three ways to load components.
+There are four ways to load components.
 
-  * Specify a component URL in tag attribute (Autoloading)
-  * Load default files (Autoloading)
-  * Import with <script> tag (Manualloading)
+  * Place tags that has bm-autoload/bm-automorph attribute in HTML.
+  * Import Javascript files with <script> tag.
+  * Add "molds"/"components" settings to a component setting file.
+  * Add dynamically in Javascript code.
 
-====Specify a component URL in tag attribute====
+====Place tags that has bm-autoload/bm-automorph attribute in HTML====
 
-This is how we loaded a component in the previous page [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]], specifying the URL in bm-autoload attribute. A file extension differs depending on whether you are loading an HTML only component or an HTML+JS component.
+===Specify file name===
 
-===HTML + JS===
+This is how we loaded a component in [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]]. Specify a URL in bm-autoload attribute. A file extension differs depending on whether you are loading an HTML only component or an HTML+JS component. 
+
+If you want to load an HTML+JS component, specify **a URL to the Javascript file** in bm-autoload attribute.
 
 <code html>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
 </code>
 
-If you are loading an HTML+JS component, specify **a URL to the Javascript file** in bm-autoload attribute. BitsmistJS library loads the file from the specified URL asynchronously. Then, the component is initialized and loads an interface HTML file, and shows it on your browser.
-
+ BitsmistJS library loads the file from the specified URL asynchronously. Then, the component is initialized and loads an interface HTML file, and shows it on your browser.
 
 <WRAP admonition note links>
-Though the path in this example is a relative path, you can use an absolute path also. However, the library uses XMLHttpRequest to load files, Servers hosting components need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
+Though the path in this example is a relative path, you can use an absolute path also. However, the library uses XMLHttpRequest to load files, servers hosting components need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
   * [[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
 </WRAP>
 
-===HTML only===
-
-If you are loading a component that doesn't need any actions (event handlers), then you must specify **a path to the HTML file**.
+If you are loading a component that doesn't have any actions (event handlers), then specify **a path to the HTML file**.
 
 <code html>
 <pad-hello bm-autoload="/pad-hello.html"></pad-hello>
@@ -41,12 +41,9 @@ If you are loading a component that doesn't need any actions (event handlers), t
 
 This time, only the HTML file is loaded asynchronously and will be displayed on the browser.
 
-In both cases,  HTML+JS or HTML only, the components are loaded on DOMContentLoaded event. Also, components inside the component HTML file will be loaded after the HTML files are appended to nodes.
 ====Load default files====
 
-When a URL is not specified in bm-autoload attribute, the files are loaded using default paths and names. Use bm-automorph attribute instead for HTML-only components.
-
-===HTML+JS===
+When a URL is not specified in bm-autoload attribute, the files are loaded using default paths and names. 
 
 <code html>
 <pad-hello bm-autoload></pad-hello>
@@ -55,11 +52,10 @@ When a URL is not specified in bm-autoload attribute, the files are loaded using
 In the example above, the default path is the current path and the default file name is the tag name + extention ".js", thus "pad-hello.js". For example, if you are browsing https://example.com/index.html, the component is loaded from https://examples.com/pad-hello.js.
 
 <WRAP admonition tip links>
-Default path can be changed in settings.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:loading#default_path| Default path]]
+The default path can be changed in settings.
+  * <html><i class="fas fa-link"></i></html>[[#default_path| Default path]]
+  * <html><i class="fas fa-link"></i></html>[[#default_file| Default file]]
 </WRAP>
-
-===HTML only===
 
 Use bm-automorph attribute for HTML-only components.
 
@@ -69,7 +65,7 @@ Use bm-automorph attribute for HTML-only components.
 
 In the example above, the default path is the current path and the default file name is the tag name + extension ".html", thus, "pad-hello.html".
 
-====Import with <script> tag====
+====Import Javascript files with <script> tag====
 
 Just like usual Javascript files, import component script files using <script> tag in HTML.
 
@@ -89,79 +85,185 @@ You can use this method to bundle several components in one file using a bundler
 You can not use this method for HTML-only components.
 </WRAP>
 
+====Add “molds”/“components” settings to a component setting file====
+
+By adding "molds"/"components" to a component's settings, those components specified in the sections will be added to their parent component as the child components.
+
+<code javascript>
+{
+    "components": {
+        "PadSetting": {
+            "loadings": {
+                "rootNode": "#widgets"
+            },
+            "settings": {
+                "name": "PadSetting"
+            }
+        }
+    }
+}
+</code>
+
+They will be inserted in the place specified by "rootNode" setting under its parent node.
+
+<WRAP admonition tip links>
+"molds"/"components" sections are handled by LoaderOrganizer. Refer to the link below for details.
+  * [[en:bitsmistjs_core:docs:refs:organizer:loader#settings|Reference - LoaderOrganizer - Settings]]
+</WRAP>
+====Add dynamically using Javascript code====
+
+Components can be added dynamically by code.
+
+===Use addComponent() method===
+
+Use addComponent() method each component has to add child components to a component. The component's settings can be set by passing a setting object to the method.
+
+<code javascript>
+document.querySelector("bm-router").addComponent("PadFilter", {
+    "loadings": {
+        "path":"common",
+        "rootNode":"#pads"
+    }
+});
+</code>
+
+In the example above, the PadFilter component is added to the #pads node under the bm-router component.
+
+<WRAP admonition tip links>
+addComponent() method is offered by LoaderOrganizer.
+  * [[en:bitsmistjs_core:docs:refs:organizer:loader#addcomponent_componentname_settings_sync|Reference - LoaderOrganizer - addComponent()]]
+</WRAP>
+
 =====Default path=====
 
 In [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]], we placed all the files right under the root path. However, in the actual environment, you might want to organize components files to specific directories. You can take advantage of using the default path and reduce the amount of typing instead of specifying each component URL in bm-autoload attribute. We will explain the default path here.
 
-====Three settings for default path====
+====Settings that decide a default path====
 
-If a custom tag doesn't have a URL in bm-autoload attribute, the default path is used for loading the component. There are three settings that decide the default path.
+There are some settings that decide a default path.
 
-  * Base application url (system.appBaseUrl)
-  * Component path (system.componentPath)
-  * Path (settings.path)
+  * Base application URL （system.appBaseUrl/loadings.appBaseUrl）
+  * Component path （system.componentPath/loadings.componentPath）
+  * Tempalte path （system.templatePath/loadings.templatePath）
+  * Path （loadings.path/bm-path attribute）
 
-The component will be loaded from the path concatenated with the above three settings. Each setting defaults to "" (empty string).
+<WRAP admonition tip>
+Those settings can be specified in both system settings and component settings. Since the component settings have higher priority than system settings, you can overwrite system settings with component settings so that the component can use a different default path from system-wide settings.</WRAP>
 
-ex.)
+The component will be loaded from the path concatenated above settings. Each setting defaults to "" (empty string).
 
+<WRAP legend>e.g.</WRAP>
 ^Settings^Value^
 |Base application url|https://example.com|
 |Component path|components|
+|Template path|templates|
 |Path|common|
 
 <code html>
 <bar-header bm-autoload></bar-header>
 </code>
 
-With those settings and "bar-header" component in a HTML file, the component will be loaded from https://example.com/components/common/bar-header.js.
+With those settings and "bar-header" component in an HTML file, the component will be loaded from https://example.com/components/common/bar-header.js and its template file from https://example.com/templates/common/bar-header.html.
 
-====Specifying default path====
+====Specifying a default path====
 
-The settings can be divided into two types in terms of scope. One is global settings that are shared by all components and the other is component settings that are specific to each component.
+You can specify these settings in settings or tag attributes. The settings can be divided into two types in terms of scope. One is global settings that are shared by all components and the other is component settings that are specific to each component.
 
 <WRAP admonition tip links>
-For the details of the setting, refer to the link below.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:settings| Component:Settings]]
+For the details of the settings, refer to the link below.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:settings| Component - Settings]]
 </WRAP>
 
-It is natural that a base application URL and a component path are specified in global settings and a path in component settings.
-
-===Base application URL and component path in global setting===
+Basically, a base application URL and a component/template path should be specified in global settings.
 
 <code javascript>
 BITSMIST.v1.settings.merge({
     "system": {
         "appBaseUrl":"https://example.com",
         "componentPath":"components",
+        "templatePath":"templates",
     },
 });
 </code>
 
-===Path in component setting===
+Save the above settings in a file, "settings.js" for example, and load the file with a script tag.
 
-<code javascript>
-_getSettings()
-{
-    return {
-        "settings": {
-            "name": "BarHeader",
-            "path": "common"
-        },
-    };
-}
+<code html>
+<script type='text/javascript' src='/settings.js'></script>
 </code>
 
-You can also specify a path in bm-path attribute.
+Then specify a path in each component attribute.
 
 <code html>
 <bar-header bm-autoload bm-path="common"></bar-header>
 </code>
 
-<WRAP admonition note links>
-If a URL is specified in bm-autoload attribute, then "system.appBaseUrl", "system.componentPath",  "system.templatePath", "settings.path" settings will be set automatically according to the URL.
-  * [[en:bitsmistjs_core:docs:refs:organizer:setting#tag_attributes|SettingOrganizer#Tag attributes]]
-</WRAP>
+If you are adding components using "molds"/"components" settings or Javascript, those settings can be specified in "loadings" sections for each component.
+
+<code javascript>
+{
+    "components": {
+        "PadSetting": {
+            "loadings": {
+            　　　　  "appBaseUrl": "https://util.example.com/",
+            　　　　  "componentPath": "",
+            　　　　  "templatePath": "",
+            　　　　  "path": "widgets"
+            },
+            "settings": {
+            　　　　  "name": "PadSetting"
+            }
+        }
+    }
+}
+</code>
+
+Note you can specify a base application URL, and a component/template path in this "loadings" section to override system settings. In the example above, the component will be loaded from https://util.example.com/widgets/ even though system settings refer to https://example.com/components/.
+
 =====Default file names=====
 
-If a URL is not specified in bm-autoload attribute, then the default file name will be used for the component. The default file name is tag name + file extension, ".html" for HTML file, and ".js" for JS file.
+If a URL is not specified in bm-autoload attribute, then the default file name will be used for the component. The default file name is the tag name.  You can change the default file name by changing a setting.
+
+====Settings that decide a default file name====
+
+A file name can be specified in bm-filename attribute or "loadings.fileName" setting. An extension will be added to it when loading, ".html" for HTML file, and ".js" for Javascript file.
+
+====Specifying a default file name====
+
+Specify a file name in each tag attribute without an extension.
+
+<code javascript>
+<bar-header bm-autoload bm-filename="header"></bar-header>
+</code>
+
+If you are adding components using “molds”/“components” settings or Javascript, those settings can be specified in “loadings” sections for each component.
+
+<code javascript>
+{
+    "components": {
+        "BarHeader": {
+            "loadings": {
+                "fileName": "header"
+            },
+            "settings": {
+                "name": "BarHeader"
+            }
+        }
+    }
+}
+</code>
+
+=====Overrides of some settings when URL is specified=====
+
+If you specify a URL in bm-autoload attribute, then the component's settings,  "loadings.appBaseUrl", "loadings.componentPath", "loadings.templatePath", "loadings.path",  "loadings.fileName" settings will be overwrittten. If the URL links to a HTML file "loadgins.autoMorph" is set to true also.
+
+As an example, If you set a URL "https://example.com/component/transactions/pad-main.js" as bm-autoload value, settings will be overwritten as below.
+
+^Setting^Value^
+|loadings.appBaseUrl|""（Empty string）|
+|loadings.componentPath|""（Empty string）|
+|loadings.templatePath|""（Empty string）|
+|loadings.path|https://example.com/component/transactions|
+|loadings.fileName|pad-main|
+
+Thus, its template HTML will be loaded from https://example.com/component/transactions/pad-main.html.

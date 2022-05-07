@@ -50,7 +50,7 @@ Trueの場合、コンポーネントにアタッチされます。
 
 ==== organizers ====
 
-''Type:Object'' ''Inject:Component'' ''get''
+''型:Object'' ''Inject:Component'' ''get''
 
 このコンポーネントに適用されたオーガナイザを保持するオブジェクトです。
 
