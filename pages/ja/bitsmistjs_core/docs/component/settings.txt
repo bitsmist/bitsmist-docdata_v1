@@ -107,7 +107,7 @@ bm-settings属性にJSON形式で記述します。
   - _getSettings()関数
   - グローバル設定
 
-基本的な設定を_getSettings()関数に記述しておき、ページによって変わる設定内容をタグの属性で記述しておく、といった使い方も可能です。
+基本的な設定を_getSettings()関数に記述しておき、ページによって変わる設定内容をタグの属性で記述しておく、といった使い方が可能です。
 
 ===== 設定内容 =====
 
@@ -120,12 +120,12 @@ BitmistJSではコンポーネントの設定内容に応じた実際の処理�
 ここでは、コアライブラリに含まれる各オーガナイザが担当する設定の一覧を示します。設定内容についてはリンク先の各オーガナイザーの説明をご覧ください。基本的には設定のセクションによって、使用されるオーガナイザが決まります。
 
 ^セクション^担当オーガナイザ^説明^
-|settings|[[ja:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]|基本的な設定を管理します。|
-|loadings \\ molds \\ components|[[ja:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]|コンポーネントやテンプレートHTMLのローディングを管理します。|
 |events|[[ja:bitsmistjs_core:docs:refs:organizer:event|EventOrganizer]]|イベントハンドラ関係を管理します。|
+|loadings \\ molds \\ components|[[ja:bitsmistjs_core:docs:refs:organizer:loader|LoaderOrganizer]]|コンポーネントやテンプレートHTMLのローディングを管理します。|
 |organizers|[[ja:bitsmistjs_core:docs:refs:organizer:organizer|OrganizerOrganizer]]|どのオーガナイザをコンポーネントに適用するか管理します。|
-|waitFor|[[ja:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]|他のコンポーネントが特定の状態になるのを待つための設定です。|
+|settings|[[ja:bitsmistjs_core:docs:refs:organizer:setting|SettingOrganizer]]|基本的な設定を管理します。|
 |templates|[[ja:bitsmistjs_core:docs:refs:organizer:template|TemplateOrganizer]]|固定のHTMLテンプレートを指定するための設定です。|
+|waitFor|[[ja:bitsmistjs_core:docs:refs:organizer:state|StateOrganizer]]|他のコンポーネントが特定の状態になるのを待つための設定です。|
 
 また、上記とは別に、様々なオーガナイザから参照される"system"セクションについても紹介します。これらはシステム全体に影響を与えるため、後に紹介する[[#グローバル設定|グローバル設定]]に記述します。
 
