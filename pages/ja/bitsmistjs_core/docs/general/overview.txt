@@ -9,24 +9,6 @@ BitsmistJSはWeb ComponentsをベースとしたJavascriptのフレームワー�
   * **オートローディング:** 必要な時に必要なファイルがロードされます。
   * **イベントドリヴン:** イベントハンドラがどこにあるのか一目瞭然です。
 
-===== インストール =====
-
-==== CDN ====
-
-HTMLファイルの中でBitsmistJSをCDNからインポートしてください。
-
-<code html>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.9.19/dist/bitsmist-js_v1.min.js"></script>
-</code>
-
-==== ダウンロード ====
-
-BitsmistJSをダウンロードしてdistフォルダの中の''bitsmist-js_v1.min.js''をあなたのWebサイトに配置し、HTMLファイルの中からインポートして下さい。
-
-<code html>
-<script type="text/javascript" src="/js/bitsmist-js_v1.min.js"></script>
-</code>
-
 ===== index.htmlのサンプル =====
 
 BitmistJSではコンポーネント（カスタムエレメント）を作り、それらを組み合わせることでサイトを構築していきます。動作が必要なくインターフェースだけのHTMLのみのコンポーネント、インターフェースと動作が必要なHTML+Javascriptのコンポーネント、またインターフェースがなく動作だけのJavascriptのみのコンポーネントを作ることができます。

@@ -3,6 +3,7 @@
 ** 全般 **
 
   * [[ja:bitsmistjs_core:docs:general:overview|概要]]
+  * [[ja:bitsmistjs_core:docs:general:installation|インストール]]
   * [[ja:bitsmistjs_core:docs:general:sample|サンプルコンポーネントを作る]]
 
 ** コンポーネントについて **

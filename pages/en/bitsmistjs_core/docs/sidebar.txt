@@ -1,6 +1,7 @@
 ** GENERAL **
 
   * [[en:bitsmistjs_core:docs:general:overview|Overview]]
+  * [[en:bitsmistjs_core:docs:general:installation|Installation]]
   * [[en:bitsmistjs_core:docs:general:sample|Create a sample component]]
 
 ** COMPONENT **
