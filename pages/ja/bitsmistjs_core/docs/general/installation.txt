@@ -1,0 +1,17 @@
+======インストール======
+
+=====CDN=====
+
+HTMLファイルの中でBitsmistJSをCDNからインポートしてください。
+
+<code html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.9.19/dist/bitsmist-js_v1.min.js"></script>
+</code>
+
+=====ダウンロード=====
+
+BitsmistJSをダウンロードしてdistフォルダの中の''bitsmist-js_v1.min.js''をあなたのWebサイトに配置し、HTMLファイルの中からインポートして下さい。
+
+<code html>
+<script type="text/javascript" src="/js/bitsmist-js_v1.min.js"></script>
+</code>
