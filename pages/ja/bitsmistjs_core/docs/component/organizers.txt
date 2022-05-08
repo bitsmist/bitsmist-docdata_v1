@@ -11,7 +11,7 @@ BitsmistJSの核であるComponentコンポーネントはごく単純な機能�
   * コンポーネントの処理中の決められたタイミングで処理を行う（オーガナイズ処理）。
   * コンポーネントのインスタンスやプロトタイプにメソッド/プロパティを追加する。
 
-デフォルトでは以下のオーガナイザが適用されています。
+デフォルトでは以下のオーガナイザがComponentコンポーネントに適用されています。
 
   * EventOrganizer
   * LoaderOrganizer
@@ -24,7 +24,7 @@ BitsmistJSの核であるComponentコンポーネントはごく単純な機能�
 オーガナイザを適用するには、各コンポーネントの設定に記述する必要があります。その記述方法には2つあります。
 
   * "organizers"設定に記述する
-  * オーガナイザが担当する設定を記述する（オートロード）
+  * オーガナイザが担当する設定を記述する
 
 ===="organizers"設定に記述する====
 
@@ -46,7 +46,7 @@ _getSettings()
     };
 }
 </code>
-====オーガナイザが担当する設定を記述する（オートロード）====
+====オーガナイザが担当する設定を記述する====
 
 設定内にオーガナイザに紐づいているセクションを使用することで、自動的に担当するオーガナイザが適用されます。
 
@@ -96,7 +96,7 @@ _getSettings()
 |EventOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:event#addeventhandler_eventname_handlerinfo_element_bindto|addEventHandler()]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#geteventhandler_handlerinfo|getEventHandler()]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#initevents_elementname_handlerinfo_rootnode|initEvents()]]|
-|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#removeeventhandler_elementname_handlerinfo_element|removeEventHandler()]]|
+|:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#removeeventhandler_eventname_handlerinfo_element|removeEventHandler()]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#trigger_eventname_options_element|trigger()]]|
 |:::|[[ja:bitsmistjs_core:docs:refs:organizer:event#triggerasync_eventname_options_element|triggerAsync()]]|
 |LoaderOrganizer|[[ja:bitsmistjs_core:docs:refs:organizer:loader#components|components]]|

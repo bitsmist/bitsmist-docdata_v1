@@ -77,7 +77,7 @@ An object that holds templates information. Each item has the following keys.
 
 =====Extended Method=====
 
-==== addTemplate(templateName) ====
+====addTemplate(templateName, options)====
 
 ''Type:undefined'' ''Inject:Component''
 

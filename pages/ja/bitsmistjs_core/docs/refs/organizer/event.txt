@@ -317,7 +317,7 @@ onDoRefresh(sender, e, ex)
 
 なし。
 
-==== removeEventHandler(elementName, handlerInfo, element) ====
+==== removeEventHandler(eventName, handlerInfo, element) ====
 
 ''型:undefined'' ''Inject:Component''
 

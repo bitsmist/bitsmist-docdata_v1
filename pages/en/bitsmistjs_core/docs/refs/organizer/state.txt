@@ -107,7 +107,7 @@ Returns a string that describes a component's current state. Valid states are:
 
 =====Extended Methods=====
 
-==== changeState(newState) ====
+==== changeState(state) ====
 
 ''Type:undefined'' ''Inject:Component''
 
