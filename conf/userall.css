@@ -28,6 +28,12 @@ code
 	color: cadetblue
 }
 
+.dokuwiki a.urlextern
+{
+	background-image: unset;
+	padding: 0;
+}
+
 /* Mobile Header */
 
 /*

@@ -101,7 +101,7 @@ Next, we add component settings in "pad-hello.js". Override _getSettings() funct
 
 <WRAP admonition tip links>
 There are other ways to configure components' settings.
-  *  <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:settings#specifying_settings| COMPONENT:Settings#Specifying settings]]
+  *  <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:settings#specifying_settings| COMPONENT - Settings - Specifying settings]]
 </WRAP>
 
 <code javascript>
@@ -151,7 +151,7 @@ class PadHello extends BITSMIST.v1.Pad
 
 <WRAP admonition tip links>
 Every event handlers have the same function signature.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:events#event_handler_syntax| COMPONENT:Events#Event handler syntax]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:events#event_handler_syntax| COMPONENT - Events - Event handler syntax]]
 </WRAP>
 
 =====6. Create a container HTML file.=====
@@ -176,8 +176,8 @@ We put a custom tag we created and specify where the component JS file is placed
 Finally,  put these three files we created, sample.html, pad-hello.js, and pad-hello.html, directly under a web server's document root.
 
 <WRAP admonition tip links>
-We deploy the files directly under the root for the sake of simplicity. You can place these files anywhere you like.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:loading#specifying_default_path| COMPONENT:Loading#Specifying default path]]
+We deploy the files directly under the root for simplicity. You can place these files anywhere you like.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:loading|COMPONENT - Loading]]
 </WRAP>
 
 Once you deploy, access sample.html with your browser. Confirm a message pops up when you push the button.
