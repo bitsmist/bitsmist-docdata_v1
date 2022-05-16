@@ -26,7 +26,7 @@ Event settings are placed in the "events" section.
 <code javascript>
 {
     "events": {
-        <elementName>: {
+        <elementName>: { or [{
             "rootNode": <rootNode>,
             "handlers": {
                 <eventName>: {
@@ -36,7 +36,7 @@ Event settings are placed in the "events" section.
                     "order": <order>,
                 }
             }
-        }
+        } or }]
     },
 }
 </code>
@@ -48,7 +48,7 @@ Event settings are placed in the "events" section.
         <elementName>: {
             "rootNode": <rootNode>,
             "handlers": {
-                <eventName>: <handler>
+                <eventName>: <handler> or [<handler>]
             }
         }
     },
@@ -68,7 +68,7 @@ A selector string that points to target nodes to which the event handlers are at
 ====eventName====
 ''Type:String''
 
-An event name. Valid events are BitsmistJS events or Javascript native events.
+An event name. Valid events are BitsmistJS events or Javascript native events. A value for this eventName can be an array of objects also.
 
 
 ====handler====

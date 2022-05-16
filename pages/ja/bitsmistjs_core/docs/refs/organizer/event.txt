@@ -30,12 +30,12 @@ EventOrganizerはイベントハンドラの追加やイベントの発生など
         <elementName>: {
             "rootNode": <rootNode>,
             "handlers": {
-                <eventName>: {
+                <eventName>: { または [{
                     "handler": <handler>,
                     "listerOptions": <listnerOptions>,
                     "options": <options>,
                     "order": <order>,
-                }
+                } または }]
             }
         }
     },
@@ -49,7 +49,7 @@ EventOrganizerはイベントハンドラの追加やイベントの発生など
         <elementName>: {
             "rootNode": <rootNode>,
             "handlers": {
-                <eventName>: <handler>
+                <eventName>: <handler> または [<handler>]
             }
         }
     },
@@ -69,7 +69,7 @@ EventOrganizerはイベントハンドラの追加やイベントの発生など
 ====eventName====
 ''型:String''
 
-イベントハンドラを登録したいイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。
+イベントハンドラを登録したいイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。このeventNameに対する値として、配列を指定することもできます。
 
 
 ====handler====
