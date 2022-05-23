@@ -333,7 +333,7 @@ beforeRefreshイベントの後に発生します。
 
 <WRAP admonition tip links>
 これはTemplateOrganizerのshowConditionalElements()拡張メソッドを呼び出すことで、行われます。
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:refs:organizer:template#showconditionalelements_item|Reference - organizer - TemplateOrganizer.showConditionalElements()]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:refs:organizer:template#showconditionalelements_item|リファレンス - オーガナイザ - TemplateOrganizer.showConditionalElements()]]
 </WRAP>
 
 === パラメータ ===
