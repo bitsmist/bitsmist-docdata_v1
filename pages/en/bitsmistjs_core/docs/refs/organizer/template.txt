@@ -60,13 +60,13 @@ An HTML string. **Not an HTML filename, but HTML**.
 =====Extended Properties=====
 
 ====activeTemplateName====
-''Type:String''
+''Type:String'' ''get/set''
 
 The template name is currently active.
 
 ====templates====
 
-''Type:Object''
+''Type:Object'' ''get''
 
 An object that holds templates information. Each item has the following keys.
 

@@ -64,12 +64,12 @@ HTMLの文字列を指定します。これは**HTMLであって、HTMLのファ
 
 
 ====activeTemplateName====
-''型:String''
+''型:String'' ''get/set''
 
 現在有効なテンプレートの名前です。
 
 ====templates====
-''型:Object''
+''型:Object'' ''get''
 
 テンプレート情報を保持するオブジェクトです。それぞれのアイテムは以下のキーを持っています。
 
