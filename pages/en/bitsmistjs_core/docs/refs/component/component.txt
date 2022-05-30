@@ -25,7 +25,6 @@ The component's settings are placed in the "settings" section.
     "settings": {
         "autoFetch": <autoFetch>,
         "autoFill": <autoFill>,
-        "autoPostStart": <autoPostStart>,
         "autoRefresh": <autoRefresh>,
         "autoRestart": <autoRestart>,
         "autoSetup": <autoSetup>,
@@ -48,10 +47,6 @@ When set to True, [[#fetch_options|fetch()]] method will be called automatically
 When set to True, [[#fill_options|fill()]] method will be called automatically inside [[#refresh_options|refresh()]] method.
 
 
-==== autoPostStart ====
-''Type:Boolean'' ''Default:true''
-
-When set to True, the late-stage initialization process will be run automatically. This setting is used to control the flow of the initialization process in the inherited component.
 
 ==== autoRefresh ====
 ''Type:Boolean'' ''Default:true''

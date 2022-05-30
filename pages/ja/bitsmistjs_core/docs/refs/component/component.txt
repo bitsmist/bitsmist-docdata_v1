@@ -26,7 +26,6 @@ Componentの設定は"settings"セクションに記述します。
     "settings": {
         "autoFetch": <autoFetch>,
         "autoFill": <autoFill>,
-        "autoPostStart": <autoPostStart>,
         "autoRefresh": <autoRefresh>,
         "autoRestart": <autoRestart>,
         "autoSetup": <autoSetup>,
@@ -50,10 +49,6 @@ Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的�
 
 
 
-==== autoPostStart ====
-''型:Boolean'' ''デフォルト:true''
-
-Trueの場合、初期化の後部処理を自動的に呼び出します。主にコンポーネントを継承した際に、初期化フローをコントロールするために使用されます。
 
 ==== autoRefresh ====
 ''型:Boolean'' ''デフォルト:true''
