@@ -97,7 +97,7 @@ The chain of settings is implemented by ChainableStore class.
 
 ====afterAppend====
 
-Triggered after a template HTML is attached to a component when [[#switchtemplate_templatename_options|switchTemplate()]] method is called. If the component doesn't have template HTML files ([[#hastemplate|”settings.hasTemplate”]] option is set to False), this event is not triggered.
+Triggered after a template HTML is attached to a component when [[#switchtemplate_templatename_options|switchTemplate()]] method is called.
 
 === Parameters ===
 
@@ -137,9 +137,7 @@ Triggered during the latter stage of a component initialization.
 
 === Parameters ===
 
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#start_settings|start()]] method.|
-
+None
 ==== afterStop ====
 
 Triggered after doStop event.
@@ -182,9 +180,7 @@ Triggered when [[#start_settings|start()]] method is called. [[#start_settings|s
 
 === Parameters ===
 
-^Parameter^Type^Description^
-|options|Object|The options argument passed to [[#start_settings|start()]] method.|
-
+None
 ==== beforeStop ====
 
 Triggered when [[#stop_options|stop()]] method is called. By default, [[#stop_options|stop()]] is called automatically when the component is detached from the document tree, in other words, when native disconnectedCallback() is called.
@@ -220,6 +216,14 @@ Triggered after beforeSetup event.
 
 ^Parameter^Type^Description^
 |options|Object|The options argument passed to [[#setup_options|setup()]] method.|
+
+====doStart ====
+
+Triggered after beforeStart event.
+
+=== Parameters ===
+
+None
 
 ====doStop ====
 

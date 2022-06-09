@@ -98,7 +98,7 @@ Trueの場合、コンポーネントがドキュメントツリーから切り�
 
 ====afterAppend====
 
-[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。コンポーネントがテンプレートHTMLを持ってない場合（[[#hastemplate|"settings.hasTemplate"]]オプションがfalseの場合）、このイベントは発生しません。
+[[#switchtemplate_templatename_options|switchTemplate()]]メソッドが呼ばれ、テンプレートHTMLがコンポーネントにアタッチされた後に発生します。
 
 === パラメータ ===
 
@@ -183,9 +183,7 @@ doStopイベントの後に発生します。
 
 === パラメータ ===
 
-^パラメータ^型^説明^
-|options|Object|[[#start_settings|start()]]メソッドに渡されたoptions引数です。|
-
+なし。
 ==== beforeStop ====
 
 [[#stop_options|stop()]]メソッドが呼び出された時に発生します。デフォルトではコンポーネントがドキュメントツリーから切り離された時（disconnectedCallback発生時）に[[#stop_options|stop()]]メソッドが自動的に呼び出されます。
@@ -221,6 +219,14 @@ beforeSetupイベントの後に発生します。
 
 ^パラメータ^型^説明^
 |options|Object|[[#setup_options|setup()]]メソッドに渡されたoptions引数です。|
+
+====doStart ====
+
+beforeStartイベントの後に発生します。
+
+=== パラメータ ===
+
+なし。
 
 ====doStop ====
 
