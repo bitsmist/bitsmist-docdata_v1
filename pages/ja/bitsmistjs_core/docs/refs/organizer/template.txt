@@ -128,37 +128,4 @@ undefined
 
 複製されたHTML要素です。
 
-====hideConditionalElements()====
 
-''型:undefined'' ''Inject:Component''
-
-"bm-visible"属性を持つ全ての要素に"display:none"をセットして、非表示にします。
-
-===パラメータ===
-
-なし。
-
-===戻り値===
-
-なし。
-
-====showConditionalElements(item)====
-
-''型:undefined'' ''Inject:Component''
-
-"bm-visible"属性を持つ要素（条件付要素）を、条件に応じて表示・非表示にします。
-
-注意点として、このメソッドは"display"スタイルを削除することによって要素を表示します。デフォルトではテンプレートが適用された時に、[[#hideconditionalelements|hideConditionalElement()]]が呼び出され、全ての条件付要素に"display:none"を追加して非表示にします。その"display:none"を削除することで、要素が表示状態になります。
-
-条件に合わない要素は、"display:none"をセットすることで非表示にします。
-
-表示条件は"bm-visible"の値にセットします。条件の中では、item引数のそれぞれの値に、キー名でアクセスすることができます。
-
-===パラメータ===
-
-^パラメータ^型^説明^
-|item|Object|条件判断に使用されるパラメータです。|
-
-===戻り値===
-
-なし。

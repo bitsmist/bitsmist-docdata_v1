@@ -125,36 +125,3 @@ Creates an HTML element from the template. It is not attached to any document tr
 
 An HTML element cloned from the template.
 
-====hideConditionalElements()====
-
-''Type:undefined'' ''Inject:Component''
-
-Hide all the elements that have "bm-visible" attributes by setting "display:none" to the element.
-
-===Parameters===
-
-none
-
-===Return Value===
-
-undefined
-====showConditionalElements(item)====
-
-''Type:undefined'' ''Inject:Component''
-
-Show or hide elements that have "bm-visible" attributes depending on the condition. 
-
-Note it shows an element by removing the "display" style if the condition matches. By default, [[#hideconditionalelements|hideConditionalElement()]] method is called to hide all the conditional elements by adding "diplay:none" when template is applied. Removing the "display" style removes the "display:none" added by hideConditionalElements() and thus revealing the elements. 
-
-It sets "display:none" to the element when the condition doesn't match.
-
-Specify the condition as the value of the "bm-visible" attribute. Each value in the item parameter can be accessed in the condition by the key.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|item|Object|Parameters used to judge condition.|
-
-===Return Value===
-
-undefined
