@@ -53,20 +53,19 @@ Functionオブジェクトを返します。
 
 なし。
 
-==== newComponent(superClass, settings, tagName, className) ====
+==== newComponent(className, settings, superClass, tagName) ====
 
 ''型:Component'' ''Static''
 
-新しいコンポーネントの**定義（Functionオブジェクト）**を作成します。インスタンスを作成するのではないことに注意してください。HTMLファイルに引数で指定したタグ名を挿入することで、インスタンス化されます。
+引数で渡されたスーパークラスを継承して、新しいコンポーネントの**定義（Functionオブジェクト）**を作成します。インスタンスを作成するのではないことに注意してください。引数でタグ名が指定された場合は、そのタグと新しく作成されたクラスが紐づけられます。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|superClass \\ ''必須''|Function|他のクラスを継承する場合は、ここにスーパークラスを指定します。|
+|className \\ ''必須''|String|新しく作成するコンポーエントのクラス名を指定します。|
 |settings \\ ''必須''|Object|作成するコンポーネントの設定を指定します。ここで指定された値が、Component._getSettings()で返されます。|
-|tagName \\ ''必須''|String|このコンポーネントのタグ名を指定します。|
-|className \\ ''Default:（説明参照）''|String|クラス名を指定します。指定されない場合は、タグ名から生成されます。|
-||||
+|superClass \\ ''デフォルト:BITSMIST.v1.Component''|Function|作成するコンポーネントのスーパークラスを指定します。|
+|tagName|String|このコンポーネントのタグ名を指定します。ここに指定したタグをHTMLに挿入することで、インスタンス化されます。|
 
 === 戻り値 ===
 
@@ -76,12 +75,12 @@ Functionオブジェクトを返します。
 
 <code javascript>
 // Search padコンポーネントを作成
-var PadSearch = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
+var PadSearch = BITSMIST.v1.ClassUtil.newComponent("PadSearch", {
     "settings": {
         "name": "PadSearch",
         "path": "common"
     }
-}, "pad-search");
+}, BITSMIST.v1.Component, "pad-search");
 
 // 作成したコンポーネントにsearch()メソッドを追加する
 PadSearch.prototype.search = function(keyword)

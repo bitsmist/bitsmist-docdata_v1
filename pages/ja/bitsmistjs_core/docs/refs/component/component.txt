@@ -55,10 +55,6 @@ Trueの場合、[[#refresh_options|refresh()]]メソッドを呼ぶと自動的�
 
 Trueの場合、初期化終了時に自動的に[[#refresh_options|refresh()]]メソッドが呼び出されます。
 
-==== autoRestart ====
-''型:Boolean'' ''デフォルト:false''
-
-Trueの場合、コンポーネントがドキュメントツリーにアタッチされた際に、たとえ初期化済みであっても再度[[#start_settings|start()]]メソッドを呼び出します。
 
 ==== autoSetup ====
 ''型:Boolean'' ''デフォルト:true''

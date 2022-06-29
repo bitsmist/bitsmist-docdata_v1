@@ -53,10 +53,6 @@ When set to True, [[#fill_options|fill()]] method will be called automatically i
 
 When set to True, [[#refresh_options|refresh()]] method will be called automatically after initialization is finished.
 
-==== autoRestart ====
-''Type:Boolean'' ''Default:false''
-
-When set to True, [[#start_settings|start()]] method will be called even though the component is already initialized when it is re-attached to the document tree.
 
 ==== autoSetup ====
 ''Type:Boolean'' ''Default:true''

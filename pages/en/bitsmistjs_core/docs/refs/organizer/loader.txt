@@ -4,7 +4,7 @@
 
 =====Overview=====
 
-LoaderOrganizer handles the loading of class files, setting files, and template HTML files. Note actual loading process is handled by loaders and LoaderOrganizer does its job by calling them. 
+LoaderOrganizer handles the loading process of class files, setting files, and template HTML files. Note actual loading process is handled by loaders and LoaderOrganizer does its job by calling them. 
 
 =====Organizing=====
 
@@ -73,7 +73,7 @@ Specifies a path to the template common path.
 ====splitComponent====
 ''Type:String'' ''Default:false''
 
-Specifies whether a component file is split. If set to True, the loader will load two files.
+Specifies whether a component file is split. If set to True, the loader will load two files for each component.
 
 
 =====Settings=====
@@ -86,8 +86,8 @@ Extra components settings are placed in the "components" or "molds" section.
     "molds"/"components": {
         <componentName>: {
             "loadings": {
+                "autoLoad": <autoLoad>,
                 "autoMorph": <autoMorph>,
-                "className": <className>,
                 "fileName": <fileName>,
                 "loaderName": <loaderName>,
                 "overwrite": <overwrite>,
@@ -111,7 +111,6 @@ An object set as the value for <componentName> is setting for an adding componen
     "molds": {
         "PadSidebar": {
             "loadings": {
-                "className": "PadSidebar",
                 "rootNode": "#content"
             },
             "settings": {
@@ -122,7 +121,6 @@ An object set as the value for <componentName> is setting for an adding componen
     "components": {
         "PadSetting": {
             "loadings": {
-                "className": "PadSetting",
                 "rootNode": "#main"
             },
             "settings": {
@@ -133,27 +131,29 @@ An object set as the value for <componentName> is setting for an adding componen
 }
 </code>
 
-==== autoMorph ====
-''Type:String/True'' ''Default:"BITSMIST.v1.Component"''
+====autoLoad====
 
-Specifies a class name to use for instantiating an HTML-only component.
+''Type:String/true''
+
+Specifies to load a component automatically. Specify true, a URL to the component js file or the HTML template file as the value. If the value is true the component is loaded using the default path and the file name.
+
+==== autoMorph ====
+''Type:String/true'' ''Default:"BITSMIST.v1.Component"''
+
+Specifies a class name to use for instantiating a component. A new class is created by inheriting the specified class and the class is paired to the tag name. If the class doesn't exist yet use the "autoLoad" option to load it automatically.
 
 ====componentName====
 
 ''Type:String''
 
-The name of the component. If there is no "className" option in settings, this value also becomes a class name of the component.
+The name of the component. This value is also used as a class name of the component.
 
 
-==== className ====
-''Type:String'' ''Default:<Component Name>''
-
-A class name of the component. If not specified, the component name is used as the class name.
 
 ==== fileName ====
 ''Type:String'' ''Default:<Tag Name>''
 
-A filename of the component without extension. If not specified, the tag name is used as the file name.
+A file name of the component without extension. If not specified, the tag name is used as the file name. This file name is used for retrieving both class files and HTML files.
 
 
 ====loaderName====
@@ -184,7 +184,7 @@ Specifies whether a component file is split. If set to True, the loader will loa
 ==== sync ====
 ''Type:String/Boolean'' ''Default:false''
 
-If a string is set, it waits for an added component to become the specified state. If set to True, it waits for the “started” state.
+If a string is set, it waits for an added component to become the specified state. If set to True, it waits for the “ready” state.
 
 ==== tag ====
 ''Type:String''
@@ -204,19 +204,14 @@ Some settings can be specified in tag attributes. Tag attributes have higher pri
 
 ''Type:String''
 
-Indicates to load a component automatically. Specify a URL to the component as the value. If the value is empty the component is loaded using the default paths.
+Indicates to load a component automatically. Specify a URL to the component or to the HTML file as the value. If the value is empty the component is loaded using the default path and the file name. Same as [[#autoload|"loadings.autoLoad"]].
 
 ====bm-automorph====
 
 ''Type:String/(none)''  ''Default:"BITSMIST.v1.Component"''
 
-Specifies an existing class name to use when instantiating the component. Same as [[#automorph|"loadings.autoMorph"]].
+Specifies a class name to use when instantiating the component. Same as [[#automorph|"loadings.autoMorph"]]. If not specified BITSMIST.v1.Component will be used.
 
-====bm-classname====
-
-''Type:String''
-
-A class name of the component. Same as [[#classname|"loadings.className"]].
 
 ====bm-filename====
 
@@ -259,12 +254,12 @@ Returns the object holding child components that are added to the component.
 
 ''Type:undefined'' ''Asynchronous'' ''Inject:component''
 
-Adds a child component to the component. The added component instance is added to the [[#components|"components"]] property.
+Adds a child component to the component. The added component instance will be added to the [[#components|"components"]] property.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
-|componentName \\ ''Required''|String|A name of the component to add. If no "className" setting in the settings parameter, this value is also used as the class name.|
+|componentName \\ ''Required''|String|A name of the component to add. This value is also used as the class name.|
 |settings|Object|Component settings.|
 |sync \\ ''Default:false''|Object|Whether to return a promise that is resolved after finish loading the component.|
 
@@ -274,12 +269,15 @@ undefined
 
 ===Referencing Settings===
 
-  * [[#classname|loadings.className]]
+  * [[#autoload|loadings.autoLoad]]
+  * [[#automorph|loadings.autoMorph]]
+  * [[#loadername1|loadings.loaderName]]
   * [[#overwrite|loadings.overwrite]]
   * [[#rootnode|loadings.rootNode]]
   * [[#sync|loadings.sync]]
   * [[#tag|loadings.tag]]
   * [[#tagname|loadings.tagName]]
+
 
 ====getLoader(loaderName)====
 ''Type:Function'' ''Inject:Component''
@@ -295,19 +293,19 @@ Returns specified loader. If the loader name is not specified, then the default 
 
 Loader Object
 
-====loadComponent(className, settings, loadOptions, tagName)====
+====loadComponent(tagName, className, settings, loadOptions)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Load component files.
+Load component files. The actual process is handled by an active loader.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
+|tagName \\ ''Required''|Object|A tag name of the component.|
 |className \\ ''Required''|String|A name of component class.|
 |settings|Object|Component settings.|
 |loadOptions|Object|Options for loading. Valid keys are below.|
 |  "path"|String|A path to the component to load.|
-|tagName \\ ''Required''|Object|A tag name of the component.|
 
 ===Return Value===
 
@@ -315,26 +313,27 @@ undefined
 
 === Referencing Settings ===
 
+  * [[#autoload|loadings.autoLoad]]
   * [[#automorph|loadings.autoMorph]]
   * [[#filename|loadings.fileName]]
   * [[#path|loadings.path]]
   * [[#splitcomponent1|loadings.splitComponent]]
-  * [[#tagName|loadings.tagName]]
-  * [[#lsystem.appBaseUrl]]
+  * [[#|system.appBaseUrl]]
   * [[#|system.componentPath]]
   * [[#splitcomponent|system.splitComponent]]
-
 ==== loadTags(rootNode, options) ====
 
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Load tags under the root node specified.
+Load tags under the root node specified. The actual process is handled by an active loader.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
 |rootNode \\ ''Required''|HTMLElement|A base node to load components.|
-|options|Object|Options.|
+|options|Object|Options. Valid keys are below.|
+|　"waitForTags" \\ ''Default:false''|Boolean|If True the component waits for its child components to become "ready" state.|
+
 
 ===Return Value===
 
@@ -344,7 +343,6 @@ undefined
 
   * [[#bm-autoload|bm-autoload]]
   * [[#bm-automorph|bm-automorph]]
-  * [[#bm-classname|bm-classname]]
   * [[#bm-filename|bm-filename]]
   * [[#bm-loadername|bm-loadername]]
   * [[#bm-path|bm-path]]
@@ -353,7 +351,7 @@ undefined
 ====loadSetting(settingName, loadOptions)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Load a component setting file and merge settings in the file into component settings.
+Load a component setting file and merge settings in the file into component settings. The actual process is handled by an active loader.
 
 ===Parameters===
 
@@ -375,7 +373,7 @@ undefined
 ====loadSettingFile(settingName, path, loadOptions)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Load a setting file.
+Load a setting file. The actual process is handled by an active loader.
 
 ===Parameters===
 
@@ -393,7 +391,7 @@ undefined
 ====loadTemplate(templateName, loadOptions)====
 ''Type:undefined'' ''Inject:Component'' ''Asynchronous''
 
-Load a template HTML file.
+Load a template HTML file. The actual process is handled by an active loader.
 
 ===Parameters===
 

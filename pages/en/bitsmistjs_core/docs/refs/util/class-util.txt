@@ -53,7 +53,7 @@ Inherits the subclass from the super class.
 
 undefined
 
-==== newComponent(superClass, settings, tagName, className) ====
+==== newComponent(className, settings, superClass, tagName) ====
 
 ''Type:Component'' ''Static''
 
@@ -66,11 +66,10 @@ This function exists for older browser support. You can use the class notation f
 ===Parameters===
 
 ^Parameter^Type^Description^
-|superClass \\ ''required''|Function|The Super class to inherit.|
+|className ''required''|String|A class name for the new component.|
 |settings \\ ''required''|Object|A component settings object. This settings will be returned in Component._getSettings().|
-|tagName \\ ''required''|String|A tag name for this component.|
-|className \\ ''Default:(see desc)''|String|A class name for this component. It is guessed from a tag name if this parameter is missing.|
-||||
+|superClass \\ ''Default:BITSMIST.v1.Component''|Function|The Super class to inherit.|
+|tagName|String|A tag name for this component. By inserting this tag to HTML the component will be instantiated.|
 
 ===Return Value===
 
@@ -80,12 +79,12 @@ A created function object.
 
 <code javascript>
 // Create a search pad component.
-var PadSearch = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
+var PadSearch = BITSMIST.v1.ClassUtil.newComponent("PadSearch", {
     "settings": {
         "name": "PadSearch",
         "path": "common"
     }
-}, "pad-search");
+}, BITSMIST.v1.Component, "pad-search");
 
 // Add search() method to the created component.
 PadSearch.prototype.search = function(keyword)

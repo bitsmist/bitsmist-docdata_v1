@@ -84,8 +84,8 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
     "molds"/"components": {
         <componentName>: {
             "loadings": {
+                "autoLoad": <autoLoad>,
                 "autoMorph": <autoMorph>,
-                "className": <className>,
                 "fileName": <fileName>,
                 "loaderName": <loaderName>,
                 "overwrite": <overwrite>,
@@ -109,7 +109,6 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
     "molds": {
         "PadSidebar": {
             "loadings": {
-                "className": "PadSidebar",
                 "rootNode": "#content"
             },
             "settings": {
@@ -120,7 +119,6 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
     "components": {
         "PadSetting": {
             "loadings": {
-                "className": "PadSetting",
                 "rootNode": "#main"
             },
             "settings": {
@@ -131,27 +129,30 @@ Trueの場合、DOMが読み込まれた時点でオートロード処理を開�
 }
 </code>
 
-==== autoMorph ====
-''型:String/True'' ''Default:"BITSMIST.v1.Component"''
+====autoLoad====
 
-HTMLのみのコンポーネントをインスタンス化する際に使用するクラス名を指定します。
+''型:String/true''
+
+コンポーネントに必要なファイルを自動的にロードすることを示します。値としてTrue、コンポーネントのJSファイルへのURL、テンプレートHTMLファイルへのURLのいずれかを指定することができます。Trueの場合は、デフォルトのパスとファイル名が使用されます。
+
+====autoMorph====
+
+''型:String/true'' ''Default:"BITSMIST.v1.Component"''
+
+コンポーネントをインスタンス化する際に使用するクラス名を指定します。このクラスを継承した新しいクラスが作成され、それがタグに紐づけられます。指定するクラスがまだ存在しない場合は、autoLoadオプションも同時に使用してクラスをロードする必要があります。
 
 ====componentName====
 
 ''型:String''
 
-コンポーネントの名前を指定します。"className"オプションの指定がない場合、この値がクラス名となります。
+コンポーネントの名前を指定します。また、この値がクラス名となります。
 
 
-==== className ====
-''型:String'' ''デフォルト:<コンポーネント名>''
-
-コンポーネントのクラス名を指定します。指定がない場合は、コンポーネント名がクラス名になります。
 
 ==== fileName ====
 ''型:String'' ''デフォルト:<タグ名>''
 
-コンポーネントのファイル名を拡張しなしで指定します。指定がない場合は、タグ名がファイル名となります。
+コンポーネントのファイル名を拡張子なしで指定します。指定がない場合は、タグ名がファイル名となります。 クラスファイル、テンプレートファイルの両方に使用されます。
 
 
 
@@ -183,7 +184,7 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 ==== sync ====
 ''型:String/Boolean'' ''デフォルト:false''
 
-文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、"started"になるのを待ちます。
+文字列が指定された場合、追加したコンポーネントが指定したステートになるのを待ちます。Trueの場合は、"ready"になるのを待ちます。
 ==== tag ====
 ''型:String''
 
@@ -202,19 +203,14 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 
 ''型:String''
 
-コンポーネントに必要なファイルを自動的にロードすることを示します。値としてコンポーネントのJSファイルへのURLを指定することができます。指定がない場合は、デフォルトのパスとファイル名が使用されます。
+コンポーネントに必要なファイルを自動的にロードすることを示します。値としてコンポーネントのJSファイルへのURLか、テンプレートHTMLファイルへのURLを指定することができます。指定がない場合は、デフォルトのパスとファイル名が使用されます。[[#autoload|"loadings.autoLoad"]]と同じです。
 
 ====bm-automorph====
 
 ''型:String/(none)''
 
-タグをインスタンス化する際、クラスのJSファイルをロードせずに、指定された既に存在するクラスを使用します。[[#automorph|"loadings.autoMorph"]]と同じです。
+タグをインスタンス化する際、指定されたクラスを使用します。[[#automorph|"loadings.autoMorph"]]と同じです。指定がない場合は、BITSMIST.v1.Componentを使用します。
 
-====bm-classname====
-
-''型:String''
-
-コンポーネントのクラス名を指定します。[[#classname|"loadings.className"]]と同じです。
 
 ====bm-filename====
 
@@ -260,7 +256,7 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|componentName \\ ''必須''|String|追加するコンポーネント名です。設定で指定がない場合は、これがクラス名となります。|
+|componentName \\ ''必須''|String|追加するコンポーネント名です。これがクラス名となります。|
 |settings|Object|追加するコンポーネントの設定情報です。|
 |sync \\ ''Default:false''|Object|Trueならコンポーネントのロード完了を待ちます。|
 
@@ -270,7 +266,9 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 
 === 参照する設定 ===
 
-  * [[#classname|loadings.className]]
+  * [[#autoload|loadings.autoLoad]]
+  * [[#automorph|loadings.autoMorph]]
+  * [[#loadername1|loadings.loaderName]]
   * [[#overwrite|loadings.overwrite]]
   * [[#rootnode|loadings.rootNode]]
   * [[#sync|loadings.sync]]
@@ -291,19 +289,19 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 
 ローダオブジェクト。
 
-====loadComponent(className, settings, loadOptions, tagName)====
+====loadComponent(tagName, className, settings, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-コンポーネントのファイルをロードします。
+コンポーネントのファイルをロードします。実際の処理はローダが行います。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
+|tagName \\ ''必須''|Object|コンポーネントに紐づけるタグ名です。|
 |className \\ ''必須''|String|コンポーネントのクラス名です。|
 |settings|Object|コンポーネントの設定です。|
-|loadOptions|Object|ロードする際のオプションです。有効なキーは以下です。|
+|loadOptions|Object|ロードする際のオプションです。有効なキーには以下のものがあります。|
 |  "path"|String|ロードするコンポーネントのパスを指定します。|
-|tagName \\ ''必須''|Object|コンポーネントに紐づけるタグ名です。|
 
 ===戻り値===
 
@@ -311,25 +309,27 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 
 === 参照する設定 ===
 
+  * [[#autoload|loadings.autoLoad]]
   * [[#automorph|loadings.autoMorph]]
   * [[#filename|loadings.fileName]]
   * [[#path|loadings.path]]
   * [[#splitcomponent1|loadings.splitComponent]]
-  * [[#tagName|loadings.tagName]]
-  * [[#lsystem.appBaseUrl]]
+  * [[#|system.appBaseUrl]]
   * [[#|system.componentPath]]
   * [[#splitcomponent|system.splitComponent]]
 
 ==== loadTags(rootNode, options) ====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-指定されたrootNode配下にある、ロードが必要なコンポーネントをロードします。
+指定されたrootNode配下にある、ロードが必要なコンポーネントをロードします。実際の処理はローダが行います。
 
 ===パラメータ===
 
 ^パラメータ^型^説明^
 |rootNode \\ ''必須''|HTMLElement|ロード対象の基点となるノードです。|
-|options|Object|ロードのオプションです。|
+|options|Object|ロードのオプションです。有効なキーは以下のものがあります。|
+|　"waitForTags" \\ ''デフォルト:false''|Boolean|Trueの場合、各コンポーネントが"ready"状態になるのを待ちます。|
+
 
 ===戻り値===
 
@@ -339,16 +339,15 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 
   * [[#bm-autoload|bm-autoload]]
   * [[#bm-automorph|bm-automorph]]
-  * [[#bm-classname|bm-classname]]
   * [[#bm-filename|bm-filename]]
   * [[#bm-loadername|bm-loadername]]
   * [[#bm-path|bm-path]]
   * [[#bm-split|bm-split]]
- 
+
 ====loadSetting(settingName, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-コンポーネントの設定ファイルをロードします。ロードした設定は、コンポーネントの設定にマージされます。
+コンポーネントの設定ファイルをロードします。ロードした設定は、コンポーネントの設定にマージされます。実際の処理はローダが行います。
 
 ===パラメータ===
 
@@ -370,7 +369,7 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 ====loadSettingFile(settingName, path, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-設定ファイルをロードします。
+設定ファイルをロードします。実際の処理はローダが行います。
 
 ===パラメータ===
 
@@ -388,7 +387,7 @@ HTMLのみのコンポーネントをインスタンス化する際に使用す�
 ====loadTemplate(templateName, loadOptions)====
 ''型:undefined'' ''Inject:Component'' ''非同期''
 
-テンプレートHTMLファイルをロードします。
+テンプレートHTMLファイルをロードします。実際の処理はローダが行います。
 
 ===パラメータ===
 
