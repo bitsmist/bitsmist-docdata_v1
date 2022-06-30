@@ -18,9 +18,7 @@ There are four ways to load components.
 
 ===Specify file name===
 
-This is how we loaded a component in [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]]. Specify a URL in bm-autoload attribute. A file extension differs depending on whether you are loading an HTML only component or an HTML+JS component. 
-
-If you want to load an HTML+JS component, specify **a URL to the Javascript file** in bm-autoload attribute.
+This is how we loaded a component in [[en:bitsmistjs_core:docs:general:sample|"Create a sample component"]]. Specify a URL to the Javascript file in bm-autoload attribute.
 
 <code html>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
@@ -32,15 +30,6 @@ If you want to load an HTML+JS component, specify **a URL to the Javascript file
 Though the path in this example is a relative path, you can use an absolute path also. However, the library uses XMLHttpRequest to load files, servers hosting components need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
   * [[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
 </WRAP>
-
-If you are loading a component that doesn't have any actions (event handlers), then specify **a path to the HTML file**.
-
-<code html>
-<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
-</code>
-
-This time, only the HTML file is loaded asynchronously and will be displayed on the browser.
-
 ====Load default files====
 
 When a URL is not specified in bm-autoload attribute, the files are loaded using default paths and names. 
@@ -56,14 +45,6 @@ The default path can be changed in settings.
   * <html><i class="fas fa-link"></i></html>[[#default_path| Default path]]
   * <html><i class="fas fa-link"></i></html>[[#default_file| Default file]]
 </WRAP>
-
-Use bm-automorph attribute for HTML-only components.
-
-<code html>
-<pad-hello bm-automorph></pad-hello>
-</code>
-
-In the example above, the default path is the current path and the default file name is the tag name + extension ".html", thus, "pad-hello.html".
 
 ====Import Javascript files with <script> tag====
 
@@ -112,7 +93,16 @@ They will be inserted in the place specified by "rootNode" setting under its par
 </WRAP>
 ====Add dynamically using Javascript code====
 
-Components can be added dynamically by code.
+Components can be added dynamically by code. There are two ways to do so.
+
+===Insert a tag===
+
+Add a tag to the HTML. If you need to load the component you need to set appropriate tag attributes to the tag. After inserting the tag you need to call component's  [[en:bitsmistjs_core:docs:refs:organizer:loader#loadtags_rootnode_options|loadTags()]] method to start auto loading the component. Pass the root node to loadTags().
+
+<code javascript>
+document.querySelector("#pads").insertAdjacentHTML("afterbegin", "<pad-filter bm-autoload bm-path='common'></pad-filter>");
+document.querySelector("#pads").loadTags(document.querySelector("#pads"));
+</code>
 
 ===Use addComponent() method===
 
@@ -133,6 +123,39 @@ In the example above, the PadFilter component is added to the #pads node under t
 addComponent() method is offered by LoaderOrganizer.
   * [[en:bitsmistjs_core:docs:refs:organizer:loader#addcomponent_componentname_settings_sync|Reference - LoaderOrganizer - addComponent()]]
 </WRAP>
+
+====Morph from another component====
+
+For simple components that do not have their own event handlers, you can create a new component based on another component and use that.
+
+If a URL to an HTML file is specified in the bm-autoload attribute, a new class inheriting from the Component class is automatically created internally and the class is associated with the tag.
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</code>
+
+In the above example, a PadHello class inheriting from the Component class is created and tied to the pad-hello tag. The tag is then instantiated and the HTML file is loaded from the server and displayed within the custom tag during its initialization process.
+
+
+To use the default path and file name, specify the bm-automorph attribute.
+
+<code html>
+<pad-hello bm-automorph></pad-hello>
+</code>
+
+By default, it inherits from the Component class, but a superclass can be specified with the bm-automorph attribute.
+
+<code html>
+<pad-hello bm-automorph='MyComponent'></pad-hello>
+</code>
+
+Note that if the specified class needs to be loaded,  the bm-autoload attribute is needed to load the class.
+
+<code html>
+<pad-hello bm-autoload='https://example.com/mycomponent.js' bm-automorph='MyComponent'></pad-hello>
+</code>
+
+In this case, a PadHello class that inherits from MyComponent is created and the class is associated with the tag after https://example.com/mycomponent.js is loaded.
 
 =====Default path=====
 

@@ -2,7 +2,7 @@
 
 =====概要=====
 
-各コンポーネントのJavascriptファイルやHTMLファイルはブラウザにロードされる必要があります。ここでは、どうやってそれらのファイルをロードするのか、を指定する方法について説明します。
+各コンポーネントのJavascriptファイルやHTMLファイルはブラウザにロードされる必要があります。ここでは、どうやってそれらのファイルをロードするのかを指定する方法について説明します。
 =====ロード方法=====
 
 コンポーネントのロード方法には、以下の方法があります。
@@ -11,11 +11,13 @@
   * <script>タグでインポートする
   * 設定ファイルの"molds"/"components"セクションに記述する
   * プログラムから動的に追加する
-====bm-autoload/bm-automorph属性を持つタグを記述する====
+  * モーフィングする
+
+====bm-autoload属性を持つタグを記述する====
 
 ===ファイル名を指定する===
 
-これは[[ja:bitsmistjs_core:docs:general:sample|サンプルコンポーネント]]で使用した方法です。必要なファイルへのパスをbm-autoload属性に記述します。HTMLのみのファイルか、HTML+JSのファイルかによって指定するファイルの拡張子が変わります。HTML+JSの場合は、カスタムタグの"bm-autoload"属性にJavascriptファイルへのURLを記述します。
+これは[[ja:bitsmistjs_core:docs:general:sample|サンプルコンポーネント]]で使用した方法です。カスタムタグの"bm-autoload"属性にJavascriptファイルへのURLを記述します。
 
 <code html>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
@@ -27,14 +29,6 @@
 この例では相対パスを使っていますが、絶対パスでも構いません。ただし、XMLHttpRequestを使用して取得しているため、絶対パスを使って別のオリジンからロードする場合は、サーバー側でAccess-Control-Allow-Originヘッダーを付加する必要があります。
   * [[https://developer.mozilla.org/ja/docs/Web/HTTP/CORS|オリジン間リソース共有 (CORS) | MDN Web Docs]]
 </WRAP>
-
-動作（イベントハンドラ）が必要のないコンポーネントの場合はHTMLファイルへのURLを指定します。
-
-<code html>
-<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
-</code>
-
-この場合はHTMLファイルがサーバーから読み込まれ、カスタムタグ内に表示されます。
 
 ===ファイル名を指定しない===
 
@@ -51,14 +45,6 @@ bm-autoload属性の値にURLを指定しない場合は、デフォルトのパ
   * <html><i class="fas fa-link"></i></html>[[#デフォルトのパス| デフォルトのパス]]
   * <html><i class="fas fa-link"></i></html>[[#デフォルトのファイル名| デフォルトのファイル名]]
 </WRAP>
-
-なお、HTMLのみの場合はbm-autoload属性ではなく、bm-automorph属性を指定します。
-
-<code html>
-<pad-hello bm-automorph></pad-hello>
-</code>
-
-と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた"pad-hello.html"となります。
 
 ====<script>タグでインポートする====
 
@@ -111,10 +97,11 @@ HTMLのみのコンポーネントの場合、このロード方法は使用で�
 
 ===タグを挿入する===
 
-ドキュメントツリーにタグを追加します。ロードが必要な場合、必要な情報をタグ属性に指定しておく必要があります。
+ドキュメントツリーにタグを追加します。ロードが必要な場合、必要な情報をタグ属性に指定しておく必要があります。また追加した後は、オートロードを開始するために、コンポーネントの[[[[ja:bitsmistjs_core:docs:refs:organizer:loader#loadtags_rootnode_options|loadTags()]]メソッドを実行してください。loadTags()の引数には、起点となるノードを指定します。
 
 <code javascript>
-document.querySelector("#pads").insertAdjacentHTML("afterbegin", "<pad-filter bm-path='common'></pad-filter>");
+document.querySelector("#pads").insertAdjacentHTML("afterbegin", "<pad-filter bm-autoload bm-path='common'></pad-filter>");
+document.querySelector("#pads").loadTags(document.querySelector("#pads"));
 </code>
 
 ===addComponent()メソッドを使う===
@@ -136,6 +123,38 @@ document.querySelector("bm-router").addComponent("PadFilter", {
 addComponent()メソッドはLoaderOrganizerによって提供されます。
   * [[ja:bitsmistjs_core:docs:refs:organizer:loader#addcomponent_componentname_settings_sync|リファレンス - LoaderOrganizer - addComponent()]]
 </WRAP>
+
+====モーフィングする====
+
+独自のイベントハンドラなどを持たない単純なコンポーネントの場合、別のコンポーネントをもとに新しいコンポーネントを作成し、それを利用することができます。
+
+bm-autoload属性にHTMLファイルへのURLを指定した場合、内部で自動的にComponentクラスを継承した新しいクラスを作成し、そのクラスをタグと紐付けます。
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</code>
+
+上記の例の場合、Componentクラスを継承したPadHelloクラスが作成され、pad-helloタグに紐づけられます。その後タグがインスタンス化され、Componentクラスの初期化が始まり、HTMLファイルがサーバーから読み込まれ、カスタムタグ内に表示されます。
+
+デフォルトのパスとファイル名を利用する場合、bm-automorph属性を指定します。
+
+<code html>
+<pad-hello bm-automorph></pad-hello>
+</code>
+
+デフォルトではComponentクラスを継承しますが、bm-automorph属性でスーパークラスを指定することもできます。
+
+<code html>
+<pad-hello bm-automorph='MyComponent'></pad-hello>
+</code>
+
+なお、指定するクラスをロードする必要がある場合、bm-autoload属性を使ってロードする必要があります。
+
+<code html>
+<pad-hello bm-autoload='https://example.com/mycomponent.js' bm-automorph='MyComponent'></pad-hello>
+</code>
+
+この場合、https://example.com/mycomponent.jsがロードされた後に、MyComponentクラスを継承したPadHelloクラスが作成され、タグに紐づけられます。
 
 =====ロードのタイミング=====
 
@@ -178,7 +197,7 @@ addComponent()メソッドはLoaderOrganizerによって提供されます。
 
 ====デフォルトパスの設定方法====
 
-これらのパスの指定はタグの属性、または設定で行います。設定には大きく分けると、全コンポーネントで共通のグローバル設定と、コンポーネント固有の設定があります。
+デフォルトパスの指定はタグの属性、または設定で行います。設定には大きく分けると、全コンポーネントで共通のグローバル設定と、コンポーネント固有の設定があります。
 
 <WRAP admonition tip links>
 設定の詳細については設定を参照ください。
