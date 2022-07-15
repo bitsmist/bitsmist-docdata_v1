@@ -167,9 +167,9 @@ Most of the settings are component-specific. However, you might want to share so
 
 ====Specifying global settings====
 
-Loading BitsmistJS library automatically creates a component called SettingManager. By setting the values to SettingManager settings, the settings will be shared globally. You can access SettingManager in BITSMIST.v1.settings global variable. 
+Loading BitsmistJS library automatically creates a Store object. By setting the values to the Store object, the values will be shared globally. You can access those settings via BITSMIST.v1.settings global variable. 
 
-In the next example, we are merging some settings to the global settings using the merge() method of settings property.
+In the next example, we are merging some settings to the global settings using the merge() method of the Store object.
 
 <code javascript>
 BITSMIST.v1.settings.merge({
@@ -181,7 +181,7 @@ BITSMIST.v1.settings.merge({
 </code>
 
 <WRAP admonition note>
-We recommend using merge() instead of set() so that we do not remove existing settings that might be already set somewhere else.
+We recommend using merge() instead of set() so that you do not remove existing settings that might be already set elsewhere.
 </WRAP>
 
 ====Loading global settings====
@@ -198,7 +198,7 @@ By loading the global settings this way, they are available before any component
 
 ====Chaining to global settings====
 
-The "settings" property has the ability to chain to another "settings" property. By default, each component's setting property is chained to the global settings, that is, SettingManager's setting property explained in the earlier section.
+The "settings" property has the ability to chain to another "settings" property. By default, each component's setting property is chained to the global settings, that is, BITSMIST.v1.settings Store object.
 
 When a settings property is chained to another settings property, the setting value will be retrieved from the chained settings if the property doesn't have the item. By accessing the component local settings, you are automatically accessing the global settings (if the item exists in the global settings).
 
@@ -237,7 +237,7 @@ There might be the case that you don't want to use the site global settings. For
 
 ====Accessing global settings====
 
-You can access the global settings explicitly by accessing SettingsManager's settings property.
+You can access the global settings explicitly by accessing BITSMIST.v1.settings.
 
 <code javascript>
 console.log(BITSMIST.v1.settings.get("myValue"));

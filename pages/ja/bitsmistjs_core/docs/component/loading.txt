@@ -185,7 +185,6 @@ bm-autoload属性にHTMLファイルへのURLを指定した場合、内部で�
 |ベースURL|https://example.com|
 |コンポーネントフォルダ|components|
 |テンプレートフォルダ|templates|
-|パス|common|
 
 ヘッダーコンポーネント"bar-header"が以下のようにHTMLファイルに指定してあった場合、
 

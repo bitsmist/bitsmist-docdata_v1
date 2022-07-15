@@ -256,13 +256,8 @@ In the next example, two handlers with each option are specified.
 }
 </code>
 
-=====Extended Properties=====
 
-====eventResult====
 
-''Type:Array of Object'' ''get''
-
-Returns an array of objects that contain event results.
 =====Extended Methods=====
 
 ==== addEventHandler(eventName, handlerInfo, element, bindTo) ====

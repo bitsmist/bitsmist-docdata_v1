@@ -166,9 +166,9 @@ console.log(this.settings.get("mysection.value")); // console displays 1
 
 ====グローバル設定の設定方法====
 
-BitsmistJSをロードすると、SettingManagerというコンポーネントが自動的にインスタンス化されます。そのSettingManagerに設定をセットすると、それがグローバルな設定となります。SettingManagerはBITSMIST.v1.settingsというグローバル変数に格納されています。
+BitsmistJSをロードすると、BITSMIST.v1.settingsというStoreオブジェクトが使えるようになります。そのStoreオブジェクトに値をセットすると、それがグローバルな設定となります。グローバル設定にはBITSMIST.v1.settingオブジェクトを使ってアクセスできます。
 
-次の例では、SettingsManagerのsettingsプロパティのmerge()メソッドを使って、既存の設定に設定をマージしています。
+次の例では、Storeのmerge()メソッドを使って、既存の設定に設定をマージしています。
 
 <code javascript>
 BITSMIST.v1.settings.merge({
@@ -234,7 +234,7 @@ console.log(this.settings.get("myValue")); // console displays 2
 
 ====グローバル設定へのアクセス====
 
-明示的にグローバルな設定にアクセスしたい場合は、SettingManagerのsettingsプロパティにアクセスします。
+明示的にグローバルな設定にアクセスしたい場合は、BITSMIST.v1.settingsにアクセスします。
 
 <code javascript>
 console.log(BITSMIST.v1.settings.get("myValue"));

@@ -256,13 +256,6 @@ onDoRefresh(sender, e, ex)
 }
 </code>
 
-=====拡張プロパティ=====
-
-====eventResult====
-
-''Type:Array of Object'' ''get''
-
-イベントの処理結果を含むオブジェクトです。
 
 =====拡張メソッド=====
 

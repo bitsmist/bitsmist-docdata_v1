@@ -16,10 +16,10 @@ Returns the object that contains a copy of all items in the Store. The stored It
 
 ''Type:Function'' ''get/set''
 
-Returns the merge function to be used in the [[#merge_value_merger|merge()]] method. By default, the internal deep merge function is used. Both merge source object and target object are passed to this merge function.
+Returns the merge function to be used in the [[#merge_value_merger|merge()]] method. By default, the internal deep merge function is used. Both merge source object and target object are passed to this merge function. Return the merged object from the function.
 
 <code javascript>
-merger(sourceObject, targetObject); // Merge targetObject into sourceObject.
+merger(targetObject, sourceObject); // Merge sourceObject into targetObject.
 </code>
 
 =====Constructor=====
@@ -135,7 +135,7 @@ undefined
 
 ''Type:undefined''
 
-Set a value to an item specified by the key parameter. If the key does not exist, it will be automatically created. If the item already exists in a store and it is an object, the value will be merged with the current item.
+Set a value to an item specified by the key parameter. If the key does not exist, it will be automatically created. If the item already exists in the store, the value will be overwritten by the new value.
 
 You can use a period-separated string to specify a hierarchy. The below example sets the value to store["settings"]["name"].
 
@@ -143,7 +143,7 @@ You can use a period-separated string to specify a hierarchy. The below example 
 store.set("settings.name", "BarHeader");
 </code>
 
-If the item does not exist, then it will be created automatically. In the above example, if "settings" does not exist, the "settings" object will be created automatically.
+If the intermediate hierarchies do not exist, they will be created automatically. In the above example, if "settings" does not exist, a hierarchy called "settings" is automatically created. However, if the key already exists and is not an object, an error will be thrown. For example, if the above code is executed on a Store object with content {"settings": "value"}, the "settings " hierarchy cannot be created and it will be an error.
 
 ===Parameters===
 

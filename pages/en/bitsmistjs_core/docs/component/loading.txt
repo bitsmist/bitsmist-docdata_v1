@@ -180,13 +180,14 @@ The component will be loaded from the path concatenated above settings. Each set
 |Base application url|https://example.com|
 |Component path|components|
 |Template path|templates|
-|Path|common|
+
+Let's assume we have those settings and "bar-header" component in an HTML file like this.
 
 <code html>
-<bar-header bm-autoload></bar-header>
+<bar-header bm-autoload bm-path="common"></bar-header>
 </code>
 
-With those settings and "bar-header" component in an HTML file, the component will be loaded from https://example.com/components/common/bar-header.js and its template file from https://example.com/templates/common/bar-header.html.
+The component will be loaded from https://example.com/components/common/bar-header.js and its template file from https://example.com/templates/common/bar-header.html.
 
 ====Specifying a default path====
 
