@@ -1,10 +1,12 @@
 ====== RouteOrganizer ======
 
-''Inherit:Organizer''
+''継承:Organizer''
 
 ===== 概要 =====
 
 RouteOrganizerはアプリケーションのルーティングに関する処理を担当します。例えばこのURLの場合には、特定の処理をするといった用途に利用します。
+
+====ルートの決定====
 
 このオーガナイザを利用する場合、どのようなルートが存在するかを設定の”routes”セクションに設定します。このルート情報と現在のURLを元に現在のルートが決定されます。以下は設定例です。
 
@@ -14,25 +16,60 @@ RouteOrganizerはアプリケーションのルーティングに関する処理
     "name": "list",
     "path": "/:resource/list/",
     "specName": "{{:resource}}",
-    "componentName": "PadList"
   },
   {
     "name": "top",
     "path":　"/",
     "specName": "top",
-    "componentName": "PadTop"
   }
 ]
 </code>
 
-ルート情報配列の先頭から順番に、以下の方法で最初に一致したものが、現在のルートとして採用されます。
+ルート情報配列の先頭から順番に、以下の条件が全て一致したものが、現在のルートとして採用されます。
 
   - （originの指定がある場合）originと一致する。
   - （pathの指定がある場合）URLとpathが正規表現で一致する
 
-RouteOrganizerは各ルート固有の設定ファイルを追加で読み込むことができます。その追加で読み込む設定ファイルは、スペックファイル（Spec file）と呼ばれます。スペックファイルに記述される内容は、通常のコンポーネントの設定ファイルと同じです。
+====スペックファイル====
 
-ブラウザの”戻る”、”進む”ボタンなどでpopstateイベントが発生した場合、RouteOrganizerがデフォルトの処理を行います。イベント発生時には、その新しいルートに対するopen()処理を行うことで、通常のロードと同じ流れの処理が行われます。またスペックファイルに記述されているコンポーネントに対し、”beforePopstate”、”afterPopstate”イベントをトリガーするので、コンポーネント側でイベントハンドラを記述することで、popstateイベント時に独自の処理も行うことができます。
+RouteOrganizerはルートを決定した後、そのルート固有の設定ファイルを追加で読み込むことができます。その追加で読み込む設定ファイルは、スペックファイル（Spec file）と呼ばれます。スペックファイルに記述される内容は、通常のコンポーネントの設定ファイルと同じです。
+
+====ルートの変更====
+
+openRoute()メソッドを呼ぶことで、違うルート（URL）ヘ移動することができます。openRoute()は以下の流れで処理を行います。
+
+  - options["jump"]がTrue、または新しいルート情報が存在しない場合は、新しいURLヘ遷移します。
+  - hitory.pushState()し、新しいURLを履歴に追加します。
+  - 新しいルートが違うスペックファイルを要求する場合、updateRoute()メソッドを呼びます。（現在未実装）
+  - URLの検証を行います。
+  - アタッチされているコンポーネントのrefresh()メソッドを呼びます。
+  - URLの正規化を行います。
+
+<WRAP admonition caution>
+現状ではupdateRoute()メソッドが機能していないため、スペックファイルが違う場合でも、URLが遷移します。本来なら、遷移せずにコンポーネントのロードなどが行われる予定です。
+</WRAP>
+
+なお、ページが遷移した場合、自動的に現在のURLに対してopenRoute()が呼び出されます。こうすることで、URLの検証以降の作業が行われます。
+====Popstate処理====
+
+ブラウザの”戻る”、”進む”ボタンなどでpopstateイベントが発生した場合、RouteOrganizerがデフォルトの処理を行います。
+
+イベント発生時には、その新しいルートに対するopenRoute()処理を行うことで、通常のロードと同じ流れの処理が行われます。またアタッチしているコンポーネントに対し、”beforePopstate”、”afterPopstate”イベントをトリガーするので、コンポーネント側でイベントハンドラを記述することで、popstateイベント時に独自の処理も行うことができます。
+
+====URLの検証と修正====
+
+RouteOrganizerではURLの検証と修正の仕組みを持っています。ただし、RouteOrganizerでは具体的な作業は行わず、イベントをトリガーするのみです。そのイベントハンドラに検証や修正のロジックを記述します。
+
+validateRoute()メソッドを呼び出すことでこの処理が行われますが、validateRoute()メソッドはopenRoute()メソッドの中で自動的に呼び出されます。
+
+validateRoute()は以下の流れで処理を行います。
+
+  - beforeValidateイベントをトリガーします。
+  - doCheckValidityオーガナイザイベントをトリガーします。
+  - 検証に失敗し、かつ"settings.autoFixURL"オプションがTrueなら、URLの自動修正を行います。
+  - doValidateURLイベントをトリガーします。
+  - afterValidateイベントをトリガーします。
+  - 検証結果がNGなら、例外をスローします。
 ===== オーガナイズ処理 =====
 
 ”routes”セクションからルーティング情報に関する設定を読み込み、現在保持しているルーティング情報に追加します。これらの処理は設定情報が読み込まれた直後の”beforeStart”と、スペックファイルが読み込まれた直後の”afterSpecLoad”のタイミングで行われます。
@@ -46,65 +83,163 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
   * beforeStart
   * afterSpecLoad
 
+=====設定 (グローバル)=====
+
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "system": {
+        "specPath": <specPath>,
+    }
+}
+</code>
+
+
+====specPath====
+''型:String''
+
+スペックファイルのパスを指定します。
+
 ===== 設定 =====
 
-ルーティング情報は設定の"routes"セクションに記述します。
-====書式====
+ルーティング情報は設定の"routes"セクションに記述します。"routes"セクションは配列となっており、複数のルート情報を設定できます。またいくつかの設定は、"settings"セクションに記述します。
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "settings": {
+        "autoFixURL": <autoFixURL>,
+        "validationName": <validationName>,
+    },
+    "routes": [{
+        "name": <name>,
+        "origin": <origin>,
+        "path": <path>,
+        "specName": <specName>,
+    }],
+}
+</code>
 
-<WRAP listtable>
-  * "routes": Array of  <rootInfo> {
-    * "name": <name>
-    * "origin": <origin>
-    * "path": <path>
-    * "specName": <specName>
-    * "componentName": <componentName>
-  * }
-</WRAP>
+====autoFixURL====
+''型:Boolean''
 
-====説明====
+URLの検証が失敗したときに、自動的に修正するかを指定します。
 
-^ 項目^型^説明^
-|routeInfo|Object|ルート情報を格納したオブジェクトです。ルート情報には以下の内容が含まれます。|
-|name \\ ''optional''|String|ルートの名前を指定します。|
-|origin \\ ''optional''|String|ルートのオリジンを指定します。|
-|path \\ ''optional''|String|ルートのパスを指定します。[[https://github.com/pillarjs/path-to-regexp|path-to-regexp]]で使用可能な正規表現を指定できます。パスの指定がない場合は、全てのURLが合致することになります。|
-|specName \\ ''optional''|String|ルートのスペックファイル名を指定します。合致したルートのこのファイル名のファイルが、追加で読み込まれます。”path”のパラメータを使用することが可能です。|
-|componentName \\ ''optional''|String|ルートのメインコンポーネント名を指定します。再描画時にこのコンポーネントのrefresh()メソッドが呼びされます。|
+====name====
+''型:String''
 
-=====設定例=====
+ルートの名前を指定します。
 
-ここでは様々な設定例を紹介します。
+====origin====
+''型:String''
+
+ルートのオリジンを指定します。
+
+====path====
+''型:String''
+
+ルートのパスを指定します。[[https://github.com/pillarjs/path-to-regexp|path-to-regexp]]で使用可能な正規表現を指定できます。パスの指定がない場合は、全てのURLが合致することになります。
+
+====specName====
+''型:String''
+
+ルートのスペックファイル名を指定します。合致したルートのこのファイル名のファイルが、追加で読み込まれます。
+
+====validationName====
+''型:String''
+
+検証時にどのパターンを使うかの名称を指定します。
+
+===== タグ属性 =====
+
+いくつかのコンポーネント設定はタグの属性に指定することもできます。タグ属性は他の設定より高い優先順位を持っています。
+
+====bm-specpath====
+''型:String''
+
+スペックファイルのパスを指定します。[[#specpath|"system.specPath"]]と同じです。
 
 ===== イベント =====
+
+====afterNormalizeURL====
+
+doNormalizeURLイベントの後に発生します。
+
+===パラメータ===
+
+なし。
+
+==== afterPopstate ====
+
+Popstateイベント時にルータによってopen()メソッドが呼ばれ、画面が再描画された後に発生します。
+
+===パラメータ===
+
+なし。
 
 ==== afterSpecLoad ====
 
 スペックファイルをロードした直後に発生します。
 
-=== Extra Info ===
+===パラメータ===
 
 ^パラメータ^型^説明^
 |spec|Object|ロードしたスペックファイルをObjectに変換したものです。|
 
+====afterValidate====
+
+doValidateイベントの後に発生します。
+
+===パラメータ===
+
+なし。
+
+====beforeNormalizeURL====
+
+normalizeURL()メソッドを呼び出した時に発生します。
+
+===パラメータ===
+
+なし。
+
 ==== beforePopstate ====
 
-ルータによってopen()メソッドが呼ばれ、画面が再描画される前に発生します。
+Popstate処理時に、ルータによってopenRoute()メソッドが呼ばれ、画面が再描画される前に発生します。
 
-==== afterPopstate ====
+====beforeValidate====
 
-ルータによってopen()メソッドが呼ばれ、画面が再描画された後に発生します。
+validateRoute()メソッドが呼ばれたときに発生します。
+
+===パラメータ===
+
+なし。
+====doNormalizeURL====
+
+beforeNormalizeURLの後に発生します。
+
+===パラメータ===
+
+なし。
+
+====doValidate====
+
+自動修正が行われた後に、発生します。
+
+===パラメータ===
+
+なし。
+
+
 ===== 拡張プロパティ =====
 
 ==== routeInfo ====
 
-''get'' ''Type:Object'' ''Inject:component''
+''型:Object'' ''Inject:component'' ''get'' 
 
 現在のルートに関する情報を保持するオブジェクトです。
 
 ^ 項目^型^説明^
 |name|String|ルートの名前です。|
 |specName|String|ルートのスペックファイル名です。|
-|componentName|String|ルートのメインコンポーネント名です。|
 |url|String|URLです。|
 |path|String|URLのパスです。ホスト名やクエリーパラメータを含みません。|
 |query|String|URLのクエリー部です。|
@@ -114,15 +249,31 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
 
 ==== spec ====
 
-''get'' ''Type:Object'' ''Inject:component''
+''型:Object'' ''Inject:component'' ''get''
 
 現在のルート固有の追加設定を保持するオブジェクトです。
 
 =====  拡張メソッド =====
 
+==== jumpRoute(routeInfo, options) ====
+
+''型:undefined'' ''Inject:component''
+
+パラメータに渡されたルート情報を元に生成されたURLへ遷移します。ページロードを発生させます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|遷移先のルート情報です。|
+|options|Object|オプション情報です。|
+
+=== 戻り値 ===
+
+なし。
+
 ==== loadParameters() ====
 
-''Inject:component''
+''型:Object'' ''Inject:component''
 
 現在のURLのクエリーパラメータをもとにオブジェクトを生成します。例えばURLのクエリ部が”?limit=10&offset=30”の場合、以下のオブジェクトを返します。
 
@@ -139,11 +290,32 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
 
 === 戻り値 ===
 
+クエリーパラメータのオブジェクトです。
+
+====normalizeRoute(url)====
+
+''型:undefined'' ''非同期'' ''Inject:component''
+
+パラメータに渡されたURLを正規化します。このメソッドはイベントをトリガーするのみで、実際の正規化作業はトリガーされるイベントのイベントハンドラで行います。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|url|String|正規化するURLです。|
+
+=== 戻り値 ===
+
 なし。
+
+=== イベント ===
+
+  * [[#beforenormalizeurl|beforeNormalizeURL]]
+  * [[#donormalizeurl|doNormalizeURL]]
+  * [[#afternormalizeurl|afterNormalizeURL]]
 
 ==== openRoute(routeInfo, options) ====
 
-''Inject:component''
+''型:undefined'' ''非同期'' ''Inject:component''
 
 パラメータに渡されたルート情報に応じたルートへ遷移します。遷移先のルート情報と現在のルート情報をもとに、jumpRoute()、updateRoute()、refreshRoute()のいずれかが呼び出されます。
 
@@ -153,7 +325,7 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
 
 ^パラメータ^型^説明^
 |routeInfo|Object|遷移先のルート情報です。|
-|options|Object|遷移時のオプションです。以下のキーを持ちます。|
+|options|Object|遷移時のオプションです。以下のキーが有効です。|
 |  "pushState" \\ ''default:True''|Boolean|新しいルートをpushState()するかを指定します。pushState()すると、ブラウザの履歴に追加されます。|
 |  "jump"|String|遷移先のルートへ遷移する際に、ページロードを発生させます。|
 
@@ -161,9 +333,25 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
 
 なし。
 
-==== replaceRoute(routeInfo) ====
+==== refreshRoute(routeInfo, options) ====
 
-''Inject:component''
+''型:undefined''  ''非同期'' ''Inject:component''
+
+コンポーネントのrefresh()メソッドを呼び、現在のルートを再描画します。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|routeInfo|Object|再描画のルート情報です。現在のところ未使用です。|
+|options|Object|オプション情報です。refresh()メソッドに渡されます。|
+
+=== 戻り値 ===
+
+なし。
+
+==== replaceRoute(routeInfo, options) ====
+
+''型:undefined'' ''Inject:component''
 
 パラメータに渡されたルート情報に応じたルートへ上書きします。ブラウザの履歴を残すことなく、現在のURLを置き換えます。
 
@@ -171,14 +359,34 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
 
 ^パラメータ^型^説明^
 |routeInfo|Object|遷移先のルート情報です。|
+|options|Object|オプション情報です。|
 
 === 戻り値 ===
 
 なし。
 
-==== updateRoute(routeInfo) ====
+====switchSpec(specName) ====
 
-''Inject:component''
+''型:undefined'' ''非同期'' ''Inject:component''
+
+別のスペックファイルを読み込み、それに切り替えます。
+
+=== パラメータ ===
+
+^パラメータ^型^説明^
+|specName|String|スペック名です。これに拡張子".js"を付加したファイル名がロードされます。|
+
+=== 戻り値 ===
+
+なし。
+
+=== 参照する設定 ===
+
+  * [[#specpath|system.specPath]]
+
+==== updateRoute(routeInfo, options) ====
+
+''型:undefined''  ''非同期'' ''Inject:component''
 
 パラメータに渡されたルート情報に応じたルートへ遷移します。ページロードを発生させずに、コンポーネントなどの読み込みなどを行います。
 
@@ -186,37 +394,41 @@ RouteOrganizerは各ルート固有の設定ファイルを追加で読み込む
 
 ^パラメータ^型^説明^
 |routeInfo|Object|遷移先のルート情報です。|
+|options|Object|オプション情報です。|
+
 
 === 戻り値 ===
 
 なし。
 
-==== jumpRoute(routeInfo) ====
+====validateRoute(url)====
 
-''Inject:component''
+''型:undefined'' ''非同期'' ''Inject:component''
 
-パラメータに渡されたルート情報に応じたルートへ遷移します。ページロードを発生させます。
+パラメータに渡されたURLを検証します。このメソッドはイベントをトリガーするのみで、実際の検証作業はトリガーされるイベントのイベントハンドラで行います。
+
+イベントハンドラ内で検証を行い、検証が失敗した場合はthis.validationResult["result"]にfalseを設定します。検証が失敗すると、"settings.autoFix"がTrueの場合は、自動修正を試みます。最終的に問題が解消されなければ、例外をスローします。
 
 === パラメータ ===
 
 ^パラメータ^型^説明^
-|routeInfo|Object|遷移先のルート情報です。|
+|url|String|検証するURLです。|
 
 === 戻り値 ===
 
 なし。
 
-==== refreshRoute(routeInfo) ====
+=== イベント ===
 
-''Inject:component''
+  * [[#beforevalidate|beforeValidate]]
+  * [[#dovalidate|doValidate]]
+  * [[#aftervalidate|afterValidate]]
 
-現在のルートを再描画します。再描画はルート情報の”componentName”で指定されたコンポーネントのrefresh()メソッドを呼び出すことで行われます。コンポーネントはこのオーガナイザがアタッチされたコンポーネントが保持している必要があります。
+=== オーガナイザイベント ===
 
-=== パラメータ ===
+  * doCheckValidity
 
-^パラメータ^型^説明^
-|routeInfo|Object|再描画のルート情報です。|
+=== 参照する設定 ===
 
-=== 戻り値 ===
-
-なし。
+  * [[#validationname|settings.validationName]]
+  * [[#autofixurl|settings.autoFixURL]]

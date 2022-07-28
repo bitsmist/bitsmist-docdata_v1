@@ -3,6 +3,7 @@
 ** GENERAL **
 
   * [[en:bitsmistjs_router:docs:general:overview|Overview]]
+  * [[en:bitsmistjs_router:docs:general:installation|Installation]]
 
 ** REFERENCE - COMPONENT **
 

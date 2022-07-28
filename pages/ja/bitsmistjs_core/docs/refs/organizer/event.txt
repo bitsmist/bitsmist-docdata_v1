@@ -341,7 +341,7 @@ onDoRefresh(sender, e, ex)
 
 ^パラメータ^型^説明^
 |eventName \\ ''Required''|String|発生させるイベント名です。|
-|options|Object|イベントのオプションです。イベントハンドラからアクセスできます。|
+|options|Object|イベントのオプションです。イベントハンドラからe.detailでアクセスできます。|
 |element \\ ''Default:（説明参照）''|HTMLElement|イベントを発生させる要素です。指定がない場合は、コンポーネント自身となります。|
 
 === 戻り値 ===

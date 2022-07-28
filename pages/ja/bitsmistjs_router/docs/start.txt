@@ -3,6 +3,7 @@
 ** 全般 **
 
   * [[ja:bitsmistjs_router:docs:general:overview|概要]]
+  * [[ja:bitsmistjs_router:docs:general:installation|インストール]]
 
 ** リファレンス - コンポーネント **
 

@@ -6,6 +6,8 @@
 
 RouteOrganizer handles the application routings. It can be used to do route-specific jobs.
 
+====Determining the route====
+
 The RouteOrganizer references routes setting that describes what routes exist in the "routes" section of the component settings. This route setting and the current URL are used to determine the current route. Below is example settings:
 
 <code javascript>
@@ -14,29 +16,64 @@ The RouteOrganizer references routes setting that describes what routes exist in
     "name": "list",
     "path": "/:resource/list/",
     "specName": "{{:resource}}",
-    "componentName": "PadList"
   },
   {
     "name": "top",
     "path":　"/",
     "specName": "top",
-    "componentName": "PadTop"
   }
 ]
 </code>
 
 The current route is determined by checking through each route settings whether it matches the following rules. The first matched one is adopted as the current route.
 
-  - Matches origins
-  - Matches path (Regular expression)
+  - Matches origin (if an origin is specified)
+  - Matches path (if a path is specified)
+
+====Spec File===
 
 The RouteOrganizer can load an additional settings file specific to the current route. This additional settings file is called a spec file. The settings format in the spec file is as same as the usual component settings.
 
-The RouteOrganizer also handles popstate events triggered by such as pressing the forward/back button. It calls open() method to process just like the usual loading process. Since it triggers beforePopstate/afterPopstate events to the component that is attached to the route, you can do your own process by writing event handlers for those events.
+====Changing the Route====
 
+Transfer to the new route by calling openRoute() method. openRoute() process as the following:
+
+  - Transfers to a new route with a page load when options["jump"] is True or new route information is not specified.
+  - Call history.pushState() and adds a new URL to the browser's history. (optional)
+  - Call updateRoute() method when a new route requires a different spec file. (not implemented yet)
+  - Validate a URL.
+  - Call attaching component's refresh() method.
+  - Normalize URL.
+
+<WRAP admonition caution>
+Currently, since updateRoute() method is not working, it causes a  page load when the spec file is different. It will be transferred to the new route without a page load in the future.
+</WRAP>
+
+When a page load occurs, openRoute() method is called automatically for the new URL and URL validation and beyond will be performed.
+
+====Popstate Handling====
+
+The RouteOrganizer handles popstate events triggered by such as pressing the forward/back button. 
+
+When an event occurs, openRoute() method is called for the new route just like the normal loading process. Also, since the "beforePopstate" and "afterPopstate" events are triggered for attaching components, it is possible to do your own processes by writing event handlers on the component.
+
+====URL Validation and Correction====
+
+RouteOrganizer has a mechanism for URL validation and modification. However, RouteOrganizer does not perform any specific work, but only triggers events. Describes the logic for validation and modification in the event handlers.
+
+This is done by calling the validateRoute() method, which is automatically called in the openRoute() method.
+
+validateRoute() performs the following flow.
+
+  - Triggers beforeValidate event.
+  - Triggers doCheckValidity organizer event.
+  - Fix the URL if validation failed and "settings.autoFixURL" option is True/
+  - Triggers ValidateURL event.
+  - Triggers afterValidate event.
+  - Throws an error when validation still fails.
 ===== Organizing =====
 
-Load route settings from the "routes" section and add them to the current route settings. These processes are done in beforeStart and afterSpecLoad timings.
+The RouteOrganizer loads route settings from the "routes" section and add them to the current route settings. These processes are done in beforeStart and afterSpecLoad timings.
 
 === Sections ===
 
@@ -47,55 +84,163 @@ Load route settings from the "routes" section and add them to the current route 
   * beforeStart
   * afterSpecLoad
 
+=====Settings (Global)=====
+
+<WRAP legend>Format:</WRAP>
+<code javascript>
+{
+    "system": {
+        "specPath": <specPath>,
+    }
+}
+</code>
+
+====specPath====
+''Type:String''
+
+Specify a spec file path.
 ===== Settings =====
 
-The route settings are placed in the "routes" section.
+The routing settings are placed in the "routes" section. The "routes" section is an array, allowing multiple routes to be configured. Some settings are also placed in the "settings" section.
 
-====Syntax====
+<WRAP legend>Format:</WRAP>
+<code javascript>
+{
+    "settings": {
+        "autoFixURL": <autoFixURL>,
+        "validationName": <validationName>,
+    },
+    "routes": [{
+        "name": <name>,
+        "origin": <origin>,
+        "path": <path>,
+        "specName": <specName>,
+    }],
+}
+</code>
 
-<WRAP listtable>
-  * "routes": Array of  <rootInfo> {
-    * "name": <name>
-    * "origin": <origin>
-    * "path": <path>
-    * "specName": <specName>
-    * "componentName": <componentName>
-  * }
-</WRAP>
+====autoFixURL====
+''Type:Boolean''
 
-====Description====
+Whether to fix the URL automatically when URL validation failed.
 
-^ Item^Type^Description^
-|routeInfo|Object|An object that holds route settings. The route settings include below:|
-|name \\ ''optional''|String|A name of the route.|
-|origin \\ ''optional''|String|An origin of the route.|
-|path \\ ''optional''|String|A path of the route. Regular expressions that are valid to [[https://github.com/pillarjs/path-to-regexp|path-to-regexp]] can be used. When not specified, all paths match.|
-|specName \\ ''optional''|String|A name of a spec file for the route. The spec file of the matched route will be loaded.|
-|componentName \\ ''optional''|String|A name of the main component for the route. The refresh() method of this component is called when redrawing.|
+====name====
+''Type:String''
+
+A name of the route.
+
+====origin====
+''Type:String''
+
+An origin of the route.
+
+====path====
+''Type:String''
+
+A path of the route with regular expressions that can be used with [[https://github.com/pillarjs/path-to-regexp|path-to-regexp]]. When not specified, all URLs match.
+
+====specName====
+''Type:String''
+
+A name of the spec file for the route. The spec file of the matched route will be loaded.
+
+====validationName====
+''Type:String''
+
+A validation pattern name to use when validating the URL.
+
+=====Tag Attributes=====
+
+Some settings can be specified in tag attributes. Tag attributes have higher priority than settings.
+
+====bm-specpath====
+''Type:String''
+
+A path to the spec file. Same as [[#specpath|"system.specPath"]].
 
 ===== Events =====
+
+====afterNormalizeURL====
+
+Triggered after doNormallizeURL event.
+
+===Parameters===
+
+None
+
+==== afterPopstate ====
+
+Triggered in popstate handling, after the router calls openRoute() method and redraw.
+
+===Parameters===
+
+None
 
 ==== afterSpecLoad ====
 
 Triggered right after a spec file is loaded.
 
-=== Extra Info ===
+===Parameters===
 
 ^Paramter^Type^Description^
-|spec|Object|An spec file JSON contents converted to an object.|
+|spec|Object|Spec file JSON contents converted to an object.|
 
-==== beforePopstate ====
+====afterValidate====
 
-Triggered in popstate handling, before the router calls open() method to redraw.
-==== afterPopstate ====
+Triggered after doValidate event.
 
-Triggered in popstate handling, after the router calls open() method and redraw.
+===Parameters===
+
+None
+
+====beforeNormalizeURL====
+
+Triggered when normalizeURL()　method is called.
+
+===Parameters===
+
+None
+
+====beforePopstate====
+
+Triggered in popstate handling, before the router calls openRoute() method to redraw.
+
+===Parameters===
+
+None
+====beforeValidate====
+
+Triggered when validateRoute() method is called.
+
+===Parameters===
+
+None
+====doNormalizeURL====
+
+Triggered after beforeNormalizeURL event.
+
+===Parameters===
+
+None
+
+====doValidateURL====
+
+Triggered after auto fixation of the URL when validating.
+
+===Parameters===
+
+None
+
+
+
+
+
 
 ===== Extended Properties =====
 
 ==== routeInfo ====
 
-''get'' ''Type:Object'' ''Inject:component''
+''Type:Object'' ''Inject:component'' ''get'' 
 
 Returns an object that holds information about the current route.
 
@@ -112,15 +257,30 @@ Returns an object that holds information about the current route.
 
 ==== spec ====
 
-''get'' ''Type:Object'' ''Inject:component''
+''Type:Object'' ''Inject:component'' ''get'' 
 
 Returns an object that holds settings specific to the current route. That is spec file JSON contents converted to an object.
 
 =====  Extended Methods =====
 
+==== jumpRoute(routeInfo, options) ====
+
+''Type:undefined'' ''Inject:component''
+
+Trasfers to a route according to the route information passed to the parameter. It causes a page load.
+
+=== Parameters ===
+
+^Parameter^Type^Description^
+|routeInfo|Object|A route information of the destination.|
+|options|Object|Options.|
+
+===Return Value===
+
+undefined
 ==== loadParameters() ====
 
-''Inject:component''
+''Type:Object'' ''Inject:component''
 
 Creates an object from the current URL query. 
 
@@ -137,11 +297,32 @@ E.g. If a URL query is "?limit=10&offset=30" then the object returned is:
 
 A query parameter object.
 
+====normalizeRoute(url)====
+
+''Type:undefined'' ''Asynchronous'' ''Inject:component''
+
+Normalizes a URL passed to the parameter. This method only triggers events and the actual process is done by event handlers triggered.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url|String|A URL to normalize.|
+
+===Return Value===
+
+undefined
+
+===Event===
+
+  * [[#beforenormalizeurl|beforeNormalizeURL]]
+  * [[#donormalizeurl|doNormalizeURL]]
+  * [[#afternormalizeurl|afterNormalizeURL]]
+
 ==== openRoute(routeInfo, options) ====
 
-''Inject:component''
+''Type:undefined'' ''Asynchronous'' ''Inject:component''
 
-Transitions to the route according to the route information passed to the parameter. One of jumpRoute (), updateRoute (), and refreshRoute () is called based on the route information passed and the current route information.
+Transfers to a route according to the route information passed to the parameter. One of jumpRoute (), updateRoute (), refreshRoute () is called based on the route information passed and the current route information.
 
 If the "name" of the current route information and the destination is different, jumpRoute () is called, if the "specName" is different, updateRoute () is called, and if both are the same, refreshRoute () is called.
 
@@ -149,13 +330,32 @@ If the "name" of the current route information and the destination is different,
 
 ^Parameter^Type^Description^
 |routeInfo|Object|A route information of the destination.|
-|options|Object|An option for the transition. It has the following keys:|
+|options|Object|Options for the transition. It has the following keys:|
 |  "pushState" \\ ''default:True''|Boolean|Whether to pushState () the new route. pushState() will add a destination URL to your browser history.|
-|  "jump"|Boolean|Whether to trigger a page load when transitioning to the destination route.Triggers a page load when set to True.|
+|  "jump"|Boolean|Whether to trigger a page load when trasferring to the destination route. Triggers a page load when set to True.|
+
+===Return Value===
+
+undefined
+==== refreshRoute(routeInfo, options) ====
+''Type:undefined''  ''Asynchronous'' ''Inject:component''
+
+Redraws the current route by calling attaching component's refresh() method. 
+
+===Parameters===
+
+^Parameter^Type^Description^
+|routeInfo|Object|Route information to redraw. Currently unused.|
+|options|Object|Options. It will be passed to refresh() method.|
+
+===Return Value===
+
+undefined
+
 
 ==== replaceRoute(routeInfo) ====
 
-''Inject:component''
+''Type:undefined'' ''Inject:component''
 
 Overwrites the route according to the route information passed to the parameter. Replaces the current URL without leaving the browser history.
 
@@ -164,30 +364,70 @@ Overwrites the route according to the route information passed to the parameter.
 ^Parameter^Type^Description^
 |routeInfo|Object|A route information of the destination.|
 
-==== updateRoute(routeInfo) ====
+===Return Value===
+
+undefined
+
+====switchSpec(specName) ====
+
+''Type:undefined'' ''Asynchronous'' ''Inject:component''
+
+Loads another spec file and switches to it.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|specName|String|A spec name. This name +  the extention ".js" is the file name to load.|
+
+===Return Value===
+
+undefined
+
+===Referencing Settings===
+
+  * [[#specpath|system.specPath]]
+
+==== updateRoute(routeInfo, options) ====
 
 ''Inject:component''
 
-It transitions to the route according to the route information passed to the parameter. Does loading components, etc. without causing page load.
+It transfers to the route according to the route information passed to the parameter without causing page load.
 
 === Parameters ===
 
 ^Parameter^Type^Description^
 |routeInfo|Object|A route information of the destination.|
+|options|Object|Options.|
 
-==== jumpRoute(routeInfo) ====
 
-''Inject:component''
+====validateRoute(url)====
 
-It transitions to the route according to the route information passed to the parameter. Causes a page load.
+''Type:undefined'' ''Asynchronous'' ''Inject:component''
 
-=== Parameters ===
+Validates the URL passed to the parameter. This method only triggers an event; the actual validation work is done in the event handler of the triggered events.
+
+In the event handler, if the validation fails set this.validationResult["result"] to false. If the validation fails and "settings.autoFix" is True, an attempt is made to automatically fix the URL. If the problem is not finally resolved, an exception is thrown.
+
+===Parameters===
 
 ^Parameter^Type^Description^
-|routeInfo|Object|A route information of the destination.|
+|url|String|A URL to validate.|
 
-==== refreshRoute() ====
+===Return Value===
 
-''Inject:component''
+undefined
 
-Redraws the current route. Redrawing is done by calling the refresh () method of the component specified by "componentName" of the route information. The component must be held by the component to which this organizer is attached.
+===Events===
+
+  * [[#beforevalidate|beforeValidate]]
+  * [[#dovalidate|doValidate]]
+  * [[#aftervalidate|afterValidate]]
+
+===Oraganizer Events===
+
+  * doCheckValidity
+
+===Referencing Settings===
+
+  * [[#validationname|settings.validationName]]
+  * [[#autofixurl|settings.autoFixURL]]

@@ -7,28 +7,3 @@ BitsmistJS Routerはルーティングに関する処理を行うBitsmistJS用�
 このライブラリをインポートすると”<bm-router>”というタグが使用可能になり、そのタグをHTML上に配置することで、ルータの機能を使用することができます。
 
 ルータは各ルート用の追加の設定ファイルを読み込むことが可能です。この追加設定ファイルのことをスペックファイル（Spec file）と呼びます。このスペックファイルにそのルート用の設定を記述することで、そのルート特有の処理を行うことが可能になります。
-
-”popstate"の処理はルータが自動的に行います。イベント発生時には、その新しいルートに対するopen()処理を行うことで、通常のロードと同じ流れの処理が行われます。
-===== インストール =====
-
-<WRAP admonition note links>
-ルーターより先にコアライブラリをインポートしておく必要があります。
-  *  <html><i class="fas fa-link"></i></html>[[ja:bitsmistjs_core:docs:general:overview#インストール|BitsmistJS Core:概要#インストール]]
-</WRAP>
-==== CDN ====
-
-HTMLファイルの中でBitsmistJS RouterをCDNからインポートしてください。
-
-<code html>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js-router_v1@0.9.9/dist/bitsmist-js-router_v1.min.js"></script>
-</code>
-
-==== ダウンロード ====
-
-BitsmistJS Routerをダウンロードしてdistフォルダの中の''bitsmist-js-router_v1.min.js''をあなたのWebサイトに配置し、HTMLファイルの中からインポートして下さい。
-
-<code html>
-<script type="text/javascript" src="/js/bitsmist-js-router_v1.min.js"></script>
-</code>
-
-
