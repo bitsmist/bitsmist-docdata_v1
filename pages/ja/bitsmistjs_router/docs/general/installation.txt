@@ -10,7 +10,7 @@
 HTMLファイルの中でBitsmistJS RouterをCDNからインポートしてください。
 
 <code html>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js-router_v1@0.10.0/dist/bitsmist-js-router_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js-router_v1@0.10.1/dist/bitsmist-js-router_v1.min.js"></script>
 </code>
 
 =====ダウンロード=====
