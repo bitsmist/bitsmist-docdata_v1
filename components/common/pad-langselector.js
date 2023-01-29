@@ -1,8 +1,4 @@
-var PadLangSelector = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
-	"settings": {
-		"name": "BarSelector",
-		"path": "/components/common",
-	},
+var PadLangSelector = BITSMIST.v1.ClassUtil.newComponent("PadLangselector", {
 	"events": {
 		"this": {
 			"handlers": {
@@ -15,7 +11,7 @@ var PadLangSelector = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, 
 			}
 		}
 	}
-}, "pad-langselector");
+});
 
 PadLangSelector.prototype.onAfterAppend = function(sender, e, ex)
 {

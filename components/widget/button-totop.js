@@ -2,14 +2,7 @@
 //	ButtonTotop
 // =============================================================================
 
-var ButtonTotop = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
-
-	// Settings
-	"settings": {
-		"name":						"ButtonTotop",
-		"path":						"widgets",
-	},
-
+var ButtonTotop = BITSMIST.v1.ClassUtil.newComponent("ButtonTotop", {
 	// Events
 	"events": {
 		"this": {
@@ -25,7 +18,7 @@ var ButtonTotop = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
 		}
 	},
 
-}, "button-totop");
+});
 
 // -----------------------------------------------------------------------------
 

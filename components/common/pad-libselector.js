@@ -1,8 +1,4 @@
-var PadLibSelector = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
-	"settings": {
-		"name": "BarSelector",
-		"path": "/components/common",
-	},
+var PadLibSelector = BITSMIST.v1.ClassUtil.newComponent("PadLibselector", {
 	"events": {
 		"this": {
 			"handlers": {
@@ -23,7 +19,7 @@ var PadLibSelector = BITSMIST.v1.ClassUtil.newComponent(BITSMIST.v1.Component, {
 			}
 		}
 	}
-}, "pad-libselector");
+});
 
 PadLibSelector.prototype.onAfterAppend = function(sender, e, ex)
 {
@@ -94,6 +90,9 @@ PadLibSelector.prototype.__setTitle = function()
 		break;
 	case "bitsmistjs_extras":
 		title.innerText = "BitsmistJS Extras";
+		break;
+	case "bitsmist_server":
+		title.innerText = "BitsmistServer Core";
 		break;
 	default:
 		title.innerText = "Bitsmist Frameworks";
