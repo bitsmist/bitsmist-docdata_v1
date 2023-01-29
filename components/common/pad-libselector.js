@@ -2,26 +2,26 @@ var PadLibSelector = BITSMIST.v1.ClassUtil.newComponent("PadLibselector", {
 	"events": {
 		"this": {
 			"handlers": {
-				"afterAppend": "onAfterAppend"
+				"afterTransform":	"onAfterTransform"
 			}
 		},
 		"libselector": {
 			"handlers": {
-				"change": "onSelector_Change",
-				"blur": "onSelector_Blur",
-				"keyup": "onSelector_KeyUp"
+				"change":			"onSelector_Change",
+				"blur":				"onSelector_Blur",
+				"keyup":			"onSelector_KeyUp"
 			}
 		},
 		"menu": {
-			"rootNode":	".fa-bars",
+			"rootNode":				".fa-bars",
 			"handlers": {
-				"click": "onMenu_Click"
+				"click":			"onMenu_Click"
 			}
 		}
 	}
 });
 
-PadLibSelector.prototype.onAfterAppend = function(sender, e, ex)
+PadLibSelector.prototype.onAfterTransform = function(sender, e, ex)
 {
 
 	var path = JSINFO["id"].split(":");
