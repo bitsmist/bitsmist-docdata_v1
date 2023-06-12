@@ -3,13 +3,14 @@
 
 
 =====BitsmistJS=====
+
 BitsmistJSはWeb ComponentsベースのJavascriptのフレームワークです。
 ^Name^Links^Description^
-| BitsmistJS Core|[[https://github.com/bitsmist/bitsmist-js_v1|GitHub]] \\ [[ja:bitsmistjs_core:docs:start|Documents]]|コアライブラリです。BitsmistJSを使うためには、最低限これが必要です。|
-|BitsmistJS Router|[[https://github.com/bitsmist/bitsmist-js-router_v1|GitHub]] \\ [[ja:bitsmistjs_router:docs:start| Documents]]|ルーティング用のライブラリです。ルーティングの操作に必要です。|
+| BitsmistJS Core|[[https://github.com/bitsmist/bitsmist-js_v1|GitHub]] \\ [[ja:bitsmistjs_core:docs:start|ドキュメント]]|コアライブラリです。BitsmistJSを使うためには、最低限これが必要です。|
 |BitsmistJS Extras|[[https://github.com/bitsmist/bitsmist-js-extras_v1|GitHub]]|追加の実験的なコンポーネントです。|
 
 =====Bitsmist Server=====
+
 Bitsmist ServerはPHPで作成されたWeb APIフレームワークです。
 ^Name^Links^Description^
 |Bitsmist Server Core|[[https://github.com/bitsmist/bitsmist-server_v1|GitHub]] \\ [[https://packagist.org/packages/bitsmist/bitsmist-server_v1|Composer]]|コアライブラリです。Bitsmist Serverを使うためには最低限必要です。|

@@ -1,8 +1,2 @@
 ** Bitsmist Frameworks **
   * [[ja:bitsmist_frameworks:docs:start|概要]]
-
-** BitsmistJS Core **
-  * [[ja:bitsmistjs_core:docs:start|ドキュメント]]
-
-** BitsmistJS Router **
-  * [[ja:bitsmistjs_router:docs:start|ドキュメント]]

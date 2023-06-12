@@ -1,9 +1,0 @@
-====== Overview ======
-
-===== Introduction =====
-
-The BitsmistJS Router is an addon library for BitsmistJS that handles routings. It enables applications to do specific jobs for each route, such as adding extra components for the current URL.
-
-By importing the library, you can use the "<bm-router>" tag, and putting it in the HTML makes the router work.
-
-The router can load additional settings for each route. A file containing additional settings is called a spec file. Specifying settings in the spec file makes an application do some extra jobs depending on the route.
