@@ -1,10 +1,16 @@
-class PadLibselector extends BITSMIST.v1.Component
+class PadLibselector extends BITSMIST.v1.Unit
 {
 
 	_getSettings()
 	{
 
 		return {
+			"style": {
+				"options": {
+					"styleRef":					false,
+				}
+			},
+
 			"event": {
 				"events": {
 					"this": {
