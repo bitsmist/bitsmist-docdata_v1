@@ -2,7 +2,7 @@
 
   * [[en:bitsmist-js-core:general:overview|Overview]]
   * [[en:bitsmist-js-core:general:installation|Installation]]
-  * [[en:bitsmist-js-core:general:sample|Sample Unit]]
+  * [[en:bitsmist-js-core:general:sample|Create a Sample Unit]]
 
 ** Unit Explained **
 
