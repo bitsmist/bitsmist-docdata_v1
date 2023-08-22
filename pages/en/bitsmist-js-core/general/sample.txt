@@ -1,0 +1,241 @@
+======Create a Sample Unit======
+
+=====Overview=====
+
+Let's create a simple sample unit before we go on to the details to see what the unit is like. We create a unit that has a button under a heading and says “Hello, World!” when the button is pressed.
+
+[[#the_full_source|The full source]] is attached at the bottom of this page. If you are an experienced programmer, looking at the full source first might be helpful since it's so simple. 
+
+We create the unit in the following steps:
+
+  - Decide names.
+  - Create the unit's HTML/CSS file.
+  - Create the unit's Javascript file.
+  - Add settings.
+  - Add the event handler.
+  - Create the container HTML file.
+  - Deploy files to the web server.
+
+=====1. Decide Names=====
+
+Before we start creating a unit, we need to decide the names of the resources needed for the unit.
+
+BitsmistJS unit requires the following files by default:
+
+  * A Javascript file that defines the component's action.
+  * HTML/CSS files that define the appearance of the unit.
+
+However, some units use multiple HTML files to switch between them or have no HTML at all. By default, independent CSS files are required, but it is also possible to put them together in the HTML file. Also, units that do not require any action will have no Javascript file, only an HTML file.
+
+We need to decide on names for:
+
+  * Tag name
+  * Class name
+  * Filename
+
+Usually, however, once the tag name is determined, the default name can be used for the rest.
+
+==== Tag Name ====
+
+Since the BitsmistJS units are built on top of the custom elements in the standard Web Components technology,  you need to follow the rules. Each unit requires its own tag name. There must be one "-" in the tag name.
+
+<WRAP admonition tip>
+<WRAP links>
+[[https://developer.mozilla.org/en/docs/Web/Web_Components/Using_custom_elements | Using custom elements | MDN Web Docs]]
+</WRAP>
+</WRAP>
+
+We name the tag "pad-hello" here.
+
+==== Class Name ====
+
+A unit needs a class definition if the unit has actions (event handlers). By default, BitsmistJS create the class name by removing the "-" from the tag name and capitalizing the first letter of each word. In this project, it is "PadHello" since the tag name is "pad-hello".
+
+<WRAP admonition note>
+Internally, the BitsmistJS library automatically creates a class according to the tag name for the unit that doesn't have any javascript files.
+</WRAP>
+
+====File Name====
+
+The tag name + ".js" is the default javascript file name for the unit,  the tag name + ".html" is the default HTML file name, and the tag name + ".css" is the default CSS file name.
+
+In this project, we create one javascript file, one HTML file, and one CSS file, each name being "pad-hello.js", "pad-hello.html", and "pad-hello.css".
+=====2. Create the Unit's HTML/CSS File=====
+
+We create a unit's HTML file and a CSS file that is displayed on a browser, the form which has a button under a heading.
+
+<code html>
+<h1>Hello, World</h1>
+<button id="btn-greet">Greet</button>
+</code>
+
+We name the file "pad-hello.html" as we decided in the previous section.
+
+Write ** only contents ** of <pad-hello> tag. This HTML will be inserted in the <pad-hello> tag.
+
+<code html>
+<h1>Hello, World!</h1>
+<button id="btn-greet">Greet</button>
+</code>
+
+Next, we create the CSS file to display the heading in blue. The file name is "pad-hello.css".
+
+<code css>
+pad-hello {
+    color: blue;
+    display: block;
+    text-align: center;
+}
+</code>
+=====3. Create the Unit's Javascript File=====
+
+If a unit has some actions, you need a Javascript file that defines a class and those actions. The class must inherit the BitsmistJS Unit class.
+
+====Inherit the Base Component====
+
+In BitsmistJS, we inherit one of the base units to create our custom units. As of now, BitsmistJS core offers only one base component called "Unit". 
+
+====Define the Class====
+
+The base unit we inherit is in BITSMIST.v1 global object, we inherit like this:
+
+<code javascript>
+class PadHello extends BITSMIST.v1.Unit
+{
+}
+</code>
+
+The file name is "pad-hello.js".
+
+=====4. Add Settings=====
+
+Next, we add the unit's settings in "pad-hello.js". Override _getSettings() function, and return an object that contains the settings.
+
+<WRAP admonition tip links>
+There are other ways to configure components' settings.
+  *  <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:docs:component:settings#specifying_settings| Explained - Settings - Specifying Settings]]
+</WRAP>
+
+<code javascript>
+class PadHello extends BITSMIST.v1.Unit
+{
+    _getSettings()
+    {
+        return {
+            "event": {
+                "events": {
+                    "btn-greet": {
+                        "handlers": {
+                            "click": "onBtnGreet_Click"
+                        }
+                    }
+                }
+            }
+        };
+    }
+}
+</code>
+
+We specify which function will run when the button is pushed in the "event.events" section. Refer to [[en:bitsmist-js-core:reference:perk:event-perk#settings|EventPerk reference]] how to specify event handlers in detail.
+
+=====5. Add the Event Handler=====
+
+Next, we create the event handler in "pad-hello.js". Write the action taken when the button is pushed. The function name is "onBtnGreet_Click" as described in the settings we added earlier.
+
+<code javascript>
+class PadHello extends BITSMIST.v1.Unit
+{
+    ...
+
+    onBtnGreet_Click(sender, e, ex)
+    {
+        alert("Hello, World!");
+    }
+}
+</code>
+
+<WRAP admonition tip links>
+Every event handlers have the same function signature.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:events#event_handler_syntax| Explained - Events - Event Handler Syntax]]
+</WRAP>
+
+=====6. Create the Container HTML File.=====
+
+Create the container HTML file that contains the unit we created. The file name is "sample.html".
+
+<code html>
+<html>
+    ...
+<body>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</body>
+</html>
+</code>
+
+We put the custom tag we created and specify where the unit's JS file is placed in the bm-autoload attribute. In this project, we are assuming all files are located right under the root path.
+
+=====7. Deploy Files to the Web Server=====
+
+Finally,  put these four files we created, sample.html, pad-hello.js, pad-hello.html, and pad-hello.css directly under the web server's document root.
+
+<WRAP admonition tip links>
+We deploy the files directly under the root for simplicity. You can place these files anywhere you like.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:loading|Explained - Loading]]
+</WRAP>
+
+Once you deploy, access sample.html with your browser. Confirm the message pops up when you push the button.
+
+=====The Full Source=====
+
+These are the source files for this sample project.
+
+<file html sample.html>
+<html>
+<head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<title>BitsmisJS Sample</title>
+</head>
+<body>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</body>
+</html>
+</file>
+
+
+<file html pad-hello.html>
+<h1>Hello Unit</h1>
+<button id="btn-greet">Greet</button>
+</file>
+
+<file css pad-hello.css>
+pad-hello {
+    color: blue;
+    display: block;
+    text-align: center;
+}
+</file>
+
+<file javascript pad-hello.js>
+class PadHello extends BITSMIST.v1.Unit
+{
+    _getSettings()
+    {
+        return {
+            "event": {
+                "events": {
+                    "btn-greet": {
+                        "handlers": {
+                            "click": "onBtnGreet_Click"
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    onBtnGreet_Click(sender, e, ex)
+    {
+        alert("Hello, World!");
+    }
+}
+</file>

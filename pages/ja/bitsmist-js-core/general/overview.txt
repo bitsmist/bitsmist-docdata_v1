@@ -1,0 +1,114 @@
+====== 概要 ======
+
+===== 特徴 =====
+
+BitsmistJSはWeb ComponentsをベースとしたJavascriptのフレームワークです。コンポーネントベースのフレームワークで、コンポーネントを作成することが目的となります。それぞれのコンポーネントは独立していますが、他のコンポーネントとコミュニケーションをとりながら、一つのサイトを作り上げていきます。
+
+できるだけコーディングが少なくなることを目標としています。設定を記述するだけで、さまざまな機能が利用できるように考慮されています。
+
+====標準技術====
+
+Web Components・Structured CSS・ShadowDOM・非同期処理といった、Javascriptの標準技術を使用しています。
+
+====コンポーネント====
+
+独立したコンポーネントを作成し組み合わせることで、サイトを作り上げます。各コンポーネントの役割がはっきりしているため、改修もしやすくなります。サイトの一部分だけに導入するといったことも簡単にできます。
+
+====独立した素のHTMLファイル==== 
+
+シンプルに本来のHTMLそのままを使います。Javascriptは別のファイルに記述するため、Webデザイナーにとっても扱いやすいです。
+
+====オートローディング====
+
+必要な時に必要なファイルがロードされます。全て非同期で処理されるため、効率よくファイルをロードできます。
+====イベントドリヴン==== 
+
+HTMLファイルとは分離されたファイルに、イベントごとに処理を記述していきます。どの処理がどこに書かれているのか、一目瞭然です。
+
+====拡張性==== 
+
+パークと呼ばれる仕組みを使って、コンポーネントを拡張できます。パークを用意し設定に記載するだけで、コンポーネントに新たな機能を追加することが可能です。
+
+
+=====ユニットのサンプル=====
+
+BitmistJSではコンポーネント（このフレームワークではユニットと呼ばれます）を作り、それらを組み合わせることでサイトを構築していきます。動作が必要なくインターフェースだけのHTMLのみのユニット、インターフェースと動作が必要なHTML+Javascriptのユニット、またインターフェースがなく動作だけのJavascriptのみのユニットを作ることができます。
+====HTMLのみのユニット====
+
+<html><img class="screenwide" src="https://bitsmist.com/images/ja/bitsmistjs_htmlonly_ja.png"></html>
+
+<file html index.html>
+<html>
+<head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+</head>
+<body>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</body>
+</html>
+</file>
+
+<file html pad-hello.html>
+<h1>Hello, World!</h1>
+</file>
+
+<file css pad-hello.css>
+pad-hello {
+    color: blue;
+    display: block;
+    text-align: center;
+}
+</file>
+
+==== HTMLとJavascriptから成るユニット ====
+
+<html><img class="screenwide" src="https://bitsmist.com/images/ja/bitsmistjs_htmlandjs_ja.png"></html>
+
+<file html index.html>
+<html>
+<head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+</head>
+<body>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</body>
+</html>
+</file>
+
+<file html pad-hello.html>
+<h1>Hello, World!</h1>
+<button id="btn-greet">Greet</button>
+</file>
+
+<file css pad-hello.css>
+pad-hello {
+    color: blue;
+    display: block;
+    text-align: center;
+}
+</file>
+
+<file javascript pad-hello.js>
+class PadHello extends BITSMIST.v1.Unit
+{
+    _getSettings()
+    {
+        return {
+            "event": {
+                "events": {
+                    "btn-greet": {
+                        "handlers": {
+                            "click": "onBtnGreet_Click"
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    onBtnGreet_Click(sender, e, ex)
+    {
+        alert("Hello, World!");
+    }
+}
+</file>
