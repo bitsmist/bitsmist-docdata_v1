@@ -43,7 +43,9 @@ class PadLibselector extends BITSMIST.v1.Unit
 	{
 
 		var path = JSINFO["id"].split(":");
-		var target = ( path[0] === "start" ? "bitsmist_frameworks" : path[1] );
+		var target = ( path[0] === "start" ? "bitsmist-framework" : path[1] );
+
+		console.log("@@@target", target);
 
 		document.getElementById("libselector").value = target;
 		this.__setTitle();
@@ -110,16 +112,13 @@ class PadLibselector extends BITSMIST.v1.Unit
 		var title = document.querySelector("pad-libselector #title span");
 		switch (path[1])
 		{
-		case "bitsmistjs_core":
+		case "bitsmist-js-core":
 			title.innerText = "BitsmistJS Core";
 			break;
-		case "bitsmistjs_router":
-			title.innerText = "BitsmistJS Router";
-			break;
-		case "bitsmistjs_extras":
+		case "bitsmist-js-extras":
 			title.innerText = "BitsmistJS Extras";
 			break;
-		case "bitsmist_server":
+		case "bitsmist-server-core":
 			title.innerText = "BitsmistServer Core";
 			break;
 		default:
