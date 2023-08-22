@@ -70,7 +70,7 @@ class PadLibselector extends BITSMIST.v1.Unit
 		var target = document.getElementById("libselector").value;
 		var path = JSINFO["id"].split(":");
 		var lang = ( path[0] === "start" ? "en" : path[0] );;
-		var id = lang + ":" + target + ":docs:start";
+		var id = lang + ":" + target + ":start";
 
 		var url = ( window.location.href.indexOf("doku.php") > -1 ? "/doku.php?id=" + id : "/" + id.replace(/:/g, "/" ) )
 		window.location.href = url;

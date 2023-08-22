@@ -6,5 +6,5 @@ This is a Bitsmist frameworks site. \\
 Choose your language. \\
 言語を選んでください。
 
-  * [[en:bitsmist_frameworks:docs:start|English]]
-  * [[ja:bitsmist_frameworks:docs:start|日本語]]
+  * [[en:bitsmist-frameworks:start|English]]
+  * [[ja:bitsmist-frameworks:start|日本語]]

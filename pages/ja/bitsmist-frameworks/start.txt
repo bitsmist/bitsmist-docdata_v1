@@ -1,0 +1,15 @@
+====== 概要 ======
+
+=====BitsmistJS=====
+
+BitsmistJSはWeb ComponentsベースのJavascriptのフレームワークです。
+^Name^Links^Description^
+| BitsmistJS Core|[[https://github.com/bitsmist/bitsmist-js_v1|GitHub]] \\ [[ja:bitsmist-js-core:start|ドキュメント]]|コアライブラリです。BitsmistJSを使うためには、最低限これが必要です。|
+|BitsmistJS Extras|[[https://github.com/bitsmist/bitsmist-js-extras_v1|GitHub]]|追加の実験的な機能です。|
+
+=====Bitsmist Server=====
+
+Bitsmist ServerはPHPで作成されたWeb APIフレームワークです。
+^Name^Links^Description^
+|Bitsmist Server Core|[[https://github.com/bitsmist/bitsmist-server_v1|GitHub]] \\ [[https://packagist.org/packages/bitsmist/bitsmist-server_v1|Composer]]|コアライブラリです。Bitsmist Serverを使うためには最低限必要です。|
+|Bitsmist Server Skeleton|[[https://github.com/bitsmist/bitsmist-server-skeleton_v1|GitHub]] \\ [[https://packagist.org/packages/bitsmist/bitsmist-server-skeleton_v1|Composer]]|Bitsmist Serverを使ったプロジェクトを開始するための、空のComposerプロジェクトです。|
