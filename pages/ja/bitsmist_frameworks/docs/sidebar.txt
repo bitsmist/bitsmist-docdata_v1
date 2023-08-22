@@ -1,2 +1,0 @@
-** Bitsmist Frameworks **
-  * [[ja:bitsmist_frameworks:docs:start|概要]]
