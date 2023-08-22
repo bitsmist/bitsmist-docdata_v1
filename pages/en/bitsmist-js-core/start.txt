@@ -6,7 +6,7 @@
   * [[en:bitsmist-js-core:general:installation|Installation]]
   * [[en:bitsmist-js-core:general:sample|Sample Unit]]
 
-** Explained **
+** Unit Explained **
 
   * [[en:bitsmist-js-core:unit:overview|Overview]]
   * [[en:bitsmist-js-core:unit:asset|Properties and Methods]]

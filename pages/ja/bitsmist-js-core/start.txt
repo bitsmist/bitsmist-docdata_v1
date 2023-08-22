@@ -6,7 +6,7 @@
   * [[ja:bitsmist-js-core:general:installation|インストール]]
   * [[ja:bitsmist-js-core:general:sample|サンプルユニットを作る]]
 
-** 解説 **
+** ユニットの解説 **
 
   * [[ja:bitsmist-js-core:unit:overview|概要]]
   * [[ja:bitsmist-js-core:unit:asset|プロパティとメソッド]]

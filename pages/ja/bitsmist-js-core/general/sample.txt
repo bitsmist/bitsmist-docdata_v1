@@ -110,7 +110,7 @@ class PadHello extends BITSMIST.v1.Unit
 
 <WRAP admonition tip links>
 他の記述方法もあります。
-  *  <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:settings#設定の読込|解説 - 設定 - 設定の読込]]
+  *  <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:settings#設定の読込|ユニットの解説 - 設定 - 設定の読込]]
 </WRAP>
 
 <code javascript>
@@ -153,7 +153,7 @@ class PadHello extends BITSMIST.v1.Unit
 
 <WRAP admonition tip links>
 全てのイベントハンドラは同じシグニチャを持ちます。
-  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:events#イベントハンドラの書き方|解説 - イベント - イベントハンドラの書き方]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:events#イベントハンドラの書き方|ユニットの解説 - イベント - イベントハンドラの書き方]]
 </WRAP>
 
 =====6. ユニットを表示するHTMLファイルを作成する=====
@@ -177,7 +177,7 @@ class PadHello extends BITSMIST.v1.Unit
 
 <WRAP admonition tip links>
 今回は分かりやすさのために全てルート直下に配置していますが、自由に配置できます。
-  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:loading|解説 - ロード]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:loading|ユニットの解説 - ロード]]
 </WRAP>
 
 配置が完了したら、実際にsample.htmlをブラウザで読み込み表示させます。ボタンを押すとメッセージが表示されるはずです。

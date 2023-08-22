@@ -113,7 +113,7 @@ Next, we add the unit's settings in "pad-hello.js". Override _getSettings() func
 
 <WRAP admonition tip links>
 There are other ways to configure components' settings.
-  *  <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:docs:component:settings#specifying_settings| Explained - Settings - Specifying Settings]]
+  *  <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:docs:component:settings#specifying_settings|Unit Explained - Settings - Specifying Settings]]
 </WRAP>
 
 <code javascript>
@@ -156,7 +156,7 @@ class PadHello extends BITSMIST.v1.Unit
 
 <WRAP admonition tip links>
 Every event handlers have the same function signature.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:events#event_handler_syntax| Explained - Events - Event Handler Syntax]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:events#event_handler_syntax|Unit Explained - Events - Event Handler Syntax]]
 </WRAP>
 
 =====6. Create the Container HTML File.=====
@@ -180,7 +180,7 @@ Finally,  put these four files we created, sample.html, pad-hello.js, pad-hello.
 
 <WRAP admonition tip links>
 We deploy the files directly under the root for simplicity. You can place these files anywhere you like.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:loading|Explained - Loading]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:loading|Unit Explained - Loading]]
 </WRAP>
 
 Once you deploy, access sample.html with your browser. Confirm the message pops up when you push the button.
