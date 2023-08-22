@@ -45,8 +45,6 @@ class PadLibselector extends BITSMIST.v1.Unit
 		var path = JSINFO["id"].split(":");
 		var target = ( path[0] === "start" ? "bitsmist-framework" : path[1] );
 
-		console.log("@@@target", target);
-
 		document.getElementById("libselector").value = target;
 		this.__setTitle();
 
