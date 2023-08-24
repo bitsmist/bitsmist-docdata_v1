@@ -1,0 +1,242 @@
+======Settings======
+
+=====Overview=====
+
+Each unit operates according to its settings described in JSON or Javascript object format. There are two types of settings: global settings for all units and settings specific to each unit. Unit settings and global settings are linked, so that settings not found in the unit settings are automatically obtained from the global settings.
+
+This page describes the settings.
+
+=====Loading Settings=====
+
+There are four ways to specify a unit's settings.
+
+  * Return the Settings Object.
+  * Load from the External File.
+  * Specify in Tag Attributes.
+  * Specify in Global Settings.
+
+====Return the Settings Object====
+
+Every BitsmistJS unit has a method called _getSettings(). Overriding the method and returning an object that contains the settings configures the unit.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "setting": {
+            "path": "common",
+        },
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": this.onDoSetup
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+This is the most typical way of configuring a unit.
+
+====Load from the External File====
+
+Describe the settings in JSON format in an external file and specify its URL in the bm-settingref attribute of the tag.
+
+<code html>
+<bar-header bm-settingsref="https://example.com/settings/bar-header.settings.js"></bar-header>
+</code>
+
+<file javascript bar-header.setting.js>
+{
+    "setting": {
+        "path": "common"
+    },
+    "event": {
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": this.onDoSetup
+                }
+            }
+        }
+    }
+}
+</file>
+
+If an external settings file is specified, the file is loaded during unit initialization and merged into the unit's settings. Initialization is suspended until the file has been loaded.
+
+Using this method, it is possible to load different settings for different tags (instances) of the same class.
+
+====Specify in Tag Attributes====
+
+Write settings in the bm-options attribute using JSON format.
+
+<code html>
+<button-link bm-options='{"title":"BitsmistJS"}'></button-link>
+</code>
+
+However, the only section you can specify here is the "options" section of the settings.
+
+In this way, as with reading external files, different settings are possible for different tags in the same unit.
+
+Some perks also read settings from their own attributes. For example, in UnitPerk, the attribute "bm-path" can be used to specify the path to load the unit.
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+====Specify in Global Settings====
+
+Global settings are settings shared by all units on the page. Each unit's settings are linked to the global settings. This means that when a unit refers to its own setting that does not exist, they are transparently retrieved from the global settings.
+
+<WRAP admonition note links>
+For the details of the global settings, please refer to the dedicated section.
+  *  <html><i class="fas fa-link"></i></html>[[#global_settings|Global Settings]]
+</WRAP>
+
+=====Settings Priority=====
+
+Multiple settings can be used in combination. If the same settings exist, they will be overwritten by the one with the higher priority. The order of priority is as follows (the upper the higher):
+
+  - Tag Attributes
+  - External files
+  - _getSettings() function
+  - Global settings
+
+One typical way is to configure the basic settings in the _getSettings() function and specify tag-specific settings in the tag attribute that overrides the basic settings.
+
+=====Settings Sections=====
+
+The actual processing of the units according to their settings is done by each perk. Therefore, what settings exist will depend on which perk is applied.
+
+<WRAP admonition tip links>
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:perks| Unit Explained - Extending with Perks]]
+</WRAP>
+
+The settings are separated by sections. Each perk has its own dedicated section and its settings are described in that section.
+
+Here is a list of the sections of each perk in the core library. Please follow the links for details on each perk's settings.
+
+^Section^Perk^Description^
+|basic|[[en:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]|Handles basic functions.|
+|event|[[en:bitsmist-js-core:reference:perk:event-perk|EventPerk]]|Handles events.|
+|setting|[[en:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]|Handles settings.|
+|skin|[[en:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]|Handles HTML.|
+|status|[[en:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]|Handles unit's status.|
+|style|[[en:bitsmist-js-core:reference:perk:skin-perk|StylePerk]]|Handles CSS.|
+|unit|[[en:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]|Handles loading units.|
+
+There is also a "system" section that is referenced by the various perks. Since this affects the entire system, it is usually described in [[#global_settings|Global Settings]], which will be explained later.
+
+<WRAP admonition tip>
+Global system settings can be described in the unit's settings to override global settings.
+</WRAP>
+
+=====Accessing Settings=====
+
+To access the settings, use the setting asset for each unit.
+
+<code javascript>
+this.set("setting", "value", 1);
+console.log(this.get("setting", "value")); // console displays 1
+</code>
+
+. (period) can be used as a hierarchy separator.
+
+<code javascript>
+this.set("setting", "mysection.value", 1);
+console.log(this.get("setting", "value")); // console displays "undefined"
+console.log(this.get("setting", "mysection.value")); // console displays 1
+</code>
+
+<WRAP admonition tip links>
+The setting asset uses ChainableStore.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:store:chainable-store| Reference - Store - ChainableStore]]
+</WRAP>
+
+=====Global Settings====
+
+This section describes the global settings that are shared among all units.
+
+====How to Set Global Settings====
+
+Just as each unit has a setting asset, the BITSMIST.v1.Unit class, the parent of all units, also has a setting asset. The value set in the setting asset of this Unit class becomes the global value.
+
+The following example uses the setting.merge skill to merge settings into global settings.
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "system": {
+        "options": {
+            "env": "prod",
+        }
+    },
+});
+</code>
+
+<WRAP admonition note>
+Since there may already be global settings elsewhere, we recommend using the setting.merge skill instead of the set() method to avoid erasing them.
+</WRAP>
+
+====Loading Global Settings====
+
+The global settings describe the system-wide settings. Without these settings, units cannot act properly, so they should be loaded as early as possible.
+
+One way to do this, for example, is to write the above settings in a Javascript file called settings.js and load it in the HEAD tag (but after the BitsmistJS library).
+
+<code html>
+<script type='text/javascript' src='/js/settings.js'></script>
+</code>
+
+This way, the global settings will take effect before the units' autoloading starts.
+
+====Linked Settings====
+
+Setting assets can be linked to other settings. Each unit setting is linked to global settings.
+
+When the unit's setting is linked to global settings, if the setting does not exist in the unit, it is retrieved from the linked setting. Therefore, by accessing a setting that doesn't exist in the unit's settings, the corresponding global settings are automatically retrieved if that setting exists in the global settings.
+
+<code javascript>
+BITSMIST.v1.Unit.set("setting", "myValue", 1) // global setting
+
+console.log(this.get("setting", "myValue")); // console displays 1
+</code>
+
+====Overriding Global Settings====
+
+If there is a setting in a unit that is the same as the global setting, the unit's setting takes precedence. Therefore, for units that **dare to use settings different from the global settings**, setting the same items in the unit will prevent the unit from using the global settings.
+
+<code javascript>
+BITSMIST.v1.Unit.set("setting", "myValue", 1)
+console.log(this.get("setting", "myValue")); // console displays 1
+
+this.set("setting", "myValue", 2)
+console.log(this.get("setting", "myValue")); // console displays 2
+</code>
+
+For example, a unit on that site will follow the global settings, but a third-party unit served from a different server may want to use its own settings.
+
+However, there are exceptions. Depending on the variable type combination of global and unit settings, setting the same item in a unit will result in a merge.
+
+<code javascript>
+BITSMIST.v1.Unit.set("setting", "myValue", [1, 2, 3]);
+this.set("setting", "myValue", 4);
+
+console.log(this.get("setting", "myValue")); // console displays [1,2,3,4]
+</code>
+
+<WRAP admonition note links>
+The deepMerge() utility function is used for merging. See below for how and what combinations are merged.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:util:util#deepmerge_obj1_obj2| Reference - Util - Util.deepMerge()]]
+</WRAP>
+
+====Accessing Global Settings====
+
+If you want to access global settings explicitly, access the setting asset in BITSMIST.v1.Unit.
+
+<code javascript>
+console.log(BITSMIST.v1.Unit.get("setting", "myValue"));
+</code>

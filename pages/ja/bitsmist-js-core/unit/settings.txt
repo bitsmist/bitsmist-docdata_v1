@@ -1,0 +1,243 @@
+======設定======
+
+=====概要=====
+
+各ユニットはJSON、またはJavascriptオブジェクト形式で記述される設定内容に従って、動作を行います。設定には全ユニットに関わるグローバル設定と、各ユニットに固有の設定があります。ユニットの設定と、グローバルの設定は連結されており、ユニット設定にない設定は、自動的にグローバルの設定から取得するようになっています。
+
+ここでは設定について説明します。
+
+
+
+=====設定の読込=====
+
+ユニットの設定を記述するには、以下の方法があります。
+
+  * 設定取得用の関数から設定を返す
+  * 外部ファイルに記述する
+  * タグの属性に記述する
+  * グローバル設定に記述する
+
+====設定取得用の関数から返す====
+
+全てのBitsmistJSユニットは、_getSettings()というメソッドを持っています。このメソッドをオーバーライドして設定内容が記述されたオブジェクトを返すことで、ユニットを設定できます。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "setting": {
+            "path": "common",
+        },
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": this.onDoSetup
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+これが最も一般的な方法です。
+
+====外部ファイルに記述する====
+
+外部ファイルにJSON形式で設定を記述し、そのURLをタグのbm-settingref属性に指定します。
+
+<code html>
+<bar-header bm-settingsref="https://example.com/settings/bar-header.settings.js"></bar-header>
+</code>
+
+<file javascript bar-header.setting.js>
+{
+    "setting": {
+        "path": "common"
+    },
+    "event": {
+        "events": {
+            "this": {
+                "handlers": {
+                    "doSetup": this.onDoSetup
+                }
+            }
+        }
+    }
+}
+</file>
+
+外部設定ファイルの指定がある場合、ユニットの初期化中に該当のファイルがロードされ、ユニットの設定にマージされます。ファイルのロードが完了するまで、初期化は中断されます。
+
+この方法を使うと、同じユニットでもタグ（インスタンス）ごとに違う設定を読み込ませることが可能です。
+
+====タグの属性に記述する====
+
+bm-options属性にJSON形式で記述します。
+
+<code html>
+<button-link bm-options='{"title":"BitsmistJS"}'></button-link>
+</code>
+
+ただし、ここで指定できるオプションは、設定の"options"セクションのみです。
+
+この方法の場合、外部ファイルを読む場合と同じく、同じユニットでもタグごとに違う設定が可能です。
+
+また、パークによっては、独自の属性から設定を読み込みます。例えばUnitPerkでは"bm-path"という属性で、ユニットを読み込むパスを指定できます。
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+====グローバル設定に記述する====
+
+グローバル設定はページ上の全てのユニットで共有される設定です。各ユニットの設定はグローバル設定に連結されています。どういうことかというと、ユニットが自身の設定を参照した際、もしその設定が存在しない場合は透過的にグローバル設定から取得されるようになっています。
+
+<WRAP admonition note links>
+グローバル設定についての詳細は、専用のセクションを参考にしてください。
+  *  <html><i class="fas fa-link"></i></html>[[#グローバル設定|グローバル設定]]
+</WRAP>
+
+=====設定の優先度=====
+
+設定の記述方法は、複数組み合わせて使うこともできます。その際、同じ設定が存在する場合は優先順位の高い方で上書きされます。優先度は以下のようになります。上の方がより優先度が高くなります。
+
+  - タグの属性
+  - 外部ファイル
+  - _getSettings()関数
+  - グローバル設定
+
+基本的な設定を_getSettings()関数に記述しておき、ページによって変わる設定内容をタグの属性で記述しておく、といった使い方が可能です。
+
+=====設定内容=====
+
+ユニットの設定内容に応じた実際の処理は、各パークによって行われます。そのため、どのような設定が存在するかは、どのパークを適用するかによって変わってきます。
+
+<WRAP admonition tip links>
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:perks| ユニットの解説 - パークによる拡張]]
+</WRAP>
+
+設定はセクションによって区切られています。各パークはそれぞれ専用のセクションを持ち、そのセクションに各パークの設定を記述します。
+
+ここでは、コアライブラリに含まれる各パークが担当する設定のセクションの一覧を示します。設定内容についてはリンク先の各パークの説明をご覧ください。
+
+^セクション^担当パーク^説明^
+|basic|[[ja:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]|基本的な機能を管理します。|
+|event|[[ja:bitsmist-js-core:reference:perk:event-perk|EventPerk]]|イベントハンドラ関係を管理します。|
+|setting|[[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]|設定を管理します。|
+|skin|[[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]|HTMLを管理します。|
+|status|[[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]|ユニットの状態を管理します。|
+|style|[[ja:bitsmist-js-core:reference:perk:skin-perk|StylePerk]]|CSSを管理します。|
+|unit|[[ja:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]|ユニットのローディングを管理します。|
+
+また、様々なパークから参照される"system"セクションがあります。これはシステム全体に影響を与えるため、通常は後に紹介する[[#グローバル設定|グローバル設定]]に記述します。
+
+<WRAP admonition tip>
+グローバルなシステム設定をあえてユニットの設定に記述することで、グローバル設定を上書きすることも可能です。
+</WRAP>
+
+=====設定へのアクセス=====
+
+設定内容にアクセスするためには、各ユニットのsettingアセットを使用します。
+
+<code javascript>
+this.set("setting", "value", 1);
+console.log(this.get("setting", "value")); // console displays 1
+</code>
+
+.（ピリオド）を使用して、階層を指定したアクセスも可能です。
+
+<code javascript>
+this.set("setting", "mysection.value", 1);
+console.log(this.get("setting", "value")); // console displays "undefined"
+console.log(this.get("setting", "mysection.value")); // console displays 1
+</code>
+
+<WRAP admonition tip links>
+このsettingアセットはChainableStoreオブジェクトを使用しています。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:store:chainable-store| リファレンス - ストア - ChainableStore]]
+</WRAP>
+
+=====グローバル設定====
+
+ここでは全ユニット間で共有される、グローバル設定について説明します。
+
+====グローバル設定の設定方法====
+
+各ユニットがsettingアセットを持っているのと同様に、全てのユニットの親であるBITSMIST.v1.Unitクラスもsettingアセットを持っています。このUnitクラスのsettingアセットにセットされた値が、グローバルな値となります。
+
+次の例ではsetting.mergeスキルを使って、グローバル設定をマージしています。
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "system": {
+        "options": {
+            "env": "prod",
+        }
+    },
+});
+</code>
+
+<WRAP admonition note>
+既に他の場所でグローバル設定がされている可能性もあるため、それらを消してしまわないよう、set()メソッドではなくsetting.mergeスキルを使うことをお勧めします。
+</WRAP>
+
+====グローバル設定のロード====
+
+グローバル設定には全体に関わる設定が記述されます。この設定情報がないと処理を正しく先に進めることができないため、できるだけ早めにロードします。
+
+一つの方法として、例えば上記の設定をsettings.jsというJavascriptに記述し、HEAD内で読み込みます（ただし、BitsmistJSライブラリよりかは後にしてください）。
+
+<code html>
+<script type='text/javascript' src='/js/settings.js'></script>
+</code>
+
+こうすると、ユニットのオートロードが始まる前に、グローバル設定が有効になります。
+
+====グローバル設定の連結====
+
+settingアセットには他の設定と連結させる機能があります。各ユニットの設定は、グローバルな設定と連結しています。
+
+グローバル設定と連結していると、ユニット内にその設定が存在しない場合、連結されている設定から取得されます。そのため通常の設定のアクセス方法と同じようにアクセスすることで、グローバル設定にその設定が存在するのであれば、自動的にグローバルな設定が取得されます。
+
+<code javascript>
+BITSMIST.v1.Unit.set("setting", "myValue", 1) // global setting
+
+console.log(this.get("setting", "myValue")); // console displays 1
+</code>
+
+====グローバル設定の上書き====
+
+グローバルな設定と同じ設定がユニット内にあると、そちらが優先されます。そのため、**あえてグローバルとは違う設定を使いたい**ユニットに対しては、ユニットに同じ項目の設定をすることで、連結されたグローバルな設定を取得しないようになります。
+
+<code javascript>
+BITSMIST.v1.Unit.set("setting", "myValue", 1)
+console.log(this.get("setting", "myValue")); // console displays 1
+
+this.set("setting", "myValue", 2)
+console.log(this.get("setting", "myValue")); // console displays 2
+</code>
+
+例えば、そのサイト上のユニットはそのサイトのグローバル設定に従いますが、全く別のサーバから提供されるサードパーティのユニットは、独自の設定を使いたいかもしれません。
+
+ただし、例外があります。グローバル設定とユニット設定の型の組み合わせによっては、ユニットで同じ項目を設定するとマージされます。
+
+<code javascript>
+BITSMIST.v1.Unit.set("setting", "myValue", [1, 2, 3]);
+this.set("setting", "myValue", 4);
+
+console.log(this.get("setting", "myValue")); // console displays [1,2,3,4]
+</code>
+
+<WRAP admonition note links>
+マージにはdeepMerge()ユーティリティ関数が使用されています。どのような組み合わせでどのようにマージされるかは以下を参照してください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:util:util#deepmerge_obj1_obj2| リファレンス - ユーティリティ - Util.deepMerge()]]
+</WRAP>
+====グローバル設定へのアクセス====
+
+明示的にグローバルな設定にアクセスしたい場合は、BITSMIST.v1.Unitのsettingアセットにアクセスします。
+
+<code javascript>
+console.log(BITSMIST.v1.Unit.get("setting", "myValue"));
+</code>
