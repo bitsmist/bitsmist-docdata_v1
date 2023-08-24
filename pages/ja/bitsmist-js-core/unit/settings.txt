@@ -114,7 +114,7 @@ bm-options属性にJSON形式で記述します。
 
 ユニットの設定内容に応じた実際の処理は、各パークによって行われます。そのため、どのような設定が存在するかは、どのパークを適用するかによって変わってきます。
 
-<WRAP admonition tip links>
+<WRAP admonition note links>
   * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:perks| ユニットの解説 - パークによる拡張]]
 </WRAP>
 

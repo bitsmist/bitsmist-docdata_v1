@@ -112,7 +112,7 @@ One typical way is to configure the basic settings in the _getSettings() functio
 
 The actual processing of the units according to their settings is done by each perk. Therefore, what settings exist will depend on which perk is applied.
 
-<WRAP admonition tip links>
+<WRAP admonition note links>
   * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:perks| Unit Explained - Extending with Perks]]
 </WRAP>
 
