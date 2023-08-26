@@ -1,0 +1,222 @@
+======Events======
+
+=====Overview=====
+
+One of the features of BitsmistJS is that it is event-driven. Events occur at various times in each unit. When an event occurs, BitmistJS prepares arguments and calls the registered event handler. By writing the event handler for each event, you create the behavior of the unit.
+
+This page describes the events.
+
+<WRAP admonition tip links>
+Events are handled by EventPerk.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:perk:event-perk| Reference - Perk - EventPerk]]
+</WRAP>
+
+=====Types of Events=====
+
+There are two types of events: Javascript native events, such as the "click" event, and BitsmistJS events, such as "doSetup".
+
+BitsmistJS events are implemented using Javascript standard custom events. Therefore, in many cases, you can use them without being aware of whether they are Javascript-native events or BitsmistJS events.
+
+====BitsmistJS Events====
+
+Here is a list of events triggered by the core library. Each BitsmistJS event often consists of three sets of events beginning with before/do/after. The events beginning with do perform the main processing, and the events beginning with before/after perform the pre/post processing.
+
+^Event^Description^
+|beforeStart|Handles initialization process.|
+|doStart|:::|
+|afterStart|:::|
+|beforeStop|Handles termination process.|
+|doStop|:::|
+|afterStop|:::|
+|beforeApplySettings|Handles applying settings process.|
+|doApplySettings|:::|
+|afterApplySettings|:::|
+|beforeSetup|Handles setting up process.|
+|doSetup|:::|
+|afterSetup|:::|
+|beforeTransform|Handles transforming process.|
+|doTransform|:::|
+|afterTransform|:::|
+|beforeRefresh|Handles refreshing process.|
+|doRefresh|:::|
+|afterRefresh|:::|
+|beforeFetch|Handles fetching data process.|
+|doFetch|:::|
+|afterFetch|:::|
+|beforeClear|Handles clearing process.|
+|doClear|:::|
+|afterClear|:::|
+|beforeFill|Handles filling the contents process.|
+|doFill|:::|
+|afterFill|:::|
+|afterReady|Handles after initialization process.|
+
+=====Event Handlers=====
+
+Each event handler has a common signature. Use the same signature for both Javascript native events and BitsmistJS events.
+
+<code javascript>
+onDoSetup(sender, e, ex)
+{
+}
+</code>
+
+The event handler has three arguments. These three arguments are set by BitsmistJS.
+
+===sender===
+
+The object that fired this event. For example, in the case of a click event, it is the element that was clicked, and in the case of doSetup, it is the unit itself.
+
+===e===
+
+For Javascript-native events, the event information passed to the event listener is passed here as is. In the case of a click event, for example, a MouseEvent object is passed. In the case of a BitmistJS event, the event information passed by the unit that triggered the event is passed.
+
+===ex===
+
+This argument is the settings specified in the "options" section of the setting's event handler information.
+
+<WRAP admonition tip links>
+Event handler information is an object that is set as the value of "eventName" in the event settings.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:perk:event-perk#settings|Reference - Pek - EventPerk - Settings]]
+</WRAP>
+
+=====How to Specify Event Handlers=====
+
+Specify which event handlers are triggered on when and on which element in the "event" section of the settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": this.onDoSetup
+                    }
+                },
+                "btn-menu": {
+                    "handlers": {
+                        "click": this.onBtnMenu_Click
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+In this example, the onDoSetup() method is called when the doSetup event is triggered on "this" (the unit itself). It also shows that the onBtnMenu_Click() method is called when the menu button is clicked.
+
+See [[en:bitsmist-js-core:reference:perk:event-perk#settings|Reference - Perk - EventPerk]] for details on how to specify elements and handlers.
+
+=====Order of Event Handlers=====
+
+If there are multiple event handlers for the same event on the same element, they are basically executed in the order in which they are registered.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": [
+                            {
+                                "handler": this.onDoSetup1
+                            },
+                            {
+                                "handler": this.onDoSetup2,
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+In the above case, this.onDoSetup1() will be executed first, and then this.onDoSetup2().
+
+This order can be controlled by specifying a numerical value for "order" in the handler settings. The event handler with the higher number will be executed first. If no value is specified, the default value is 0.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": [
+                            {
+                                "handler": this.onDoSetup1
+                            },
+                            {
+                                "handler": this.onDoSetup2,
+                                "order": 10
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+In the above case, the handlers are executed this.onDoSetup2() first, then this.onDoSetup1().
+=====Wait for the Event Handlers to Finish=====
+
+Each event handler is executed asynchronously. By returning a promise and resolving/rejecting it at the appropriate time, the next process will "wait" for the previous event handler to finish.
+
+<code javascript>
+onDoSetup1(sender, e, ex)
+{
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("setup1");
+            resolve();
+        }, 2000);
+    });
+}
+
+onDoSetup2(sender, e, ex)
+{
+    console.log("setup2");
+}
+</code>
+
+If the above two event handlers were registered in the unit's doSetup event, the result will be as expected.
+
+<code>
+setup1
+setup2
+</code>
+
+What happens if the promise is not returned?
+
+<code javascript>
+onDoSetup1(sender, e, ex)
+{
+    setTimeout(() => {
+        console.log("setup1");
+    }, 2000);
+}
+
+onDoSetup2(sender, e, ex)
+{
+    console.log("setup2");
+}
+</code>
+
+<code>
+setup2
+setup1
+</code>
+
+setup2 is displayed first.
+
+This was an example of multiple event handlers for the same event, but the same can be said for a series of different events. For example, when the "basic.setup" spell is cast, events occur in the following sequence: beforeSetup, doSetup, and afterSetup. If the beforeSetup event handler does not return a promise, the doSetup process runs without waiting for the beforeSetup process to finish. If the subsequent process needs to wait, always return a promise and resolve/reject at the appropriate timing in an event handler.

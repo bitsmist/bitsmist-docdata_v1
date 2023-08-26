@@ -1,0 +1,223 @@
+======イベント======
+
+=====概要=====
+
+BitsmistJSの特徴のひとつが、イベントドリブンです。各ユニットでは様々なタイミングでイベントが発生します。イベントが発生すると、BitmistJSが引数を準備し登録されているイベントハンドラを呼び出します。各イベントに対するイベントハンドラ内に処理を記述することで、ユニットの動作を作成していきます。
+
+ここではイベントについて説明します。
+
+<WRAP admonition tip links>
+イベントはイベントパークによって処理されます。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:perk:event-perk| リファレンス - パーク - EventPerk]]
+</WRAP>
+
+=====イベントの種類=====
+
+発生するイベントには、"click"イベントのようなJavascriptネイティブのイベントと、"doSetup"のようなBitsmistJSの独自のイベントがあります。
+
+独自イベントはJavascript標準のカスタムイベントを使って実装されています。そのため多くの場合、JavascriptネイティブなのかBitmistJSオリジナルなのかを意識せずに使えるようになっています。
+
+====BitsmistJSオリジナルイベント====
+
+ここではコアライブラリが発生させるイベントの一覧を紹介します。BitsmistJSイベントは1つのイベントに対し、before/do/afterで始まるイベントの3セットになっています（そうでないものもありますが）。doで始まるイベントでメインとなる処理を行い、before/afterで始まるイベントでは、その前処理/後処理を行います。
+
+^イベント^説明^
+|beforeStart|初期化時の処理を行います。|
+|doStart|:::|
+|afterStart|:::|
+|beforeStop|終了時の処理を行います。|
+|doStop|:::|
+|afterStop|:::|
+|beforeApplySettings|設定を適用する処理を行います。|
+|doApplySettings|:::|
+|afterApplySettings|:::|
+|beforeSetup|ユニットに設定を反映する処理を行います。|
+|doSetup|:::|
+|afterSetup|:::|
+|beforeTransform|HTMLテンプレート追加時の処理を行います。|
+|doTransform|:::|
+|afterTransform|:::|
+|beforeRefresh|画面描画時の処理を行います。|
+|doRefresh|:::|
+|afterRefresh|:::|
+|beforeFetch|データ取得時の処理を行います。|
+|doFetch|:::|
+|afterFetch|:::|
+|beforeClear|ユニットをクリアする処理を行います。|
+|doClear|:::|
+|afterClear|:::|
+|beforeFill|ユニットにコンテンツを満たす処理を行います。|
+|doFill|:::|
+|afterFill|:::|
+|afterReady|ユニットの初期化終了後の処理を行います。|
+
+=====イベントハンドラの書き方=====
+
+各イベントハンドラは共通の引数を持っています。Javascriptネイティブなイベント、BitsmistJSオリジナルなイベント、いずれもこのイベントハンドラの形式で対応します。
+
+<code javascript>
+onDoSetup(sender, e, ex)
+{
+}
+</code>
+
+イベントハンドラには3つの引数があります。この3つの引数はBitsmistJSによってセットされます。
+
+===sender===
+
+senderにはこのイベントを発生させたオブジェクトが渡されます。例えば、クリックイベントの場合はクリックした要素、doSetupの場合はユニット自身が入っています。
+
+===e===
+
+Javascriptネイティブなイベントの場合、ここにはイベントリスナーに渡されるイベント情報がそのまま渡されます。例えばclickイベントの場合は、MouseEventオブジェクトが渡されます。BitmistJSオリジナルなイベントの場合は、イベントを発生させたユニットが渡すイベント情報が入ります。
+
+===ex===
+
+この引数には設定のイベントハンドラ情報の"options"で指定された内容が渡されます。
+
+<WRAP admonition tip links>
+イベントハンドラ情報はイベント設定で"eventName"の値としてセットされるオブジェクトです。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:perk:event-perk#設定|リファレンス - パーク - EventPerk - 設定]]
+</WRAP>
+
+=====イベントハンドラの指定方法=====
+
+どの要素のどのイベント時にどのイベントハンドラを使用するかを、設定の"event"セクションに記述します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": this.onDoSetup
+                    }
+                },
+                "btn-menu": {
+                    "handlers": {
+                        "click": this.onBtnMenu_Click
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+この例では"this"（ユニット自身）のdoSetupイベントでonDoSetup()メソッドを呼び出すように指定しています。またメニューボタンがクリックされた際には、onBtnMenu_Click()メソッドを呼び出すようにも指定しています。
+
+要素の指定の仕方、ハンドラの指定の仕方など、詳細は[[ja:bitsmist-js-core:reference:perk:event-perk#設定|イベントパークのリファレンス]]をご覧ください。
+
+=====イベントハンドラの順番=====
+
+同じ要素の同じイベントに複数のイベントハンドラがある場合、基本的には登録された順番に実行されます。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": [
+                            {
+                                "handler": this.onDoSetup1
+                            },
+                            {
+                                "handler": this.onDoSetup2,
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+上記の場合、this.onDoSetup1()→this.onDoSetup2()の順に実行されます。
+
+ハンドラ情報の"order"に数値を指定すると、この順番を制御することができます。より高い数値のイベントハンドラが先に実行されます。指定がない場合は0となります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": [
+                            {
+                                "handler": this.onDoSetup1
+                            },
+                            {
+                                "handler": this.onDoSetup2,
+                                "order": 10
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+上記の場合は、this.onDoSetup2()→this.onDoSetup1()の順になります。
+
+=====イベントハンドラの実行を同期する=====
+
+各イベントハンドラは非同期で実行されます。Promiseを返し適切なタイミングでresolve/rejectすることで、次の処理はこのイベントハンドラの終了を"待つ"ようになります。
+
+<code javascript>
+onDoSetup1(sender, e, ex)
+{
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("setup1");
+            resolve();
+        }, 2000);
+    });
+}
+
+onDoSetup2(sender, e, ex)
+{
+    console.log("setup2");
+}
+</code>
+
+上記の2つのイベントハンドラがユニットのdoSetupイベントに登録されていた場合、
+
+<code>
+setup1
+setup2
+</code>
+
+と順番に表示されます。もしPromiseを返さない場合はどうなるでしょうか？
+
+<code javascript>
+onDoSetup1(sender, e, ex)
+{
+    setTimeout(() => {
+        console.log("setup1");
+    }, 2000);
+}
+
+onDoSetup2(sender, e, ex)
+{
+    console.log("setup2");
+}
+</code>
+
+<code>
+setup2
+setup1
+</code>
+
+setup2が先に表示されます。
+
+これは同じイベントに複数のイベントハンドラが存在する場合の例でしたが、違うイベントが続けて発生する場合も同じことが言えます。例えばユニットの"basic.setup"スペルを呼び出すと、beforeSetup→doSetup→afterSetupという流れでイベントが発生します。beforeSetupのイベントハンドラでPromiseを返さない場合は、beforeSetupの処理の終了を待たずに、doSetupの処理が走ります。後続の処理が待つ必要がある場合は、常にPromiseを返し、適切なタイミングでresolve/rejectしてください。
