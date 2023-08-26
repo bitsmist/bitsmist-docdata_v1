@@ -1,0 +1,127 @@
+======パークによる拡張======
+
+=====概要=====
+
+BitsmistJSの核であるUnitユニットはごく単純な機能しか持ちません。各ユニットはパークを適用することで、機能を拡張できます。
+
+例えば[[ja:bitsmist-js-core:general:sample|サンプルのハローユニット]]では、イベントハンドラを設定でセットしましたが、これはEventPerkによって処理がされています。またHTMLファイルのロードと適用は、SkinPerkによって行われます。
+
+パークには次の機能があります
+
+  * ユニットの処理中の特定のタイミング（イベントハンドラ）で処理を行う。
+  * ユニットのインスタンスやプロトタイプにスキル・インベントリ等を追加する。
+
+デフォルトでは以下のパークがUnitユニットに適用されています。
+
+  * [[ja:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]] 
+  * [[ja:bitsmist-js-core:reference:perk:style-perk|StylePerk]] 
+  * [[ja:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]
+
+=====パークの適用=====
+
+パークを適用するには、各ユニットの設定に記述する必要があります。各パークには対応したセクション名があり、設定にそのセクションが存在することで、自動的にパークが適用されます。
+
+例えば、以下の設定には"event"セクションがあるため、EventPerkが自動的に適用されます。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "event": {
+            "events": {
+                "this": {
+                    "handlers": {
+                        "doSetup": this.onDoSetup
+                    }
+                },
+            }
+        }
+    };
+}
+</code>
+
+<WRAP admonition tip>
+どのセクションにどのパークが紐づいているかは、各パークのリファレンスのタイトルの下にある"セクション名"をご覧ください。
+</WRAP>
+
+=====イベント処理=====
+
+パークによってはユニットにイベントハンドラを登録し、そのハンドラ内で独自の処理を行います。パークが登録するイベントハンドラは優先順位を高めており、ユーザイベントよりも先に発生するように設計されています。
+
+どのイベントでどのような処理をするのかはパークによって異なります。例えばSkinPerkは"beforeTransform"で必要なHTMLファイルをロードし、"doTransform"でそのファイルをユニットに適用します。
+
+以下に、コアライブラリに含まれるパークが、どのイベントで何をするかの一覧を示します。詳細については、各リンク先を参照ください。
+
+^イベント^パーク^説明^
+|doApplySettings|[[ja:bitsmist-js-core:reference:perk:event-perk#doapplysettings|EventPerk]]|イベントハンドラをセットします。|
+|:::|[[ja:bitsmist-js-core:reference:perk:status-perk#doapplysettings|StatuePerk]]|他のユニットを待つためのインベントハンドラをセットします。|
+|:::|[[ja:bitsmist-js-core:reference:perk:unit-perk#doapplysettings|UnitPerk]]|コンポーネントを追加します。|
+|beforeTransform|[[ja:bitsmist-js-core:reference:perk:skin-perk#beforetransform|SkinPerk]]|HTMLファイルをロードします。|
+|doTransform|[[ja:bitsmist-js-core:reference:perk:skin-perk#dotransform|SkinPerk]]|HTMLファイルを適用します。|
+|:::|[[ja:bitsmist-js-core:reference:perk:style-perk#dotransform|StylePerk]]|CSSをロードして適用します。|
+|afterTransform|[[ja:bitsmist-js-core:reference:perk:event-perk#afterTransform|EventPerk]]|イベントハンドラをセットします。|
+
+=====拡張機能====
+
+各パークはユニットのプロトタイプや各インスタンスに、アセット・インベントリ・ステート・スキル・スペルを追加する機能も持ちます。
+
+以下にコアライブラリのパークが付加する機能の一覧を示します。詳細は各パークの説明をご覧ください。
+
+^パーク^タイプ^名称^
+|BasicPerk|プロパティ|[[ja:bitsmist-js-core:reference:perk:basic-perk#|uniqueId]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|unitRoot]]|
+|:::|メソッド|[[ja:bitsmist-js-core:reference:perk:basic-perk#|get]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|has]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|set]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|use]]|
+|:::|アセット|[[ja:bitsmist-js-core:reference:perk:basic-perk#|inventory]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|skill]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|spell]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|state]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|vault]]|
+|:::|スキル|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.locate]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.locateAll]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.scanAll]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.scan]]|
+|:::|スペル|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.clear]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.fetch]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.fill]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.refresh]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.setup]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.start]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.stop]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:basic-perk#|basic.transform]]|
+|EventPerk|スキル|[[ja:bitsmist-js-core:reference:perk:event-perk#|event.add]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:event-perk#|event.init]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:event-perk#|event.remove]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:event-perk#|event.reset]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:event-perk#|trigger]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:event-perk#|triggerSync]]|
+|PerkPerk|スペル|[[ja:bitsmist-js-core:reference:perk:perk-perk#|perk.attach]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:perk-perk#|attachPerks]]|
+|SettingPerk|アセット|[[ja:bitsmist-js-core:reference:perk:setting-perk#|setting]]|
+|:::|スキル|[[ja:bitsmist-js-core:reference:perk:setting-perk#|seting.get]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:setting-perk#|setting.merge]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:setting-perk#|setting.set]]|
+|:::|スペル|[[ja:bitsmist-js-core:reference:perk:setting-perk#|setting.apply]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:setting-perk#|setting.summon]]|
+|SkinPerk|インベントリ|[[ja:bitsmist-js-core:reference:perk:skin-perk#|skin.skins]]|
+|:::|ステート|[[ja:bitsmist-js-core:reference:perk:skin-perk#|skin.active.skinName]]|
+|:::|スキル|[[ja:bitsmist-js-core:reference:perk:skin-perk#|skin.apply]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:skin-perk#|skin.clone]]|
+|:::|スペル|[[ja:bitsmist-js-core:reference:perk:skin-perk#|skin.summon]]|
+|StatusPerk|ステート|[[ja:bitsmist-js-core:reference:perk:status-perk#|status.status]]|
+|:::|スキル|[[ja:bitsmist-js-core:reference:perk:status-perk#|status.change]]|
+|:::|スペル|[[ja:bitsmist-js-core:reference:perk:status-perk#|status.wait]]|
+|StylePerk|インベントリ|[[ja:bitsmist-js-core:reference:perk:style-perk#|style.styles]]|
+|:::|スペル|[[ja:bitsmist-js-core:reference:perk:style-perk#|style.apply]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:style-perk#|style.summon]]|
+|UnitPerk|インベントリ|[[ja:bitsmist-js-core:reference:perk:unit-perk#|unit.units]]|
+|:::|スペル|[[ja:bitsmist-js-core:reference:perk:unit-perk#|unit.materialize]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:unit-perk#|unit.materializeAll]]|
+|:::|:::|[[ja:bitsmist-js-core:reference:perk:unit-perk#|unit.summon]]|
