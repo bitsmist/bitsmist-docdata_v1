@@ -1,0 +1,27 @@
+======Unit======
+
+''Inherits:HTMLElement''
+
+=====Overview=====
+
+The Unit object is the core of BitsmistJS. It inherits from HTMLElement and thus takes over the functionality of a standard HTML element. When creating your own units, you create them by inheriting from this Unit class.
+
+The Unit itself has almost no functionality other than that of the HTML element from which it inherits; it simply calls specific functions when the Javascript native callback functions are called.
+
+  * ConnectedCallback ... this._connectedHandler()
+  * disconnectedCallback ... this._disconnectedHandler()
+  * adoptedCallback ... this._adoptedHandler()
+  * attributeChangedCallback ... this._attributeChangedHandler()
+
+Units can expand their functionality by attaching perks. By default, the following perks are attached.
+
+  * [[ja:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:style-perk|StylePerk]]
+
+The above four callback functions are provided by BasicPerk.
