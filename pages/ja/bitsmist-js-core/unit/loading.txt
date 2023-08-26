@@ -1,0 +1,331 @@
+======ロード======
+
+=====概要=====
+
+各ユニットのJavascriptファイルは、ブラウザにロードされる必要があります。ロード方法にはオートロードとマニュアルロードがあります。オートロードはユニットのタグの属性にbm-autoload属性を指定することで、自動的に必要なファイルをロードし、タグをインスタンス化します。マニュアルロードはscriptタグに明示的に必要なファイルを記述し、ユニットをロードします。前者は手軽なのですが、ロードするファイルがユニットごとにデフォルトでは3つ必要になります。後者の場合は、例えばWebpackなどを使うと、複数のユニットを一つにまとめることができます。
+
+ここでは、ユニットのロード方法について説明します。
+
+=====ロード方法=====
+
+ユニットのロード方法には、以下の方法があります。
+
+  * bm-autoload属性を持つタグを記述する
+  * <script>タグでインポートする
+  * 設定の"unit"セクションに記述する
+  * プログラムから動的に追加する
+  * モーフィングする
+
+====bm-autoload属性を持つタグを記述する====
+
+ユニットのタグにbm-autoload属性を付加することで、ユニットに必要なファイルが自動的にロードされます。その際、ファイルへのURLを記述する方法と、デフォルトのパスやファイル名を使う方法があります。
+
+===URLを指定する===
+
+これは[[ja:bitsmist-js-core:general:sample|サンプルユニット]]で使用した方法です。カスタムタグの"bm-autoload"属性にJavascriptファイルへのURLを記述します。
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</code>
+
+するとBitsmistJSライブラリが、指定されたURLからファイルを自動的にダウンロードします。その後ユニットが初期化され、インターフェースのHTML/CSSファイルがロードされて画面に表示されます。
+
+<WRAP admonition note links>
+この例では相対パスを使っていますが、絶対パスでも構いません。ただし、XMLHttpRequestを使用して取得しているため、絶対パスを使って別のオリジンからロードする場合は、サーバ側でAccess-Control-Allow-Originヘッダーを付加する必要があります。
+  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/HTTP/CORS|オリジン間リソース共有 (CORS) | MDN Web Docs]]
+</WRAP>
+
+===URLを指定しない===
+
+bm-autoload属性の値にURLを指定しない場合は、デフォルトのパスとファイル名が使用されます。
+
+<code html>
+<pad-hello bm-autoload></pad-hello>
+</code>
+
+と指定された場合、デフォルトのパスは現在のパス（現在表示しているhtmlのパス）、デフォルトのファイル名はタグ名に拡張子をつけた"pad-hello.js"となります。例えばhttps://example.com/index.htmlを表示している場合、https://example.com/pad-hello.jsが読み込まれます。
+
+<WRAP admonition tip links>
+デフォルトのパスとファイルは設定で変更することが可能です。
+  * <html><i class="fas fa-link"></i></html>[[#デフォルトのパス| デフォルトのパス]]
+  * <html><i class="fas fa-link"></i></html>[[#デフォルトのファイル名| デフォルトのファイル名]]
+</WRAP>
+
+====<script>タグでインポートする====
+
+通常のJavascriptのようにHTMLファイル内に<script>タグを記述してインポートします。
+
+<code html>
+<script type='text/javascript' src='/bar-hello.js'></script>
+</code>
+
+上記の文でユニットは読み込まれているため、カスタムタグではbm-autoload属性は不要です。
+
+<code html>
+<pad-hello></pad-hello>
+</code>
+
+ただし、この方法でも、HTML/CSSファイルは必要な時に呼ばれるオートロード形式になります。HTML/CSSファイルも一緒にマニュアルでロードしたい場合は、Webpackなどを使用して、ファイルをまとめる必要があります。その場合は、複数のユニットを一つのファイルにまとめることも可能です。
+
+<WRAP admonition note>
+HTMLのみのユニットの場合、このロード方法は使用できません。
+</WRAP>
+
+====設定の“unit.units”セクションに記述する====
+
+各ユニットの設定の"unit.units"セクションに、追加するユニットを記述することで、そのユニットの子ユニットとして追加することができます。オートロード、マニュアルロードのいずれも使うことができます。
+
+<code javascript>
+{
+    "unit": {
+        "units": {
+            "PadSetting": {
+                "unit": {
+                    "options": {
+                        "parentNode": "#widgets"
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+追加するユニットは、親ユニット配下の"parentNode"で指定されたノードに、追加されます。
+
+<WRAP admonition tip links>
+"unit"セクションはUnitPerkによって、操作されます。設定の記述方法については以下を参照ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:perk:unit-perk#設定|リファレンス - UnitPerk - 設定]]
+</WRAP>
+
+====プログラムから動的に追加する====
+
+プログラムから動的にユニットを追加することも可能です。その場合、2つの方法があります。どちらの方法でもオートロード、マニュアルロードのいずれも使うことができます。
+
+===タグを挿入する===
+
+ドキュメントツリーにタグを追加します。既にロードされているユニットの場合、即座にインスタンス化されます。
+
+<code javascript>
+this.insertAdjacentHTML("afterbegin", "<pad-filter></pad-filter>");
+</code>
+
+ロードが必要な場合、必要な情報をタグ属性に指定し、追加した後に[[ja:bitsmist-js-core:reference:perk:unit-perk#materializeall|unit.materializeAll]]スペルを実行してください。ユニットがロードされて、インスタンス化されます。
+
+<code javascript>
+this.insertAdjacentHTML("afterbegin", "<pad-filter bm-autoload bm-path='common'></pad-filter>");
+this.use("spell", "unit.materializeAll");
+</code>
+
+===unit.materializeスペルを使う===
+
+各ユニットが持っている[[ja:bitsmist-js-core:reference:perk:unit-perk#materialize|unit.materialize]]スペルを使用して、そのユニットの子ユニットして追加することができます。materializeスペルに設定内容を記述したオブジェクトを渡すことで、初期化できます。
+
+<code javascript>
+this.use("spell", "unit.materialize", "PadFilter", {
+    "unit": {
+        "options": {
+            "path":"common",
+            "parentNode":"#pads"
+        }
+    }
+});
+</code>
+
+上記の例の場合、ユニットの#padsノードに、PadFilterという子ユニットを追加しています。
+
+<WRAP admonition tip links>
+materializeAll/materializeスペルはUnitPerkによって提供されます。
+  * [[ja:bitsmist-js-core:reference:perk:unit-perk#materialize|リファレンス - UnitPerk - materialize]]
+</WRAP>
+
+
+====モーフィングする====
+
+独自のイベントハンドラなどを持たない単純なユニットの場合、別のユニットをもとに新しいユニットを作成し、それを利用することができます。その際、表示するHTMLファイルを指定する方法と、デフォルトのファイルをロードする方法があります。
+
+===HTMLファイルを指定する===
+
+bm-autoload属性にHTMLファイルへのURLを指定した場合、内部で自動的にUnitクラスを継承した新しいクラスを作成し、そのクラスをタグと紐付けます。
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</code>
+
+上記の例の場合、Unitクラスを継承したPadHelloクラスが作成され、pad-helloタグに紐づけられます。その後タグがインスタンス化され、Unitクラスの初期化が始まり、HTMLファイルがサーバから読み込まれ、カスタムタグ内に表示されます。
+
+===デフォルトのファイルをロードする===
+
+デフォルトのパスとファイル名を利用する場合、bm-automorph属性を指定します。
+
+<code html>
+<pad-hello bm-automorph></pad-hello>
+</code>
+
+デフォルトではUnitクラスを継承しますが、bm-automorph属性でスーパークラスを指定することもできます。
+
+<code html>
+<pad-hello bm-automorph='MyUnit'></pad-hello>
+</code>
+
+なお、指定するクラスをロードする必要がある場合、bm-autoload属性を使ってロードする必要があります。
+
+<code html>
+<pad-hello bm-autoload='https://example.com/my-unit.js' bm-automorph='MyUnit'></pad-hello>
+</code>
+
+この場合、https://example.com/my-unit.jsがロードされた後に、MyUnitクラスを継承したPadHelloクラスが作成され、タグに紐づけられます。
+
+=====ロードのタイミング=====
+
+最初に読み込まれたHTMLファイル（例えばindex.html）内にあるロード対象ユニットは、DOMContentLoadedイベントでロードが開始されます。ロード対象ユニットは"bm-autoload"、または"bm-automorph"属性を持つタグです。
+
+また読み込まれたユニットのHTMLがノードにアタッチされた時に、そのユニット内にロード対象ユニットがあれば、さらにそれらのファイルがロードされます。
+
+=====デフォルトのパス=====
+
+[[ja:bitsmist-js-core:general:sample|サンプルとして作成したユニット]]ではファイルは全てルート直下に置きました。実際の運用では、ユニットを分類して特定のフォルダにまとめることになると思います。その場合、bm-autoload属性でURLを個別に指定するのではなく、デフォルトのパスをうまく使うことで、記述量を減らすことができます。ここではデフォルトのパスについて説明します。
+
+====パスを決める設定====
+
+ デフォルトのパスは、以下の設定を元に決定されます。
+
+  * システムユニットパス （system.unit.options.path）
+  * ユニットパス （unit.options.path/bm-path）
+
+<WRAP admonition tip>
+システムユニットパスは、グローバル設定・各ユニット固有の設定の両方で行うことができます。システム設定、ユニット設定の両方に同じ指定がある場合は、各ユニットの設定が優先されます。これを利用して、特定のユニットだけシステム全体とは違うURLをベースとすることもできます。
+</WRAP>
+
+上記の設定を繋げたフォルダからファイルがダウンロードされます。いずれも初期値は""（空文字列）です。例として以下のように設定したとします。
+
+^設定^値^
+|system.unit.options.path|https://example.com/units/|
+
+ヘッダーユニット"bar-header"が以下のようにHTMLファイルに指定してあった場合、
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+ユニットはhttps://example.com/units/common/bar-header.jsから読み込まれます。
+
+====デフォルトパスの設定方法====
+
+デフォルトパスの指定は設定、またはタグの属性で行います。設定には大きく分けると、全ユニットで共通のグローバル設定と、ユニット固有の設定があります。
+
+<WRAP admonition tip links>
+設定の詳細については設定を参照ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:settings| ユニットについて - 設定]]
+</WRAP>
+
+システムユニットパスは、基本的にはグローバル設定で行います。
+
+<code javascript>
+BITSMIST.v1.Unit.settings.merge({
+    "system": {
+        "unit": {
+            "options": {
+                "path": "https://example.com/units/"
+            }
+        }
+    },
+});
+</code>
+
+上記の内容を、例えば"settings.js"という名前で保存し、HTMLのスクリプトタグで読み込みます。
+
+<code html>
+<script type='text/javascript' src='/settings.js'></script>
+</code>
+
+ユニットパスはそれぞれのユニットの属性で設定します。
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+"unit"セクションを使って追加、またはコードから動的に追加する場合は、セクション内のユニットの設定に記述することもできます。
+
+<code javascript>
+{
+    "unit": {
+        "units": {
+            "PadSetting": {
+                "unit": {
+                    "options": {
+                        "path": "common"
+                    }
+                },
+            }
+        }
+    }
+}
+</code>
+
+<code javascript>
+this.use("spell", "unit.materialize", "PadSetting", {
+    "unit": {
+        "options": {
+            "path": "common"
+            "parentNode": "#pads"
+        }
+    }
+});
+</code>
+
+<WRAP admonition note>
+_getSettings()や外部設定ファイルを使う方法では、デフォルトのパスの指定はできません。なぜならそれらの方法はユニットがロードされた後に実行されるためで、ロード前に指定することができないからです。
+</WRAP>
+=====デフォルトのファイル名=====
+
+bm-autoload属性でURLを指定しない場合、デフォルトのファイル名が使用されます。デフォルトではタグ名がファイル名となりますが、設定で変更することが可能です。
+
+====ファイル名を決める設定====
+
+ファイル名は、bm-filename属性または設定の"unit.options.fileName"で変更可能です。ここで指定したファイル名に拡張子"js"を付加したものが、ロードするファイル名となります。
+
+====デフォルトファイル名の設定方法====
+
+ファイル名はそれぞれのタグの属性で指定します。拡張子は不要です。
+
+<code html>
+<bar-header bm-autoload bm-filename="header"></bar-header>
+</code>
+
+"unit"セクションを使って追加、またはコードから動的に追加する場合は、セクション内のユニットの設定に記述することもできます。
+
+<code javascript>
+{
+    "unit": {
+        "units": {
+            "BarHeader": {
+                "unit": {
+                    "options": {
+                        "fileName": "header"
+                    }
+                },
+            }
+        }
+    }
+}
+</code>
+
+<code javascript>
+document.querySelector("bm-router").use("skill", "unit.materialize", "BarHeader", {
+    "unit": {
+        "options": {
+            "fileName": "header",
+        }
+    }
+});
+</code>
+=====URL指定時の設定の上書き=====
+
+bm-autoload属性にURLを指定した場合、その値に応じて"unit.options.path", "unit.options.fileName"の設定が自動的にセットされます。またURLにHTMLを指定した場合は, さらに"unit.options.autoMorph"がTrueに設定されます。
+
+例としてbm-autoloadにhttps://example.com/unit/transactions/pad-main.jsと指定された場合、各設定が以下のようにセットされます。
+
+^設定^値^
+|unit.options.path|https://example.com/unit/transactions/|
+|unit.options.fileName|pad-main|

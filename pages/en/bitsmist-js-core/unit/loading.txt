@@ -1,0 +1,331 @@
+======Loading======
+
+=====Overview=====
+
+The Javascript file for each unit must be loaded into the browser. There are two loading methods: autoloading and manual loading. Autoloading automatically loads the necessary files and instantiates the tag by specifying the bm-autoload attribute in the unit's tag attribute. Manual loading is done by explicitly specifying the necessary files in the script tag and loading the unit. The former is easy but requires three files to be loaded per unit by default. In the latter case, multiple units can be combined into one using, for example, Webpack.
+
+This page describes how to load units.
+
+=====How to Load a Unit=====
+
+The following methods are available for loading units
+
+  * Specify the bm-autoload attribute in a tag.
+  * Import with a <script> tag.
+  * Specify units in the "unit.units" section of the settings.
+  * Add dynamically using Javascript.
+  * Morph from the existing class.
+
+====Specify the bm-autoload Attribute in a Tag====
+
+Adding the bm-autoload attribute to the unit's tag will automatically load the files required for the unit. You can specify the URL to the file or omit the URL to use the default path and filename.
+
+===Specify the URL===
+
+This is how we loaded a unit in [[en:bitsmist-js-core:general:sample|"Create a Sample Unit"]]. Specify the URL to the Javascript file in the bm-autoload attribute.
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.js"></pad-hello>
+</code>
+
+The BitsmistJS library will then automatically download the file from the specified URL. The unit is then initialized and the interface HTML/CSS files are loaded and displayed on the browser.
+
+<WRAP admonition note links>
+Though the path in this example is relative, you can also use an absolute path. However, the library uses XMLHttpRequest to load files, servers hosting units need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
+  * [[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
+</WRAP>
+
+===Use Default Path/Filename===
+
+The default path and filename will be used if no URL is specified for the bm-autoload attribute.
+
+<code html>
+<pad-hello bm-autoload></pad-hello>
+</code>
+
+In the example above, the default path is the current path (the path of the currently displayed HTML) and the default file name is "pad-hello.js",  the tag name with the extension "js". For example, if you are browsing "https://example.com/index.html", then "https://example.com/pad-hello.js" will be loaded.
+
+<WRAP admonition tip links>
+The default path and filename can be changed in the settings.
+  * <html><i class="fas fa-link"></i></html>[[#default_path| Default Path]]
+  * <html><i class="fas fa-link"></i></html>[[#default_filename| Default Filename]]
+</WRAP>
+
+
+====Import with a <script> Tag====
+
+Import by putting <script> tags in the HTML file.
+
+<code html>
+<script type='text/javascript' src='/bar-hello.js'></script>
+</code>
+
+Since the unit is loaded in the above statement, the bm-autoload attribute is not needed in the custom tag.
+
+<code html>
+<pad-hello></pad-hello>
+</code>
+
+However, even with this method, the HTML/CSS files will be autoloaded.  If you want to manually load the HTML/CSS files together, you will need to use Webpack or similar to combine the files. In this case, multiple units can be combined into a single file.
+
+<WRAP admonition note>
+You can not use this method for HTML-only units.
+</WRAP>
+
+====Specify Units in the "unit.units" Section of the Settings====
+
+Units can be added as children of a unit by specifying the units to be added in the "unit.units" section of each unit's settings. This works for both autoloading and manual loading.
+
+<code javascript>
+{
+    "unit": {
+        "units": {
+            "PadSetting": {
+                "unit": {
+                    "options": {
+                        "parentNode": "#widgets"
+                    }
+                }
+            }
+        }
+    }
+}
+</code>
+
+The unit will be added to the node specified by "parentNode" under the parent unit.
+
+<WRAP admonition tip links>
+The “unit” section is handled by UnitPerk. Refer to the link below for details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:perk:unit-perk#settings|Reference - UnitPerk - Settings]]
+</WRAP>
+
+====Add Dynamically Using Javascript====
+
+It is also possible to add units dynamically using Javascript. In this case, there are two methods. This method works for both autoloading and manual loading.
+
+===Insert a Tag===
+
+Add a tag to the document tree. If the unit is already loaded, it starts its initialization immediately.
+
+<code javascript>
+this.insertAdjacentHTML("afterbegin", "<pad-filter></pad-filter>");
+</code>
+
+If loading is required, specify the required information in the tag attribute, then cast [[en:bitsmist-js-core:reference:perk:unit-perk#materializeall|unit.materializeAll]] spell. The unit will be loaded and instantiated.
+
+<code javascript>
+this.insertAdjacentHTML("afterbegin", "<pad-filter bm-autoload bm-path='common'></pad-filter>");
+this.use("spell", "unit.materializeAll");
+</code>
+
+===Cast unit.materialize Spell===
+
+Cast [[en:bitsmist-js-core:reference:perk:unit-perk#materialize|unit.materialize]] spell to add the unit as a child unit. Pass the settings object to the materialize spell and the unit can be initialized.
+
+<code javascript>
+this.use("spell", "unit.materialize", "PadFilter", {
+    "unit": {
+        "options": {
+            "path":"common",
+            "parentNode":"#pads"
+        }
+    }
+});
+</code>
+
+In the above example, a child unit called PadFilter is added to the #pads node of the unit.
+
+<WRAP admonition tip links>
+materializeAll/materialize spells are offered by UnitPerk.
+  * [[en:bitsmist-js-core:reference:perk:unit-perk#materialize|Reference - UnitPerk - materialize]]
+</WRAP>
+
+
+====Morph from the Existing Class====
+
+For simple units that do not have their own event handlers, you can create a new unit that inherits another unit. There are two ways to do this: specify the URL to the HTML file or load the default HTML file.
+
+===Specify the URL to the HTML File===
+
+If a URL to an HTML file is specified in the bm-autoload attribute, a new class inheriting from the Unit class is automatically created internally and the tag is defined using the new class.
+
+<code html>
+<pad-hello bm-autoload="/pad-hello.html"></pad-hello>
+</code>
+
+In the above example, the PadHello class inheriting from the Unit class is created and tied to the pad-hello tag. The tag is then instantiated, starts initializing, loads the HTML file from the server, and the tag is displayed in the browser.
+
+===Load the Default HTML File===
+
+To use the default path and filename, specify the bm-automorph attribute.
+
+<code html>
+<pad-hello bm-automorph></pad-hello>
+</code>
+
+By default, it inherits from the Unit class. But a superclass can be specified with the bm-automorph attribute.
+
+<code html>
+<pad-hello bm-automorph='MyUnit'></pad-hello>
+</code>
+
+Note that if the specified class needs to be loaded, it must be loaded using the bm-autoload attribute.
+
+<code html>
+<pad-hello bm-autoload='https://example.com/my-unit.js' bm-automorph='MyUnit'></pad-hello>
+</code>
+
+In this case, "https://example.com/my-unit.js" will be loaded and then the PadHello class inheriting the MyUnit class is created and tied to the tag.
+=====When Autoloading Starts=====
+
+The units that need autoloading in the first loaded HTML file (e.g. index.html) will start loading on the DOMContentLoaded event. The target units are tags with the "bm-autoload" or "bm-automorph" attribute.
+
+When the HTML of a loaded unit is appended to a unit, if there are loadable units within that unit, those files will also be loaded.
+
+=====Default Path=====
+
+In [[en:bitsmist-js-core:general:sample|Create a Sample Unit]], all files were placed directly under the root. In actual operation, we will probably categorize the units and organize them into specific folders. In such a case, Using default paths instead of specifying URLs in each bm-autoload attribute can reduce the amount of description. This section describes the default paths.
+
+====Settings That Determine the Path====
+
+ The path is determined based on the following settings
+
+  * System Unit Path （system.unit.options.path）
+  * Unit Path（unit.options.path/bm-path）
+
+<WRAP admonition tip>
+System unit paths can be set in both global and unit-specific settings. If both the system and unit settings have the same setting items, unit-specific settings take precedence. 
+</WRAP>
+
+Files are downloaded from the path concatenated the above settings. The default value is "" (empty string). As an example, assume the following settings
+
+^Setting^Value^
+|system.unit.options.path|https://example.com/units/|
+
+If the header unit "bar-header" is specified in the HTML file as follows,
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+the unit is loaded from "https://example.com/units/common/bar-header.js".
+
+====How to Set the Default Path====
+
+The default path can be specified in the settings or tag attributes. There are two main types of settings: global settings that are shared between all units and unit-specific settings.
+
+<WRAP admonition tip links>
+Refer to the Settings page for details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:settings| Unit Explained - Settings]]
+</WRAP>
+
+The system unit path is basically set in the global settings.
+
+<code javascript>
+BITSMIST.v1.Unit.settings.merge({
+    "system": {
+        "unit": {
+            "options": {
+                "path": "https://example.com/units/"
+            }
+        }
+    },
+});
+</code>
+
+Save the above settings as, for example, "settings.js" and load it in an HTML script tag.
+
+<code html>
+<script type='text/javascript' src='/settings.js'></script>
+</code>
+
+The unit path is set by the attributes of each unit.
+
+<code html>
+<bar-header bm-autoload bm-path="common"></bar-header>
+</code>
+
+You can place them in the unit's "unit" settings if you add units using the "unit" section, or dynamically using Javascript.
+
+<code javascript>
+{
+    "unit": {
+        "units": {
+            "PadSetting": {
+                "unit": {
+                    "options": {
+                        "path": "common"
+                    }
+                },
+            }
+        }
+    }
+}
+</code>
+
+<code javascript>
+this.use("spell", "unit.materialize", "PadSetting", {
+    "unit": {
+        "options": {
+            "path": "common"
+            "parentNode": "#pads"
+        }
+    }
+});
+</code>
+
+<WRAP admonition note>
+_getSettings() or an external settings file cannot be used to specify a default path, because those methods are performed **after** the unit has been loaded. 
+</WRAP>
+=====Default Filename=====
+
+If no URL is specified in the bm-autoload attribute, the default filename is used. By default, the tag name is used as the filename, but this can be changed in the settings.
+
+====Settings That Determines the Filename ====
+
+The file name can be changed using the bm-filename attribute or the "unit.options.fileName" setting. The file name specified here plus the extension "js" will be the name of the file to be loaded.
+
+====How to Set the Default Filename====
+
+The file name is specified in a tag attribute. No extension is required.
+
+<code html>
+<bar-header bm-autoload bm-filename="header"></bar-header>
+</code>
+
+You can place them in the unit's “unit” settings if you add units using the “unit” section, or dynamically using Javascript.
+
+<code javascript>
+{
+    "unit": {
+        "units": {
+            "BarHeader": {
+                "unit": {
+                    "options": {
+                        "fileName": "header"
+                    }
+                },
+            }
+        }
+    }
+}
+</code>
+
+<code javascript>
+this.use("skill", "unit.materialize", "BarHeader", {
+    "unit": {
+        "options": {
+            "fileName": "header",
+        }
+    }
+});
+</code>
+=====Override of the Settings When URL Is Specified. =====
+
+When a URL is specified in the bm-autoload attribute, the "unit.options.path" and "unit.options.fileName" settings are automatically set accordingly. If HTML is specified in the URL, "unit.options.autoMorph" is set to True.
+
+As an example, if the bm-autoload attribute is set to "https://example.com/unit/transactions/pad-main.js", then settings will be set as follows.
+
+^Setting^Value^
+|unit.options.path|https://example.com/unit/transactions/|
+|unit.options.fileName|pad-main|
