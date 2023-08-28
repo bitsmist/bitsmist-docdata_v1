@@ -1,0 +1,82 @@
+======Perk======
+
+=====Overview=====
+
+This is the base class of the Perk. All perks inherit this Perk.
+=====Properties=====
+
+====info====
+
+''Type:Object'' ''get''
+
+Returns an object with information about this perk. It has the following keys:
+
+^Key^Type^Description^
+|depends|String/Array of String|This is the name of the perk on which this perk depends. It is possible to specify more than one in an array.|
+|section|String|The section name of the settings this perk will use. If this section name is present in the settings, the corresponding perk will be attached to the unit.|
+|order|Number|This is the priority level of the perk. The lower the number, the higher the priority. Perk initialization and event handlers are executed according to this priority order.|
+
+
+The base class returns an empty object.
+
+=====Methods=====
+
+====globalInit()====
+
+''Type:Undefined'' ''static''
+
+Initializes the perk. It is called automatically once when a perk is registered using [[en:bitsmist-js-core:reference:perk:perk-perk#register_perk|PerkPerk.register()]]. Normally, the perk is registered before all processing begins.
+
+
+The base class does nothing.
+
+===Parameters===
+
+None.
+
+===Return Value===
+
+Undefined.
+
+====init(unit, options)====
+
+''Type:Undefined'' ''Asynchronous'' ''static''
+
+Initializes the unit. It is called when attaching a perk to a unit. Normally, it is called automatically when the settings are loaded. The unit to be attached is passed as an argument.
+
+The base class does nothing.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|unit \\ ''Required''|Unit|A unit to be attached.|
+|options|Object|Initialization options.|
+
+===Return Value===
+
+Undefined.
+
+====upgrade(unit, type, name, content)====
+
+''Type:Undefined'' ''static''
+
+Upgrades the unit. The type of upgrade varies depending on the type argument.
+
+^type^Description^
+|"asset"|Adds the asset to the unit. Specify the asset name for the "name" and content holder for the "content" parameter.|
+|"method"|Adds the method to the unit. Specify the method name for the "name" and the Function object for "the content" parameter.|
+|"property"|Adds the property to the unit. Specify the property name for the "name" and the getter/setter for the "content" parameter.|
+|"event"|Adds the event handler to the unit. Specify the event name for the "name" and the event handler Function object for the "content" parameter.|
+|others|Adds content to the asset specified by the "name" parameter with the "content" parameter.|
+
+===Paramters===
+
+^Parameter^Type^Description^
+|unit \\ ''Required''|Unit|The unit to be upgraded.|
+|type \\ ''Required''|String|Specify the upgrade type. Valid types are "asset", "method", "property", "event" and the asset names.|
+|name \\ ''Required''|String|Specify the name of the item to be upgraded.|
+|content \\ ''Required''|*|Specify the content of upgrade.|
+
+===Return Value===
+
+Undefined.
