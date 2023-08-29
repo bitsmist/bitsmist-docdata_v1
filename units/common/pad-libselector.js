@@ -126,7 +126,7 @@ class PadLibselector extends BITSMIST.v1.Unit
 
 		// Link
 		var link = document.querySelector("pad-libselector #title");
-		var id = path[0] + ":" + path[1] + ":docs:start";
+		var id = path[0] + ":" + path[1] + ":start";
 		var url = ( window.location.href.indexOf("doku.php") > -1 ? "/doku.php?id=" + id : "/" + id.replaceAll(":", "/" ) );
 		link.href = url;
 
