@@ -10,7 +10,8 @@ BasicPerkはユニットに基本的な機能を付与します。ただし、�
 
 各ユニット固有の設定は“basic”セクションに記述します。
 
-<WRAP legend>書式:</WRAP>
+====書式-ユニット固有設定====
+
 <code javascript>
 {
     "basic": {

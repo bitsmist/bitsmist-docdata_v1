@@ -8,9 +8,10 @@ The BasicPerk grants basic functionality to the unit. However, this perk only tr
 
 =====Settings=====
 
+====Format - Unit====
+
 Unit-specific settings are described in the “basic” section.
 
-<WRAP legend>Format:</WRAP>
 <code javascript>
 {
     "basic": {
