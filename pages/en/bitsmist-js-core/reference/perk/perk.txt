@@ -12,9 +12,9 @@ This is the base class of the Perk. All perks inherit this Perk.
 Returns an object with information about this perk. It has the following keys:
 
 ^Key^Type^Description^
-|depends|String/Array of String|This is the name of the perk on which this perk depends. It is possible to specify more than one in an array.|
+|depends|String/Array of String|The name of the perk on which this perk depends. It is possible to specify more than one in an array.|
 |section|String|The section name of the settings this perk will use. If this section name is present in the settings, the corresponding perk will be attached to the unit.|
-|order|Number|This is the priority level of the perk. The lower the number, the higher the priority. Perk initialization and event handlers are executed according to this priority order.|
+|order|Number|The priority level of the perk. The lower the number, the higher the priority. Perk initialization and event handlers are executed according to this priority order.|
 
 
 The base class returns an empty object.
@@ -73,9 +73,9 @@ Upgrades the unit. The type of upgrade varies depending on the type argument.
 
 ^Parameter^Type^Description^
 |unit \\ ''Required''|Unit|The unit to be upgraded.|
-|type \\ ''Required''|String|Specify the upgrade type. Valid types are "asset", "method", "property", "event" and the asset names.|
-|name \\ ''Required''|String|Specify the name of the item to be upgraded.|
-|content \\ ''Required''|*|Specify the content of upgrade.|
+|type \\ ''Required''|String|The upgrade type. Valid types are "asset", "method", "property", "event" and the asset names.|
+|name \\ ''Required''|String|The name of the item to be upgraded.|
+|content \\ ''Required''|*|The content of upgrade.|
 
 ===Return Value===
 
