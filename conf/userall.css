@@ -34,6 +34,10 @@ code
 	padding: 0;
 }
 
+.page.group hr {
+	border-color: black;
+}
+
 /* Mobile Header */
 
 /*
@@ -197,6 +201,47 @@ code
 #dokuwiki__content .page .admonition.links ul li i
 {
 	margin-right: 5px;
+}
+
+/* Code */
+
+.code {
+	color: #ccc;
+	background-color: black;
+}
+
+.code .st0 {
+	color: #f55;
+}
+
+.code .kw1,
+.code .kw8 {
+	color: #d3d300;
+}
+
+.code .kw2 {
+    color: #ccc;
+    font-weight: bold;
+}
+
+.code .kw3,
+.code .kw7,
+.code .sy2 {
+    color: #77d;
+}
+
+.code .kw13,
+.code .kw14,
+.code .kw15,
+.code .kw16,
+.code .me1,
+.code .me2 {
+    color: #6a6;
+}
+
+.code .br0,
+.code .sy0 {
+    color: #ccc;
 }
 
 /* Misc */
