@@ -1,0 +1,501 @@
+======BasicPerk======
+
+''継承:Perk'' ''セクション名:basic'' ''優先度:0''
+
+=====概要=====
+
+BasicPerkはユニットに基本的な機能を付与します。ただし、このパークでは処理に必要なイベントをトリガーするのみで、実際の処理はその他のパークやイベントハンドラによって行われます。
+
+=====設定=====
+
+各ユニット固有の設定は“basic”セクションに記述します。
+
+<WRAP legend>書式:</WRAP>
+<code javascript>
+{
+    "basic": {
+        "options": {
+            "autoClear": Boolean,
+            "autoFetch": Boolean,
+            "autoFill": Boolean,
+            "autoRefresh": Boolean,
+            "autoRestart": Boolean,
+            "autoSetup": Boolean,
+            "autoTransform": Boolean,
+        }
+    }
+}
+</code>
+
+
+====autoClear====
+
+''型:Boolean'' ''デフォルト:True''
+
+Trueの場合、[[#refresh|refresh]]スペルを使うと、自動的に[[#clear|clear]]スペルも呼び出されます。
+
+----
+
+====autoFetch====
+
+''型:Boolean'' ''デフォルト:True''
+
+Trueの場合、[[#refresh|refresh]]スペルを使うと、自動的に[[#fetch|fetch]]スペルも呼び出されます。
+
+----
+
+====autoFill====
+
+''型:Boolean'' ''デフォルト:True''
+
+Trueの場合、[[#refresh|refresh]]スペルを使うと、自動的に[[#fill|fill]]スペルも呼び出されます。
+
+----
+
+====autoRefresh====
+
+''型:Boolean'' ''デフォルト:True''
+
+Trueの場合、スタート処理中に自動的に[[#refresh|refresh]]スペルが呼び出されます。
+
+----
+
+====autoRestart====
+
+''型:Boolean'' ''デフォルト:False''
+
+Trueの場合、ユニットがノードに接続された時（ConnectedCallback時）に、すでに初期化済みであっても再度スタート処理を行います。
+
+----
+
+====autoSetup====
+
+''型:Boolean'' ''デフォルト:True''
+
+Trueの場合、トランスフォーム中に自動的に[[#setup|setup]]スペルが呼び出されます。
+
+----
+
+====autoTransform====
+
+''型:Boolean'' ''デフォルト:True''
+
+Trueの場合、スタート処理中に自動的に[[#transform|transform]]スペルが呼び出されます。
+
+=====ユニットプロパティ=====
+
+====uniqueId====
+
+''型:String'' ''対象:プロトタイプ'' ''get''
+
+ユニットのインスタンスごとに割り当てられるユニークなIDです。自動的に生成されます。
+
+----
+
+====unitRoot====
+
+''型:HTMLElement'' ''対象:プロトタイプ'' ''get/set''
+
+ユニットのルートとなるノードです。ShadowDOMの場合、attachShadow()の戻り値となります。ShadowDOMでない場合は、"this"となります。
+=====ユニットメソッド=====
+
+====get(assetName, key, defaultValue)====
+
+''型:*'' ''対象:プロトタイプ''
+
+ユニットのアセットから値を取得します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|assetName|String|取得元のアセット名を指定します。|
+|key|String|取得する値のアセット内のキー名を指定します。|
+|defaultValue|*|アセット内に指定されたキーが無い場合に、この値を返します。|
+
+===戻り値===
+
+アセットから取得した値です。
+
+----
+
+====has(assetName, key)====
+
+''型:Boolean'' ''対象:プロトタイプ''
+
+ユニットのアセットが指定されたキーの値を持っているか返します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|assetName|String|取得元のアセット名を指定します。|
+|key|String|アセット内のキー名を指定します。|
+
+===戻り値===
+
+キーが存在すればTrue、存在しなければFalseを返します。
+
+----
+
+====set(assetName, key, value)====
+
+''型:Undefined'' ''対象:プロトタイプ''
+
+ユニットのアセットに値を設定します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|assetName|String|設定するアセット名を指定します。|
+|key|String|設置するアセット内のキー名を指定します。|
+|value|*|設定する値です。|
+
+===戻り値===
+
+なし。
+
+----
+
+====use(assetName, key, ..args)====
+
+''型:*'' ''対象:プロトタイプ''
+
+ユニットのアセット内の関数を呼び出します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|assetName|String|使用するアセット名を指定します。|
+|key|String|使用するアセット内のキー名を指定します。|
+|...args|*|関数に渡す引数です。|
+
+===戻り値===
+
+使用した関数が返した値です。
+
+=====アセット=====
+
+====inventory====
+
+''型:ChainableStore'' ''対象:インスタンス''
+
+ユニットに必要な情報等を格納するためのアセットです。他のユニットから参照される場合もあります。
+
+----
+
+====skill====
+
+''型:ChainableStore'' ''対象:インスタンス''
+
+スキルを格納するためのアセットです。
+
+----
+
+====spell====
+
+''型:ChainableStore'' ''対象:インスタンス''
+
+スペルを格納するためのアセットです。
+
+----
+
+====state====
+
+''型:ChainableStore'' ''対象:インスタンス''
+
+ユニットの状態などを格納するためのアセットです。
+
+----
+
+====vault====
+
+''型:ChainableStore'' ''対象:インスタンス''
+
+ユニットに必要な情報等を格納するためのアセットです。プライベートな用途に使用します。ただし現状では他のユニットからのアクセスを防ぐ仕組みはないため、セキュリティ目的で使用しないでください。
+
+
+=====スキル=====
+
+====locate====
+
+''型:HTMLElement'' ''対象:Unit''
+
+引数で指定されたターゲット情報に合致するユニットのうち、最初の一つを返します。
+===パラメータ===
+
+^パラメータ^型^説明^
+|target \\ ''必須''|Object/String/HTMLElement|ターゲットをとなるユニットを指定する情報です。|
+
+target引数には、ターゲットを指定する情報を指定します。文字列が指定された場合、それをタグ名として検索します。HTMLElementが指定された場合は、それをそのまま返します。オブジェクトの場合、以下のキーが存在します。
+
+^キー^説明^
+|"selector"|documentに対して、この値を引数にしてquerySelector()が実行されます。|
+|"scan"|unitに対して、この値を引数にしてscanスキルが実行されます。|
+|"uniqueId"|ユニットのユニークIDを指定します。|
+|"tagName"|ユニットのタグ名を指定します。|
+|"object"|ユニットそのものを指定します。これがそのまま返されます。|
+|"id"|ユニットのIDを指定します。|
+|"className"|クラス名を指定します。|
+
+=== 戻り値 ===
+
+指定された条件に合致するユニットです。
+
+----
+
+
+====locateAll====
+
+''型:Array of HTMLElement'' ''対象:Unit''
+
+引数で指定されたターゲット情報に合致するユニットを全て返します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|target \\ ''必須''|Object/String/HTMLElement|ターゲットをとなるユニットを指定する情報です。詳細は[[#locate|locate]]の説明を参照してください。|
+
+=== 戻り値 ===
+
+指定された条件に合致するユニットです。
+
+----
+
+====scan====
+
+''型:HTMLElement'' ''対象:Unit''
+
+ユニット内にある、指定されたクエリーに合致するHTML要素の最初の1つを返します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|query \\ ''必須''|String|検索クエリーです。document.querySelector()と同じ書式を使います。|
+
+=== 戻り値 ===
+
+クエリーに合致するHTML要素です。
+
+----
+
+====scanAll====
+
+''型:NodeList'' ''対象:Unit''
+
+ユニット内にある、指定されたクエリーに合致するHTML要素を全てを返します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|query \\ ''必須''|String|検索クエリーです。document.querySelectorAll()と同じ書式を使います。|
+
+===戻り値===
+
+クエリーに合致するHTML要素のNodeListです。
+
+=====スペル=====
+
+====clear====
+
+''型:Undefined'' ''対象:Unit''
+
+このユニットをクリアするためのイベントをトリガーします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+=== 戻り値 ===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeClear
+  * doClear
+  * afterClear
+
+----
+
+
+====fetch====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットに必要なデータを取得するためのイベントをトリガーします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeFetch
+  * doFetch
+  * afterFetch
+
+----
+
+====fill====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットにコンテンツを埋めこむためのイベントをトリガーします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeFill
+  * doFill
+  * afterFill
+
+----
+
+====refresh====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットを描画するためのイベントをトリガーします。設定の[[#autoclear|autoClear]]・[[#autofetch|autoFetch]]・[[#autofill|autoFill]]に応じて、[[#clear|clear]]・[[#fetch|fetch]]・[[#fill|fill]]スペルも呼び出します。
+
+設定の[[#autorefrsh|autoRefresh]]がTrueの場合（デフォルトTrue）、ユニットの初期化中に自動的に呼び出されます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeRefresh
+  * doRefresh
+  * afterRefresh
+
+===参照する設定===
+
+  * [[#autoclear|autoClear]]
+  * [[#autofetch|autoFetch]]
+  * [[#autofill|autoFill]]
+
+----
+
+====setup====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットをセットアップするためのイベントをトリガーします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeSetup
+  * doSetup
+  * afterSetup
+
+----
+
+
+====start====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットの初期化を開始します。タグがインスタンス化される時に自動的に呼び出されるため、通常は呼び出す必要はありません。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeStart
+  * doStart
+  * afterStart
+  * afterReady
+
+===参照する設定===
+
+  * [[#autotransform|autoTransform]]
+  * [[#autorefresh|autoRefresh]]
+
+----
+
+====stop====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットの終了処理を行うためのイベントをトリガーします。タグが切り離された時に自動的に呼び出されるため、通常は呼び出す必要はありません。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeStop
+  * doStop
+  * afterStop
+
+----
+
+====transform====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットに適用するHTMLとCSSを切り替えるためのイベントをトリガーします。[[#autosetup|autoSetup]]設定がTrueの場合、beforeTransformとdoTransformの間で、[[#setup|setup]]スペルを呼び出します。またdoTransformイベントがトリガーされた後[[ja:bitsmist-js-core:reference:perk:unit-perk#materializeall|unit.materializeAll]]スペルを呼び出し、HTML内の子ユニットを実体化します。
+
+設定の[[#autotransform|autoTransform]]がTrueの場合（デフォルトTrue）、ユニットの初期化中に自動的に呼び出されます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options|Object|トリガするイベントに渡されるオプションです。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeTransform
+  * doTransform
+  * afterTransform
+
+===参照する設定===
+
+  * [[#autosetup|autoSetup]]
+
+
