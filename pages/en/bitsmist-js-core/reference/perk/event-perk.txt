@@ -7,7 +7,7 @@
 EventPerk grants event-related functions such as adding event handlers and triggering events.
 =====Settings=====
 
-====Format-Unit====
+====Format - Unit====
 
 Unit-specific settings are described in the “event” section.
 

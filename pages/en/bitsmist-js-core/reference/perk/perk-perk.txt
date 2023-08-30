@@ -8,7 +8,7 @@ PerkPerk grants units perk-related functions such as attaching perks.
 
 =====Settings=====
 
-====Format-Unit====
+====Format - Unit====
 
 Unit-specific settings are described in the “perk” section.
 
@@ -87,7 +87,7 @@ Attaches all the perks depending on the settings using the [[#attach|attachl]] s
 ===Parameters===
 
 ^Parameter^Type^Description^
-|options|Object|Options. Has the below keys.|
+|options|Object|Options. Has the following keys:|
 |  "settings"|Object|The unit settings.|
 
 ===Return Value===
