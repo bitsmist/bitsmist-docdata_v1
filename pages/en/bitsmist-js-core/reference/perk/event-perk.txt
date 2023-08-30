@@ -296,11 +296,19 @@ In the next example, two handlers with each option are specified.
 
 Load the settings from the "event.events" section and add event handlers.
 
+===Reference Settings===
+
+  * [[#format-unit|events]]
+
 ----
 
 ====afterTransform====
 
 Load the settings from the “event.events” section and add event handlers **only to the elements inside the units**. The unit's own events are not installed at this time.
+
+===Reference Settings===
+
+  * [[#format-unit|events]]
 
 
 =====Skills=====
@@ -342,6 +350,10 @@ Sets event handlers for events to elements. Unlike [[#add|add]] skill, init skil
 
 Undefined.
 
+===Reference Settings===
+
+  * [[#elementName|events.<elementName>]]
+
 ----
 
 ====remove====
@@ -379,6 +391,10 @@ Removes event handlers from elements. The reverse process of the [[#init|init]] 
 ===Return Value===
 
 Undefined.
+
+===Reference Settings===
+
+  * [[#elementName|events.<elementName>]]
 
 ----
 
