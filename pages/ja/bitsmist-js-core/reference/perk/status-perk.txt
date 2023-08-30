@@ -1,0 +1,118 @@
+======StatusPerk======
+
+''継承:Perk'' ''セクション名:status'' ''優先度:100''
+
+=====概要=====
+
+StatusPerkはユニットの状態に関する機能を付与します。
+
+=====設定=====
+
+====書式-グローバル設定====
+
+全ユニットに共通な設定はグローバル設定の“system.status”セクションに記述します。
+
+<code javascript>
+{
+    "system": {
+        "status": {
+            "options": {
+                "waitForTimeout": Number,
+            }
+        }
+    }
+}
+</code>
+
+====書式-ユニット固有設定====
+
+各ユニット固有の設定は“status”セクションに記述します。
+
+<code javascript>
+{
+    "status": {
+        "options": {
+            "waitForTimeout": Number,
+        },
+        "waitFor": {
+            <eventName>: [{
+                （設定できる値はbasic.locateスキルを参照してください）
+            }, ...],
+            ...
+        }
+    }
+}
+</code>
+
+====eventName====
+
+''型:String''
+
+イベント名を指定します。ここで指定されたイベントのイベントハンドラ内で、他のユニットを待ちます。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。
+
+値には、[[ja:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]]スキルのtaget引数と同じものを、配列で指定します。
+
+====waitForTimeout====
+
+''型:Number'' ''デフォルト:10000''
+
+[[#wait|wait]]スペルを使用する時の、タイムアウトまでの時間をミリ秒で指定します。
+
+=====イベント=====
+
+====doApplySettings====
+
+"status.waitFor"セクションから設定を読み込み、他のユニットを待つためのイベントハンドラをインストールします。
+
+=====ステート=====
+
+====status====
+
+''型:String'' ''対象:インスタンス''
+
+このユニットの現在の状態です。[[#change|change]]スキルを呼び出すと、変更されます。有効な状態は以下の通りです。
+
+  * "starting"
+  * "started"
+  * "ready"
+  * "stopping"
+  * "stopped"
+
+=====スキル=====
+
+====change====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットの状態を変更します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|status|String|ユニットの状態を表す文字列です。有効な文字列については、[[#status|ステート - status]]を参照してください|
+
+===戻り値===
+
+なし。
+
+=====スペル=====
+
+====wait====
+
+''型:Undefined'' ''対象:Unit''
+
+引数で指定された情報に従って、他のユニットが特定の状態になるのを待ちます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|waitList \\ ''Required''|Array of Object|待つ対象のユニットの情報の配列です。[[#書式-ユニット固有設定|設定の<eventName>に対してセットする値]]と同じ内容です。|
+|timeout \\ ''デフォルト:（説明参照）''|Number|タイムアウトをミリ秒で指定します。ここで指定された時間がたってもユニットが指定の状態にならない場合、例外が発生します。指定がない場合、[[#waitfortimeout|設定のwaitForTimeout]]の値が使用されます。|
+
+===戻り値===
+
+なし。
+
+===参照する設定===
+
+  * [[#waitfortimeout|status.options.waitForTimeout]]/[[#waitfortimeout|system.status.options.waitForTimeout]]

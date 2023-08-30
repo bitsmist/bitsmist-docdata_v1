@@ -1,0 +1,116 @@
+======StatusPerk======
+
+''Inherits:Perk'' ''Section:status'' ''Priority:100''
+
+=====Overview=====
+
+StatusPerk grants functions related to the unit's status.
+
+=====Settings=====
+
+====Format - Global====
+
+Settings common to all units are described in the "system.status" section of the global settings.
+
+<code javascript>
+{
+    "system": {
+        "status": {
+            "options": {
+                "waitForTimeout": Number,
+            }
+        }
+    }
+}
+</code>
+
+====Format - Unit====
+
+Unit-specific settings are described in the “status” section.
+
+<code javascript>
+{
+    "status": {
+        "options": {
+            "waitForTimeout": Number,
+        },
+        "waitFor": {
+            <eventName>: [{
+                (See basic.locate skill for valid values)
+            }, ...],
+            ...
+        }
+    }
+}
+</code>
+
+====eventName====
+
+''Type:String''
+
+The event name. Wait for other units in the event handler for the event specified here. Valid event names are BitsmistJS events or standard Javascript events.
+
+The value for this item is an array;  each item being the same as the target argument of the [[en:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]] skill.
+====waitForTimeout====
+
+''Type:Number'' ''Default:10000''
+
+The time in milliseconds before timeout when using the [[#wait|wait]] spell.
+=====Event Handlers=====
+
+====doApplySettings====
+
+Loads the settings from the "status.waitFor" section and installs event handlers to wait for other units.
+
+=====States=====
+
+====status====
+
+''Type:String'' ''Target:Instance''
+
+The current status of this unit. It can be changed using the [[#change|change]] skill. Valid statuses are as follows:
+
+  * "starting"
+  * "started"
+  * "ready"
+  * "stopping"
+  * "stopped"
+
+=====Skills=====
+
+====change====
+
+''Type:Undefined'' ''Target:Unit''
+
+Changes the unit's status.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|status|String|The unit's status. See [[#status|State - status]] for valid values.|
+
+===Return Value===
+
+None.
+
+=====Spells=====
+
+====wait====
+
+''Type:Undefined'' ''Target:Unit''
+
+Waits for other units to be specific status.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|waitList \\ ''Required''|Array of Object|The wait info array. Each object in the array is equivalent to the settings set as a value for [[#eventname|<eventName>]].|
+|timeout \\ ''Default:(see desc)''|Number|The timeout in milliseconds. If the unit is not in the specified status after the time specified here, an exception is raised. If not specified, [[#waitfortimeout|waitForTimeout]] setting value is used.|
+
+===Return Value===
+
+None.
+
+===Reference Settings===
+
+  * [[#waitfortimeout|status.options.waitForTimeout]]/[[#waitfortimeout|system.status.options.waitForTimeout]]
