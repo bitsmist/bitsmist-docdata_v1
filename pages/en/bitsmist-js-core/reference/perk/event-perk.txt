@@ -294,7 +294,7 @@ In the next example, two handlers with each option are specified.
 
 ====doApplySettings====
 
-Load the settings from the "event.events" section and add event handlers.
+Loads the settings from the "event.events" section and adds event handlers.
 
 ===Reference Settings===
 
@@ -304,7 +304,7 @@ Load the settings from the "event.events" section and add event handlers.
 
 ====afterTransform====
 
-Load the settings from the “event.events” section and add event handlers **only to the elements inside the units**. The unit's own events are not installed at this time.
+Loads the settings from the “event.events” section and adds event handlers **only to the elements inside the units**. The unit's own events are not installed at this time.
 
 ===Reference Settings===
 
