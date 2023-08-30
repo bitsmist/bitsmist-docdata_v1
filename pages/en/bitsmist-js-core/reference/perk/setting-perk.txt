@@ -1,0 +1,188 @@
+======SettingPerk======
+
+''Inherits:Perk'' ''Section:setting'' ''Priority:10''
+
+=====Overview=====
+
+SettingPerk grants functions related to the unit's settings.
+
+=====Setting=====
+
+====Format - Global====
+
+Settings common to all units are described in the "system.setting" section of the global settings.
+
+<code javascript>
+{
+    "system": {
+        "setting": {
+            "options": {
+                "settingFormat": "js"|"json",
+            }
+        }
+    }
+}
+</code>
+
+====Format - Unit====
+
+Unit-specific settings are described in the “setting” section.
+
+<code javascript>
+{
+    "setting": {
+        "options": {
+            "settingFormat": "js"|"json",
+            "settingsRef": Boolean|String,
+        }
+    }
+}
+</code>
+
+====Format - Tag Attribute====
+
+Some settings can be described in tag attributes.
+
+<code html>
+<my-unit
+    bm-options=String
+    bm-settingref=Empty|String|"false"
+></my-unit>
+</code>
+
+====bm-options====
+
+''Type:String''
+
+Settings string in JSON format. The settings specified here will be merged into the "options" section of the unit settings.
+
+----
+
+====settingFomrat====
+
+''Type:String'' ''Default:"json"''
+
+The format of the setting file. "js" or "json" can be specified. If not specified, the file is treated as a JSON file.
+
+----
+
+====settingsfRef / bm-settingsref====
+
+''Type:Boolean|String'' ''Default:False''
+
+The URL to the unit's settings file or Boolean. If True, the default URL is used. The settings are read asynchronously and merged into the unit's settings.
+
+If the value is set in the bm-settingsref attribute, it is assumed to be the URL to the file. It is treated as true if no value is specified. To specify false, specify the string "false".
+
+=====Assets=====
+
+====setting====
+
+''Type:ChainableStore'' ''Target:Instance''
+
+This asset holds the unit's settings.
+=====Skills=====
+
+====get====
+
+''Type:*'' ''Target:Unit''
+
+Retrieves settings from the settings asset.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to be retrieved.|
+|defaultValue|*|The value to be returned if the key does not exist.|
+
+===Return Value===
+
+The value of the specified key. If the key is not found, the defalutValue parameter is returned if specified, or Undefined if not specified.
+
+----
+
+====merge====
+
+''Type:Undefined'' ''Target:Unit''
+
+Merges settings.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to merge.|
+|value \\ ''Required''|*|The value to merge.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====set====
+
+''Type:Undefined'' ''Target:Unit''
+
+Sets the setting to the settings asset.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to set.|
+|value \\ ''Required''|*|The value to set.|
+
+===Return Value===
+
+Undefined.
+
+=====Spells=====
+
+====apply====
+
+''Type:Undefined'' ''Target:Unit''
+
+Triggers events to apply the settings. It also uses the [[en:bitsmist-js-core:reference:perk:perk-perk#attachperks|"perk.attachPerks"]] spell between "beforeApplySettings" and "doApplySettings" to attach the necessary perks.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options \\ ''Required''|Object|Options passed to the event to be triggered. Has the following keys:|
+|  "settings" \\ ''Required''|Object|The unit settings.|
+
+===Return Value===
+
+Undefined.
+
+===Trigger Events===
+
+  * beforeApplySettings
+  * doApplySettings
+  * afterApplySettings
+
+----
+
+====summon====
+
+''Type:Undefined'' ''Target:Unit''
+
+Loads the unit's external settings file. The loaded settings are merged into the unit's settings. The file to load is specified by [[#settingsfref_bm-settingsref|settingsRef/bm-settingsref]].
+
+If the settings format is a Javascript object, "this" can be used to refer to the unit in the settings since the unit is bound to the object.
+
+===Parameters===
+
+None.
+
+===Return Value===
+
+Undefined.
+
+===Reference Settings===
+
+  * [[#settingsfref_bm-settingsref|setting.options.settingRef/bm-settingsref]]
+  * [[#|system.unit.options.path]]
+  * [[#|unit.options.path]]
+  * [[#settingfomrat|setting.options.settingFormat]]/[[#settingfomrat|system.setting.options.settingFormat]]
+  * [[#|unit.options.fileName]]
+  * [[#|unit.options.query]]
+

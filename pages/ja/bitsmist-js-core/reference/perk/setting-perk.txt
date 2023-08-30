@@ -1,0 +1,191 @@
+======SettingPerk======
+
+''継承:Perk'' ''セクション名:setting'' ''優先度:10''
+
+=====概要=====
+
+SettingPerkはユニットの設定に関する機能を付与します。
+
+=====設定=====
+
+====書式-グローバル設定====
+
+全ユニットに共通な設定はグローバル設定の“system.setting”セクションに記述します。
+
+<code javascript>
+{
+    "system": {
+        "setting": {
+            "options": {
+                "settingFormat": "js"|"json",
+            }
+        }
+    }
+}
+</code>
+
+====書式-ユニット固有設定====
+
+各ユニット固有の設定は“setting”セクションに記述します。
+
+<code javascript>
+{
+    "setting": {
+        "options": {
+            "settingFormat": "js"|"json",
+            "settingsRef": Boolean|String,
+        }
+    }
+}
+</code>
+
+====書式-タグ属性====
+
+いくつかの設定は、タグ属性で指定することもできます。
+
+<code html>
+<my-unit
+    bm-options=String
+    bm-settingref=Empty|String|"false"
+></my-unit>
+</code>
+
+====bm-options====
+
+''型:String''
+
+JSON形式で設定を記述します。ここで指定された設定は、ユニット設定の"options"セクションにマージされます。
+
+----
+
+====settingFomrat====
+
+''型:String'' ''デフォルト:"json"''
+
+設定ファイルのフォーマットを指定します。"js"または"json"を指定できます。指定がない場合は、JSONファイルとして扱われます。
+
+----
+
+====settingsfRef / bm-settingsref====
+
+''型:Boolean|String'' ''デフォルト:False''
+
+ユニットの設定ファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。設定は非同期に読み込まれ、ユニットの設定にマージされます。
+
+bm-settingsref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、“false”という文字列を指定してください。
+
+
+
+=====アセット=====
+
+====setting====
+
+''型:ChainableStore'' ''対象:インスタンス''
+
+このユニットの設定を保持するアセットです。
+
+=====スキル=====
+
+====get====
+
+''型:*'' ''対象:Unit''
+
+設定を設定アセットから取得します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|key \\ ''必須''|String|取得するキーを指定します。|
+|defaultValue|*|キーが存在しない場合に返す値を指定します。|
+
+===戻り値===
+
+指定されたキーの値です。キーの値が見つからない場合、defalutValueパラメータが指定されていればその値、指定されてない時はUndefinedを返します。
+
+----
+
+====merge====
+
+''型:Undefined'' ''対象:Unit''
+
+設定をマージします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|key \\ ''必須''|String|値をマージするキーを指定します。|
+|value \\ ''必須''|*|マージする値を指定します。|
+
+===戻り値===
+
+なし。
+
+----
+
+====set====
+
+''型:Undefined'' ''対象:Unit''
+
+設定を設定アセットにセットします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|key \\ ''必須''|String|値をセットするキーを指定します。|
+|value \\ ''必須''|*|セットする値を指定します。|
+
+===戻り値===
+
+なし。
+
+=====スペル=====
+
+====apply====
+
+''型:Undefined'' ''対象:Unit''
+
+設定を適用するためのイベントをトリガーします。また、"beforeApplySettings"と"doApplySettings"の間で[[ja:bitsmist-js-core:reference:perk:perk-perk#attachperks|"perk.attachPerks"]]スペルを使い、必要なパークをアタッチさせます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options \\ ''必須''|Object|トリガするイベントに渡されるオプションです。以下のキーがあります。|
+|  "settings" \\ ''必須''|Object|ユニットの設定です。|
+
+===戻り値===
+
+なし。
+
+===トリガーするイベント===
+
+  * beforeApplySettings
+  * doApplySettings
+  * afterApplySettings
+
+----
+
+====summon====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットの外部設定ファイルをロードします。ロードした設定は、ユニットの設定にマージされます。ロードするファイルは[[#settingsfref_bm-settingsref|settingsRef/bm-settingsref]]で指定します。
+
+設定フォーマットがJavascriptオブジェクトの場合、ユニットがオブジェクトにバインドされるため、設定内で"this"はユニットを指します。
+
+===パラメータ===
+
+なし。
+
+===戻り値===
+
+なし。
+
+===参照する設定===
+
+  * [[#settingsfref_bm-settingsref|setting.options.settingRef/bm-settingsref]]
+  * [[#|system.unit.options.path]]
+  * [[#|unit.options.path]]
+  * [[#settingfomrat|setting.options.settingFormat]]/[[#settingfomrat|system.setting.options.settingFormat]]
+  * [[#|unit.options.fileName]]
+  * [[#|unit.options.query]]
+
