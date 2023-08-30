@@ -1,0 +1,95 @@
+======PerkPerk======
+
+''Inherits:Perk'' ''Section:perk'' ''Priority:0''
+
+=====Overview=====
+
+PerkPerk grants units perk-related functions such as attaching perks.
+
+=====Settings=====
+
+====Format-Unit====
+
+Unit-specific settings are described in the “perk” section.
+
+<code javascript>
+{
+    "perk": {
+        "options": {
+            "apply": [String, ...],
+        }
+    }
+}
+</code>
+
+====apply====
+
+''Type:Array of String''
+
+The names of the perks to be applied to the unit. The perks must already exist in the system.
+
+=====Methods=====
+
+====register(perk)====
+
+''Type:Undefined''
+
+Registers the perk with the system. A perk cannot be attached unless it is registered. The perk's global initialization process is executed when registered.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|perk|Perk|The perk to register.|
+
+===Return Value===
+
+Undefined.
+
+=====Inventory=====
+
+====perks====
+
+''Type:Object'' ''Target:Instance''
+
+This object holds the perks attached to this unit. Each item has the following keys:
+
+^Parameter^Type^Description^
+|object|Perk|The perk attached.|
+
+=====Spells=====
+
+====attach====
+
+''Type:Undefined'' ''Target:Unit''
+
+Attaches the perk passed in the argument to the unit. If the perk depends on other perks, dependent perks are attached first. The attached perk is added to the [[#perks|perks]] in unit's inventory. When attaching, each park's init() method is called and the unit is upgraded. If the specified perk is already attached, nothing is done.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|perk|Perk|The perk to attach.|
+|options|Object|Options. Passed to the init() method of the attaching perk.|
+
+===Return Value===
+
+Undefined.
+
+
+----
+
+====attachPerks====
+
+''Type:Undefined'' ''Target:Unit''
+
+Attaches all the perks depending on the settings using the [[#attach|attachl]] spell. The order of attaching is based on the priority number of each perk, the lower the number the earlier.
+
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|Options. Has the below keys.|
+|  "settings"|Object|The unit settings.|
+
+===Return Value===
+
+Undefined.
