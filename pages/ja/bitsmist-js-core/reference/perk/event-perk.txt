@@ -1,0 +1,416 @@
+======EventPerk======
+
+''継承:Perk'' ''セクション名:event'' ''優先度:210''
+
+=====概要=====
+
+EventPerkはイベントハンドラの追加やイベントのトリガーなど、イベント関連の機能を付与します。
+
+=====設定=====
+
+====書式-ユニット固有設定====
+
+各ユニット固有の設定は"event"セクションに記述します。
+
+<code javascript>
+{
+    "event": {
+        "events": {
+            <elementName>: {
+                "handlers": {
+                    <eventName>: { または [{
+                        "handler": Function|String,
+                        "listerOptions": Object,
+                        "options": Object,
+                        "order": Number,
+                    } または }, ...]
+                    ...
+                },
+                "rootNode": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+イベントハンドラの設定には短縮系があります。イベントハンドラにオプションが不要な場合は、こちらを使用できます。
+
+<code javascript>
+{
+    "event": {
+        "events": {
+            <elementName>: {
+                "handlers": {
+                    <eventName>: Function|String または [Function|String, ...],
+                    ...
+                },
+                "rootNode": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+====elementName====
+
+''型:String''
+
+要素名を指定します。[[#rootnode|rootNode]]オプションを指定しない場合、この値を要素のIDとみなします。この値が"this“の場合ユニット自身を表します。[[#rootnode|rootNode]]オプションに指定がある場合は、この値は特に意味は持ちません（ただし一意な値にしてください）。
+
+----
+
+====eventName====
+
+''型:String''
+
+イベントハンドラを登録したいイベント名を指定します。有効なイベント名はBitsmistJSイベント、もしくはJavascriptの標準のイベントです。
+----
+
+====handler====
+
+''型:String|Function''
+
+このイベントに対するイベントハンドラを指定します。イベントハンドラは文字列またはFunctionオブジェクトを指定します。文字列を指定した場合は、ユニットのメソッド名と判断されます。この場合、ユニットのメソッドの中から同名の関数がセットされます。Functionオブジェクトを指定した場合はイベントハンドラそのもの（Functionオブジェクト）と判断されます。いずれの場合もハンドラはユニットにbindされ、"this"はユニット自身を指すようになります（[[#add|add]]スキルの引数で指定されてない場合）。
+
+----
+
+====listenerOptions====
+
+''型:Object''
+
+JavascriptネイティブのaddEventListener()関数に渡すオプションを指定します。
+
+----
+
+====options====
+
+''型:Object''
+
+イベントハンドラに渡すオプションのオブジェクトを指定します。イベントハンドラの引数"ex"からアクセスできます。
+
+----
+
+====order====
+
+''型:Number'' ''Default:0''
+
+同じ要素の同じイベントに、複数のイベントハンドラがある場合の実行順を制御します。数値が高いほど先に実行されます。指定がない場合は0です。
+
+----
+
+====rootNode====
+
+''型:String''
+
+イベントハンドラをセットする対象の要素のノードを表す、セレクター文字列です。自身の配下の要素のみが対応となります。複数の要素が該当する場合、全ての要素に対して同じイベントハンドラがセットされます。
+
+=====設定例=====
+
+ここでは様々な設定例を紹介します。省略形が使える場合は、省略形で記述しています。
+
+====要素の指定方法====
+
+どの要素に対してなのかを指定する例を紹介します。大きく分けると、ユニット自身なのか、ユニット内部の要素なのか、に別れます。
+
+===ユニット自身===
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": this.onDoRefresh
+            }
+        }
+    }
+}
+</code>
+
+<elementName>が"this"なので、ユニット自身に対してセットします。
+
+"rootNode"に指定することもできます。その場合<elementName>"myself"は、特に意味を持ちません。
+
+<code javascript>
+"event": {
+    "events": {
+        "myself": {
+            "rootNode": "this"
+            "handlers": {
+                "doRefresh": this.onDoRefresh
+            }
+        }
+    }
+}
+</code>
+
+===ユニット内の要素===
+
+要素を指定する場合、要素がIDを持っていれば<elementName>にそれを指定することができます。
+
+<code javascript>
+"event": {
+    "events": {
+        "btn-menu": {
+            "handlers": {
+                "click": this.onBtnMenu_Click
+            }
+        }
+    }
+}
+</code>
+
+上記の場合、btn-menuというIDを持つ要素に、イベントハンドラがセットされます。
+
+"rootNode"に指定する場合、querySelectorAll()に指定可能な文字列を使用できます。
+
+<code javascript>
+"event": {
+    "events": {
+        "btn-menu": {
+            "rootNode": ".buttons"
+            "handlers": {
+                "click": this.onBtnMenu_Click
+            }
+        }
+    }
+}
+</code>
+
+その結果、複数の要素になっても構いません。全ての要素に同じイベントハンドラがセットされます。この場合も、<elementName>"btn-menu"は、特に意味を持ちません。
+
+====ハンドラの指定方法====
+
+次にイベントハンドラの指定方法の例を示します。
+
+
+===関数オブジェクトと文字列===
+
+イベントハンドラとして、関数オブジェクトか文字列を指定することができます。
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": this.onDoRefresh
+            }
+        }
+    }
+}
+</code>
+
+"doRefresh"イベントに対して、Functionオブジェクトを指定しています。
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": "onDoRefresh"
+            }
+        }
+    }
+}
+</code>
+
+この例では、"doRefresh"イベントに対して、文字列を指定しています。この場合はこのユニットのメソッドの中から同名の関数がセットされます。つまりthis.onDoRefresh()メソッドがセットされます。
+
+<WRAP admonition note>
+Functionオブジェクトを指定する場合は、設定の時点でそのFunctionオブジェクトが存在する必要があります。対して文字列の場合はイベントハンドラを実行する時に存在する必要があります。
+</WRAP>
+
+===複数のイベントハンドラ===
+
+一つのイベントに対して、複数のイベントハンドラを指定することができます。
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": ["onDoRefresh1", this.onDoRefresh2]
+            }
+        }
+    }
+}
+</code>
+
+配列を使用することで、1つのイベントに2つのイベントハンドラを指定しています。文字列とFunctionオブジェクトを組み合わせても構いません。
+
+====オプションを指定する====
+
+イベントハンドラにオプションを指定することができます。
+
+===一つのハンドラにオプションを指定する===
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": {
+                    "handler": this.onDoRefresh,
+                    "options": {"value":"1"}
+                 }
+            }
+        }
+    }
+}
+</code>
+
+この例ではイベントハンドラと同時にオプションも指定しています。このオプションは以下のように、イベントハンドラのexパラメータからアクセス可能です。
+
+<code javascript>
+onDoRefresh(sender, e, ex)
+{
+    console.log("value =", ex.value); // console displays "value = 1"
+}
+</code>
+
+===複数のハンドラにオプションを指定する===
+
+次の例では、複数のハンドラを指定しています。それぞれのハンドラに別のオプションを渡しています。
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": [
+                    {
+                        "handler": this.onDoRefresh1,
+                        "options": {"value":"1"}
+                     },
+                    {
+                        "handler": "onDoRefresh2",
+                        "options": {"value":"2"}
+                     },
+                 ]
+            }
+        }
+    }
+}
+</code>
+
+=====イベントハンドラ=====
+
+====doApplySettings====
+
+"event.events"セクションから設定を読み込み、イベントハンドラを追加します。
+
+----
+
+====afterTransform====
+
+"event.events"セクションから設定を読み込み、ユニット内の各要素に対するイベントハンドラのみをセットされます。ユニット自身のイベントは、このタイミングではインストールされません。
+
+=====スキル=====
+
+====add====
+
+''型:Undefined'' ''対象:Unit''
+
+引数で指定されたHTML要素に対し、指定されたイベントのイベントハンドラをセットします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|eventName \\ ''必須''|String|イベント名です。|
+|handlerInfo \\ ''必須''|Object|イベントハンドラ情報です。これは[[#設定|設定の<eventName>に対してセットする値]]と同じものです。|
+|element \\ ''デフォルト:this''|HTMLElement|イベントハンドラをセットするHTML要素です。指定がない場合は、ユニット自身となります。|
+|bindTo \\ ''デフォルト:this''|Object|イベントハンドラをこのオブジェクトにbindします。つまり、この引数がハンドラ内でthisとなります。指定がない場合はユニット自身にbindされます。|
+
+===戻り値===
+
+なし。
+
+----
+
+====init====
+
+''型:Undefined'' ''対象:Unit''
+
+引数で指定された名前の要素に対し、イベントハンドラを設定します。[[#add|add]]スキルと違い、複数のイベントに対してイベントハンドラを一度にセットすることも可能です。それぞれのイベントに対し、[[#add|add]]スキルを使用してセットします。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|elementName \\ ''必須''|Object|要素名を指定します。[[#elementname|設定のelementName]]の説明も参照してください。|
+|eventInfo|Object|イベント情報を格納したオブジェクトを指定します。[[#設定|設定の<elementName>に対してセットする値]]と同じです。指定がない場合は、設定の"events"セクションからelementName引数に指定された値を取得して使用します。|
+|rootNode \\ ''デフォルト:this''|String|要素の検索対象となるルートノードを指定します。指定がない場合はユニット自身になります。|
+
+===戻り値===
+
+なし。
+
+----
+
+====remove====
+
+''型:Undefined'' ''対象:Unit''
+
+HTML要素からイベントハンドラを取り除きます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|eventName \\ ''必須''|String|イベント名です。|
+|handlerInfo \\ ''必須''|Object|イベントハンドラ情報です。これは[[#設定|設定の<eventName>に対してセットする値]]と同じものです。|
+|element \\ ''デフォルト:this''|HTMLElement|イベントハンドラを取り除くHTML要素です。指定がない場合は、ユニット自身となります。|
+
+===戻り値===
+
+なし。
+
+----
+
+====reset====
+
+''型:Undefined'' ''対象:Unit''
+
+引数で指定された名前の要素に対し、設定に従ってイベントハンドラを除去します。[[#init|init]]スキルの逆の処理を行います。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|elementName \\ ''必須''|Object|要素名を指定します。[[#elementname|設定のelementName]]の説明も参照してください。|
+|eventInfo|Object|イベント情報を格納したオブジェクトを指定します。[[#設定|設定の<elementName>]]の値です。指定がない場合は、設定の"events"セクションからelementName引数に指定された値を取得して使用します。|
+|rootNode \\ ''デフォルト:this''|String|要素の検索対象となるルートノードを指定します。指定がない場合はユニット自身になります。|
+
+===戻り値===
+
+なし。
+
+----
+
+====triggerSync====
+
+''型:Undefined'' ''対象:Unit''
+
+イベントを発生させますが、[[#trigger|trigger]]と違い、一つ前のハンドラの終了を待たずに次のハンドラを呼び出します。その他の説明に関しては[[#trigger|trigger]]を参照してください。
+
+=====スペル=====
+
+====trigger====
+
+''型:Undefined'' ''対象:Unit''
+
+イベントを発生させます。同じ要素の同じイベントに複数のイベントハンドラがセットされている場合、前のイベントハンドラの実行が完了してから、次のイベントハンドラを呼び出します。
+
+<WRAP admonition note>
+前のイベントハンドラがPromiseを返し、正しいタイミングでresolve/rejectしている場合のみ、次のイベントハンドラが待つことができます。
+</WRAP>
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|eventName \\ ''必須''|String|発生させるイベント名です。|
+|options|Object|イベントの詳細情報です。イベントハンドラからe.detailでアクセスできます。|
+|element \\ ''デフォルト:this''|HTMLElement|イベントを発生させる要素です。指定がない場合は、ユニット自身となります。|
+
+===戻り値===
+
+なし。
+

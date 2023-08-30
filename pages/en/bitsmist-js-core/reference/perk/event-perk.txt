@@ -1,0 +1,424 @@
+======EventPerk======
+
+''Inherits:Perk'' ''Section:event'' ''Priority:210''
+
+=====Overview=====
+
+EventPerk grants event-related functions such as adding event handlers and triggering events.
+=====Settings=====
+
+====Format-Unit====
+
+Unit-specific settings are described in the “event” section.
+
+<code javascript>
+{
+    "event": {
+        "events": {
+            <elementName>: {
+                "handlers": {
+                    <eventName>: { or [{
+                        "handler": Function|String,
+                        "listerOptions": Object,
+                        "options": Object,
+                        "order": Number,
+                    } or }, ...]
+                    ...
+                },
+                "rootNode": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+There is a shortened format for event handlers. If you do not need event handler options, you can use this format.
+
+<code javascript>
+{
+    "event": {
+        "events": {
+            <elementName>: {
+                "handlers": {
+                    <eventName>: Function|String or [Function|String, ...],
+                    ...
+                },
+                "rootNode": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+====elementName====
+
+''Type:String''
+
+The target element name to set event handlers. If the [[#rootnode|rootNode]] option is not specified, this value is taken as the ID of the element. If this value is "this", it represents the unit itself. If the [[#rootnode|rootNode]] option is specified, this value has no particular meaning,  but should be unique.
+
+----
+
+====eventName====
+
+''Type:String''
+
+The name of the event for which you want to register an event handler. Valid event names are BitsmistJS events or standard Javascript events. 
+
+----
+
+====handler====
+
+''Type:String|Function''
+
+The event handler for this event. The event handler can be a string or a Function object. If a string is specified, it is assumed to be the method name of the unit. If a Function object is specified, it is considered to be the event handler itself (Function object). In either case, the handler will be bound to the unit, and "this" will point to the unit itself, unless specified in the [[#add|add]] skill argument.
+
+----
+
+====listenerOptions====
+
+''Type:Object''
+
+The options which passed to the Javascript native addEventListener() function.
+
+----
+
+====options====
+
+''Type:Object''
+
+The options which passed to the event handler. It can be accessed via the "ex" argument of the event handler.
+
+----
+
+====order====
+
+''Type:Number'' ''Default:0''
+
+The order priority. It controls the order of execution when there are multiple event handlers for the same event on the same element. The higher the number, the earlier the event is executed. If not specified, it is 0.
+
+----
+
+====rootNode====
+
+''Type:String''
+
+The selector string represents the node to which the event handler is set. Only elements under the unit's own node are selected. If multiple elements are returned, the same event handler is set for all elements.
+=====Examples=====
+
+Here are some examples of settings. The shortened formats are used whenever possible.
+====Specifying the Target====
+
+Here is an example of specifying the target element. There are two main types of elements: the unit itself or elements inside the unit.
+
+===Unit Itself===
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": this.onDoRefresh
+            }
+        }
+    }
+}
+</code>
+
+Since <elementName> is ”this”, the event handler is set to the unit itself.
+
+You can specify it in “rootNode”, also. In this case, the <elementName> “myself” is just a meaningless string (to the library),  but should be a unique one.
+
+<code javascript>
+"event": {
+    "events": {
+        "myself": {
+            "rootNode": "this"
+            "handlers": {
+                "doRefresh": this.onDoRefresh
+            }
+        }
+    }
+}
+</code>
+
+===Elements in the Unit===
+
+If an element has an ID, you can specify it in <elementName>.
+
+<code javascript>
+"event": {
+    "events": {
+        "btn-menu": {
+            "handlers": {
+                "click": this.onBtnMenu_Click
+            }
+        }
+    }
+}
+</code>
+
+In the above example, the event handler is set to an element that has an ID “btn-menu”.
+
+You can use a selector string that is valid to querySelectorAll() in “rootNode”. 
+
+<code javascript>
+"event": {
+    "events": {
+        "btn-menu": {
+            "rootNode": ".buttons"
+            "handlers": {
+                "click": this.onBtnMenu_Click
+            }
+        }
+    }
+}
+</code>
+
+This could result in more than one element. The event handler is set to all the elements matched.
+====Specifying Event Handlers====
+
+We will show you how to specify event handlers.
+
+===Function Object or String===
+
+You can use a Function object or a string as an event handler.
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": this.onDoRefresh
+            }
+        }
+    }
+}
+</code>
+
+In the above example, a Function object is specified as the event handler for the “doRefresh” event.
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": "onDoRefresh"
+            }
+        }
+    }
+}
+</code>
+
+In this example, a string is set as the event handler. The method that has the name “onDoRefresh” is searched from the unit's method, that is this.onDoRefresh(), and used as the event handler.
+
+<WRAP admonition note>
+If a Function object is set, the function needs to exist at the time of instantiating, while it needs to exist at the time of executing if a string is set.
+</WRAP>
+
+===Multiple Event Handlers===
+
+You can set multiple event handlers to one element.
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": ["onDoRefresh1", this.onDoRefresh2]
+            }
+        }
+    }
+}
+</code>
+
+Two event handlers are specified using an array.  You can mix function objects and strings in one array.
+
+====Passing Options Event Handlers====
+
+You can pass options to event handlers.
+
+===Single Event Handler===
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": {
+                    "handler": this.onDoRefresh,
+                    "options": {"value":"1"}
+                 }
+            }
+        }
+    }
+}
+</code>
+
+In this example, both an event handler and options are set at the same time. The options can be accessed via the “ex” parameter of the event handler.
+
+<code javascript>
+onDoRefresh(sender, e, ex)
+{
+    console.log("value =", ex.value); // console displays "value = 1"
+}
+</code>
+
+===Multiple Event Handlers===
+
+In the next example, two handlers with each option are specified.
+
+<code javascript>
+"event": {
+    "events": {
+        "this": {
+            "handlers": {
+                "doRefresh": [
+                    {
+                        "handler": this.onDoRefresh1,
+                        "options": {"value":"1"}
+                     },
+                    {
+                        "handler": "onDoRefresh2",
+                        "options": {"value":"2"}
+                     },
+                 ]
+            }
+        }
+    }
+}
+</code>
+
+=====Event Handlers=====
+
+====doApplySettings====
+
+Load the settings from the "event.events" section and add event handlers.
+
+----
+
+====afterTransform====
+
+Load the settings from the “event.events” section and add event handlers **only to the elements inside the units**. The unit's own events are not installed at this time.
+
+
+=====Skills=====
+
+====add====
+
+''Type:Undefined'' ''Target:Unit''
+
+Sets event handlers for an event to elements.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|eventName \\ ''Required''|String|The event name.|
+|handlerInfo \\ ''Required''|Object|The handler info. This is equivalent to [[#settings|the settings set as a value for <eventName>]].|
+|element \\ ''Default:this''|HTMLElement|The element to set event handlers. The default is the unit itself.|
+|bindTo \\ ''Default:this''|Object|Binds event handlers to this object. This value becomes “this” in the event handlers. The default is the unit itself.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====init====
+
+''Type:Undefined'' ''Target:Unit''
+
+Sets event handlers for events to elements. Unlike [[#add|add]] skill, init skill can set event handlers for multiple events at once. Uses [[#add|add]] skill internally to set each event.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|elementName \\ ''Required''|Object|The element name. See [[#elementname|elementName setting]] also.|
+|eventInfo|Object|The event info. This is equivalent to [[#settings|the settings set as a value for <elementName>]]. If not specified, the value from the settings of the elemetName is used instead.|
+|rootNode \\ ''Default:this''|String|A root node for searching for the target elements. The default is the unit itself.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====remove====
+
+''Type:Undefined'' ''Target:Unit''
+
+Removes event handlers from elements.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|eventName \\ ''Required''|String|The event name.|
+|handlerInfo \\ ''Required''|Object|The handler info. This is equivalent to [[#settings|the settings set as a value for <eventName>]]|
+|element \\ ''Default:this''|HTMLElement|The element from which remove event handlers. The default is the unit itself.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====reset====
+
+''Type:Undefined'' ''Target:Unit''
+
+Removes event handlers from elements. The reverse process of the [[#init|init]] skill is performed.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|elementName \\ ''Required''|Object|The element name. See [[#elementname|elementName settings]] also.|
+|eventInfo|Object|The event info. This is equivalent to [[#settings|the setting set as a value for <elementName>]]. If not specified, the value from settings of the elementName is used instead.|
+|rootNode \\ ''Default:this''|String|A root node for searching for the target elements. The default is the unit itself.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====triggerSync====
+
+''Type:Undefined'' ''Target:Unit''
+
+Fires an event, but unlike [[#trigger|trigger]], it calls the next handler without waiting for the previous one to finish.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|eventName \\ ''Required''|String|The event name to trigger.|
+|options|Object|Options passed to the event handler. Can be accessed from the event handlers via e.detail parameter.|
+|element \\ ''Default:this''|HTMLElement|The element on which event triggers. Default is the unit.|
+
+===Return Value===
+
+Undefined.
+
+=====Spells=====
+
+====trigger====
+
+''Type:Undefined'' ''Target:Unit''
+
+Fires an event. If multiple event handlers are set for the same event of the same element, the event handlers wait until the previous event handler is complete.
+
+<WRAP admonition note>
+The event handler can wait for the previous handler only if the previous event handler returns a promise and resolve/reject at the appropriate time.
+</WRAP>
+
+===Parameters===
+
+^Parameter^Type^Description^
+|eventName \\ ''Required''|String|The event name to trigger.|
+|options|Object|Options passed to the event handler. Can be accessed from the event handlers via e.detail parameter.|
+|element \\ ''Default:this''|HTMLElement|The element on which event triggers. Default is the unit.|
+
+===Return Value===
+
+Undefined.
+
