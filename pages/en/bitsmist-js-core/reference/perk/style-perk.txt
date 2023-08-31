@@ -1,0 +1,199 @@
+======StylePerk======
+
+''Inherits:Perk'' ''Section:style'' ''Priority:200''
+
+=====Overview=====
+
+StylePerk grants the unit's style-related functions, such as loading and applying the CSS.
+=====Settings=====
+
+====Format - Global====
+
+Settings common to all units are described in the "system.style" section of the global settings.
+
+The CSS specified in the apply setting in the system section is loaded at Perk initialization and applied to the Document.
+
+<code javascript>
+{
+    "system": {
+        "style": {
+            "options": {
+                "apply": [String, ...],
+                "path": String,
+            },
+            "styles": {
+                <styleName>: {
+                    "CSS": String,
+                    "type": "CSS"|"URL",
+                    "URL": String,
+                },
+                ...
+            }
+        }
+    }
+}
+</code>
+
+====Format - Unit====
+
+Unit-specific settings are described in the “style” section.
+
+<code javascript>
+{
+    "style": {
+        "options": {
+            "apply": [String, ...],
+            "fileName": String,
+            "path": String,
+            "styleRef": Boolean|String,
+        },
+        "styles": {
+            <styleName>: {
+                "CSS": String,
+                "type": "CSS"|"URL",
+                "URL": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+====Format - Tag Attributes====
+
+Some settings can be described in tag attributes.
+
+<code html>
+<my-unit
+    bm-styleref=Empty|String|"false"
+></my-unit>
+</code>
+
+====apply====
+
+''Type:Array of String''
+
+The name of the CSS to be applied. If in the "system" section, the specified CSS is applied to the document. If it is in the "style" section, it is applied to the unit if it is in shadowDOM mode, otherwise it is applied to the document.
+
+Note that you do not need to specify the default style here. If "style.options.styleRef" is specified, the default style for the unit is automatically applied **most last** even if it is not described here.
+
+----
+
+====CSS====
+
+''Type:String''
+
+The CSS string. This is **CSS, not a CSS filename**. Used when the "type" setting is "CSS".
+
+----
+
+====fileName====
+
+
+''Type:String'' ''Default:<Tag Name>''
+
+The CSS file name. No extension is required. If not set, then [[en:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]] is used.  If it is not available, then the tag name is used as the file name. Loads a file with the filename + extension "css".
+
+----
+
+====path====
+
+''Type:String''
+
+The path to the CSS file. The "system.style.options.path" and "style.options.path" concatenated will be used as the default path. If the setting does not exist, "system.unit.options.path" and "unit.options.path" will be used instead.
+
+----
+
+====styleName====
+
+''Type:String''
+
+The style name. Specify “default” for the default style.
+
+----
+
+====styleRef / bm-styleref====
+
+''Type:Boolean|String'' ''Default:True''
+
+The URL to the default style file or a boolean value. If true, the file is loaded from the default URL. If false, the default style file is loaded and applied.
+
+If the value for the bm-styleref attribute is set, the value is used as the URL to the file, or true if no value is specified. To specify false, set the string "false".
+
+If the CSS file is not found, it causes a 404 error and the unit initialization stops. To avoid this, you need to set false explicitly if the unit does not have a CSS.
+
+
+----
+
+====type====
+
+''Type:String''
+
+Specifies where to get the CSS from. Type can be “CSS” or “URL”. If “CSS”, the CSS string is retrieved from the “CSS” setting. For “URL”, the CSS file is loaded from the URL specified in the “URL” setting. 
+
+----
+
+====URL====
+
+''Type:String''
+
+The URL of the CSS file. Used when the “type” setting is “URL”.
+=====Event Handlers=====
+
+====doTransform====
+
+First, loads all the CSS required for the unit. The required CSS are the styles specified in "style.options.apply" and the default styles. When loading is complete, all CSS applied to the unit is removed. After that, all loaded CSS is applied in order.
+
+=====Inventory=====
+
+====styles====
+
+''Type:Object'' ''Target:Instance''
+
+The object that holds style information.
+
+Each item has the following keys:
+^Key^Type^Description^
+|name|String|The style name.|
+|CSS|String|The CSS.|
+|status|String|The style loading status. The values are either ""(empty string) or "loaded".|
+
+=====Spells=====
+
+====apply====
+
+''Type:Undefined'' ''Target:Unit''
+
+Applies a style to the unit. If the specified style has already been applied, does nothing.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|styleName \\ ''Required''|String|The name of the style to be applied.|
+
+===Return Value===
+
+Undefined.
+
+===Exceptions===
+
+  * If the specified style has not yet been loaded.
+
+----
+
+====summon====
+
+''Type:Undefined'' ''Target:Unit''
+
+Loads a CSS file. Only loads, and does not apply. If it has already been loaded, it will not be loaded. If the argument "options" is not passed, it refers to the settings of the specified style name.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|styleName \\ ''Required''|String|The name of the style to be loaded.|
+|options|Object|This is equivalent to [[#format_-_unit|the settings set as a value]] for <styleName>.|
+
+===Return Value===
+
+Returns [[#styles|style info object]] of the loaded style.
+
