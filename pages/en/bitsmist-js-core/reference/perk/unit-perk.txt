@@ -91,7 +91,7 @@ The position at which the unit is to be inserted. One of "beforebegin", "afterbe
 
 If set, class files for the unit will be automatically loaded. The value can be True, a URL to the unit's JS file, or a URL to an HTML file. If True, files will be loaded using the default path and filename. If a JS file is specified, the specified class file will loaded. If an HTML file is specified, the specified HTML file is loaded after morphing.
 
-If the value is set for the bm-autoload attribute, the value is used as the URL to the file, or True if no value is specified.
+If the value is set for the bm-autoload attribute, the value is used as the URL to the file, or true if no value is specified.
 
 ----
 
