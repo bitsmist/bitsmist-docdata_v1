@@ -189,6 +189,7 @@ Applies a skin to the unit. If the specified skin has already been applied, does
 
 ^Parameter^Type^Description^
 |skinName \\ ''Required''|String|The name of the skin to be applied.|
+|clone|Node|The template to apply. If not specified, the template in [[#skins|the skin info]] is used.|
 
 ===Return Value===
 
