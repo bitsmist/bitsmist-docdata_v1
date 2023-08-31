@@ -160,7 +160,7 @@ The object that holds skin information.
 
 Each item has the following keys:
 ^Key^Type^Description^
-|name|String|The skin Name.|
+|name|String|The skin name.|
 |HTML|String|The skin HTML.|
 |template|String|The template node created from the skin's HTML.|
 |status|String|The skin loading status. The values are either ""(empty string) or "loaded".|
@@ -205,7 +205,7 @@ Undefined.
 
 ''Type:Object'' ''Target:Unit''
 
-Loads HTML files. Only loads, and does not apply. If it has already been loaded, it will not be loaded. If the argument "options" is not passed, it refers to the settings of the specified skin name.
+Loads an HTML file. Only loads, and does not apply. If it has already been loaded, it will not be loaded. If the argument "options" is not passed, it refers to the settings of the specified skin name.
 
 ===Parameters===
 
