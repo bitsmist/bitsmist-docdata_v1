@@ -39,7 +39,7 @@ Unit-specific settings are described in the “setting” section.
 }
 </code>
 
-====Format - Tag Attribute====
+====Format - Tag Attributes====
 
 Some settings can be described in tag attributes.
 
