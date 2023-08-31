@@ -1,0 +1,228 @@
+======SkinPerk======
+
+''継承:Perk'' ''セクション名:skin'' ''優先度:210''
+
+=====概要=====
+
+SkinPerkはユニットのHTMLに関する機能を付与します。またShadowDOMの有効化も、このパークが行います。
+
+=====設定=====
+
+====書式-グローバル設定====
+
+全ユニットに共通な設定はグローバル設定の“system.skin”セクションに記述します。
+
+<code javascript>
+{
+    "system": {
+        "skin": {
+            "options": {
+                "path": String,
+                "shadowDOM": "open"|"close",
+            }
+        }
+    }
+}
+</code>
+
+====書式-ユニット固有設定====
+
+各ユニット固有の設定は“skin”セクションに記述します。
+
+<code javascript>
+{
+    "skin": {
+        "options": {
+            "fileName": String,
+            "path": String,
+            "shadowDOM": "open"|"closed",
+            "skinRef": Boolean|String,
+        },
+        "skins": {
+            <skinName>: {
+                "HTML": String,
+                "rootNode": String,
+                "type": "HTML"|"node"|"URL",
+                "URL": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+====書式-タグ属性====
+
+いくつかの設定は、タグ属性で指定することもできます。
+
+<code html>
+<my-unit
+    bm-skinref=Empty|String|"false"
+></my-unit>
+</code>
+
+====fileName====
+
+
+''型:String'' ''デフォルト:<タグ名>''
+
+HTMLのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子”html”を付けたファイルをロードします。
+
+----
+
+====HTML====
+
+''型:String''
+
+HTMLの文字列を指定します。これは**HTMLであって、HTMLのファイル名ではありません**。"type"設定が"HTML"の時に使用されます。
+
+----
+
+====path====
+
+''型:String''
+
+HTMLファイルのパスを指定します。"system.skin.options.path"と"skin.options.path"を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、"system.unit.options.path"と"unit.options.path"が代わりに使用されます。
+
+----
+
+====rootNode====
+
+''型:String''
+
+ユニット内の特定のノードを指し示すセレクタ文字列を指定します。書式はquerySelector()と同じです。そのノードのinnerHTMLがスキンとして利用されます。"type"設定が"node"の時に使用されます。
+
+----
+
+====shadowDOM====
+
+''型:String'' ''デフォルト:False''
+
+ShadowDOMを使用する場合、"open"または"closed"を指定します。それ以外の文字を指定すると、ShadowDOMを使用しません。デフォルトではShadowDOMを使用しません。
+
+----
+
+====skinName====
+
+''型:String''
+
+スキン名を指定します。デフォルトのスキンは"default”と指定してください。
+
+----
+
+====skinRef / bm-skinref====
+
+''型:Boolean|String'' ''デフォルト:True''
+
+ユニットのデフォルトのスキンファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、スキンファイルのロードと適用が行われません。
+
+bm-skinref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、“false”という文字列を指定してください。
+
+スキンファイルが存在しない場合、404エラーが発生し、ユニットの初期化が止まります。もしユニットにスキンファイルがないのであれば、明示的にfalseをセットしてください。
+
+----
+
+====type====
+
+''型:String''
+
+HTMLテンプレートをどこから取得するかを指定します。タイプは"HTML"、"URL"、"node"のいずれかです。"HTML"の場合は、"HTML"設定からHTML文字列を取得して使用します。"URL"の場合は、"URL"設定で指定されたURLからHTMLファイルをロードします。"node"の場合は、"rootNode"設定で指定されたセレクタを使いノードを取得し、それを利用します。
+
+----
+
+====URL====
+
+''型:String''
+
+HTMLファイルのURLを指定します。"type"設定が"URL"の時に使用されます。
+
+=====イベントハンドラ=====
+
+
+====beforeTransform====
+
+e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合（デフォルトはTrue）、設定に従ってスキンをロードします。スキン名の指定がない場合は、デフォルトのスキンをロードします。デフォルトのスキンは、”default”セクションの設定がない場合はデフォルトのURLからロードされます。”default”セクションの設定がある場合は、その設定に従います。
+
+ロードしたHTMLを元にTemplateノードを作成し、それをクローンしたものが[[ja:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]]プロパティにセットされます。次のdoTransformで実際に適用されるまでは、ユニットのスキンに対する操作はこのクローンに対して行われ、画面には描画されません。
+
+----
+
+====doTransform====
+
+ユニットにHTMLを適用します。e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合（デフォルトはTrue）、設定に従ってスキンを適用します。スキン名の指定がない場合は、デフォルトのスキンを適用します。
+
+beforeTransformで作成されたTemplateのクローンをユニットに追加し、表示します。
+=====インベントリ=====
+
+====skins====
+
+''型:Object'' ''対象:インスタンス''
+
+スキン情報を保持するオブジェクトです。それぞれのアイテムは以下のキーを持っています。
+
+^キー^型^説明^
+|name|String|スキン名です。|
+|HTML|String|スキンのHTMLです。|
+|template|String|スキンのHTMLから作られたtemplateノードです。|
+|status|String|スキンのロード状態を示します。""（空白）またはloaded"の値を取ります。|
+
+=====ステート=====
+
+====active====
+
+''型:Object'' ''対象:インスタンス''
+
+現在アクティブなスキン情報を格納するオブジェクトです。
+
+以下のキーを持ちます。
+
+^キー^型^説明^
+|skinName|String|現在有効なスキン名です。[[#apply|apply]]スキルを使用すると、セットされます。|
+
+
+=====スキル=====
+
+====apply====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットにスキンを適用します。指定されたスキンが既に適用されている場合、何もしません。
+
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|skinName \\ ''必須''|String|適用するスキンの名前です。|
+
+===戻り値===
+
+なし。
+
+===例外===
+
+  * 指定されたスキンがまだロードされてない場合。
+
+=====スペル=====
+
+====summon====
+
+''型:Object'' ''対象:Unit''
+
+HTMLファイルをロードします。ロードするのみでユニットには適用されません。既にロード済みの場合は、ロードされません。optionsパラメータが渡されない場合、パラメータで指定されたスキン名の設定を参照します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|skinName \\ ''必須''|String|ロードするスキン名です。|
+|options|Object|[[#書式-ユニット固有設定|設定の<skinName>の値]]と同じものです。|
+
+===戻り値===
+
+ロードしたスキンの[[#skins|スキン情報オブジェクト]]を返します。
+
+===参照する設定===
+
+  * [[#type|type]]
+  * [[#html|HTML]]  
+  * [[#rootnode|rootNode]] 
+  * [[#url|URL]] 

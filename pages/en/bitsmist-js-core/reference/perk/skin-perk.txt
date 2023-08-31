@@ -1,0 +1,224 @@
+======SkinPerk======
+
+''Inherits:Perk'' ''Section:skin'' ''Priority:210''
+
+=====Overview=====
+
+The SkinPerk grants the HTML-related features. The ShadowDOM is also handled by this perk.
+=====Settings=====
+
+====Format - Global====
+
+Settings common to all units are described in the "system.skin" section of the global settings.
+
+<code javascript>
+{
+    "system": {
+        "skin": {
+            "options": {
+                "path": String,
+                "shadowDOM": "open"|"close",
+            }
+        }
+    }
+}
+</code>
+
+====Format - Unit====
+
+Unit-specific settings are described in the “skin” section.
+
+<code javascript>
+{
+    "skin": {
+        "options": {
+            "fileName": String,
+            "path": String,
+            "shadowDOM": "open"|"closed",
+            "skinRef": Boolean|String,
+        },
+        "skins": {
+            <skinName>: {
+                "HTML": String,
+                "rootNode": String,
+                "type": "HTML"|"node"|"URL",
+                "URL": String,
+            },
+            ...
+        }
+    }
+}
+</code>
+
+====Format - Tag Attributes====
+
+Some settings can be described in tag attributes.
+
+<code html>
+<my-unit
+    bm-skinref=Empty|String|"false"
+></my-unit>
+</code>
+
+====fileName====
+
+''Type:String'' ''Default:<tag name>''
+
+The HTML file name. No extension is required. If not set, then [[en:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]] is used.  If it is not available, then the tag name is used as the file name. Loads a file with the filename + extension "html".
+
+----
+
+====HTML====
+
+''Type:String''
+
+The HTML string. This is **HTML, not an HTML filename**. Used when the "type" setting is "HTML".
+
+----
+
+====path====
+
+''Type:String''
+
+The path to the HTML file. The "system.skin.options.path" and "skin.options.path" concatenated will be used as the default path. If the setting does not exist, "system.unit.options.path" and "unit.options.path" will be used instead.
+
+----
+
+====rootNode====
+
+''Type:String''
+
+The selector string that points to a specific node in the unit. The format is the same as querySelector(). The innerHTML of the node is used as the skin. Used when the "type" setting is "node".
+
+----
+
+====shadowDOM====
+
+''Type:String'' ''Default:False''
+
+To use ShadowDOM, specify "open" or "closed", otherwise ShadowDOM is not used. By default, ShadowDOM is not used.
+
+----
+
+====skinName====
+
+''Type:String''
+
+The skin name. Specify "default" for the default skin.
+
+----
+
+====skinRef / bm-skinref====
+
+''Type:Boolean|String'' ''Default:True''
+
+The URL to the default skin file or a boolean value. If true, the file is loaded from the default URL. If false, no skin file is loaded and applied.
+
+If the value for the bm-skinref attribute is set, the value is used as the URL to the file, or true if no value is specified. To specify false, set the string "false".
+
+If the skin file is not found, it causes a 404 error and the unit initialization stops. To avoid this, you need to set false explicitly If the unit does not have a skin.
+
+----
+
+====type====
+
+''Type:String''
+
+Specifies where to get the HTML template from. Type can be "HTML", "URL", or "node". If "HTML", the HTML string is retrieved from the "HTML" setting. For "URL", the HTML file is loaded from the URL specified in the "URL" setting. For "node", the selector specified in the "rootNode" setting is used to obtain the node.
+
+----
+
+====URL====
+
+''Type:String''
+
+The URL of the HTML file. Used when the "type" setting is "URL".
+
+=====Event Handlers=====
+
+====beforeTransform====
+
+If a skin name is specified in e.details.skinName or "skin.options.skinRef" is set to True (default is True), the skin is loaded according to the settings. If no skin name is specified, the default skin is loaded. The default skin is loaded from the default URL if the "default" section is not set. If the "default" section is set, it follows the settings.
+
+A Template node is created from the loaded HTML, and the clone is set to the [[en:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]] property. Until actually applied in the next doTransform event handler, operations on the unit's skin will be performed on this clone and will not be drawn to the screen.
+
+----
+
+====doTransform====
+
+Applies HTML to the unit. If e.detail.skinName is set or "skin.options.skinRef" is True (default is True), the skin is applied according to the settings. If no skin name is specified, the default skin is applied.
+
+A clone of the Template created in beforeTransform is added to the unit and displayed.
+
+=====Inventory=====
+
+====skins====
+
+''Type:Object'' ''Target:Instance''
+
+The object that holds skin information.
+
+Each item has the following keys:
+^Key^Type^Description^
+|name|String|The skin Name.|
+|HTML|String|The skin HTML.|
+|template|String|The template node created from the skin's HTML.|
+|status|String|The skin loading status. The values are either ""(empty string) or "loaded".|
+
+=====States=====
+
+====active====
+
+''Type:Object'' ''Target:Instance''
+
+The object that stores the currently active skin information.
+
+Each item has the following keys:
+^Key^Type^Description^
+|skinName|String|The currently active skin name. Set when the [[#apply|apply]] skill is used.|
+
+=====Skills=====
+
+====apply====
+
+''Type:Undefined'' ''Target:Unit''
+
+Applies a skin to the unit. If the specified skin has already been applied, does nothing.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|skinName \\ ''Required''|String|The name of the skin to be applied.|
+
+===Return Value===
+
+Undefined.
+
+===Exceptions===
+
+  * If the specified skin has not yet been loaded.
+
+=====Spells=====
+
+====summon====
+
+''Type:Object'' ''Target:Unit''
+
+Loads HTML files. Only loads, and does not apply. If it has already been loaded, it will not be loaded. If the argument "options" is not passed, it refers to the settings of the specified skin name.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|skinName \\ ''Required''|String|The name of the skin to be loaded.|
+|options|Object|This is equivalent to [[#format_-_unit|the settings set as a value]] for <skinName>.|
+
+===Return Value===
+
+Returns [[#skins|skin info object]] of the loaded skin.
+
+===Reference Settings===
+
+  * [[#type|type]]
+  * [[#html|HTML]]
+  * [[#rootnode|rootNode]]
+  * [[#url|URL]]
