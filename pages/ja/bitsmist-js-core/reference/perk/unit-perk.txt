@@ -1,0 +1,263 @@
+======UnitPerk======
+
+''継承:Perk'' ''セクション名:unit'' ''優先度:400''
+
+=====概要=====
+
+UnitPerkはクラスファイルのロードなど、ユニットのロードとインスタンス化に関する機能を付与します。
+
+=====設定=====
+
+====書式-グローバル設定====
+
+全ユニットに共通な設定はグローバル設定の"system.unit"セクションに記述します。
+
+<code javascript>
+{
+    "system": {
+        "unit": {
+            "options": {
+                "path": String,
+                "splitClass": Boolean,
+            }
+        }
+    }
+}
+</code>
+
+====書式-ユニット固有設定====
+
+各ユニット固有の設定は"unit"セクションに記述します。
+
+"unit.units"セクションには、動的に追加するユニットの一覧を記述します。<unitName>の値として設定するオブジェクトは、追加するユニットに対する設定となります。ここで記載されてない設定も含め、全ての設定を記述することができます。ここで記述された値は、そのユニットの設定にマージされます。ユニットのロードに関する設定は、"unit.units.<unitName>"セクション配下でのみ記述できるということに注意してください。
+
+<code javascript>
+{
+    "unit": {
+        "options": {
+            "fileName": String,
+            "path": String,
+            "query": String,
+        },
+        "units": {
+            <unitName>:  {
+                "options": {
+                    "adjacentPosition": "beforebegin"|"afterbegin"|"beforeend"|"afterend",
+       	            "autoLoad": Boolean|String,
+                    "autoMorph": Boolean|String,
+                    "className": String,
+                    "fileName": String,
+                    "parentNode": String,
+                    "parentUnit": String,
+                    "path": String,
+                    "query": String,
+                    "replaceParent": Boolean,
+                    "splitClass": Boolean,
+                    "syncOnAdd": String,
+                    "tag": String,
+                },
+            },
+            ...
+        }
+    }
+}
+</code>
+
+====書式-タグ属性====
+
+いくつかの設定は、タグ属性で指定することもできます。
+
+<code html>
+<my-unit
+    bm-autoload=Empty|String
+    bm-automorph=Empty|String
+    bm-classname=String
+    bm-filename=String
+    bm-path=String
+    bm-splitclass=Empty|"false"
+></my-unit>
+</code>
+
+====adjacentPosition====
+
+''型:String''
+
+ユニットを挿入するポジションを指定します。 "beforebegin"、"afterbegin"、"beforeend"、"afterend"のいずれかを指定できます。意味は標準のinsertAdjacentHTML()のposition引数と同じです。
+
+====autoLoad / bm-autoload====
+
+''型:Boolean|String'' ''デフォルト:False''
+
+ユニットに必要なファイルを自動的にロードすることを示します。値としてTrue、ユニットのJSファイルへのURL、HTMLファイルへのURLのいずれかを指定することができます。Trueの場合は、デフォルトのパスとファイル名が使用されます。HTMLファイルが指定された場合、モーフィング後に指定されたHTMLファイルがロードされます。
+
+bm-autoload属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。
+
+====autoMorph / bm-automorph====
+
+''型:Boolean|String'' ''デフォルト:"BITSMIST.v1.Unit"''
+
+既存のクラスを使ってユニットをインスタンス化します。指定したクラスを継承した新しいクラスが作成され、それがタグに紐づけられます。指定するクラスがまだ存在しない場合は、[[#autoload_bm-autoload |autoLoad]]オプションも同時に使用してクラスをロードする必要があります。Trueの場合は、デフォルトのUnitオブジェクトが使用されます。
+
+bm-automorph属性を指定した場合、値が指定されていればクラスの名称、値が指定されてなければTrueとみなされます。
+
+====className / bm-classname====
+
+''型:String'' ''デフォルト:（説明参照）''
+
+ユニットのクラス名を指定します。指定がない場合は、タグ名のハイフンの前後の文字の頭を大文字にし、ハイフンを取り除いてつなげたものがクラス名となります。
+
+====fileName / bm-filename====
+
+''型:String'' ''デフォルト:<タグ名>''
+
+ユニットのファイル名を拡張子なしで指定します。指定がない場合は、タグ名がファイル名となります。 クラスファイル、HTMLファイル等のファイルをロードする際のファイル名として使用されます。
+
+
+====parentNode====
+
+''型:String''
+
+このユニットを追加するノードを指定します。ノードは、[[#parentunit|parentUnit]]で指定されたユニットの配下にある必要があります。指定がない場合、親ノードの直下に追加されます。
+
+====parentUnit====
+
+''型:String'' ''デフォルト:this''
+
+このユニットを追加する親のユニットを指定します。値には、[[ja:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]]スキルのtarget引数と同じものを指定します。指定がない場合は、自身に追加します。
+
+====path / bm-path====
+
+''型:String''
+
+ユニットのパスを指定します。“system.unit.options.path”と“unit.options.path”を繋げたものが、デフォルトのパスとして使用されます。
+
+====query====
+
+''型:String''
+
+ファイルを取得する際にURLに付加されるクエリーです。
+
+====replaceParent====
+
+''型:Boolean'' ''デフォルト:False''
+
+親ノードを置き換えるか指定します。
+
+====splitClass / bm-splitclass====
+
+''型:Boolean'' ''デフォルト:False''
+
+ユニットのクラスファイルが分割されているかを指定します。Trueの場合、2つのファイルを読み込みます。
+
+bm-splitclass属性を指定した場合、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、"false"という文字列を指定してください。
+
+====syncOnAdd====
+
+''型:Boolean|String'' ''デフォルト:False''
+
+文字列が指定された場合、ユニットを追加後に、追加したユニットが指定した状態になるのを待ちます。Trueの場合は、"ready"になるのを待ちます。
+
+状態の名称は、[[ja:bitsmist-js-core:reference:perk:status-perk#status|リファレンス - StatuePerk - ステート -status]]を参照してください。
+
+====tag====
+
+''型:String''
+
+ユニットのタグを終了タグも含めて指定します。この値でHTMLに挿入されます。
+
+=====イベントハンドラ=====
+
+====doApplySettings====
+
+"unit.units"セクションから設定を読み込み、ユニットを追加します。
+
+=====インベントリ=====
+
+====units====
+
+''型:Object'' ''対象:インスタンス''
+
+このユニットに追加されたユニットを保持するオブジェクトです。それぞれのアイテムは以下のキーを持っています。
+
+^キー^型^説明^
+|object|Unit|追加したユニットです。|
+
+=====スペル=====
+
+====materialize====
+
+''型:Unit'' ''対象:Unit''
+
+ユニット内に新たなユニットを追加します。追加したユニットのインスタンスは、インベントリ内のunitsに追加されます。クラスファイルのロードが必要な場合は、autoLoadまたはautoMorphオプションをsettings引数に指定してください。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|tagName \\ ''必須''|String|追加するユニットのタグ名です。|
+|settings|Object|追加するユニットの設定情報です。[[#書式-ユニット固有設定|設定の<unitName>の値に設定する値]]と同じものです。|
+|options|Object|ロードオプションです。以下のキーがあります。|
+|  "syncOnAdd"|Boolean|設定の[[#synconadd|syncOnAdd]]と同じです。こちらの方が優先度が高くなります。|
+
+===戻り値===
+
+追加したユニットのインスタンスです。
+
+===参照する設定===
+
+  * [[#autoload_bm-autoload|autoLoad]]
+  * [[#automorph_bm-automorph|autoMorph]]
+  * [[#adjacentPosition|adjacentPosition]]
+  * [[#parentnode|parentNode]]
+  * [[#replaceparent|replaceParent]]
+  * [[#synconadd|syncOnAdd]]
+  * [[#tag|tag]]
+
+====materializeAll====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニット内に存在する、ロードが必要な全てのユニットをインスタンス化します。それぞれのユニットに対し、[[#materialize|materialize]]スペルを使ってインスタンス化を行います。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|rootNode \\ ''必須''|HTMLElement|ロード対象の基点となるノードです。|
+|options|Object|ロードのオプションです。有効なキーは以下のものがあります。|
+|  "waitForTags" \\ ''デフォルト:false''|Boolean|Trueの場合、ロードした全ユニットが"ready"状態になるのを待ちます。|
+
+===戻り値===
+
+なし。
+
+===参照する設定===
+
+  * [[#autoload_bm-autoload|bm-autoload]]
+  * [[#automorph_bm-automorph|bm-automorph]]
+
+====summon====
+
+''型:Undefined'' ''対象:Unit''
+
+ユニットのクラスファイルをロードします。ファイルのロードが完了した後は、ユニットのタグをドキュメントツリーに追加することで、インスタンス化できます。ロード前にタグが存在する場合、このスペルが完了すると自動的にインスタンス化されます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|tagName \\ ''必須''|Object|ロードするユニットのタグ名です。|
+|settings|Object|ユニットの設定です。|
+
+===戻り値===
+
+なし。
+
+===参照する設定===
+
+  * [[#appbaseurl|appBaseURL]]
+  * [[#autoload_bm-autoload|autoLoad]]
+  * [[#automorph_bm-automorph|autoMorph]]
+  * [[#classname_bm-classname|className]]
+  * [[#unitpath|unitPath]]
+  * [[#filename_bm-filename|fileName]]
+  * [[#path_bm-path|path]]
+  * [[#query|query]]
+  * [[#splitclass_bm-split|splitclass]]
