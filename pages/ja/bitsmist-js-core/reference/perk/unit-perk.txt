@@ -84,6 +84,8 @@ UnitPerkはクラスファイルのロードなど、ユニットのロードと
 
 ユニットを挿入するポジションを指定します。 "beforebegin"、"afterbegin"、"beforeend"、"afterend"のいずれかを指定できます。意味は標準のinsertAdjacentHTML()のposition引数と同じです。
 
+----
+
 ====autoLoad / bm-autoload====
 
 ''型:Boolean|String'' ''デフォルト:False''
@@ -91,6 +93,8 @@ UnitPerkはクラスファイルのロードなど、ユニットのロードと
 ユニットに必要なファイルを自動的にロードすることを示します。値としてTrue、ユニットのJSファイルへのURL、HTMLファイルへのURLのいずれかを指定することができます。Trueの場合は、デフォルトのパスとファイル名が使用されます。HTMLファイルが指定された場合、モーフィング後に指定されたHTMLファイルがロードされます。
 
 bm-autoload属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。
+
+----
 
 ====autoMorph / bm-automorph====
 
@@ -100,11 +104,15 @@ bm-autoload属性を指定した場合、値が指定されていればファイ
 
 bm-automorph属性を指定した場合、値が指定されていればクラスの名称、値が指定されてなければTrueとみなされます。
 
+----
+
 ====className / bm-classname====
 
 ''型:String'' ''デフォルト:（説明参照）''
 
 ユニットのクラス名を指定します。指定がない場合は、タグ名のハイフンの前後の文字の頭を大文字にし、ハイフンを取り除いてつなげたものがクラス名となります。
+
+----
 
 ====fileName / bm-filename====
 
@@ -112,6 +120,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ユニットのファイル名を拡張子なしで指定します。指定がない場合は、タグ名がファイル名となります。 クラスファイル、HTMLファイル等のファイルをロードする際のファイル名として使用されます。
 
+----
 
 ====parentNode====
 
@@ -119,11 +128,15 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 このユニットを追加するノードを指定します。ノードは、[[#parentunit|parentUnit]]で指定されたユニットの配下にある必要があります。指定がない場合、親ノードの直下に追加されます。
 
+----
+
 ====parentUnit====
 
 ''型:String'' ''デフォルト:this''
 
 このユニットを追加する親のユニットを指定します。値には、[[ja:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]]スキルのtarget引数と同じものを指定します。指定がない場合は、自身に追加します。
+
+----
 
 ====path / bm-path====
 
@@ -131,17 +144,23 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ユニットのパスを指定します。“system.unit.options.path”と“unit.options.path”を繋げたものが、デフォルトのパスとして使用されます。
 
+----
+
 ====query====
 
 ''型:String''
 
 ファイルを取得する際にURLに付加されるクエリーです。
 
+----
+
 ====replaceParent====
 
 ''型:Boolean'' ''デフォルト:False''
 
 親ノードを置き換えるか指定します。
+
+----
 
 ====splitClass / bm-splitclass====
 
@@ -151,6 +170,8 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 bm-splitclass属性を指定した場合、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、"false"という文字列を指定してください。
 
+----
+
 ====syncOnAdd====
 
 ''型:Boolean|String'' ''デフォルト:False''
@@ -158,6 +179,8 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 文字列が指定された場合、ユニットを追加後に、追加したユニットが指定した状態になるのを待ちます。Trueの場合は、"ready"になるのを待ちます。
 
 状態の名称は、[[ja:bitsmist-js-core:reference:perk:status-perk#status|リファレンス - StatuePerk - ステート -status]]を参照してください。
+
+----
 
 ====tag====
 
@@ -212,6 +235,8 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
   * [[#synconadd|syncOnAdd]]
   * [[#tag|tag]]
 
+----
+
 ====materializeAll====
 
 ''型:Undefined'' ''対象:Unit''
@@ -233,6 +258,8 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
   * [[#autoload_bm-autoload|bm-autoload]]
   * [[#automorph_bm-automorph|bm-automorph]]
+
+----
 
 ====summon====
 
