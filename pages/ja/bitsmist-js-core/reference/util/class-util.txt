@@ -1,0 +1,102 @@
+======ClassUtil======
+
+=====概要=====
+
+新しいクラスの生成など、クラスに関わる操作を行うユーティリティークラスです。
+
+=====メソッド=====
+
+====createObject(className, ...args)====
+
+''型:Object'' ''Static''
+
+引数で指定されたクラス名のユニットをインスタンス化します。クラスが存在していない場合は、例外が発生します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|className \\ ''必須''|Function|インスタンス化するクラスを指定します。|
+|...args| |インスタンス化するクラスのコンストラクタに渡す引数を指定します。|
+
+===戻り値===
+
+作成したインスタンスを返します。
+
+===例外===
+
+  * 指定されたクラスが存在しない場合。
+====getClass(className)====
+
+''型:Function'' ''Static''
+
+指定されたクラス名を持つFunctionオブジェクトを返します。**インスタンスではありません。**
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|className \\ ''必須''|Function|クラス名を指定します。|
+
+===戻り値===
+
+Functionオブジェクトを返します。クラスが存在しない場合は、Undefinedを返します。
+
+====inherit(subClass, superClass)====
+
+''型:undefined'' ''Static''
+
+指定されたsubClassをsuperClassから継承させます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|subClass \\ ''必須''|Function|継承されるクラスを指定します。|
+|superClass \\ ''必須''|Function|継承するスーパークラスを指定します。|
+
+===戻り値===
+
+なし。
+
+====newUnit(className, settings, superClass, tagName)====
+
+''型:Unit'' ''Static''
+
+引数で渡されたスーパークラスを継承して、新しいユニットの**定義（Functionオブジェクト）**を作成します。インスタンスを作成するのではないことに注意してください。引数でタグ名が指定された場合は、そのタグと新しく作成されたクラスが紐づけられます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|className \\ ''必須''|String|新しく作成するコンポーエントのクラス名を指定します。|
+|settings \\ ''必須''|Object|作成するユニットの設定を指定します。ここで指定された値が、Unit._getSettings()で返されます。|
+|superClass \\ ''デフォルト:Unit''|Function|作成するユニットのスーパークラスを指定します。|
+|tagName|String|このユニットのタグ名を指定します。ここに指定したタグをHTMLに挿入することで、インスタンス化されます。|
+
+===戻り値===
+
+作成したユニットを返します。
+
+===使用例===
+
+<code javascript>
+// Search padユニットを作成
+var PadSearch = BITSMIST.v1.ClassUtil.newUnit("PadSearch", {
+    "setting": {
+        "path": "common"
+    }
+}, BITSMIST.v1.Unit, "pad-search");
+
+// 作成したユニットにsearch()メソッドを追加する
+PadSearch.prototype.search = function(keyword)
+{
+   ...
+};
+</code>
+
+<code html>
+<html>
+...
+<body>
+<!-- インスタンス化 -->
+<pad-search></pad-search>
+</body>
+</html>
+</code>

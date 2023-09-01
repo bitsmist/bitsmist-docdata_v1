@@ -1,0 +1,101 @@
+======ClassUtil======
+
+=====Overview=====
+
+ClassUtil is a utility class that handles class-related tasks such as creating new classes.
+=====Methods=====
+
+====createObject(className, ...args)====
+
+''Type:Object'' ''Static''
+
+Instantiates the specified class. An exception is thrown when the specified class doesn't exist.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|className \\ ''Required''|Function|The class name to instantiate.|
+|...args| |Arguments passed to the class constructor.|
+
+===Return Value===
+
+A created instance.
+
+===Exception===
+
+  * If the specified class doesn't exist.
+====getClass(className)====
+
+''Type:Function'' ''Static''
+
+Returns the Function object that has the specified class name, **not the instance**.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|className \\ ''Required''|Function|The class name.|
+
+===Return Value===
+
+The Function object.
+
+====inherit(subClass, superClass)====
+
+''Type:undefined'' ''Static''
+
+Makes the subclass inherits the super class.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|subClass \\ ''Required''|Function|The class that inherits the super class.|
+|superClass \\ ''Required''|Function|The super class.|
+
+===Return Value===
+
+Undefined.
+
+====newUnit(className, settings, superClass, tagName)====
+
+''Type:Unit'' ''Static''
+
+Creates a new Function object that inherits the super class given. Note that the created object is not an instance. If the tagName option is set, the tag name will be tied to the newly created class.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|className \\ ''Required''|String|The class name of the unit to create.|
+|settings \\ ''Required''|Object|The unit's settings object. This settings will be returned in Unit._getSettings().|
+|superClass \\ ''Default:Unit''|Function|The super class to inherit.|
+|tagName|String|The tag name for the new unit. By inserting this tag into the HTML the unit will be instantiated.|
+
+===Return Value===
+
+A created function object.
+
+===Examples===
+
+<code javascript>
+// Create Search pad unit.
+var PadSearch = BITSMIST.v1.ClassUtil.newUnit("PadSearch", {
+    "setting": {
+        "path": "common"
+    }
+}, BITSMIST.v1.Unit, "pad-search");
+
+// Add search() method to the created unit
+PadSearch.prototype.search = function(keyword)
+{
+   ...
+};
+</code>
+
+<code html>
+<html>
+...
+<body>
+<!-- Instantiation -->
+<pad-search></pad-search>
+</body>
+</html>
+</code>
