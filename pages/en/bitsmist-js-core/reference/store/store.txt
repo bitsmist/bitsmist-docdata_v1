@@ -1,0 +1,187 @@
+======Store======
+
+=====Overview=====
+
+The Store class is a utility class for storing information such as settings. The Store can store hierarchical data.
+
+
+
+=====Properties=====
+
+====options====
+
+''Type:Object'' ''get/set''
+
+The store options.
+
+----
+
+====items====
+
+''Type:Object'' ''get/set''
+
+The object that contains a copy of all items in the Store. The stored items are initialized to the passed values when set.
+
+----
+
+====merger====
+
+''Type:Function'' ''get/set''
+
+The merge function to be used in the [[#merge_newitems_merger|merge()]] method. By default, 
+ BitmistJS's [[en:bitsmist-js-core:reference:util:util#deepmerge_obj1_obj2|deep merge utility function]] is used. 
+
+Both the merge source object and target object are passed to this merge function. Return the merged object from the merge function.
+
+<code javascript>
+merger(targetObject, sourceObject); // merge sourceObject into targetObject
+</code>
+
+=====Constructor=====
+
+====Constructor(options)====
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options|Object|The object to initialize the Store. Has the following keys:|
+|  "items"|Object|The items object to initialize a Store.|
+|  "merger"|Function|The merge function object.|
+
+=====Methods=====
+
+====clear()====
+
+''Type:Undefined''
+
+Removes all items from the Store.
+
+===Parameters===
+
+None.
+
+===Return Value===
+
+Undefined.
+
+----
+
+====clone()====
+
+''Type:Object''
+
+Returns the deep copy of items this store holds.
+
+
+===Parameters===
+
+None.
+
+===Return Value===
+
+The deep copy of stored items.
+
+----
+
+====get(key, defaultValue)====
+
+''Type:*''
+
+Returns the value specified by the key parameter. Returns the default value if the key doesn't exist. The value will be deep copied if the value is an array or object.
+
+You can use a period-separated string to specify a hierarchy. The below example returns the value of store[“settings”][“name”] from the store.
+
+<code javascript>
+store.get("settings.name");
+</code>
+
+No exception is thrown even if any of the intermediate levels of the hierarchy do not exist. In the above example, it returns Undefined if "settings" does not exist, without an error.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to be retrieved.|
+|defaultValue|*|The default value to be returned when the key doesn't exist.|
+
+===Return Value===
+
+A value specified by the key. When the key is not found, returns defaultValue, or undefined if defaultValue is missing.
+
+----
+
+====has(key)====
+
+''Type:Boolean''
+
+Returns if the specified key exists.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to check.|
+
+===Return Value===
+
+True if the key exists, false if it doesn't exist.
+
+----
+
+====merge(newItems, merger)====
+
+''Type:Undefined''
+
+Merges new items into current items.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|newItems \\ ''Required''|Object/ \\ Array of objects|The object to merge or array of objects. If the newItems parameter is an array, all objects in the array will be merged in order.|
+|merger|Function|A function for merging objects. This parameter has a higher priority than [[#merger|merger]] property.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====remove(key)====
+
+''Type:Undefined''
+
+Removes the item that has the specified key.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to remove.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====set(key, value)====
+
+''Type:Undefined''
+
+Sets the value to an item specified by the key parameter. If the key does not exist, it will be automatically created. If the item already exists in the store, the value will be overwritten by the new value.
+
+
+You can use a period-separated string to specify a hierarchy. The below example sets the value to store[“settings”][“name”].
+
+<code javascript>
+store.set("settings.name", "BarHeader");
+</code>
+
+If the intermediate hierarchies do not exist, they will be created automatically. In the above example, if “settings” does not exist, the hierarchy “settings” is automatically created. However, if the intermediate hierarchy already exists and is not an object, an error will be thrown. For example, if the above code is executed on a Store object with content {“settings”: “value”}, the “settings ” hierarchy cannot be created and it causes an error.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to set the value.|
+|value \\ ''Required''|*|The value to set.|
+
+===Return Value===
+
+Undefined.
