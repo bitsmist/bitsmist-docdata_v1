@@ -20,7 +20,7 @@ The store options.
 
 ''Type:Object'' ''get/set''
 
-The object that contains a copy of all items in the Store. The stored items are initialized to the passed values when set.
+The object that contains a copy of all items in the store. The copy is created using [[#clone|clone()]] method. The stored items are initialized to the passed values when set.
 
 ----
 
@@ -105,7 +105,7 @@ No exception is thrown even if any of the intermediate levels of the hierarchy d
 
 ===Return Value===
 
-A value specified by the key. When the key is not found, returns defaultValue, or undefined if defaultValue is missing.
+The value specified by the key. When the key is not found, returns defaultValue, or undefined if defaultValue is missing.
 
 ----
 
@@ -136,7 +136,7 @@ Merges new items into current items.
 
 ^Parameter^Type^Description^
 |newItems \\ ''Required''|Object/ \\ Array of objects|The object to merge or array of objects. If the newItems parameter is an array, all objects in the array will be merged in order.|
-|merger|Function|A function for merging objects. This parameter has a higher priority than [[#merger|merger]] property.|
+|merger|Function|The function for merging objects. This parameter has a higher priority than [[#merger|merger]] property.|
 
 ===Return Value===
 
