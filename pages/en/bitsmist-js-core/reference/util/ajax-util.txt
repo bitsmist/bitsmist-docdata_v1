@@ -1,0 +1,159 @@
+======AjaxUtil======
+
+=====Overview=====
+
+AjaxUtil is a utility class that uses XMLHttpRequest to send an Ajax request to a server.
+=====Methods=====
+
+====ajaxRequest(options)====
+
+''Type:XMLHttpRequest'' ''Asynchronous'' ''Static''
+
+Sends an ajax request to a server.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options. \\ ''Required''|Object|Ajax options. Has the following keys:|
+|  "URL" \\ ''Required''|String|The URL to access.|
+|  "method" \\ ''Required''|String|The HTTP medhod. Ex. GET, POST, PUT.|
+|  "data"|Object|Data to send with the request.|
+|  "headers"|Object|The object that contains headers to send with the request. Each item is passed to XMLHttpRequest.setRequestHeader().|
+
+===Return Value===
+
+XHR Object.
+
+===Examples===
+
+==GET==
+
+<code javascript>
+let url = "https://api.example.com/members/1/"
+let method = "GET";
+
+BITSMIST.v1.AjaxUtil.ajaxRequest({url:url, method:method}).then((xhr) => {
+    console.log(xhr.responseText);
+});
+</code>
+
+==POST==
+
+<code javascript>
+let url = "https://api.example.com/members/"
+let method = "POST";
+let item =  {"id":2, "name":"John"};
+let headers = {
+    "Content-Type":"application/json",
+    "X-From": "www.example.com"
+};
+let options = {"withCredentials":true};
+
+BITSMIST.v1.AjaxUtil.ajaxRequest({
+    URL:url,
+    method:method,
+    data:item,
+    headers:headers,
+    options:options
+}).then((xhr) => {
+    console.log(xhr.responseText);
+});
+</code>
+
+====loadScript(url)====
+
+''Type:Undefined'' ''Asynchronous'' ''Static''
+
+Loads the script file from the server. The loaded script will be appended to the current page and executed.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url \\ ''Required''|String|The URL of the file.|
+
+===Return Value===
+
+Undefined.
+
+====loadJSON(url, options)====
+
+''Type:Object'' ''Asynchronous'' ''Static''
+
+Loads the JSON/Javascript object file from the specified URL. The loaded file will be converted to a Javascript object. You can specify whether the file is a JSON or Javascript object in the options parameter. If the format is not specified, the file is considered to be JSON if the extension is "json" and a Javascript object if the extension is "js".
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url \\ ''Required''|String|The URL of the file.|
+|options|String|Load options. Has the following keys:|
+|  "format"|String|The file format. "js" or "json".|
+
+===Return Value===
+
+The Javascript object that is converted from the content of the retrieved file.
+
+====loadText(url)====
+
+''Type:String'' ''Asynchronous'' ''Static''
+
+Loads the text file from the specified URL.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url \\ ''Required''|String|The URL of the file.|
+
+===Return Value===
+
+The content of the retrieved file.
+
+
+====loadHTML(url)====
+
+''Type:String'' ''Asynchronous'' ''Static''
+
+Loads the HTML file from the specified URL.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url \\ ''Required''|String|The URL of the file.|
+
+===Return Value===
+
+The content of the retrieved file.
+
+
+====loadCSS(url)====
+
+''Type:String'' ''Asynchronous'' ''Static''
+
+Loads the CSS file from the specified URL.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url \\ ''Required''|String|The URL of the file.|
+
+===Return Value===
+
+The content of the retrieved file.
+
+====loadClass(url, options)====
+
+''Type:Undefined'' ''Asynchronous'' ''Static''
+
+Loads the class files from the specified URL. The loaded class files will be appended to the current page and executed.
+
+Do not **add an extension** to the URL argument. The library will automatically add the extension ".js" and load it. If the "splitClass" option is true, two files will be loaded, first ".js" and then ".settings.js".
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url \\ ''Required''|String|The URL of the file without extension.|
+|options|String|Load options. Has the following keys:|
+|  "splitClass"|Boolean|If true, the class file is split into two files.|
+
+===Return Value===
+
+Undefined.

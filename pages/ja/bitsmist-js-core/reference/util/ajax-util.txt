@@ -1,0 +1,158 @@
+======AjaxUtil======
+
+=====概要=====
+
+XMLHttpRequestを使用してAjaxリクエストを行う、ユーティリティークラスです。
+
+=====メソッド=====
+
+====ajaxRequest(options)====
+
+''型:XMLHttpRequest'' ''非同期'' ''Static''
+
+Ajaxリクエストを行います。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options. \\ ''必須''|Object|Ajaxのオプションを指定します。以下のキーがあります。|
+|  "URL" \\ ''必須''|String|アクセスするURLを指定します。|
+|  "method" \\ ''必須''|String|HTTPメソッド（GET, POST, PUT等）を指定します。|
+|  "data"|Object|送信するデータを指定します。|
+|  "headers"|Object|送信するヘッダーを格納したオブジェクトです。それぞれの項目がXMLHttpRequestのsetRequestHeader()に渡されます。|
+
+===戻り値===
+
+XHRオブジェクトを返します。
+
+===使用例===
+
+==GET==
+
+<code javascript>
+let url = "https://api.example.com/members/1/"
+let method = "GET";
+
+BITSMIST.v1.AjaxUtil.ajaxRequest({url:url, method:method}).then((xhr) => {
+    console.log(xhr.responseText);
+});
+</code>
+
+==POST==
+
+<code javascript>
+let url = "https://api.example.com/members/"
+let method = "POST";
+let item =  {"id":2, "name":"John"};
+let headers = {
+    "Content-Type":"application/json",
+    "X-From": "www.example.com"
+};
+let options = {"withCredentials":true};
+
+BITSMIST.v1.AjaxUtil.ajaxRequest({
+    URL:url, 
+    method:method, 
+    data:item, 
+    headers:headers, 
+    options:options
+}).then((xhr) => {
+    console.log(xhr.responseText);
+});
+</code>
+
+====loadScript(url)====
+
+''型:Undefined'' ''非同期'' ''Static''
+
+スクリプトファイルを指定されたURLからロードします。スクリプトは現在のページに挿入され、即時実行されます。
+
+=== パラメータ===
+
+^パラメータ^型^説明^
+|url \\ ''必須''|String|スクリプトファイルのURLを指定します。|
+
+===戻り値===
+
+なし。
+
+====loadJSON(url, options)====
+
+''型:Object'' ''非同期'' ''Static''
+
+JSON/Javascriptオブジェクトファイルを指定されたURLからロードします。ロードされたファイルはJavascriptオブジェクトに変換されます。JSONかJavascriptオブジェクトかをoptionsパラメータで指定できます。フォーマットの指定がない場合、拡張子が"json"ならJSON, "js"ならJavascriptオブジェクトと判断されます。
+
+=== パラメータ===
+
+^パラメータ^型^説明^
+|url \\ ''必須''|String|JSONファイルのURLを指定します。|
+|options|String|ロードする際のオプションです。以下のキーがあります。|
+|  "format"|String|ファイルのフォーマットです。"js"または"json"。|
+
+===戻り値===
+
+取得したファイルを変換した、Javascriptオブジェクトです。
+
+====loadText(url)====
+
+''型:String'' ''非同期'' ''Static''
+
+テキストファイルを指定されたURLからロードします。
+
+=== パラメータ===
+
+^パラメータ^型^説明^
+|url \\ ''必須''|String|テキストファイルのURLを指定します。|
+
+===戻り値===
+
+取得したファイルの中身のテキストです。
+
+====loadHTML(url)====
+
+''型:String'' ''非同期'' ''Static''
+
+HTMLファイルを指定されたURLからロードします。
+
+=== パラメータ===
+
+^パラメータ^型^説明^
+|url \\ ''必須''|String|HTMLファイルのURLを指定します。|
+
+===戻り値===
+
+取得したファイルの中身のHTMLです。
+
+====loadCSS(url)====
+
+''型:String'' ''非同期'' ''Static''
+
+CSSファイルを指定されたURLからロードします。
+
+=== パラメータ===
+
+^パラメータ^型^説明^
+|url \\ ''必須''|String|CSSファイルのURLを指定します。|
+
+===戻り値===
+
+取得したファイルの中身のCSSです。
+
+====loadClass(url, options)====
+
+''型:Undefined'' ''非同期'' ''Static''
+
+クラスファイルをロードします。クラスファイルは現在のページに挿入され、即時実行されます。
+
+引数のURLには**拡張子をつけないでください**。ライブラリが自動的に拡張子".js"を付与して、ロードします。 "splitClass"オプションがTrueの場合、最初に".js"、次に".settings.js"の2つのファイルをロードします。
+
+=== パラメータ===
+
+^パラメータ^型^説明^
+|url \\ ''Required''|String|クラスファイルのURLを指定します。拡張子は不要です。|
+|options|String|ロードする際のオプションです。以下のキーがあります。|
+|  "splitClass"|Boolean|Trueの場合、分割クラスファイルとなります。|
+
+===戻り値===
+
+なし。
