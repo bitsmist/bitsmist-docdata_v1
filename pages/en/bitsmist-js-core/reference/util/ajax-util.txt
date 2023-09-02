@@ -60,6 +60,8 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 });
 </code>
 
+----
+
 ====loadScript(url)====
 
 ''Type:Undefined'' ''Asynchronous'' ''Static''
@@ -74,6 +76,8 @@ Loads the script file from the server. The loaded script will be appended to the
 ===Return Value===
 
 Undefined.
+
+----
 
 ====loadJSON(url, options)====
 
@@ -92,6 +96,8 @@ Loads the JSON/Javascript object file from the specified URL. The loaded file wi
 
 The Javascript object that is converted from the content of the retrieved file.
 
+----
+
 ====loadText(url)====
 
 ''Type:String'' ''Asynchronous'' ''Static''
@@ -107,6 +113,8 @@ Loads the text file from the specified URL.
 
 The content of the retrieved file.
 
+
+----
 
 ====loadHTML(url)====
 
@@ -124,6 +132,8 @@ Loads the HTML file from the specified URL.
 The content of the retrieved file.
 
 
+----
+
 ====loadCSS(url)====
 
 ''Type:String'' ''Asynchronous'' ''Static''
@@ -138,6 +148,8 @@ Loads the CSS file from the specified URL.
 ===Return Value===
 
 The content of the retrieved file.
+
+----
 
 ====loadClass(url, options)====
 

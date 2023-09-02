@@ -25,6 +25,10 @@
 ===例外===
 
   * 指定されたクラスが存在しない場合。
+
+
+----
+
 ====getClass(className)====
 
 ''型:Function'' ''Static''
@@ -39,6 +43,8 @@
 ===戻り値===
 
 Functionオブジェクトを返します。クラスが存在しない場合は、Undefinedを返します。
+
+----
 
 ====inherit(subClass, superClass)====
 
@@ -55,6 +61,8 @@ Functionオブジェクトを返します。クラスが存在しない場合は
 ===戻り値===
 
 なし。
+
+----
 
 ====newUnit(className, settings, superClass, tagName)====
 

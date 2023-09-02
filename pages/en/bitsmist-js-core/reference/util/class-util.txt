@@ -24,6 +24,9 @@ A created instance.
 ===Exception===
 
   * If the specified class doesn't exist.
+
+----
+
 ====getClass(className)====
 
 ''Type:Function'' ''Static''
@@ -38,6 +41,8 @@ Returns the Function object that has the specified class name, **not the instanc
 ===Return Value===
 
 The Function object.
+
+----
 
 ====inherit(subClass, superClass)====
 
@@ -54,6 +59,8 @@ Makes the subclass inherits the super class.
 ===Return Value===
 
 Undefined.
+
+----
 
 ====newUnit(className, settings, superClass, tagName)====
 

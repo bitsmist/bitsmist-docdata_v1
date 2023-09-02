@@ -61,6 +61,8 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 });
 </code>
 
+----
+
 ====loadScript(url)====
 
 ''型:Undefined'' ''非同期'' ''Static''
@@ -75,6 +77,8 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 ===戻り値===
 
 なし。
+
+----
 
 ====loadJSON(url, options)====
 
@@ -93,6 +97,9 @@ JSON/Javascriptオブジェクトファイルを指定されたURLからロー�
 
 取得したファイルを変換した、Javascriptオブジェクトです。
 
+
+----
+
 ====loadText(url)====
 
 ''型:String'' ''非同期'' ''Static''
@@ -107,6 +114,8 @@ JSON/Javascriptオブジェクトファイルを指定されたURLからロー�
 ===戻り値===
 
 取得したファイルの中身のテキストです。
+
+----
 
 ====loadHTML(url)====
 
@@ -123,6 +132,8 @@ HTMLファイルを指定されたURLからロードします。
 
 取得したファイルの中身のHTMLです。
 
+----
+
 ====loadCSS(url)====
 
 ''型:String'' ''非同期'' ''Static''
@@ -137,6 +148,8 @@ CSSファイルを指定されたURLからロードします。
 ===戻り値===
 
 取得したファイルの中身のCSSです。
+
+----
 
 ====loadClass(url, options)====
 
