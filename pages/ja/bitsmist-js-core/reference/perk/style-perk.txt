@@ -199,3 +199,10 @@ CSSをロードします。ロードするのみで適用はされません。�
 ===戻り値===
 
 ロードしたスタイルの[[#styles|スタイル情報オブジェクト]]を返します。
+
+===参照する設定===
+
+  * [[#type|style.sytles.<styleName>.type]]
+  * [[#css|style.sytles.<styleName>.CSS]]  
+  * [[#url|style.sytles.<styleName>.URL]] 
+

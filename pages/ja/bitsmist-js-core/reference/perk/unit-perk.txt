@@ -29,33 +29,29 @@ UnitPerkはクラスファイルのロードなど、ユニットのロードと
 
 各ユニット固有の設定は"unit"セクションに記述します。
 
-"unit.units"セクションには、動的に追加するユニットの一覧を記述します。<unitName>の値として設定するオブジェクトは、追加するユニットに対する設定となります。ここで記載されてない設定も含め、全ての設定を記述することができます。ここで記述された値は、そのユニットの設定にマージされます。ユニットのロードに関する設定は、"unit.units.<unitName>"セクション配下でのみ記述できるということに注意してください。
+"unit.units"セクションには、動的に追加するユニットの一覧を記述します。<unitName>の値として設定するオブジェクトは、追加するユニットに対する設定となります。ここで記載されてない設定も含め、全ての設定を記述することができます。ここで記述された値は、そのユニットの設定にマージされます。
 
 <code javascript>
 {
     "unit": {
         "options": {
+            "adjacentPosition": "beforebegin"|"afterbegin"|"beforeend"|"afterend",
+            "autoLoad": Boolean|String,
+            "autoMorph": Boolean|String,
+            "className": String,
             "fileName": String,
+            "parentNode": String,
+            "parentUnit": String,
             "path": String,
             "query": String,
+            "replaceParent": Boolean,
+            "splitClass": Boolean,
+            "syncOnAdd": String,
+            "tag": String,
         },
         "units": {
             <unitName>:  {
-                "options": {
-                    "adjacentPosition": "beforebegin"|"afterbegin"|"beforeend"|"afterend",
-       	            "autoLoad": Boolean|String,
-                    "autoMorph": Boolean|String,
-                    "className": String,
-                    "fileName": String,
-                    "parentNode": String,
-                    "parentUnit": String,
-                    "path": String,
-                    "query": String,
-                    "replaceParent": Boolean,
-                    "splitClass": Boolean,
-                    "syncOnAdd": String,
-                    "tag": String,
-                },
+                (unit's settings)
             },
             ...
         }
@@ -211,7 +207,7 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
 ''型:Unit'' ''対象:Unit''
 
-ユニット内に新たなユニットを追加します。追加したユニットのインスタンスは、インベントリ内のunitsに追加されます。クラスファイルのロードが必要な場合は、autoLoadまたはautoMorphオプションをsettings引数に指定してください。
+ユニット内に新たなユニットを追加します。追加したユニットのインスタンスは、インベントリ内のunitsに追加されます。クラスファイルのロードが必要な場合は、autoLoadまたはautoMorphオプションをsettings引数に指定してください。ファイルが [[#summon|summon]]スペルを使って、ロードされます。
 
 ===パラメータ===
 
@@ -227,13 +223,11 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
 ===参照する設定===
 
-  * [[#autoload_bm-autoload|autoLoad]]
-  * [[#automorph_bm-automorph|autoMorph]]
-  * [[#adjacentPosition|adjacentPosition]]
-  * [[#parentnode|parentNode]]
-  * [[#replaceparent|replaceParent]]
-  * [[#synconadd|syncOnAdd]]
-  * [[#tag|tag]]
+  * [[#adjacentPosition|unit.options.adjacentPosition]]
+  * [[#parentnode|unit.options.parentNode]]
+  * [[#replaceparent|unit.options.replaceParent]]
+  * [[#synconadd|unit.options.syncOnAdd]]
+  * [[#tag|unit.options.tag]]
 
 ----
 
@@ -279,12 +273,10 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
 ===参照する設定===
 
-  * [[#appbaseurl|appBaseURL]]
-  * [[#autoload_bm-autoload|autoLoad]]
-  * [[#automorph_bm-automorph|autoMorph]]
-  * [[#classname_bm-classname|className]]
-  * [[#unitpath|unitPath]]
-  * [[#filename_bm-filename|fileName]]
-  * [[#path_bm-path|path]]
-  * [[#query|query]]
-  * [[#splitclass_bm-split|splitclass]]
+  * [[#autoload_bm-autoload|unit.options.autoLoad]]
+  * [[#automorph_bm-automorph|unit.options.autoMorph]]
+  * [[#classname_bm-classname|unit.options.className]]
+  * [[#filename_bm-filename|unit.options.fileName]]
+  * [[#path_bm-path|unit.options.path]]
+  * [[#query|unit.options.query]]
+  * [[#splitclass_bm-split|unit.options.splitclass]]

@@ -302,7 +302,7 @@ onDoRefresh(sender, e, ex)
 
 ===参照する設定===
 
-  * [[#書式-ユニット固有設定|events]]
+  * [[#書式-ユニット固有設定|event.events]]
 
 ----
 
@@ -312,7 +312,7 @@ onDoRefresh(sender, e, ex)
 
 ===参照する設定===
 
-  * [[#書式-ユニット固有設定|events]]
+  * [[#書式-ユニット固有設定|event.events]]
 
 
 =====スキル=====
@@ -356,7 +356,7 @@ onDoRefresh(sender, e, ex)
 
 ===参照する設定===
 
-  * [[#elementName|events.<elementName>]]
+  * [[#elementName|event.events.<elementName>]]
 
 ----
 
@@ -398,7 +398,7 @@ HTML要素からイベントハンドラを取り除きます。
 
 ===参照する設定===
 
-  * [[#elementName|events.<elementName>]]
+  * [[#elementName|event.events.<elementName>]]
 
 ----
 

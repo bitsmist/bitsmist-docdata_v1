@@ -223,7 +223,7 @@ HTMLファイルをロードします。ロードするのみでユニットに�
 
 ===参照する設定===
 
-  * [[#type|type]]
-  * [[#html|HTML]]  
-  * [[#rootnode|rootNode]] 
-  * [[#url|URL]] 
+  * [[#type|skin.skins.<skinName>.type]]
+  * [[#html|skin.skins.<skinName>.HTML]]  
+  * [[#rootnode|skin.skins.<skinName>.rootNode]] 
+  * [[#url|skin.skins.<skinName>.URL]] 

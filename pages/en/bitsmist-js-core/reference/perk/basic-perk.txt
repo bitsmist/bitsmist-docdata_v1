@@ -387,9 +387,9 @@ Undefined.
 
 ===Reference Settings===
 
-  * [[#autoclear|autoClear]]
-  * [[#autofetch|autoFetch]]
-  * [[#autofill|autoFill]]
+  * [[#autoclear|basic.options.autoClear]]
+  * [[#autofetch|basic.options.autoFetch]]
+  * [[#autofill|basic.options.autoFill]]
 
 ----
 
@@ -440,8 +440,8 @@ Undefined.
 
 ===Reference Settings===
 
-  * [[#autotransform|autoTransform]]
-  * [[#autorefresh|autoRefresh]]
+  * [[#autotransform|basic.options.autoTransform]]
+  * [[#autorefresh|basic.options.autoRefresh]]
 
 ----
 
@@ -493,6 +493,6 @@ Undefined.
 
 ===Reference Settings===
 
-  * [[#autosetup|autoSetup]]
+  * [[#autosetup|basic.options.autoSetup]]
 
 

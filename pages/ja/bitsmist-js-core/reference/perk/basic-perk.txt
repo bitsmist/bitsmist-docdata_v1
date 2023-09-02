@@ -390,9 +390,9 @@ target引数には、ターゲットを指定する情報を指定します。�
 
 ===参照する設定===
 
-  * [[#autoclear|autoClear]]
-  * [[#autofetch|autoFetch]]
-  * [[#autofill|autoFill]]
+  * [[#autoclear|basic.options.autoClear]]
+  * [[#autofetch|basic.options.autoFetch]]
+  * [[#autofill|basic.options.autoFill]]
 
 ----
 
@@ -444,8 +444,8 @@ target引数には、ターゲットを指定する情報を指定します。�
 
 ===参照する設定===
 
-  * [[#autotransform|autoTransform]]
-  * [[#autorefresh|autoRefresh]]
+  * [[#autotransform|basic.options.autoTransform]]
+  * [[#autorefresh|basic.options.autoRefresh]]
 
 ----
 
@@ -497,6 +497,6 @@ target引数には、ターゲットを指定する情報を指定します。�
 
 ===参照する設定===
 
-  * [[#autosetup|autoSetup]]
+  * [[#autosetup|basic.options.autoSetup]]
 
 

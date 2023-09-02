@@ -28,33 +28,29 @@ Settings common to all units are described in the "system.unit" section of the g
 
 Unit-specific settings are described in the "unit" section.
 
-The "unit.units" section lists the units to be added dynamically. The object set as the value of <unitName> is the settings for the unit to be added. All settings, including those not listed here, can be described. The values described here will be merged into the unit's settings. Note that settings for loading units can only be described under the "unit.units.<unitName>" section.
+The "unit.units" section lists the units to be added dynamically. The object set as the value of <unitName> is the settings for the unit to be added. All settings, including those not listed here, can be described. The values described here will be merged into the unit's settings.
 
 <code javascript>
 {
     "unit": {
         "options": {
+            "adjacentPosition": "beforebegin"|"afterbegin"|"beforeend"|"afterend",
+            "autoLoad": Boolean|String,
+            "autoMorph": Boolean|String,
+            "className": String,
             "fileName": String,
+            "parentNode": String,
+            "parentUnit": String,
             "path": String,
             "query": String,
+            "replaceParent": Boolean,
+            "splitClass": Boolean,
+            "syncOnAdd": String,
+            "tag": String,
         },
         "units": {
             <unitName>:  {
-                "options": {
-                    "adjacentPosition": "beforebegin"|"afterbegin"|"beforeend"|"afterend",
-       	            "autoLoad": Boolean|String,
-                    "autoMorph": Boolean|String,
-                    "className": String,
-                    "fileName": String,
-                    "parentNode": String,
-                    "parentUnit": String,
-                    "path": String,
-                    "query": String,
-                    "replaceParent": Boolean,
-                    "splitClass": Boolean,
-                    "syncOnAdd": String,
-                    "tag": String,
-                },
+                (unit's settings)
             },
             ...
         }
@@ -210,7 +206,7 @@ This object holds the units added to this unit. Each item has the following keys
 
 ''Type:Unit'' ''Target:Unit''
 
-Adds a new unit inside a unit. Instances of the added units will be added to the [[#units|units]] in the inventory, also. If class files need to be loaded, specify the autoLoad or autoMorph option in the settings argument.
+Adds a new unit inside a unit. Instances of the added units will be added to the [[#units|units]] in the inventory, also. If class files need to be loaded, specify the autoLoad or autoMorph option in the settings argument. The class files are loaded using [[#summon|summon]] spell.
 
 ===Parameters===
 
@@ -226,13 +222,11 @@ Instance of the added unit.
 
 ===Reference Settings===
 
-  * [[#autoload_bm-autoload|autoLoad]]
-  * [[#automorph_bm-automorph|autoMorph]]
-  * [[#adjacentPosition|adjacentPosition]]
-  * [[#parentnode|parentNode]]
-  * [[#replaceparent|replaceParent]]
-  * [[#synconadd|syncOnAdd]]
-  * [[#tag|tag]]
+  * [[#adjacentPosition|unit.options.adjacentPosition]]
+  * [[#parentnode|unit.options.parentNode]]
+  * [[#replaceparent|unit.options.replaceParent]]
+  * [[#synconadd|unit.options.syncOnAdd]]
+  * [[#tag|unit.options.tag]]
 
 ----
 
@@ -264,7 +258,7 @@ Undefined.
 
 ''Type:Undefined'' ''Target:Unit''
 
-Loads the class file for the unit. After the file has been loaded, the unit can be instantiated by adding the unit's tag to the document tree. If the tag exists before loading, it will be instantiated as soon as this spell is complete.
+Loads the class file for the unit. After the file has been loaded, the unit can be instantiated by adding the unit's tag to the document tree. If the tag exists before loading, it will be instantiated as soon as this spell is completed.
 
 ===Parameters===
 
@@ -278,12 +272,10 @@ Undefined.
 
 ===Reference Settings===
 
-  * [[#appbaseurl|appBaseURL]]
-  * [[#autoload_bm-autoload|autoLoad]]
-  * [[#automorph_bm-automorph|autoMorph]]
-  * [[#classname_bm-classname|className]]
-  * [[#unitpath|unitPath]]
-  * [[#filename_bm-filename|fileName]]
-  * [[#path_bm-path|path]]
-  * [[#query|query]]
-  * [[#splitclass_bm-split|splitclass]]
+  * [[#autoload_bm-autoload|unit.options.autoLoad]]
+  * [[#automorph_bm-automorph|unit.options.autoMorph]]
+  * [[#classname_bm-classname|unit.options.className]]
+  * [[#filename_bm-filename|unit.options.fileName]]
+  * [[#path_bm-path|unit.options.path]] / [[#path_bm-path|system.unit.options.path]]
+  * [[#query|unit.options.query]]
+  * [[#splitclass_bm-split|unit.options.splitclass]]

@@ -197,3 +197,8 @@ Loads a CSS file. Only loads, and does not apply. If it has already been loaded,
 
 Returns [[#styles|style info object]] of the loaded style.
 
+===Reference Settings===
+
+  * [[#type|style.sytles.<styleName>.type]]
+  * [[#css|style.sytles.<styleName>.CSS]]  
+  * [[#url|style.sytles.<styleName>.URL]] 
