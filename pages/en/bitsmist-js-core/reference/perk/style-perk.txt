@@ -36,7 +36,7 @@ The CSS specified in the apply setting in the system section is loaded at Perk i
 
 ====Format - Unit====
 
-Unit-specific settings are described in the “style” section.
+Unit-specific settings are described in the "style" section.
 
 <code javascript>
 {
@@ -108,7 +108,7 @@ The path to the CSS file. The "system.style.options.path" and "style.options.pat
 
 ''Type:String''
 
-The style name. Specify “default” for the default style.
+The style name. Specify "default" for the default style.
 
 ----
 
@@ -129,7 +129,7 @@ If the CSS file is not found, it causes a 404 error and the unit initialization 
 
 ''Type:String''
 
-Specifies where to get the CSS from. Type can be “CSS” or “URL”. If “CSS”, the CSS string is retrieved from the “CSS” setting. For “URL”, the CSS file is loaded from the URL specified in the “URL” setting. 
+Specifies where to get the CSS from. Type can be "CSS" or "URL". If "CSS", the CSS string is retrieved from the "CSS" setting. For "URL", the CSS file is loaded from the URL specified in the "URL" setting.
 
 ----
 
@@ -137,7 +137,7 @@ Specifies where to get the CSS from. Type can be “CSS” or “URL”. If “C
 
 ''Type:String''
 
-The URL of the CSS file. Used when the “type” setting is “URL”.
+The URL of the CSS file. Used when the "type" setting is "URL".
 =====Event Handlers=====
 
 ====doTransform====

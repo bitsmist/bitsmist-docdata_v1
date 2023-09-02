@@ -9,7 +9,7 @@ EventPerk grants event-related functions such as adding event handlers and trigg
 
 ====Format - Unit====
 
-Unit-specific settings are described in the “event” section.
+Unit-specific settings are described in the "event" section.
 
 <code javascript>
 {
@@ -126,9 +126,9 @@ Here is an example of specifying the target element. There are two main types of
 }
 </code>
 
-Since <elementName> is ”this”, the event handler is set to the unit itself.
+Since <elementName> is "this", the event handler is set to the unit itself.
 
-You can specify it in “rootNode”, also. In this case, the <elementName> “myself” is just a meaningless string (to the library),  but should be a unique one.
+You can specify it in "rootNode", also. In this case, the <elementName> "myself" is just a meaningless string (to the library),  but should be a unique one.
 
 <code javascript>
 "event": {
@@ -159,9 +159,9 @@ If an element has an ID, you can specify it in <elementName>.
 }
 </code>
 
-In the above example, the event handler is set to an element that has an ID “btn-menu”.
+In the above example, the event handler is set to an element that has an ID "btn-menu".
 
-You can use a selector string that is valid to querySelectorAll() in “rootNode”. 
+You can use a selector string that is valid to querySelectorAll() in "rootNode". 
 
 <code javascript>
 "event": {
@@ -197,7 +197,7 @@ You can use a Function object or a string as an event handler.
 }
 </code>
 
-In the above example, a Function object is specified as the event handler for the “doRefresh” event.
+In the above example, a Function object is specified as the event handler for the "doRefresh" event.
 
 <code javascript>
 "event": {
@@ -211,7 +211,7 @@ In the above example, a Function object is specified as the event handler for th
 }
 </code>
 
-In this example, a string is set as the event handler. The method that has the name “onDoRefresh” is searched from the unit's method, that is this.onDoRefresh(), and used as the event handler.
+In this example, a string is set as the event handler. The method that has the name "onDoRefresh" is searched from the unit's method, that is this.onDoRefresh(), and used as the event handler.
 
 <WRAP admonition note>
 If a Function object is set, the function needs to exist at the time of instantiating, while it needs to exist at the time of executing if a string is set.
@@ -256,7 +256,7 @@ You can pass options to event handlers.
 }
 </code>
 
-In this example, both an event handler and options are set at the same time. The options can be accessed via the “ex” parameter of the event handler.
+In this example, both an event handler and options are set at the same time. The options can be accessed via the "ex" parameter of the event handler.
 
 <code javascript>
 onDoRefresh(sender, e, ex)
@@ -304,7 +304,7 @@ Loads the settings from the "event.events" section and adds event handlers.
 
 ====afterTransform====
 
-Loads the settings from the “event.events” section and adds event handlers **only to the elements inside the units**. The unit's own events are not installed at this time.
+Loads the settings from the "event.events" section and adds event handlers **only to the elements inside the units**. The unit's own events are not installed at this time.
 
 ===Reference Settings===
 
@@ -325,7 +325,7 @@ Sets event handlers for an event to elements.
 |eventName \\ ''Required''|String|The event name.|
 |handlerInfo \\ ''Required''|Object|The handler info. This is equivalent to [[#settings|the settings set as a value for <eventName>]].|
 |element \\ ''Default:this''|HTMLElement|The element to set event handlers. The default is the unit itself.|
-|bindTo \\ ''Default:this''|Object|Binds event handlers to this object. This value becomes “this” in the event handlers. The default is the unit itself.|
+|bindTo \\ ''Default:this''|Object|Binds event handlers to this object. This value becomes "this" in the event handlers. The default is the unit itself.|
 
 ===Return Value===
 

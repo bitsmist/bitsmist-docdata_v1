@@ -95,7 +95,7 @@ Units can be added as children of a unit by specifying the units to be added in 
 The unit will be added to the node specified by "parentNode" under the parent unit.
 
 <WRAP admonition tip links>
-The “unit” section is handled by UnitPerk. Refer to the link below for details.
+The "unit" section is handled by UnitPerk. Refer to the link below for details.
   * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:perk:unit-perk#settings|Reference - UnitPerk - Settings]]
 </WRAP>
 
@@ -190,11 +190,11 @@ In [[en:bitsmist-js-core:general:sample|Create a Sample Unit]], all files were p
 
  The path is determined based on the following settings
 
-  * System Unit Path （system.unit.options.path）
-  * Unit Path（unit.options.path/bm-path）
+  * System Unit Path (system.unit.options.path)
+  * Unit Path (unit.options.path/bm-path)
 
 <WRAP admonition tip>
-System unit paths can be set in both global and unit-specific settings. If both the system and unit settings have the same setting items, unit-specific settings take precedence. 
+System unit paths can be set in both global and unit-specific settings. If both the system and unit settings have the same setting items, unit-specific settings take precedence.
 </WRAP>
 
 Files are downloaded from the path concatenated the above settings. The default value is "" (empty string). As an example, assume the following settings
@@ -293,7 +293,7 @@ The file name is specified in a tag attribute. No extension is required.
 <bar-header bm-autoload bm-filename="header"></bar-header>
 </code>
 
-You can place them in the unit's “unit” settings if you add units using the “unit” section, or dynamically using Javascript.
+You can place them in the unit's "unit" settings if you add units using the "unit" section, or dynamically using Javascript.
 
 <code javascript>
 {

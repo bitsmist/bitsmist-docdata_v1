@@ -10,7 +10,7 @@ StylePerkはユニットのCSSのロードと適用など、ユニットのス�
 
 ====書式-グローバル設定====
 
-全ユニットに共通な設定はグローバル設定の“system.style”セクションに記述します。
+全ユニットに共通な設定はグローバル設定の"system.style"セクションに記述します。
 
 systemセクションのapplyで指定されたCSSは、Perkの初期化時にロードされ、Documentに対して適用されます。
 
@@ -37,7 +37,7 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
 
 ====書式-ユニット固有設定====
 
-各ユニット固有の設定は“style”セクションに記述します。
+各ユニット固有の設定は"style"セクションに記述します。
 
 <code javascript>
 {
@@ -93,7 +93,7 @@ CSSの文字列を指定します。これは**CSSであって、CSSのファイ
 
 ''型:String'' ''デフォルト:<タグ名>''
 
-CSSのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子”css”を付けたファイルをロードします。
+CSSのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子"css"を付けたファイルをロードします。
 
 ----
 
@@ -101,7 +101,7 @@ CSSのファイル名を指定します。拡張子は不要です。ここに�
 
 ''型:String''
 
-CSSファイルのパスを指定します。“system.style.options.path”と“style.options.path”を繋げたものが、デフォルトのパスとして使用されます。もし存在しない場合はそれぞれ、“system.unit.options.path”と“unit.options.path”が代わりに使用されます。
+CSSファイルのパスを指定します。"system.style.options.path"と"style.options.path"を繋げたものが、デフォルトのパスとして使用されます。もし存在しない場合はそれぞれ、"system.unit.options.path"と"unit.options.path"が代わりに使用されます。
 
 ----
 
@@ -109,7 +109,7 @@ CSSファイルのパスを指定します。“system.style.options.path”と�
 
 ''型:String''
 
-スタイル名を指定します。デフォルトのスタイルは“default”と指定してください。
+スタイル名を指定します。デフォルトのスタイルは"default"と指定してください。
 
 ----
 
@@ -119,7 +119,7 @@ CSSファイルのパスを指定します。“system.style.options.path”と�
 
 ユニットのデフォルトのCSSファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、デフォルトCSSファイルのロードと適用が行われません。
 
-bm-styleref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、“false”という文字列を指定してください。
+bm-styleref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、"false"という文字列を指定してください。
 
 CSSファイルが存在しない場合、404エラーが発生し、ユニットの初期化が止まります。もしユニットにCSSファイルがないのであれば、明示的にfalseをセットしてください。
 ----
@@ -157,7 +157,7 @@ CSSファイルのURLを指定します。"type"設定が"URL"の時に使用さ
 ^キー^型^説明^
 |name|String|スタイル名です。|
 |CSS|String|スタイルのCSSです。|
-|status|String|スタイルのロード状態を示します。""（空白）、"loading"または"loaded"の値を取ります。|
+|status|String|スタイルのロード状態を示します。""(空白)、"loading"または"loaded"の値を取ります。|
 
 
 =====スペル=====

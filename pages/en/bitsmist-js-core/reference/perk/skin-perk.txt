@@ -26,7 +26,7 @@ Settings common to all units are described in the "system.skin" section of the g
 
 ====Format - Unit====
 
-Unit-specific settings are described in the “skin” section.
+Unit-specific settings are described in the "skin" section.
 
 <code javascript>
 {

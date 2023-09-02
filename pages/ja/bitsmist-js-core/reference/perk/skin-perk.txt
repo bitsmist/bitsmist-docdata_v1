@@ -10,7 +10,7 @@ SkinPerkはユニットのHTMLに関する機能を付与します。またShado
 
 ====書式-グローバル設定====
 
-全ユニットに共通な設定はグローバル設定の“system.skin”セクションに記述します。
+全ユニットに共通な設定はグローバル設定の"system.skin"セクションに記述します。
 
 <code javascript>
 {
@@ -27,7 +27,7 @@ SkinPerkはユニットのHTMLに関する機能を付与します。またShado
 
 ====書式-ユニット固有設定====
 
-各ユニット固有の設定は“skin”セクションに記述します。
+各ユニット固有の設定は"skin"セクションに記述します。
 
 <code javascript>
 {
@@ -66,7 +66,7 @@ SkinPerkはユニットのHTMLに関する機能を付与します。またShado
 
 ''型:String'' ''デフォルト:<タグ名>''
 
-HTMLのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子”html”を付けたファイルをロードします。
+HTMLのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子"html"を付けたファイルをロードします。
 
 ----
 
@@ -106,7 +106,7 @@ ShadowDOMを使用する場合、"open"または"closed"を指定します。そ
 
 ''型:String''
 
-スキン名を指定します。デフォルトのスキンは"default”と指定してください。
+スキン名を指定します。デフォルトのスキンは"default"と指定してください。
 
 ----
 
@@ -116,7 +116,7 @@ ShadowDOMを使用する場合、"open"または"closed"を指定します。そ
 
 ユニットのデフォルトのスキンファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、スキンファイルのロードと適用が行われません。
 
-bm-skinref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、“false”という文字列を指定してください。
+bm-skinref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、"false"という文字列を指定してください。
 
 スキンファイルが存在しない場合、404エラーが発生し、ユニットの初期化が止まります。もしユニットにスキンファイルがないのであれば、明示的にfalseをセットしてください。
 
@@ -141,7 +141,7 @@ HTMLファイルのURLを指定します。"type"設定が"URL"の時に使用�
 
 ====beforeTransform====
 
-e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合（デフォルトはTrue）、設定に従ってスキンをロードします。スキン名の指定がない場合は、デフォルトのスキンをロードします。デフォルトのスキンは、”default”セクションの設定がない場合はデフォルトのURLからロードされます。”default”セクションの設定がある場合は、その設定に従います。
+e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合(デフォルトはTrue)、設定に従ってスキンをロードします。スキン名の指定がない場合は、デフォルトのスキンをロードします。デフォルトのスキンは、"default"セクションの設定がない場合はデフォルトのURLからロードされます。"default"セクションの設定がある場合は、その設定に従います。
 
 ロードしたHTMLを元にTemplateノードを作成し、それをクローンしたものが[[ja:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]]プロパティにセットされます。次のdoTransformで実際に適用されるまでは、ユニットのスキンに対する操作はこのクローンに対して行われ、画面には描画されません。
 
@@ -149,7 +149,7 @@ e.detail.skinNameにスキン名が指定してある場合、または設定の
 
 ====doTransform====
 
-ユニットにHTMLを適用します。e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合（デフォルトはTrue）、設定に従ってスキンを適用します。スキン名の指定がない場合は、デフォルトのスキンを適用します。
+ユニットにHTMLを適用します。e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合(デフォルトはTrue)、設定に従ってスキンを適用します。スキン名の指定がない場合は、デフォルトのスキンを適用します。
 
 beforeTransformで作成されたTemplateのクローンをユニットに追加し、表示します。
 =====インベントリ=====
@@ -164,7 +164,7 @@ beforeTransformで作成されたTemplateのクローンをユニットに追加
 |name|String|スキン名です。|
 |HTML|String|スキンのHTMLです。|
 |template|String|スキンのHTMLから作られたtemplateノードです。|
-|status|String|スキンのロード状態を示します。""（空白）またはloaded"の値を取ります。|
+|status|String|スキンのロード状態を示します。""(空白)またはloaded"の値を取ります。|
 
 =====ステート=====
 

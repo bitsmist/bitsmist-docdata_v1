@@ -13,7 +13,7 @@ We use standard Javascript technologies such as Web Components, Structured CSS, 
 
 You create distinct components and integrate them to form a website. Each component's role is well-defined, simplifying site modifications. Additionally, you can seamlessly incorporate a component into a part of the site.
 
-====Independent Plain HTML File ==== 
+====Independent Plain HTML File ====
 
 We simply use the original HTML as-is. Since JavaScript is written in a separate file, it's also easy for web designers to handle.
 
@@ -22,12 +22,12 @@ We simply use the original HTML as-is. Since JavaScript is written in a separate
 The necessary files are loaded when needed. All processing is asynchronous, so files can be loaded efficiently.
 
 
-====Event driven==== 
+====Event driven====
 
 Javascript codes for each event is written in a file that is separated from the HTML file. It's clear at a glance which processing is written where.
 
 
-====Extensibility==== 
+====Extensibility====
 
 Components can be extended using a mechanism called "Perks. By simply preparing a perk and describing it in the configuration, new functions can be added to the component.
 

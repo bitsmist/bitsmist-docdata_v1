@@ -17,7 +17,7 @@ Ajaxリクエストを行います。
 ^パラメータ^型^説明^
 |options. \\ ''必須''|Object|Ajaxのオプションを指定します。以下のキーがあります。|
 |  "URL" \\ ''必須''|String|アクセスするURLを指定します。|
-|  "method" \\ ''必須''|String|HTTPメソッド（GET, POST, PUT等）を指定します。|
+|  "method" \\ ''必須''|String|HTTPメソッド(GET, POST, PUT等)を指定します。|
 |  "data"|Object|送信するデータを指定します。|
 |  "headers"|Object|送信するヘッダーを格納したオブジェクトです。それぞれの項目がXMLHttpRequestのsetRequestHeader()に渡されます。|
 

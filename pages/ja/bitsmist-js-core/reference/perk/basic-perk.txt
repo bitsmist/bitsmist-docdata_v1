@@ -8,7 +8,7 @@ BasicPerkはユニットに基本的な機能を付与します。ただし、�
 
 =====設定=====
 
-各ユニット固有の設定は“basic”セクションに記述します。
+各ユニット固有の設定は"basic"セクションに記述します。
 
 ====書式-ユニット固有設定====
 
@@ -65,7 +65,7 @@ Trueの場合、スタート処理中に自動的に[[#refresh|refresh]]スペ�
 
 ''型:Boolean'' ''デフォルト:False''
 
-Trueの場合、ユニットがノードに接続された時（ConnectedCallback時）に、すでに初期化済みであっても再度スタート処理を行います。
+Trueの場合、ユニットがノードに接続された時(ConnectedCallback時)に、すでに初期化済みであっても再度スタート処理を行います。
 
 ----
 
@@ -371,7 +371,7 @@ target引数には、ターゲットを指定する情報を指定します。�
 
 ユニットを描画するためのイベントをトリガーします。設定の[[#autoclear|autoClear]]・[[#autofetch|autoFetch]]・[[#autofill|autoFill]]に応じて、[[#clear|clear]]・[[#fetch|fetch]]・[[#fill|fill]]スペルも呼び出します。
 
-設定の[[#autorefrsh|autoRefresh]]がTrueの場合（デフォルトTrue）、ユニットの初期化中に自動的に呼び出されます。
+設定の[[#autorefrsh|autoRefresh]]がTrueの場合(デフォルトTrue)、ユニットの初期化中に自動的に呼び出されます。
 
 ===パラメータ===
 
@@ -478,7 +478,7 @@ target引数には、ターゲットを指定する情報を指定します。�
 
 ユニットに適用するHTMLとCSSを切り替えるためのイベントをトリガーします。[[#autosetup|autoSetup]]設定がTrueの場合、beforeTransformとdoTransformの間で、[[#setup|setup]]スペルを呼び出します。またdoTransformイベントがトリガーされた後[[ja:bitsmist-js-core:reference:perk:unit-perk#materializeall|unit.materializeAll]]スペルを呼び出し、HTML内の子ユニットを実体化します。
 
-設定の[[#autotransform|autoTransform]]がTrueの場合（デフォルトTrue）、ユニットの初期化中に自動的に呼び出されます。
+設定の[[#autotransform|autoTransform]]がTrueの場合(デフォルトTrue)、ユニットの初期化中に自動的に呼び出されます。
 
 ===パラメータ===
 

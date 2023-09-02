@@ -2,7 +2,7 @@
 
 =====Overview=====
 
-Let's create a simple sample unit before we go on to the details to see what the unit is like. We create a unit that has a button under a heading and says “Hello, World!” when the button is pressed.
+Let's create a simple sample unit before we go on to the details to see what the unit is like. We create a unit that has a button under a heading and says "Hello, World!" when the button is pressed.
 
 [[#the_full_source|The full source]] is attached at the bottom of this page. If you are an experienced programmer, looking at the full source first might be helpful since it's so simple. 
 

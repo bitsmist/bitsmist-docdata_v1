@@ -99,7 +99,7 @@ The value specified by the key. When the key is not found, returns defaultValue,
 
 Merges new items into current items.
 
-If the store is chained to another store, by default it merges with its own store items. If “writeThrough” option is true, then it merges with items in the chained store.
+If the store is chained to another store, by default it merges with its own store items. If "writeThrough" option is true, then it merges with items in the chained store.
 
 ===Parameters===
 
@@ -119,7 +119,7 @@ Undefined.
 
 Sets the value to an item specified by the key parameter. If the key does not exist, it will be automatically created.
 
-If the store is chained to another store, by default it sets the item to its own store. If “writeThrough” option is true then it sets the item to the chained store.
+If the store is chained to another store, by default it sets the item to its own store. If "writeThrough" option is true then it sets the item to the chained store.
 
 ===Parameters===
 

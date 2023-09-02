@@ -28,8 +28,8 @@ The object that contains a copy of all items in the store. The copy is created u
 
 ''Type:Function'' ''get/set''
 
-The merge function to be used in the [[#merge_newitems_merger|merge()]] method. By default, 
- BitmistJS's [[en:bitsmist-js-core:reference:util:util#deepmerge_obj1_obj2|deep merge utility function]] is used. 
+The merge function to be used in the [[#merge_newitems_merger|merge()]] method. By default,
+ BitmistJS's [[en:bitsmist-js-core:reference:util:util#deepmerge_obj1_obj2|deep merge utility function]] is used.
 
 Both the merge source object and target object are passed to this merge function. Return the merged object from the merge function.
 
@@ -89,7 +89,7 @@ The deep copy of stored items.
 
 Returns the value specified by the key parameter. Returns the default value if the key doesn't exist. The value will be deep copied if the value is an array or object.
 
-You can use a period-separated string to specify a hierarchy. The below example returns the value of store[“settings”][“name”] from the store.
+You can use a period-separated string to specify a hierarchy. The below example returns the value of store["settings"]["name"] from the store.
 
 <code javascript>
 store.get("settings.name");
@@ -168,13 +168,13 @@ Undefined.
 Sets the value to an item specified by the key parameter. If the key does not exist, it will be automatically created. If the item already exists in the store, the value will be overwritten by the new value.
 
 
-You can use a period-separated string to specify a hierarchy. The below example sets the value to store[“settings”][“name”].
+You can use a period-separated string to specify a hierarchy. The below example sets the value to store["settings"]["name"].
 
 <code javascript>
 store.set("settings.name", "BarHeader");
 </code>
 
-If the intermediate hierarchies do not exist, they will be created automatically. In the above example, if “settings” does not exist, the hierarchy “settings” is automatically created. However, if the intermediate hierarchy already exists and is not an object, an error will be thrown. For example, if the above code is executed on a Store object with content {“settings”: “value”}, the “settings ” hierarchy cannot be created and it causes an error.
+If the intermediate hierarchies do not exist, they will be created automatically. In the above example, if "settings" does not exist, the hierarchy "settings" is automatically created. However, if the intermediate hierarchy already exists and is not an object, an error will be thrown. For example, if the above code is executed on a Store object with content {"settings": "value"}, the "settings " hierarchy cannot be created and it causes an error.
 
 ===Parameters===
 

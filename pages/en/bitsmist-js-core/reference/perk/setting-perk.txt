@@ -26,7 +26,7 @@ Settings common to all units are described in the "system.setting" section of th
 
 ====Format - Unit====
 
-Unit-specific settings are described in the “setting” section.
+Unit-specific settings are described in the "setting" section.
 
 <code javascript>
 {
