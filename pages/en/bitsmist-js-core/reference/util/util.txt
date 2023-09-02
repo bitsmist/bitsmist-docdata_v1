@@ -1,0 +1,324 @@
+======Util======
+
+=====Overview=====
+
+Util a utility class that collects various utility functions.
+
+=====Methods=====
+
+====assert(conditions, msg, error)====
+
+''Type:Undefined'' ''Static''
+
+Raises an exception If the specified condition is not met.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|conditions \\ ''Required''|Expression|The expression that determines whether to raise an exception. If the result is false, an exception is raised.|
+|msg \\ ''Required''|String|The message to show.|
+|error \\ ''Default:Error'' |Error|The exception to be raised.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====concatPath(paths)====
+
+''Type:String'' ''Static''
+
+The strings in the array passed are concatenated using "/" as the delimiter to create a path. The paths are concatenated so that only one "/" appears between each word, taking into account whether each element begins or ends with a "/".
+
+===Parameters===
+
+^Parameter^Type^Description^
+|paths \\ ''Required''|Array of String|The array of paths.|
+
+===Return Value===
+
+The concatenated path string.
+
+----
+
+====deepClone(target)====
+
+''Type:*'' ''Static''
+
+Deep clones the value passed in the argument.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|target \\ ''Required''|*|The value to be cloned.|
+
+===Return Value===
+
+The cloned value.
+
+----
+
+====deepMerge(obj1, obj2)====
+
+''Type:Object'' ''Static''
+
+Deep merges argument obj2 into obj1. The obj1 will be overwritten.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|obj1 \\ ''Required''|Object|The objects to be merged.|
+|obj2 \\ ''Required''|Object|The object to merge.|
+
+===Return Value===
+
+The obj1 after merged.
+
+----
+
+====getClassNameFromTagName(tagName)====
+
+''Type:String'' ''Static''
+
+Generates a class name from the HTML tag name given in the argument. The class name is created by concatenating the tag name with the first letter of the word before and after the hyphen capitalized and the hyphen removed.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|tagName \\ ''Required''|String|The tag Name.|
+
+===Return Value===
+
+The generated class name.
+
+----
+
+====getObject(target, options)====
+
+''Type:Object'' ''Static''
+
+Converts a value to an object. If the value passed is an object, it is returned as is.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|target \\ ''Required''|String|The value to convert.|
+|options|Object|The options. Has the following keys:|
+|  "format"|String|If "js" is specified, target is assumed to be a Javascript object. If not specified, JSON is assumed.|
+|  "bindTo"|String|If the format is "js", specify the object to be bound. This value can be referenced by "this" inside the object.|
+
+===Return Value===
+
+The converted object.
+
+----
+
+====getTagNameFromClassName(className)====
+
+''Type:String'' ''Static''
+
+Generates a tag name from the class name given in the argument. The tag name will be the class name with a hyphen between the first and second words which start with an uppercase letter, and then all lowered.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|className \\ ''Required''|String|The class Name to convert.|
+
+===Return Value===
+
+The converted tag Name.
+
+----
+
+
+====getUUID()====
+
+''Type:String'' ''Static''
+
+Generates and returns a unique ID or UUID.
+
+===Parameters===
+
+None.
+
+===Return Value===
+
+The generated UUID.
+----
+
+====randomWait(max, fixed)====
+
+''Type:Undefined'' ''Asynchronous'' ''Static''
+
+Returns a promise that will be resolved after a random time.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|max|Number|Maximum time until being resolved in milliseconds.|
+|fixed|Boolean|If true, resolves after the time specified by the max parameter instead of a random time.|
+
+===Return Value===
+
+Undefined.
+
+----
+
+====safeEval(code, parameters)====
+
+''Type:*'' ''Static''
+
+Executes the text of the Javascript code given and returns the result. The code will be executed in strict mode.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|code \\ ''Required''|String|The javascript code to be executed.|
+|parameters|Object|The parameters object that is bound to the code. It can be accessed within the code with "this".|
+
+===Return Value===
+
+The return value of the executed code.
+
+----
+
+====safeGet(store, key, defaultValue)====
+
+''Type:*'' ''Static''
+
+Returns the value specified by the key parameter from the given object. Returns the default value if the key doesn't exist. The value will be deep copied if the value is an array or object.
+
+You can use a period-separated string to specify a hierarchy. 
+
+===Parameters===
+
+^Parameter^Type^Description^
+|store \\ ''Required''|Object|The object from which to retrieve.|
+|key \\ ''Required''|String|The key to be retrieved.|
+|defaultValue|*|The default value to be returned when the key doesn't exist.|
+
+===Return Value===
+
+The value specified by the key. When the key is not found, returns the default value, or Undefined if the default value is missing.
+
+----
+
+====safeHas(store, key)====
+
+''Type:Boolean'' ''Static''
+
+Returns whether the specified key exists in the object.
+
+You can use a period-separated string to specify a hierarchy. 
+
+===Parameters===
+
+^Parameter^Type^Description^
+|store \\ ''Required''|Object|The object to check.|
+|key \\ ''Required''|String|The key to check.|
+
+===Return Value===
+
+True if the key exists, false if it doesn't exist.
+
+----
+
+====safeMerge(store, key, value)====
+
+''Type:Object'' ''Static''
+
+Merges the value into the object given at the position specified by the key. The actual merging is done by [[#deepmerge_obj1_obj2|Util.deepMerge()]]. The store parameter will be be overwritten.
+
+You can use a period-separated string to specify a hierarchy.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|store \\ ''Required''|Object|The object to be merged.|
+|key \\ ''Required''|String|The key to be merged.|
+|value \\ ''Required''|*|The value to merge.|
+
+===Return Value===
+
+Returns the store given in the argument after merged.
+
+----
+
+====safeSet(store, key, value)====
+
+''Type:Object'' ''Static''
+
+Sets the value to an item in the object specified by the key parameter. If the key does not exist, it will be automatically created. If the item already exists in the store, the value will be overwritten by the new value.
+
+You can use a period-separated string to specify a hierarchy. 
+
+===Parameters===
+
+^Parameter^Type^Description^
+|store \\ ''Required''|Object|The object to set the value.|
+|key \\ ''Required''|String|The key to set the value.|
+|value \\ ''Required''|*|The value to set.|
+
+===Return Value===
+
+Returns the store given in the argument after set.
+
+----
+
+====safeRemove(store, key)====
+
+''Type:Object'' ''Static''
+
+Removes the item that has the specified key.
+
+You can use a period-separated string to specify a hierarchy. 
+
+===Parameters===
+
+^Parameter^Type^Description^
+|store \\ ''Required''|Object|The object to be removed.|
+|key \\ ''Required''|String|The key to remove.|
+
+===Return Value===
+
+Returns the store given in the argument after removal.
+
+----
+
+====scopedSelectorAll(rootNode, query, options)====
+
+''Type:NodeList'' ''Static''
+
+Returns HTML elements matching the query under the node specified. If there is another unit under the node, it does not search within that unit by default.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|rootNode|HTMLElement|The starting node of the search.|
+|query|String|The search query. The same format as document.querySelector().|
+|options|Object|The options. Has the following keys:|
+|  "penetrate"|Boolean|If True, the inner HTML of another unit is also searched.|
+
+===Return Value===
+
+A list of HTML elements found.
+
+----
+
+====warn(conditions, msg, level)====
+
+''Type:Undefined'' ''Static''
+
+The warning message is displayed on the console if the specified condition is not met.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|conditions \\ ''Required''|Expression|The expression that determines whether to show a warning. If the result is false, the warning message is displayed.|
+|msg \\ ''Required''|String|The message to be displayed.|
+|level \\ ''Default:warn'' |String|The message level.|
+
+===Return Value===
+
+Undefined.
