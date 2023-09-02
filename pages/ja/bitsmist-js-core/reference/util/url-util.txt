@@ -1,0 +1,103 @@
+======URLUtil======
+
+=====概要=====
+
+URLに関する処理を行う、ユーティリティークラスです。
+
+=====メソッド=====
+
+====buildQuery(options)====
+
+''型:String'' ''Static''
+
+引数で与えられたオブジェクトから、URLのクエリー部を生成します。各キーと値はURLEncodeされます。値が配列の場合、それぞれの要素はカンマで連結されます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|options \\ ''必須''|Object|URLのクエリーパラメータのオブジェクトです。|
+
+===戻り値===
+
+URLのクエリー文字列を返します。クエリー文字列が空文字列ではない場合、先頭に?を付加します。
+
+----
+
+====buildURL(routeInfo, options)====
+
+''型:String'' ''Static''
+
+指定されたルート情報オブジェクトを元に、URLを生成します。
+
+ルート情報に"URL"が含まれる場合それを使用し、含まれない場合は、"protocol"、"host"、"pathname"を繋ぎ合わせてURLを生成します。指定がないパラメータは、現在のURLの内容が使用されます。
+
+クエリー部はルート情報に"query"が含まれる場合、それがそのまま使用されます。"queryParameters"が含まれる場合、そのオブジェクトを元にクエリー部が生成され、URLに付加されます。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|routeInfo \\ ''必須''|Object|URLを組み立てるためのルート情報です。以下のキーがあります。|
+|  "URL"|String|クエリー部以外のURLを指定します。|
+|  "protocol"|String|URLのプロトコル部です。|
+|  "host"|String|URLのホスト部です。|
+|  "pathname"|String|URLのパス名部です。|
+|  "query"|String|URLのクエリー部です。|
+|  "queryParameters"|Object|クエリーのパラメータ部のオブジェクトです。|
+|options|Object|オプションを指定します。以下のキーがあります。|
+|  "mergeParameters"|String|Trueの場合、現在のURLのクエリーにルート情報のクエリーパラメータをマージします。|
+
+===戻り値===
+
+生成したURLを返します。
+
+----
+
+====loadParameters(url)====
+
+''型:Object'' ''Static''
+
+指定されたURLのクエリー部分を、オブジェクトに変換して返します。
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|url|String|対象となるURLを指定します。指定がない場合、現在のURLが使用されます。|
+
+===戻り値===
+
+クエリー部のオブジェクトを返します。
+
+
+----
+
+====parseURL(url)====
+
+''型:Object'' ''Static''
+
+引数で与えられたURLを分解し、格納したオブジェクトを返します。オブジェクトは以下の情報を持ちます。
+
+^キー^型^説明^
+|protocol|String|URLのプロトコル部です。|
+|username|String|URLのユーザー名部です。|
+|password|String|URLのパスワード部です。|
+|host|String|URLのホスト部です。ポートが指定されている場合は、ポートも含みます。|
+|hostname|String|URLのホスト部です。|
+|port|String|URLのポート部です。|
+|pathname|String|URLのパス部です。|
+|path|String|URLのパス部からファイル名部を取り除いたものです。|
+|search|String|URLのクエリー部です。|
+|query|String|URLのクエリー部です。|
+|hash|String|URLのハッシュ部です。|
+|filename|String|URLのファイル名部です。|
+|filenameWithoutExtension|String|URLの拡張子なしのファイル名部です。|
+|extension|String|URLのファイル名の拡張子部です。|
+|queryParameters|Object|URLのクエリー部をオブジェクトに変換したものです。|
+
+===パラメータ===
+
+^パラメータ^型^説明^
+|url|String|対象となるURLです。指定がない場合は、現在のURLが対象となります。|
+
+===戻り値===
+
+URL情報のオブジェクトです。

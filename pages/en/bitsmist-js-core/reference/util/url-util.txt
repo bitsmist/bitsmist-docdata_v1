@@ -1,0 +1,100 @@
+======URLUtil======
+
+=====Overview=====
+
+URLUtil is a utility class that performs URL-related tasks.
+=====Methods=====
+
+====buildQuery(options)====
+
+''Type:String'' ''Static''
+
+Generates the query part of a URL from the object given in the argument. Each key and value is URLEncoded. If an item in the options is an array, each element is concatenated with a comma.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|options \\ ''Required''|Object|The URL query parameter object.|
+
+===Return Value===
+
+Returns the URL query string. If the query string is not empty, a leading ? is prepended to the query string.
+
+----
+
+====buildURL(routeInfo, options)====
+
+''Type:String'' ''Static''
+
+Generates a URL based on the specified route information object.
+
+If "URL" is included in the route information, it is used as is; otherwise, "protocol", "host", and "pathname" are concatenated to generate the URL. The contents of the current URL are used for missing parts.
+
+If "query" is included in the route information, it is used as the query part. If "queryParameters" is included, the query part is generated based on that object and appended to the URL.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|routeInfo \\ ''Required''|Object|The Route information object. Has the following keys:|
+|  "URL"|String|The URL without query part.|
+|  "protocol"|String|The protocol part of the URL.|
+|  "host"|String|The host part of the URL.|
+|  "pathname"|String|The pathname part of the URL.|
+|  "query"|Object|The query part of the URL.|
+|  "queryParameters"|Object|The query object to build query part.|
+|options|Object|Options. Has the following keys:|
+|  "mergeParameters"|String|If true, merges the generated query into the current URL query.|
+
+===Return Value===
+
+The generated URL.
+----
+
+====loadParameters(url)====
+
+''Type:Object'' ''Static''
+
+Converts the query part of the specified URL into a Javascript object.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url|String|The target URL. If not specified, the current URL is used.|
+
+===Return Value===
+
+The query object.
+
+----
+
+====parseURL(url)====
+
+''Type:Object'' ''Static''
+
+Returns the object that decomposes the given URL. The object has the following information:
+
+^Key^Type^Description^
+|protocol|String|The protocol part of the URL.|
+|username|String|The username part of the URL.|
+|password|String|The password part of the URL.|
+|host|String|The host part of the URL. If a port is specified, the port is also included.|
+|hostname|String|The host part of the URL.|
+|port|String|The port part of the URL.|
+|pathname|String|The path part of the URL.|
+|path|String|The path part of the URL without the filename part.|
+|search|String|The query part of the URL.|
+|query|String|The query part of the URL.|
+|hash|String|The hash part of the URL.|
+|filename|String|The filename part of the URL.|
+|filenameWithoutExtension|String|The filename part of the URL without extension.|
+|extension|String|The filename extension part of the URL.|
+|queryParameters|Object|The query part of the URL, converted to an object.|
+
+===Parameters===
+
+^Parameter^Type^Description^
+|url|String|The target URL. If not specified, the current URL will be used.|
+
+===Return Value===
+
+URL information object.
