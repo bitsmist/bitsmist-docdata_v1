@@ -129,7 +129,7 @@ The node to which this unit is to be added. The node must be under the unit spec
 
 ''Type:String'' ''Default:this''
 
-The parent unit to which this unit will be added. The value is the same as the target argument of the [[ja:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]] skill. If not specified, it is added to itself.
+The parent unit to which this unit will be added. The value is the same as the target argument of the [[en:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]] skill. If not specified, it is added to itself.
 
 ----
 
@@ -187,7 +187,11 @@ The tags of the unit, including the closing tag. This value will be inserted int
 
 ====doApplySettings====
 
-Loads settings from the "unit.units" section and add units.
+Loads settings from the "unit.units" section and add units using [[#materialize|materialize]] spell.
+
+===Reference Settings===
+
+  * [[#format_-_unit|unit.units]]
 
 =====Inventory=====
 

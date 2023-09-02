@@ -183,9 +183,9 @@ bm-settingsref属性を指定した場合、値が指定されていればファ
 ===参照する設定===
 
   * [[#settingsfref_bm-settingsref|setting.options.settingRef/bm-settingsref]]
+  * [[#settingfomrat|setting.options.settingFormat]]/[[#settingfomrat|system.setting.options.settingFormat]]
   * [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]
   * [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]
   * [[ja:bitsmist-js-core:reference:perk:unit-perk#query|unit.options.query]]
-  * [[#settingfomrat|setting.options.settingFormat]]/[[#settingfomrat|system.setting.options.settingFormat]]
 

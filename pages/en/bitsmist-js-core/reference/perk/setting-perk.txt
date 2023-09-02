@@ -180,8 +180,8 @@ Undefined.
 ===Reference Settings===
 
   * [[#settingsfref_bm-settingsref|setting.options.settingRef/bm-settingsref]]
+  * [[#settingfomrat|setting.options.settingFormat]]/[[#settingfomrat|system.setting.options.settingFormat]]
   * [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]
   * [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[en:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]
   * [[en:bitsmist-js-core:reference:perk:unit-perk#query|unit.options.query]]
-  * [[#settingfomrat|setting.options.settingFormat]]/[[#settingfomrat|system.setting.options.settingFormat]]

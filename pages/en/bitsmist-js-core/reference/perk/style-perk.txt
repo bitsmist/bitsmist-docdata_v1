@@ -142,7 +142,14 @@ The URL of the CSS file. Used when the "type" setting is "URL".
 
 ====doTransform====
 
-First, loads all the CSS required for the unit. The required CSS are the styles specified in "style.options.apply" and the default styles. When loading is complete, all CSS applied to the unit is removed. After that, all loaded CSS is applied in order.
+First, loads all the CSS required for the unit using [[#summon|summon]] spell. The required CSS are the styles specified in "style.options.apply" and the default styles. When loading is complete, all CSS applied to the unit is removed. After that, all loaded CSS is applied in order using [[#apply|apply]] spell.
+
+===Reference Settings===
+
+  * [[#apply|style.options.apply]]
+  * [[#apply|styles.<styleName>.apply]]
+  * [[#styleref_bm-styleref|style.options.styleRef]]
+
 
 =====Inventory=====
 
@@ -199,6 +206,9 @@ Returns [[#styles|style info object]] of the loaded style.
 
 ===Reference Settings===
 
+  * [[#path|style.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
+  * [[#styleref_bm-styleref|style.options.styleRef]]
   * [[#type|style.sytles.<styleName>.type]]
   * [[#css|style.sytles.<styleName>.CSS]]  
   * [[#url|style.sytles.<styleName>.URL]] 
+  * [[#path|system.style.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

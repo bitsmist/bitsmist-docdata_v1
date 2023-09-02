@@ -144,7 +144,13 @@ CSSファイルのURLを指定します。"type"設定が"URL"の時に使用さ
 
 ====doTransform====
 
-まずユニットに必要なCSSを全てロードします。必要なCSSとは"style.options.apply"に指定されているスタイルと、デフォルトのスタイルです。ロードが完了すると、そのユニットに適用されていた全てのCSSを取り除きます。その後、ロードしたCSSを全て順番に適用してきます。
+まずユニットに必要なCSSを[[#summon|summon]]スペルを使って、全てロードします。必要なCSSとは"style.options.apply"に指定されているスタイルと、デフォルトのスタイルです。ロードが完了すると、そのユニットに適用されていた全てのCSSを取り除きます。その後、ロードしたCSSを全て順番に[[#apply|apply]]スペルで、適用します。
+
+===参照する設定===
+
+  * [[#apply|style.options.apply]]
+  * [[#apply|style.styles.<styleName>.apply]]
+  * [[#styleref_bm-styleref|style.options.styleRef]]
 
 =====インベントリ=====
 
@@ -202,7 +208,9 @@ CSSをロードします。ロードするのみで適用はされません。�
 
 ===参照する設定===
 
+  * [[#path|style.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
+  * [[#styleref_bm-styleref|style.options.styleRef]]
   * [[#type|style.sytles.<styleName>.type]]
   * [[#css|style.sytles.<styleName>.CSS]]  
   * [[#url|style.sytles.<styleName>.URL]] 
-
+  * [[#path|system.style.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

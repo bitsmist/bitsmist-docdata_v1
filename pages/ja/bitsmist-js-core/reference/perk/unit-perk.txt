@@ -188,7 +188,12 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
 ====doApplySettings====
 
-"unit.units"セクションから設定を読み込み、ユニットを追加します。
+"unit.units"セクションから設定を読み込み、[[#materialize|materialize]]スペルを使ってユニットを追加します。
+
+===参照する設定===
+
+  * [[#書式-ユニット固有設定|unit.units]]
+
 
 =====インベントリ=====
 

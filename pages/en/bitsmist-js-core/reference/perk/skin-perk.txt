@@ -138,17 +138,25 @@ The URL of the HTML file. Used when the "type" setting is "URL".
 
 ====beforeTransform====
 
-If a skin name is specified in e.details.skinName or "skin.options.skinRef" is set to True (default is True), the skin is loaded according to the settings. If no skin name is specified, the default skin is loaded. The default skin is loaded from the default URL if the "default" section is not set. If the "default" section is set, it follows the settings.
+If a skin name is specified in e.details.skinName or "skin.options.skinRef" is set to true (default is true), the skin is loaded using [[#summon|summon]] spell. If no skin name is specified, the default skin is loaded. The default skin is loaded from the default URL if the "default" section is not set. If the "default" section is set, it follows the settings.
 
 A Template node is created from the loaded HTML, and the clone is set to the [[en:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]] property. Until actually applied in the next doTransform event handler, operations on the unit's skin will be performed on this clone and will not be drawn to the screen.
+
+===Reference Settings===
+
+  * [[#skinref_bm-skinref|skinRef]]
 
 ----
 
 ====doTransform====
 
-Applies HTML to the unit. If e.detail.skinName is set or "skin.options.skinRef" is True (default is True), the skin is applied according to the settings. If no skin name is specified, the default skin is applied.
+If e.detail.skinName is set or "skin.options.skinRef" is true (default is true), the skin is applied using [[#apply|apply]] skill. If no skin name is specified, the default skin is applied.
 
 A clone of the Template created in beforeTransform is added to the unit and displayed.
+
+===Reference Settings===
+
+  * [[#skinref_bm-skinref|skinRef]]
 
 =====Inventory=====
 
@@ -219,7 +227,10 @@ Returns [[#skins|skin info object]] of the loaded skin.
 
 ===Reference Settings===
 
+  * [[#path|skin.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
+  * [[#skinref_bm-skinref|skin.options.skinRef]]
   * [[#type|skin.skins.<skinName>.type]]
   * [[#html|skin.skins.<skinName>.HTML]]  
   * [[#rootnode|skin.skins.<skinName>.rootNode]] 
   * [[#url|skin.skins.<skinName>.URL]] 
+  * [[#path|system.skin.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

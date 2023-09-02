@@ -62,6 +62,10 @@ The time in milliseconds before timeout when using the [[#wait|wait]] spell.
 
 Loads the settings from the "status.waitFor" section and installs event handlers to wait for other units.
 
+===Reference Settings===
+
+  * [[#format_-_unit|status.waitFor]]
+
 =====States=====
 
 ====status====
