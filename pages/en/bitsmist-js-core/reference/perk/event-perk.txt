@@ -298,7 +298,7 @@ Loads the settings from the "event.events" section and adds event handlers.
 
 ===Reference Settings===
 
-  * [[#format-unit|event.events]]
+  * [[#format_-_unit|event.events]]
 
 ----
 
@@ -308,7 +308,7 @@ Loads the settings from the "event.events" section and adds event handlers **onl
 
 ===Reference Settings===
 
-  * [[#format-unit|event.events]]
+  * [[#format_-_unit|event.events]]
 
 
 =====Skills=====
