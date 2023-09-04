@@ -69,7 +69,7 @@ Some settings can be described in tag attributes.
 ></my-unit>
 </code>
 
-====apply====
+===="apply"====
 
 ''Type:Array of String''
 
@@ -79,7 +79,7 @@ Note that you do not need to specify the default style here. If "style.options.s
 
 ----
 
-====CSS====
+===="CSS"====
 
 ''Type:String''
 
@@ -87,7 +87,7 @@ The CSS string. This is **CSS, not a CSS filename**. Used when the "type" settin
 
 ----
 
-====fileName====
+===="fileName"====
 
 
 ''Type:String'' ''Default:<Tag Name>''
@@ -96,7 +96,7 @@ The CSS file name. No extension is required. If not set, then [[en:bitsmist-js-c
 
 ----
 
-====path====
+===="path"====
 
 ''Type:String''
 
@@ -104,7 +104,7 @@ The path to the CSS file. The "system.style.options.path" and "style.options.pat
 
 ----
 
-====styleName====
+====<styleName>====
 
 ''Type:String''
 
@@ -112,7 +112,7 @@ The style name. Specify "default" for the default style.
 
 ----
 
-====styleRef / bm-styleref====
+===="styleRef" / bm-styleref====
 
 ''Type:Boolean|String'' ''Default:True''
 
@@ -125,7 +125,7 @@ If the CSS file is not found, it causes a 404 error and the unit initialization 
 
 ----
 
-====type====
+===="type"====
 
 ''Type:String''
 
@@ -133,7 +133,7 @@ Specifies where to get the CSS from. Type can be "CSS" or "URL". If "CSS", the C
 
 ----
 
-====URL====
+===="URL"====
 
 ''Type:String''
 

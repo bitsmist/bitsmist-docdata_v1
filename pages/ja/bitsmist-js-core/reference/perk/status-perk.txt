@@ -44,7 +44,7 @@ StatusPerkはユニットの状態に関する機能を付与します。
 }
 </code>
 
-====eventName====
+====<eventName>====
 
 ''型:String''
 
@@ -52,7 +52,7 @@ StatusPerkはユニットの状態に関する機能を付与します。
 
 値には、[[ja:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]]スキルのtaget引数と同じものを、配列で指定します。
 
-====waitForTimeout====
+===="waitForTimeout"====
 
 ''型:Number'' ''デフォルト:10000''
 

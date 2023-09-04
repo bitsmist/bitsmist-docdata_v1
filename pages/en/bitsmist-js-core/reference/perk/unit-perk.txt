@@ -50,7 +50,7 @@ The "unit.units" section lists the units to be added dynamically. The object set
         },
         "units": {
             <unitName>:  {
-                (unit's settings)
+                (unit settings)
             },
             ...
         }
@@ -73,7 +73,7 @@ Some settings can be described in tag attributes.
 ></my-unit>
 </code>
 
-====adjacentPosition====
+===="adjacentPosition"====
 
 ''Type:String''
 
@@ -81,7 +81,7 @@ The position at which the unit is to be inserted. One of "beforebegin", "afterbe
 
 ----
 
-====autoLoad / bm-autoload====
+===="autoLoad" / bm-autoload====
 
 ''Type:Boolean|String'' ''Default:False''
 
@@ -91,7 +91,7 @@ If the value is set for the bm-autoload attribute, the value is used as the URL 
 
 ----
 
-====autoMorph / bm-automorph====
+===="autoMorph" / bm-automorph====
 
 ''Type:Boolean|String'' ''Default:"BITSMIST.v1.Unit"''
 
@@ -101,7 +101,7 @@ If the value is set for the bm-automorph attribute, the value is used as the cla
 
 ----
 
-====className / bm-classname====
+===="className" / bm-classname====
 
 ''Type:String'' ''Default:(See desc)''
 
@@ -109,7 +109,7 @@ The class name of the unit. If not specified, the class name is the name of the 
 
 ----
 
-====fileName / bm-filename====
+===="fileName" / bm-filename====
 
 ''Type:String'' ''Default:<tag name>''
 
@@ -117,7 +117,7 @@ The file name of the unit without extension. If not specified, the tag name is u
 
 ----
 
-====parentNode====
+===="parentNode"====
 
 ''Type:String''
 
@@ -125,7 +125,7 @@ The node to which this unit is to be added. The node must be under the unit spec
 
 ----
 
-====parentUnit====
+===="parentUnit"====
 
 ''Type:String'' ''Default:this''
 
@@ -133,7 +133,7 @@ The parent unit to which this unit will be added. The value is the same as the t
 
 ----
 
-====path / bm-path====
+===="path" / bm-path====
 
 ''Type:String''
 
@@ -141,7 +141,7 @@ The path to the unit. The final path will be the string "system.unit.options.pat
 
 ----
 
-====query====
+===="query"====
 
 ''Type:String''
 
@@ -149,7 +149,7 @@ A query that is appended to the URL when retrieving a file.
 
 ----
 
-====replaceParent====
+===="replaceParent"====
 
 ''Type:Boolean'' ''Default:False''
 
@@ -157,7 +157,7 @@ Specifies whether to replace the parent node.
 
 ----
 
-====splitClass / bm-splitclass====
+===="splitClass" / bm-splitclass====
 
 ''Type:Boolean'' ''Default:False''
 
@@ -167,7 +167,7 @@ If the bm-splitclass attribute is specified, it is assumed to be True even if no
 
 ----
 
-====syncOnAdd====
+===="syncOnAdd"====
 
 ''Type:Boolean|String'' ''Default:False''
 
@@ -177,11 +177,17 @@ For the valid statuses, see [[en:bitsmist-js-core:reference:perk:status-perk#sta
 
 ----
 
-====tag====
+===="tag"====
 
 ''Type:String''
 
 The tags of the unit, including the closing tag. This value will be inserted into the HTML.
+
+====<unitName>====
+
+''Type:String''
+
+The name of the unit.
 
 =====Event Handlers=====
 

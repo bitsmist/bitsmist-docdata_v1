@@ -28,7 +28,7 @@ Unit-specific settings are described in the "basic" section.
 }
 </code>
 
-====autoClear====
+===="autoClear"====
 
 ''Type:Boolean'' ''Default:True''
 
@@ -36,7 +36,7 @@ If true, using the [[#refresh|refresh]] spell will automatically invoke the [[#c
 
 ----
 
-====autoFetch====
+===="autoFetch"====
 
 ''Type:Boolean'' ''Default:True''
 
@@ -44,7 +44,7 @@ If true, using the [[#refresh|refresh]] spell automatically invokes the [[#fetch
 
 ----
 
-====autoFill====
+===="autoFill"====
 
 ''Type:Boolean'' ''Default:True''
 
@@ -52,7 +52,7 @@ If true, using the [[#refresh|refresh]] spell will automatically invoke the [[#f
 
 ----
 
-====autoRefresh====
+===="autoRefresh"====
 
 ''Type:Boolean'' ''Default:True''
 
@@ -60,7 +60,7 @@ If True, the [[#refresh|refresh]] spell is automatically invoked during the init
 
 ----
 
-====autoRestart====
+===="autoRestart"====
 
 ''Type:Boolean'' ''Default:False''
 
@@ -68,7 +68,7 @@ If true, when a unit is connected to a node (at ConnectedCallback), the unit wil
 
 ----
 
-====autoSetup====
+===="autoSetup"====
 
 ''Type:Boolean'' ''Default:True''
 
@@ -76,7 +76,7 @@ If true, the [[#setup|setup]] spell is automatically invoked during the transfor
 
 ----
 
-====autoTransform====
+===="autoTransform"====
 
 ''Type:Boolean'' ''Default:True''
 

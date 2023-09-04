@@ -52,7 +52,7 @@ There is a shortened format for event handlers. If you do not need event handler
 }
 </code>
 
-====elementName====
+====<elementName>====
 
 ''Type:String''
 
@@ -60,7 +60,7 @@ The target element name to set event handlers. If the [[#rootnode|rootNode]] opt
 
 ----
 
-====eventName====
+====<eventName>====
 
 ''Type:String''
 
@@ -68,7 +68,7 @@ The name of the event for which you want to register an event handler. Valid eve
 
 ----
 
-====handler====
+===="handler"====
 
 ''Type:String|Function''
 
@@ -76,7 +76,7 @@ The event handler for this event. The event handler can be a string or a Functio
 
 ----
 
-====listenerOptions====
+===="listenerOptions"====
 
 ''Type:Object''
 
@@ -84,7 +84,7 @@ The options which passed to the Javascript native addEventListener() function.
 
 ----
 
-====options====
+===="options"====
 
 ''Type:Object''
 
@@ -92,7 +92,7 @@ The options which passed to the event handler. It can be accessed via the "ex" a
 
 ----
 
-====order====
+===="order"====
 
 ''Type:Number'' ''Default:0''
 
@@ -100,7 +100,7 @@ The order priority. It controls the order of execution when there are multiple e
 
 ----
 
-====rootNode====
+===="rootNode"====
 
 ''Type:String''
 

@@ -70,7 +70,7 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
 ></my-unit>
 </code>
 
-====apply====
+===="apply"====
 
 ''型:Array of String''
 
@@ -80,7 +80,7 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
 
 ----
 
-====CSS====
+===="CSS"====
 
 ''型:String''
 
@@ -88,7 +88,7 @@ CSSの文字列を指定します。これは**CSSであって、CSSのファイ
 
 ----
 
-====fileName====
+===="fileName"====
 
 
 ''型:String'' ''デフォルト:<タグ名>''
@@ -97,7 +97,7 @@ CSSのファイル名を指定します。拡張子は不要です。ここに�
 
 ----
 
-====path====
+===="path"====
 
 ''型:String''
 
@@ -105,7 +105,7 @@ CSSファイルのパスを指定します。"system.style.options.path"と"styl
 
 ----
 
-====styleName====
+====<styleName>====
 
 ''型:String''
 
@@ -113,7 +113,7 @@ CSSファイルのパスを指定します。"system.style.options.path"と"styl
 
 ----
 
-====styleRef / bm-styleref====
+===="styleRef" / bm-styleref====
 
 ''型:Boolean|String'' ''デフォルト:True''
 
@@ -124,7 +124,7 @@ bm-styleref属性を指定した場合、値が指定されていればファイ
 CSSファイルが存在しない場合、404エラーが発生し、ユニットの初期化が止まります。もしユニットにCSSファイルがないのであれば、明示的にfalseをセットしてください。
 ----
 
-====type====
+===="type"====
 
 ''型:String''
 
@@ -132,7 +132,7 @@ CSSをどこから取得するかを指定します。タイプは"CSS"、"URL""
 
 ----
 
-====URL====
+===="URL"====
 
 ''型:String''
 

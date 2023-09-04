@@ -51,7 +51,7 @@ UnitPerkはクラスファイルのロードなど、ユニットのロードと
         },
         "units": {
             <unitName>:  {
-                (unit's settings)
+                (unit settings)
             },
             ...
         }
@@ -74,7 +74,7 @@ UnitPerkはクラスファイルのロードなど、ユニットのロードと
 ></my-unit>
 </code>
 
-====adjacentPosition====
+===="adjacentPosition"====
 
 ''型:String''
 
@@ -82,7 +82,7 @@ UnitPerkはクラスファイルのロードなど、ユニットのロードと
 
 ----
 
-====autoLoad / bm-autoload====
+===="autoLoad" / bm-autoload====
 
 ''型:Boolean|String'' ''デフォルト:False''
 
@@ -92,7 +92,7 @@ bm-autoload属性を指定した場合、値が指定されていればファイ
 
 ----
 
-====autoMorph / bm-automorph====
+===="autoMorph" / bm-automorph====
 
 ''型:Boolean|String'' ''デフォルト:"BITSMIST.v1.Unit"''
 
@@ -102,7 +102,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====className / bm-classname====
+===="className" / bm-classname====
 
 ''型:String'' ''デフォルト:(説明参照)''
 
@@ -110,7 +110,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====fileName / bm-filename====
+===="fileName" / bm-filename====
 
 ''型:String'' ''デフォルト:<タグ名>''
 
@@ -118,7 +118,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====parentNode====
+===="parentNode"====
 
 ''型:String''
 
@@ -126,7 +126,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====parentUnit====
+===="parentUnit"====
 
 ''型:String'' ''デフォルト:this''
 
@@ -134,7 +134,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====path / bm-path====
+===="path" / bm-path====
 
 ''型:String''
 
@@ -142,7 +142,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====query====
+===="query"====
 
 ''型:String''
 
@@ -150,7 +150,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====replaceParent====
+===="replaceParent"====
 
 ''型:Boolean'' ''デフォルト:False''
 
@@ -158,7 +158,7 @@ bm-automorph属性を指定した場合、値が指定されていればクラ�
 
 ----
 
-====splitClass / bm-splitclass====
+===="splitClass" / bm-splitclass====
 
 ''型:Boolean'' ''デフォルト:False''
 
@@ -168,7 +168,7 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
 ----
 
-====syncOnAdd====
+===="syncOnAdd"====
 
 ''型:Boolean|String'' ''デフォルト:False''
 
@@ -178,12 +178,17 @@ bm-splitclass属性を指定した場合、値が指定されてなければTrue
 
 ----
 
-====tag====
+===="tag"====
 
 ''型:String''
 
 ユニットのタグを終了タグも含めて指定します。この値でHTMLに挿入されます。
 
+====<unitName>====
+
+''型:String''
+
+ユニットの名前を指定してください。
 =====イベントハンドラ=====
 
 ====doApplySettings====

@@ -60,7 +60,7 @@ Some settings can be described in tag attributes.
 ></my-unit>
 </code>
 
-====fileName====
+===="fileName"====
 
 ''Type:String'' ''Default:<tag name>''
 
@@ -68,7 +68,7 @@ The HTML file name. No extension is required. If not set, then [[en:bitsmist-js-
 
 ----
 
-====HTML====
+===="HTML"====
 
 ''Type:String''
 
@@ -76,7 +76,7 @@ The HTML string. This is **HTML, not an HTML filename**. Used when the "type" se
 
 ----
 
-====path====
+===="path"====
 
 ''Type:String''
 
@@ -84,7 +84,7 @@ The path to the HTML file. The "system.skin.options.path" and "skin.options.path
 
 ----
 
-====rootNode====
+===="rootNode"====
 
 ''Type:String''
 
@@ -92,7 +92,7 @@ The selector string that points to a specific node in the unit. The format is th
 
 ----
 
-====shadowDOM====
+===="shadowDOM"====
 
 ''Type:String'' ''Default:False''
 
@@ -100,7 +100,7 @@ To use ShadowDOM, specify "open" or "closed", otherwise ShadowDOM is not used. B
 
 ----
 
-====skinName====
+====<skinName>====
 
 ''Type:String''
 
@@ -108,7 +108,7 @@ The skin name. Specify "default" for the default skin.
 
 ----
 
-====skinRef / bm-skinref====
+===="skinRef" / bm-skinref====
 
 ''Type:Boolean|String'' ''Default:True''
 
@@ -120,7 +120,7 @@ If the skin file is not found, it causes a 404 error and the unit initialization
 
 ----
 
-====type====
+===="type"====
 
 ''Type:String''
 
@@ -128,7 +128,7 @@ Specifies where to get the HTML template from. Type can be "HTML", "URL", or "no
 
 ----
 
-====URL====
+===="URL"====
 
 ''Type:String''
 

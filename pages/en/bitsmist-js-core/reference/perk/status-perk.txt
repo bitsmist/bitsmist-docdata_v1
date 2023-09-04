@@ -44,14 +44,14 @@ Unit-specific settings are described in the "status" section.
 }
 </code>
 
-====eventName====
+====<eventName>====
 
 ''Type:String''
 
 The event name. Wait for other units in the event handler for the event specified here. Valid event names are BitsmistJS events or standard Javascript events.
 
 The value for this item is an array;  each item being the same as the target argument of the [[en:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]] skill.
-====waitForTimeout====
+===="waitForTimeout"====
 
 ''Type:Number'' ''Default:10000''
 

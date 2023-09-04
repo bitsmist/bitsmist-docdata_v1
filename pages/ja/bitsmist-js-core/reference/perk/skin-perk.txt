@@ -61,7 +61,7 @@ SkinPerkはユニットのHTMLに関する機能を付与します。またShado
 ></my-unit>
 </code>
 
-====fileName====
+===="fileName"====
 
 
 ''型:String'' ''デフォルト:<タグ名>''
@@ -70,7 +70,7 @@ HTMLのファイル名を指定します。拡張子は不要です。ここに�
 
 ----
 
-====HTML====
+===="HTML"====
 
 ''型:String''
 
@@ -78,7 +78,7 @@ HTMLの文字列を指定します。これは**HTMLであって、HTMLのファ
 
 ----
 
-====path====
+===="path"====
 
 ''型:String''
 
@@ -86,7 +86,7 @@ HTMLファイルのパスを指定します。"system.skin.options.path"と"skin
 
 ----
 
-====rootNode====
+===="rootNode"====
 
 ''型:String''
 
@@ -94,7 +94,7 @@ HTMLファイルのパスを指定します。"system.skin.options.path"と"skin
 
 ----
 
-====shadowDOM====
+===="shadowDOM"====
 
 ''型:String'' ''デフォルト:False''
 
@@ -102,7 +102,7 @@ ShadowDOMを使用する場合、"open"または"closed"を指定します。そ
 
 ----
 
-====skinName====
+====<skinName>====
 
 ''型:String''
 
@@ -110,7 +110,7 @@ ShadowDOMを使用する場合、"open"または"closed"を指定します。そ
 
 ----
 
-====skinRef / bm-skinref====
+===="skinRef" / bm-skinref====
 
 ''型:Boolean|String'' ''デフォルト:True''
 
@@ -122,7 +122,7 @@ bm-skinref属性を指定した場合、値が指定されていればファイ�
 
 ----
 
-====type====
+===="type"====
 
 ''型:String''
 
@@ -130,7 +130,7 @@ HTMLテンプレートをどこから取得するかを指定します。タイ�
 
 ----
 
-====URL====
+===="URL"====
 
 ''型:String''
 
