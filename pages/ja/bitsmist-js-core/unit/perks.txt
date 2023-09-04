@@ -18,13 +18,34 @@ BitsmistJSの核であるUnitユニットはごく単純な機能しか持ちま
   * [[ja:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
   * [[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
   * [[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
-  * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]] 
-  * [[ja:bitsmist-js-core:reference:perk:style-perk|StylePerk]] 
+  * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:style-perk|StylePerk]]
   * [[ja:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]
 
 =====パークの適用=====
 
-パークを適用するには、各ユニットの設定に記述する必要があります。各パークには対応したセクション名があり、設定にそのセクションが存在することで、自動的にパークが適用されます。
+パークを適用するには、各ユニットの設定に記述する必要があります。2つの記述方法があります。
+
+====PerkPerkのセクションに記述する====
+
+[[ja:bitsmist-js-core:reference:perk:perk-perk#PerkPerk]]の[[ja:bitsmist-js-core:reference:perk:perk-perk#apply|apply]]オプションに、追加したいパークの名前を指定します。複数のパークを指定することが可能です。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "perk": {
+            "options": {
+                "apply": ["event"]
+            }
+        }
+    };
+}
+</code>
+
+====パーク専用のセクションを記述する====
+
+各パークには対応したセクション名があり、設定にそのセクションが存在することで、自動的にパークが適用されます。
 
 例えば、以下の設定には"event"セクションがあるため、EventPerkが自動的に適用されます。
 

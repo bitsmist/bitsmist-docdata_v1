@@ -24,7 +24,28 @@ By default, the following perks are applied to a unit.
 
 =====Applying Perks=====
 
-To apply a perk, it must be described in the settings of each unit. Each perk has a dedicated section for the perk, and the presence of that section in the settings will automatically apply the perk.
+To apply a perk, it must be described in the settings of each unit. There are two ways to do so.
+
+====Describe in the "perk" section ====
+
+Specify the name of the perks in [[en:bitsmist-js-core:reference:perk:perk-perk#apply|apply]] option of 
+ [[en:bitsmist-js-core:reference:perk:perk-perk#PerkPerk]].  Multiple perks can be specified.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "perk": {
+            "options": {
+                "apply": ["event"]
+            }
+        }
+    };
+}
+</code>
+====Add Perk's Dedicated Section====
+
+Each perk has a dedicated section for the perk, and the presence of that section in the settings will automatically apply the perk.
 
 For example, the following settings has an "event" section, so the EventPerk will be applied automatically.
 
