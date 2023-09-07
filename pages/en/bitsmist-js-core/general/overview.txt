@@ -7,7 +7,7 @@ BitsmistJS is a JavaScript framework built upon Web Components. It operates on a
 The primary aim is to minimize the amount of code required. By configuring the settings, you can easily harness various functions.
 ====Standard Javascript====
 
-We use standard Javascript technologies such as Web Components, Structured CSS, ShadowDOM, and asynchronous processing.
+We use standard Javascript technologies such as Web Components, Constructable Stylesheets, ShadowDOM, and asynchronous processing.
 
 ==== Components ====
 

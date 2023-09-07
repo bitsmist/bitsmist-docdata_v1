@@ -8,7 +8,7 @@ BitsmistJSはWeb ComponentsをベースとしたJavascriptのフレームワー�
 
 ====標準技術====
 
-Web Components・Structured CSS・ShadowDOM・非同期処理といった、Javascriptの標準技術を使用しています。
+Web Components・Constructable Stylesheets・ShadowDOM・非同期処理といった、Javascriptの標準技術を使用しています。
 
 ====コンポーネント====
 
