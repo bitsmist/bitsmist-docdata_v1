@@ -39,10 +39,9 @@ Usually, however, once the tag name is determined, the default name can be used 
 
 Since the BitsmistJS units are built on top of the custom elements in the standard Web Components technology,  you need to follow the rules. Each unit requires its own tag name. There must be one "-" in the tag name.
 
-<WRAP admonition tip>
-<WRAP links>
-[[https://developer.mozilla.org/en/docs/Web/Web_Components/Using_custom_elements | Using custom elements | MDN Web Docs]]
-</WRAP>
+<WRAP admonition tip links>
+Refer to the following page for details.
+  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en/docs/Web/Web_Components/Using_custom_elements | Using custom elements | MDN Web Docs]]
 </WRAP>
 
 We name the tag "pad-hello" here.

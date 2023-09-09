@@ -41,10 +41,8 @@ BitsmistJSのユニットは、以下のファイルが必要となります。
 BitsmistJSでは、ユニットは全て標準技術であるWeb Componentsのカスタムエレメントを使って作成されるため、そのルールに従う必要があります。それぞれのユニットには独自のタグが必要となります。タグ名には必ずハイフンが一つ必要です。
 
 <WRAP admonition tip links>
-<WRAP links>
 ルールについては、以下のページなどを参考にしてください。
   * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_custom_elements | カスタム要素の使用 | MDN Web Docs]]
-</WRAP>
 </WRAP>
 
 今回は"pad-hello"というタグにします。
