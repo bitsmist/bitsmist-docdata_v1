@@ -104,7 +104,7 @@ To use ShadowDOM, specify "open" or "closed", otherwise ShadowDOM is not used. B
 
 ''Type:String''
 
-The skin name. Specify "default" for the default skin.
+The skin name. Specify "default" for the default skin. Only one <skinName> can be applied to a unit at the same time. Specify this name when you switch to another HTML using [[en:bitsmist-js-core:reference:perk:basic-perk#transform|basic.transform]] spell.
 
 ----
 

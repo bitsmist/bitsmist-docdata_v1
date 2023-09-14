@@ -6,6 +6,14 @@ The Javascript file for each unit must be loaded into the browser. There are two
 
 This page describes how to load units.
 
+<WRAP admonition note links>
+This section describes the loading of the **class files** of the unit. See below for information on loading the settings, HTML, and CSS.
+
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:settings|Unit Explanined - Settings]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:html|Unit Explanined - HTML]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:css|Unit Explanined - CSS]]
+</WRAP>
+
 =====How to Load a Unit=====
 
 The following methods are available for loading units

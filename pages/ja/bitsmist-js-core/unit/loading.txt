@@ -6,6 +6,12 @@
 
 ここでは、ユニットのロード方法について説明します。
 
+<WRAP admonition note links>
+ここでは、ユニットの**クラスファイル**のロードについて説明します。設定、HTMLやCSSのロードについては以下をご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:settings|ユニットの解説 - 設定]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:html|ユニットの解説 - HTML]]
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:css|ユニットの解説 - CSS]]
+</WRAP>
 =====ロード方法=====
 
 ユニットのロード方法には、以下の方法があります。

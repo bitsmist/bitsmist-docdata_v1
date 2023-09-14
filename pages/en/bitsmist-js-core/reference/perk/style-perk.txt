@@ -23,6 +23,7 @@ The CSS specified in the apply setting in the system section is loaded at Perk i
             },
             "styles": {
                 <styleName>: {
+                    "apply": [String, ...],
                     "CSS": String,
                     "type": "CSS"|"URL",
                     "URL": String,
@@ -73,7 +74,9 @@ Some settings can be described in tag attributes.
 
 ''Type:Array of String''
 
-The name of the CSS to be applied. If in the "system" section, the specified CSS is applied to the document. If it is in the "style" section, it is applied to the unit if it is in shadowDOM mode, otherwise it is applied to the document.
+The name of the CSS to be applied. If in the "system.style" section, the specified CSS is applied to the document. 
+
+Within the "style" section, you can write in the "options" section and the "styles.<styleName>" section. If described in the "options" section, it will be applied no matter which CSS is used. If it is in the "styles.<styleName>" section, it will only be applied when that CSS is used. Each CSS is applied to the unit if in ShadowDOM mode, otherwise to the document.
 
 Note that you do not need to specify the default style here. If "style.options.styleRef" is specified, the default style for the unit is automatically applied **most last** even if it is not described here.
 
@@ -108,7 +111,7 @@ The path to the CSS file. The "system.style.options.path" and "style.options.pat
 
 ''Type:String''
 
-The style name. Specify "default" for the default style.
+The style name. Specify "default" for the default style. Only one <styleName> can be applied to a unit at the same time. Specify this name when you switch to another CSS using [[en:bitsmist-js-core:reference:perk:basic-perk#transform|basic.transform]] spell.
 
 ----
 

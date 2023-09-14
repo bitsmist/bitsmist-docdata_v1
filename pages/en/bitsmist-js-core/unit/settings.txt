@@ -2,7 +2,7 @@
 
 =====Overview=====
 
-Each unit operates according to its settings described in JSON or Javascript object format. There are two types of settings: global settings for all units and settings specific to each unit. Unit settings and global settings are linked, so that settings not found in the unit settings are automatically obtained from the global settings.
+Each unit operates according to its settings described in JSON or Javascript object format. There are two types of settings: global settings for all units and settings specific to each unit. Unit settings and global settings are linked, so that settings not found in the unit settings are automatically obtained from the global settings. The settings are stored in "setting" asset.
 
 This page describes the settings.
 
@@ -204,6 +204,21 @@ BITSMIST.v1.Unit.set("setting", "myValue", 1) // global setting
 
 console.log(this.get("setting", "myValue")); // console displays 1
 </code>
+
+This can be used to apply the same settings to all units by writing the unit settings in the global settings.
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "style": {
+        "options": {
+            "styleRef": false,
+        },
+    }
+}
+</code>
+
+In the above example, all units do not load unit-specific CSS.
+
 
 ====Overriding Global Settings====
 

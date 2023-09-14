@@ -50,6 +50,7 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
         },
         "styles": {
             <styleName>: {
+                "apply": [String, ...],
                 "CSS": String,
                 "type": "CSS"|"URL",
                 "URL": String,
@@ -74,7 +75,9 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
 
 ''型:Array of String''
 
-適用するCSSの名前を指定します。"system"セクションに記述されている場合、指定されたCSSをdocument.bodyに対して適用します。"style"セクションに記述されている場合、shadowDOMモードの場合はユニットに、そうでない場合はdocument.bodyに対して適用されます。
+適用するCSSの名前を指定します。"system.style"セクションに記述されている場合、指定されたCSSをdocumentに対して適用します。
+
+"style"セクション内では、"options"セクションと"styles.<styleName>"セクションに記述できます。"options"セクション内に記述された場合、どのCSSを使用しても適用されます。"styles.<styleName>"セクションに記述して場合、そのCSSを使用する場合のみ適用されます。各CSSは、ShadowDOMモードの場合はユニットに、そうでない場合はdocumentに対して適用されます。
 
 なお、ユニットのデフォルトのスタイルをここに指定する必要はありません。"style.options.styleRef"が指定してある場合、ここに記述されていなくても自動的に**一番最後に**適用されます。
 
@@ -109,7 +112,8 @@ CSSファイルのパスを指定します。"system.style.options.path"と"styl
 
 ''型:String''
 
-スタイル名を指定します。デフォルトのスタイルは"default"と指定してください。
+スタイル名を指定します。デフォルトのスタイルは"default"と指定してください。一つの<styleName>を、ユニットに適用することができます。[[ja:bitsmist-js-core:reference:perk:basic-perk#transform|basic.transform]]スペルを使って別のCSSに切り替える際に、この名前を指定します。
+
 
 ----
 

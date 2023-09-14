@@ -106,7 +106,7 @@ ShadowDOMを使用する場合、"open"または"closed"を指定します。そ
 
 ''型:String''
 
-スキン名を指定します。デフォルトのスキンは"default"と指定してください。
+スキン名を指定します。デフォルトのスキンは"default"と指定してください。一つの<skinName>を、ユニットに適用することができます。[[ja:bitsmist-js-core:reference:perk:basic-perk#transform|basic.transform]]スペルを使って別のHTMLに切り替える際に、この名前を指定します。
 
 ----
 
