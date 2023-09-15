@@ -11,7 +11,8 @@
   * [[ja:bitsmist-js-core:unit:settings|設定]]
   * [[ja:bitsmist-js-core:unit:loading|ロード]]
   * [[ja:bitsmist-js-core:unit:events|イベント]]
-  * [[ja:bitsmist-js-core:unit:appearance|HTMLとCSS]]
+  * [[ja:bitsmist-js-core:unit:html|HTML]]
+  * [[ja:bitsmist-js-core:unit:css|CSS]]
   * [[ja:bitsmist-js-core:unit:perks|パークによる拡張]]
 
 ** リファレンス - ユニット **

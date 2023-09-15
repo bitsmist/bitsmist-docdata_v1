@@ -1,0 +1,226 @@
+======HTML======
+
+=====概要=====
+
+各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadowDOMの適用も、SkinPerkによって行われます。
+
+ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
+=====設定=====
+
+SkinPerkの設定は"skin"セクションに記述します。SkinPerkに対する設定は"skin.options"セクションに、各HTMLに関する設定は、"skin.skins"セクション配下にHTML名をキーに記述します。キー名は後述の[[#切り替え|HTMLの切り替え]]時に指定する名前となります。デフォルトのHTMLに関する情報は"default"セクションに記述します。なお"default"セクションが存在しない場合は、デフォルトのファイルをロードします。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "skinRef": True,
+            },
+            "skins": {
+                "default": {
+                    "type": "URL",
+                    "rootNode": "/units/default.html"
+                },
+                "skin2": {
+                    "type": "HTML",
+                    "rootNode": "<div></div>"
+                }
+            }
+        }
+    }
+}
+</code>
+
+<WRAP admonition note links>
+SkinPerkの設定の詳細については以下をご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:perk:skin-perk#設定|リファレンス - パーク - SkinPerk - 設定]]
+</WRAP>
+
+=====ロード=====
+
+SkinPerkはbeforeTransformイベントでHTMLをロードします。その際、ロードしたHTMLを元にTemplateノードを作成し、ユニットのunitRootプロパティにセットします。この時点ではまだ、画面には表示されません。
+
+HTMLのロード元としては、ファイル・ノード・固定のHTMLの3種類からロードすることができます。何も設定を記述しない場合、デフォルトのパスとファイル名を使ってHTMLファイルをロードします。
+
+====ファイル====
+
+===デフォルトのパスとファイル===
+
+”system.skin.options.path”と“skin.options.path”を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、“system.unit.options.path”と“unit.options.path”が代わりに使用されます。
+
+また、タグ名に拡張子"html"をつけたファイル名を、デフォルトのファイル名として使用します。
+
+==ファイル名やパスを指定する==
+
+もし、ロードするパスやファイル名を変更したい場合は、設定に記述します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "path": "my-skinpath",
+                "fileName": "my-skinfile",
+            },
+        }
+    }
+}
+</code>
+
+URLを使用したい場合は、skinRefオプションを使用します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "skinRef": "https://example.com/my-skinpath/my-skinfile.html",
+            },
+        }
+    }
+}
+</code>
+
+または"skins.default"セクションに記述します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "default": {
+                    "type": "URL",
+                    "URL": "https://example.com/my-skinpath/my-skinfile.html",
+                },
+            }
+        }
+    }
+}
+</code>
+
+===HTMLが不要な場合===
+
+もし、ユニットがHTMLファイルを全く持たない場合、設定にそう記述する必要があります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "skinRef": false,
+            },
+        }
+    }
+}
+</code>
+
+そうでないと、ユニットがデフォルトのHTMLファイルをロードしようとして404エラーが発生し、初期化が中断してしまいます。
+
+====固定のHTML====
+
+設定にHTMLを記述することで、そのHTMLを元にTemplateノードを作成し、それを表示します。Webpackなどを使用すれば、HTMLは外部ファイルに記述しておきながら、一つのファイルにまとめることも可能です。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "default": {
+                    "type": "HTML",
+                    "HTML": "<div></div>"
+                },
+            }
+        }
+    }
+}
+</code>
+
+
+====ノード====
+
+自身のユニット内のノードのinnerHTMLを元にTemplateノードを作成し、それを使用します。なお、ノードを指定するためにはそのノードが含まれるユニットのHTMLをあらかじめロードしておく必要があるため、最初はファイルか固定のHTMLでロードしておかなければなりません。そのため、切り替え用のHTMLを指定するために使用されます。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "default": {
+                    "type": "node",
+                    "rootNode": "template#grid"
+                },
+            }
+        }
+    }
+}
+</code>
+=====適用=====
+
+ロードしたHTMLは、doTransformイベントでユニットに適用されます。具体的には、ユニットのinnerHTMLが""（空文字）で初期化された後、Templateをクローンしたノードがユニットに追加されます。
+=====切り替え=====
+
+"basic.transform"スペルを使い、複数のHTMLを状況に応じて、切り替えることができます。その際、初期化と同じようにHTMLのロードと適用が行われます。スペルの引数には切り替え先のHTML名を指定します。
+
+<code javascript>
+this.use("spell", "basic.transform", {"skinName": "skin2"});
+</code>
+
+<WRAP admonition tip>
+初期化時のデフォルトHTMLのロードと適用にも、”basic.transform”スペルが使用されています。
+</WRAP>
+
+HTMLを切り替えて使用する場合、あらかじめ設定の"skin.skins"セクションに、切り替え先のHTMLの設定を記述しておく必要があります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "skin2": {
+                    "type": "HTML",
+                    "HTML": "<div></div>"
+                },
+            }
+        }
+    }
+}
+</code>
+=====ShadowDOM=====
+
+BitsmistJSでは、各ユニットに"open"、"closed"のいずれのShadowDOMも適用することができます。ShadowDOMを使用することで、各ユニットの独立性が上がります。ShadowDOMの適用は、SkinPerkによって行われます。
+
+<WRAP admonition note links>
+ShadowDOMはJavascriptの標準技術です。詳細については、以下をご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/Web_components/Using_shadow_DOM|シャドウ DOM の使用 - Mozilla Developer]]
+</WRAP>
+
+デフォルトではShadowDOMは使用されません。ShadowDOMを使用する場合、設定に記述する必要があります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "shadowDOM": "open",
+            },
+        }
+    }
+}
+</code>
+
+"open"または"closed"を指定することができます。
+
+<WRAP admonition caution links>
+ShadowDOMを使う場合、CSSの構造を綿密に設計する必要があります。CSSを取り扱うStylePerkの設定についても参照してください。
+
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:css#設定|ユニットの解説 - CSS - 設定]]
+</WRAP>

@@ -1,0 +1,115 @@
+======Properties and Methods======
+
+=====Overview=====
+
+Units, which are components of BitmistJS, inherit the standard HTMLElement, but have almost no other functionality; in BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name clashes between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period separator, such as "basic.scan", to prevent name collisions.
+
+<WRAP admonition note>
+There is no restriction on adding properties or methods on the library side. Prefixing is also a rule, and there is no mechanism to enforce it. It is solely up to the creator to decide whether or not to comply.
+</WRAP>
+
+The asset provides vessels for storing various types of items. By default, there are assets called "inventory," "vault," "state," "setting "skill", and "spell" assets.
+=====Properties and Methods=====
+
+The following is a small but present list of properties and methods that the BitsmistJS core library adds to units. Each of these is considered to be used from the unit (public) and some are not considered to be used directly from the unit (private).
+
+<WRAP admonition caution>
+Although we refer to them here as public and private, there is no specific difference. You can still access them from your unit. We recommend that you do not access anything that is private.
+</WRAP>
+====Public====
+
+Methods are provided primarily for accessing assets.
+
+^Name^Description^
+|set()|Stores a value in an asset.|
+|get()|Get a value from an asset. |
+|has()|Checks if the specified item exists in the asset.|
+|use()|Use [[#skill/spell|skill, spell]] in the asset.|
+|uniqueId|The unique ID of the unit|
+|unitRoot|The unit's node.|
+
+====Private====
+
+Private properties are prefixed with %%__bm_%%. Although the library cannot prevent access to them, it is recommended that they not be used.
+
+^Name^Description^
+|%%__bm_assets%%|The object to store the assets.|
+|%%__bm_uniqueid%%|The unique ID of the unit.|
+|%%__bm_unitroot%%|The unit's node.|
+|%%__bm_initialized%%|The flag to indicate whether the unit has been initialized.|
+|%%__bm_ready%%|The promise to indicate whether the unit can perform initialization and termination processes.|
+|%%__bm_eventinfo%%|The unit's event handler information.|
+
+There are also methods that are assumed to be overridden and implemented.
+
+^Name^Description^
+|_getSettings()|Returns the unit settings.|
+
+=====Assets=====
+
+An asset is a container for various types of items. By default, there are "inventory", "vault", "state", "setting", "skill", and "spell".
+
+^Name^Description^
+|inventory|The asset to store the unit's public information.|
+|vault|The asset to store the unit's private information.|
+|state|The asset to store the information about the unit's statuses.|
+|setting|The asset to stores the unit's settings.|
+|skill|The asset to stores the unit's methods.|
+|spell|The asset to store the asynchronous methods of the unit.|
+
+The set(), get(), and use() methods are provided to access items in the asset.
+
+^Name^Description^
+|set()|The method to store values in an asset.|
+|get()|The method to retrieve a value from an asset.|
+|use()|The method to use the skills and spells in the asset.|
+
+When items are added to an asset, The items in the assets are prefixed with a period-delimited, perk-specific prefix, such as "basic.scan", to avoid name conflicts.
+====Inventory, Vault and State====
+
+There are three types of assets for storing information: inventory, which stores publicly available information; vault, which stores private information; and state, which stores information about the state of the unit.
+
+The set() and get() methods are used to access the contents of each.
+
+<code javascript>
+this.get("inventory", "skin.skins.default");
+this.set("vault", "style.applied", ["default"]);
+</code>
+
+<WRAP admonition caution>
+Vault stores private information, but there is no mechanism to prevent Javascript from accessing to it. It should not be used for security purposes.
+</WRAP>
+====Setting====
+
+The "setting" asset is used to store settings. The items in the settings, like in other assets, are separated by a prefix for each perk.
+
+<code javascript>
+this.get("setting", "skin.options.skinRef");
+</code>
+
+At startup, it reads and stores settings from its own _getSettings() method or from an external settings file.
+
+<WRAP admonition note links>
+For more information on settings, please see below.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:settings|Unit Explained - Settings]]
+</WRAP>
+====Skill and Spell====
+
+There are two assets for storing methods: "skill" and "spell". The difference between skill and spell is that skill stores non-asynchronous methods and spell stores asynchronous methods. Spells return a Promise and should be handled appropriately.
+
+The items in skill and spell, like in other assets, are also separated by the prefix of each perk.
+
+<code javascript>
+// Skill
+let ele = this.use("skill", "basic.scan", "btn-menu");
+
+// Spell
+this.use("spell", "unit.materialize").then((addedUnit) => {
+    addedUnit.use("spell", "dialog.open");
+});
+
+// or
+
+await this.use("spell", "unit.materialize");
+addedUnit.use("spell", "dialog.open");
+</code>

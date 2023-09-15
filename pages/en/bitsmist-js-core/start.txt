@@ -13,7 +13,8 @@
   * [[en:bitsmist-js-core:unit:settings|Settings]]
   * [[en:bitsmist-js-core:unit:loading|Loading]]
   * [[en:bitsmist-js-core:unit:events|Events]]
-  * [[en:bitsmist-js-core:unit:appearance|HTML and CSS]]
+  * [[en:bitsmist-js-core:unit:html|HTML]]
+  * [[en:bitsmist-js-core:unit:css|CSS]]
   * [[en:bitsmist-js-core:unit:perks|Extending with Perks]]
 
 ** Reference - Unit **

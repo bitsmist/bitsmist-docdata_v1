@@ -1,0 +1,84 @@
+======Overview======
+
+This page briefly describes the Unit class, the heart of BitsmistJS, and serves as a gateway to more detailed explanations.
+=====Assets (Properties and Methods)=====
+
+Units, which are components of BitmistJS, inherit the standard HTMLElement, but have almost no other functionality; in BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name clashes between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period separator, such as "basic.scan", to prevent name collisions.
+
+<WRAP admonition note links>
+See the following for the details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:asset|Unit Explained - Assets (Properties and Methods)]]
+</WRAP>
+
+=====Settings=====
+
+Each unit operates according to its settings described in JSON or Javascript object format. There are two types of settings: global settings for all units and settings specific to each unit. Unit settings and global settings are linked, so that settings not found in the unit settings are automatically obtained from the global settings. The settings are stored in "setting" asset.
+
+<WRAP admonition note links>
+See the following for the details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:settings|Unit Explained - Settings]]
+</WRAP>
+=====Loading=====
+
+The Javascript file for each unit must be loaded into the browser. There are two loading methods: autoloading and manual loading. Autoloading automatically loads the necessary files and instantiates the tag by specifying the bm-autoload attribute in the unit's tag attribute. Manual loading is done by explicitly specifying the necessary files in the script tag and loading the unit. The former is easy but requires three files to be loaded per unit by default. In the latter case, multiple units can be combined into one using, for example, Webpack.
+
+<WRAP admonition note links>
+See the following for the details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:loading|Unit Explained - Loading]]
+</WRAP>
+=====Events=====
+
+One of the features of BitsmistJS is that it is event-driven. Events occur at various times in each unit. When an event occurs, BitmistJS prepares arguments and calls the registered event handler. By writing the event handler for each event, you create the behavior of the unit.
+
+<WRAP admonition note links>
+See the following for the details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:events|Unit Explained - Events]]
+</WRAP>
+=====HTML=====
+
+Each unit has one HTML file by default. Each unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
+
+A unit use the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
+
+<WRAP admonition note links>
+See the following for the details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:html|Unit Explained - HTML]]
+</WRAP>
+=====CSS=====
+
+Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by specifying them in the settings. You can apply multiple structured CSS to a unit, such as common CSS and CSS specific to each unit. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
+
+BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using ShadowDOM.
+
+The unit uses the "basic.transform" spell during initialization to trigger beforeTransform, doTransform, and afterTransform events. The StylePerk installs doTransform event handler to load and apply CSS.
+
+See the following for the details.
+<WRAP admonition note links>
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:css|Unit Explained - CSS]]
+</WRAP>
+=====Extending with Perks=====
+
+The core component of BitsmistJS "Unit" has few functions. Each unit can be extended in functionality by applying perks.
+
+For example, in [[en:bitsmist-js-core:general:sample|"Create a Sample Unit"]], an event handler is set in the configuration, which is handled by EventPerk. Loading and applying HTML files is done by SkinPerk.
+
+Perk has the following functions.
+
+  * Add event handlers to the unit to perform processing at specific times.
+  * Add skills, spells, and inventories to the unit instance or prototype.
+
+By default, the following perks are applied to a unit.
+
+  * [[en:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
+  * [[en:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
+  * [[en:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
+  * [[en:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
+  * [[en:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
+  * [[en:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]
+  * [[en:bitsmist-js-core:reference:perk:style-perk|StylePerk]]
+  * [[en:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]
+
+<WRAP admonition note links>
+See the following for the details.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:perks|Unit Explained - Extending with Perks]]
+</WRAP>

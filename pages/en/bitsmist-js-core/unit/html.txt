@@ -1,0 +1,228 @@
+======HTML======
+
+=====Overview=====
+
+Each unit has one HTML file by default. Each unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
+
+A unit use the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
+=====Settings=====
+
+SkinPerk settings are described in the "skin" section. The settings for SkinPerk itself are described in the "skin.options" section, and settings for each HTML are described under the "skin.skins" section using the HTML name as a key. The key name is the name specified in [[#switching_html|Switching HTML]] described below. Information about the default HTML is described in the "default" section. If the "default" section does not exist, the default file is loaded.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "skinRef": True,
+            },
+            "skins": {
+                "default": {
+                    "type": "URL",
+                    "rootNode": "/units/default.html"
+                },
+                "skin2": {
+                    "type": "HTML",
+                    "rootNode": "<div></div>"
+                }
+            }
+        }
+    }
+}
+</code>
+
+<WRAP admonition note links>
+For more information on SkinPerk settings, please see below.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:perk:skin-perk#settings|Reference - Perk - SkinPerk - Settings]]
+</WRAP>
+
+=====Loading HTML=====
+
+SkinPerk loads HTML in the beforeTransform event. In the event, it creates a Template node based on the loaded HTML and sets it to the unitRoot property of the unit. At this point, the HTML is not yet displayed on the screen.
+
+HTML can be loaded from a file, a node, or fixed HTML strings. If no settings are specified, the HTML file will be loaded using the default path and file name.
+
+====File====
+
+===Default Path and File===
+
+"system.skin.options.path" and "skin.options.path" settings concatenated will be used as the default path. If the setting does not exist, "system.unit.options.path" and "unit.options.path" will be used instead.
+
+The default filename is the tag name with the "html" extension.
+
+===Specifying a Filename or Path===
+
+If you want to change the path or filename to be loaded, specify it in the settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "path": "my-skinpath",
+                "fileName": "my-skinfile",
+            },
+        }
+    }
+}
+</code>
+
+If you want to use a URL, use the skinRef option.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "skinRef": "https://example.com/my-skinpath/my-skinfile.html",
+            },
+        }
+    }
+}
+</code>
+
+or in the "skins.default" section.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "default": {
+                    "type": "URL",
+                    "URL": "https://example.com/my-skinpath/my-skinfile.html",
+                },
+            }
+        }
+    }
+}
+</code>
+
+===No HTML===
+
+If a unit has no HTML files at all, it must described in the settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "skinRef": false,
+            },
+        }
+    }
+}
+</code>
+
+Otherwise, the unit will try to load the default HTML file and a 404 error will occur, interrupting the initialization.
+
+
+
+====Fixed HTML====
+
+By writing HTML strings in the settings, a template node is created based on that HTML, which is then displayed. Using Webpack or similar, the HTML can be written in an external file but combined into one file.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "default": {
+                    "type": "HTML",
+                    "HTML": "<div></div>"
+                },
+            }
+        }
+    }
+}
+</code>
+
+
+====Node====
+
+A template node is created based on the innerHTML of a node in its own unit. Note that in order to specify a node, the HTML of the unit containing that node must be loaded in advance, so it must initially be loaded as a file or fixed HTML. Therefore, it is used to specify HTML for switching.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "default": {
+                    "type": "node",
+                    "rootNode": "template#grid"
+                },
+            }
+        }
+    }
+}
+</code>
+=====Applying HTML=====
+
+The loaded HTML is applied to the unit in the doTransform event. Specifically, after the innerHTML of the unit is initialized with "" (an empty string), the cloned template node is added to the unit.
+=====Switching HTML=====
+
+Using the "basic.transform" spell, you can switch between multiple HTMLs. The HTML is loaded and applied in the same manner as initialization. Pass the name of the HTML to switch to for the spell argument.
+
+<code javascript>
+this.use("spell", "basic.transform", {"skinName": "skin2"});
+</code>
+
+<WRAP admonition tip>
+The "basic.transform" spelling is also used to load and apply the default HTML at initialization.
+</WRAP>
+
+If you want to switch between HTMLs, you need to write the settings for the target HTML in the "skin.skins" section of the settings in advance.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "skins": {
+                "skin2": {
+                    "type": "HTML",
+                    "HTML": "<div></div>"
+                },
+            }
+        }
+    }
+}
+</code>
+=====ShadowDOM=====
+
+BitsmistJS allows for either "open" or "closed" ShadowDOM to be applied to each unit, making each unit more independent. SkinPerk handles the application of ShadowDOm.
+
+<WRAP admonition note links>
+ShadowDOM is a standard Javascript technology. For more information, see
+  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM|Using shadow DOM - Mozilla Developer]]
+</WRAP>
+
+ShadowDOM is not used by default. If you want to use ShadowDOM, you must put it in your settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "skin": {
+            "options": {
+                "shadowDOM": "open",
+            },
+        }
+    }
+}
+</code>
+
+You can specify "open" or "closed".
+
+<WRAP admonition caution links>
+When using ShadowDOM, the CSS structure must be carefully designed; see also the StylePerk configuration for handling CSS.
+
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:css#settings|Unit Explained - CSS - Settings]]
+</WRAP>

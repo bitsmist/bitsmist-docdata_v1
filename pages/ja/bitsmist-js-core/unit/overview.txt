@@ -1,9 +1,87 @@
 ======概要======
 
-簡単に説明し、より詳しい説明へのリンクを紹介します。
+ここではBitsmistJSの中心であるUnitクラスについて簡単に説明し、より詳しい説明への入り口とします。
 =====プロパティとメソッド=====
+
+BitmistJSのコンポーネントであるユニットは標準のHTMLElementを継承していますが、それ以外の機能はほぼ持っていません。BitsmistJSでは、パークと呼ばれるものをユニットにアタッチすることによって、ユニットに機能を追加します。ユニットにはプロパティとメソッドを追加することができますが、様々なパークが追加する機能の名前の衝突を防ぐため、プロパティとメソッドの追加は最小限にしています。代わりにアセットと呼ばれる入れ物を用意しており、各パークはそこへ機能を追加していくことになります。アセット内のアイテムは、“basic.scan”といったように、ピリオド区切りで各パーク固有の接頭語をつけることで、名前の衝突を防ぎます。
+
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:asset|ユニットの解説 - プロパティとメソッド]]
+</WRAP>
+
 =====設定=====
+
+各ユニットはJSON、またはJavascriptオブジェクト形式で記述される設定内容に従って、動作を行います。設定には全ユニットに関わるグローバル設定と、各ユニットに固有の設定があります。ユニットの設定と、グローバルの設定は連結されており、ユニット設定にない設定は、自動的にグローバルの設定から取得するようになっています。ユニットの設定は“setting”アセットに格納されています。
+
+
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:settings|ユニットの解説 - 設定]]
+</WRAP>
 =====ロード=====
+
+各ユニットのJavascriptファイルは、ブラウザにロードされる必要があります。ロード方法にはオートロードとマニュアルロードがあります。オートロードはユニットのタグの属性にbm-autoload属性を指定することで、自動的に必要なファイルをロードし、タグをインスタンス化します。マニュアルロードはscriptタグに明示的に必要なファイルを記述し、ユニットをロードします。前者は手軽なのですが、ロードするファイルがユニットごとにデフォルトでは3つ必要になります。後者の場合は、例えばWebpackなどを使うと、複数のユニットを一つにまとめることができます。
+
+
+
+
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:loading|ユニットの解説 - ロード]]
+</WRAP>
 =====イベント=====
-=====HTMLとCSS=====
+
+BitsmistJSの特徴のひとつが、イベントドリブンです。各ユニットでは様々なタイミングでイベントが発生します。イベントが発生すると、BitmistJSが引数を準備し登録されているイベントハンドラを呼び出します。各イベントに対するイベントハンドラ内に処理を記述することで、ユニットの動作を作成していきます。
+
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:events|ユニットの解説 - イベント]]
+</WRAP>
+=====HTML=====
+
+各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadowDOMの適用も、SkinPerkによって行われます。
+
+ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
+
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:html|ユニットの解説 - HTML]]
+</WRAP>
+=====CSS=====
+
+各ユニットはデフォルトでは1つのCSSファイルを持ちます。各ユニットのCSSファイルは、ロードしてユニットに適用される必要があります。BitsmistJSではCSSの適用に標準技術のConstructable Stylesheetsを採用しており、設定に記述することで、共通のCSSと各ユニット専用のCSSといった複数の構造化されたCSSをユニットに適用することができます。また、複数のCSSを切り替えて使ったり、逆にCSSを全く使用しないユニットを作ることもできます。これらの機能はStylePerkによって処理されます。
+
+BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。ShadowDOMの使用時には、必須の機能です。
+
+ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:css|ユニットの解説 - CSS]]
+</WRAP>
 =====パークによる拡張=====
+
+BitsmistJSの核であるUnitユニットはごく単純な機能しか持ちません。各ユニットはパークを適用することで、機能を拡張できます。
+
+例えば[[ja:bitsmist-js-core:general:sample|サンプルのハローユニット]]では、イベントハンドラを設定でセットしましたが、これはEventPerkによって処理がされています。またHTMLファイルのロードと適用は、SkinPerkによって行われます。
+
+パークには次の機能があります
+
+  * ユニットの処理中の特定のタイミング（イベントハンドラ）で処理を行う。
+  * ユニットのインスタンスやプロトタイプにスキル・インベントリ等を追加する。
+
+デフォルトでは以下のパークがUnitユニットに適用されています。
+
+  * [[ja:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]
+  * [[ja:bitsmist-js-core:reference:perk:style-perk|StylePerk]]
+  * [[ja:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]
+
+<WRAP admonition note links>
+詳細についてはこちらをご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:perks|ユニットの解説 - パークによる拡張]]
+</WRAP>

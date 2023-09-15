@@ -1,0 +1,243 @@
+======CSS======
+
+=====Overview=====
+
+Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by specifying them in the settings. You can apply multiple structured CSS to a unit, such as common CSS and CSS specific to each unit. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
+
+<WRAP admonition note links>
+Constructable Stylesheets is a Javascript standard technology. See below for details.
+  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() constructor - Mozilla Developer]]
+</WRAP>
+
+BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using ShadowDOM.
+
+The unit uses the "basic.transform" spell during initialization to trigger beforeTransform, doTransform, and afterTransform events. The StylePerk installs doTransform event handler to load and apply CSS.
+
+=====Settings=====
+
+You can specify which CSS to load and apply in the settings. In this case, Constructable Stylesheets are automatically used. CSS settings can be divided into settings; for common CSS used by multiple units and settings for unit-specific CSS.
+
+====Common CSS====
+
+The settings for common CSS used by multiple units are described in the "system.styles" section of the global settings. StylePerk starts loading the common CSS described in the "styles" section at its initialization (before each unit is loaded).
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "system": {
+        "style": {
+            "options": {
+                "apply": ["reset", "common", "site"],
+            },
+            "styles": {
+                "reset": {
+                    "type": "URL",
+                    "URL": "/css/reset.css",
+                },
+                "common": {
+                    "type": "URL",
+                    "URL": "/css/common.css",
+                }
+            }
+        }
+    }
+}
+</code>
+
+After the common CSS have been loaded, the CSS specified by the "apply" option are applied to the document.
+====Unit-Specific CSS====
+
+StylePerk settings are described in the "style" section. The settings for StylePerk itself and common CSS to be applied are described in the "style.options" section, and settings for each CSS are described under the "style.styles" section using the CSS name as a key. The key name is the name specified in [[#switching_css|Switching CSS]] described below. The default CSS information is described in the "default" section. If the "default" section does not exist, the default file is loaded.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "styleRef": True,
+                "apply": [ "common", "wrapper" ]
+            },
+            "styles": {
+                "default": {
+                    "type": "URL",
+                    "rootNode": "/units/default.html"
+                },
+                "style2": {
+                    "apply": ["common2"],
+                    "type": "CSS",
+                    "rootNode": "div {'background-color':'black'}"
+                }
+            }
+        }
+    }
+}
+</code>
+
+Common CSS described in "styles.options.apply" will be applied no matter which CSS is used. Common CSS described in "styles.<styleName>.apply" will be applied only when switched to that CSS.
+
+<WRAP admonition note links>
+For more information on StylePerk settings, please see below.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:reference:perk:style-perk#settings|Reference - Perk - StylePerk - Settings]]
+</WRAP>
+
+====Not Using Constractable Stylesheets====
+
+If you do not use ShadowDOM, you can also apply styles in the traditional way without using Construtable Stylesheets. Describe in the settings to not use CSS and load the styles using <style> tags.
+
+You can make sure that all units do not use CSS by putting it in the global settings 
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "style": {
+        "options": {
+            "styleRef": false,
+        },
+    }
+}
+</code>
+
+<WRAP admonition tip links>
+It takes advantage of the fact that each unit is linked to a global setting.
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:settings#linked_settings|Unit Explained - Settings - Linked Settings]]
+</WRAP>
+=====Loading CSS=====
+
+StylePerk loads and applies CSS in the doTransform event.
+
+CSS can be loaded from a file or fixed CSS strings. If no settings are specified, the CSS file is loaded using the default path and file name.
+
+====File====
+
+===Default Path and File===
+
+“system.style.options.path” and “style.options.path” settings concatenated will be used as the default path. If the setting does not exist, “system.unit.options.path” and “unit.options.path” will be used instead.
+
+The default filename is the tag name with the "css" extension.
+
+===Specify Filename or Path===
+
+If you want to change the path or file name to be loaded, put it in the settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "path": "my-stylepath",
+                "fileName": "my-stylefile",
+            },
+        }
+    }
+}
+</code>
+
+If you want to use a URL, use the skinRef option.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "styleRef": "https://example.com/my-stylepath/my-stylefile.html",
+            },
+        }
+    }
+}
+</code>
+
+or in the "styles.default" section.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "styles": {
+                "default": {
+                    "type": "URL",
+                    "URL": "https://example.com/my-stylepath/my-stylefile.css",
+                },
+            }
+        }
+    }
+}
+</code>
+
+
+===No CSS===
+
+If the unit has no CSS files at all,  it must described in the settings.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "styleRef": false,
+            },
+        }
+    }
+}
+</code>
+
+Otherwise, the unit will try to load the default CSS file and a 404 error will occur, interrupting the initialization.
+
+====Fixed CSS====
+
+By writing HTML strings in the settings, a template node is created based on that HTML, which is then displayed. Using Webpack or similar, the HTML can be written in an external file but combined into one file.
+
+By putting CSS in the settings, the CSS is applied to the unit. Using Webpack or similar, the HTML can be written in an external file but combined into one file
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "styles": {
+                "default": {
+                    "type": "CSS",
+                    "CSS": "div {'background-color':'black'}"
+                },
+            }
+        }
+    }
+}
+</code>
+
+
+
+=====Applying CSS=====
+
+The loaded CSS is applied to the unit in the doTransform event. HTML is also applied in the same doTransform event, but StylePerk has higher priority, so CSS is applied first. In addition, since it is applied to a node that is still in template clone state, preventing FOUC.
+=====Switching CSS=====
+
+As with HTML, the "basic.transform" spell can be used to switch between multiple CSSs. The CSS is loaded and applied in the same way as initialization. Pass the name of the CSS to switch to for the spell argument.
+
+<code javascript>
+this.use("spell", "basic.transform", {"styleName": "style2"});
+</code>
+
+<WRAP admonition tip>
+The "basic.transform" spell is also used to load and apply the default CSS at initialization.
+</WRAP>
+
+If you wish to switch between CSS, you must enter the target CSS settings in the "style.styles" section of the settings in advance.
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "styles": {
+                "style2": {
+                    "type": "CSS",
+                    "HTML": "div {'background-color':'pink'}"
+                },
+            }
+        }
+    }
+}
+</code>

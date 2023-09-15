@@ -1,0 +1,242 @@
+======CSS======
+
+=====概要=====
+
+各ユニットはデフォルトでは1つのCSSファイルを持ちます。各ユニットのCSSファイルは、ロードしてユニットに適用される必要があります。BitsmistJSではCSSの適用に標準技術のConstructable Stylesheetsを採用しており、設定に記述することで、共通のCSSと各ユニット専用のCSSといった複数の構造化されたCSSをユニットに適用することができます。また、複数のCSSを切り替えて使ったり、逆にCSSを全く使用しないユニットを作ることもできます。これらの機能はStylePerkによって処理されます。
+
+<WRAP admonition note links>
+Constructable StylesheetsはJavascript標準の技術です。詳細は以下をご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() コンストラクター | Mozilla Developer]]
+</WRAP>
+
+BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。ShadowDOMの使用時には、必須の機能です。
+
+ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
+
+=====設定=====
+
+設定でどのCSSをロード・適用するのかを指定することができます。その場合、自動的にConstructable Stylesheetsが使用されます。設定には、どうやってCSSをロードするか、どのCSSを適用するか等を記述します。CSSの設定には大きく分けると、複数のユニットから使用される共通CSSの設定と、ユニット固有のCSSの設定があります。
+
+
+====共通CSS====
+
+複数のユニットから使用される共通CSSに関する設定は、グローバル設定の"system.styles"セクションに記述します。StylePerkは自身の初期化時（各ユニットがロードされる前）に、"styles"セクションに記述された、共通CSSのロードを開始します。
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "system": {
+        "style": {
+            "options": {
+                "apply": ["reset", "common", "site"],
+            },
+            "styles": {
+                "reset": {
+                    "type": "URL",
+                    "URL": "/css/reset.css",
+                },
+                "common": {
+                    "type": "URL",
+                    "URL": "/css/common.css",
+                }
+            }
+        }
+    }
+}
+</code>
+
+また共通CSSのロード完了後に、"apply"オプションで指定された共通CSSを、documentに対して適用します。
+====ユニット固有CSS====
+
+StylePerkの設定は"style"セクションに記述します。StylePerkに対する設定や、適用する共通CSSは"style.options"セクションに、各CSSに関する設定は"style.styles"セクション配下にCSS名をキーに記述します。キー名は後述の[[#切り替え|CSSの切り替え]]時に指定する名前となります。デフォルトのCSSに関する情報は"default"セクションに記述します。なお"default"セクションが存在しない場合は、デフォルトのファイルをロードします。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "styleRef": True,
+                "apply": [ "common", "wrapper" ]
+            },
+            "styles": {
+                "default": {
+                    "type": "URL",
+                    "rootNode": "/units/default.html"
+                },
+                "style2": {
+                    "apply": ["common2"],
+                    "type": "CSS",
+                    "rootNode": "div {'background-color':'black'}"
+                }
+            }
+        }
+    }
+}
+</code>
+
+"style.options.apply"に記述された共通CSSは、どのCSSを使用しても適用されます。"styles.<styleName>.apply"に記述された共通CSSは、そのCSSに切り替えた時のみ適用されます。
+
+<WRAP admonition note links>
+StylePerkの設定の詳細については以下をご覧ください。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:reference:perk:style-perk#設定|リファレンス - パーク - StylePerk - 設定]]
+</WRAP>
+
+====Constractable Stylesheetsを使用しない====
+
+ShadowDOMを使わない場合、Construtable Stylesheetsを使わずに、従来の方法でスタイルを適用することもできます。Constructable Stylesheetsを使用したくない場合は、各ユニットの設定でデフォルトCSSを使わない設定にしておき、<style>タグなどで、スタイルをロードします。
+
+グローバル設定に記述することで、全ユニットがCSSを使わないようにすることができます。
+
+<code javascript>
+BITSMIST.v1.Unit.use("skill", "setting.merge", {
+    "style": {
+        "options": {
+            "styleRef": false,
+        },
+    }
+}
+</code>
+
+<WRAP admonition tip links>
+各ユニットがグローバル設定に連結されていることを利用しています。
+  * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:settings#グローバル設定の連結|ユニットの解説 - 設定 - グローバル設定の連結]]
+</WRAP>
+=====ロード=====
+
+StylePerkはdoTransformイベントでCSSをロードし、適用します。
+
+CSSのロード元としては、ファイル・固定のCSSの2種類からロードすることができます。何も設定を記述しない場合、デフォルトのパスとファイル名を使ってCSSファイルをロードします。
+
+====ファイル====
+
+===デフォルトのファイル===
+
+”system.style.options.path”と“style.options.path”を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、“system.unit.options.path”と“unit.options.path”が代わりに使用されます。
+
+また、タグ名に拡張子“css”をつけたファイル名を、デフォルトのファイル名として使用します。
+
+===ファイル名やパスを指定する===
+
+もし、ロードするパスやファイル名を変更したい場合は、設定に記述します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "path": "my-stylepath",
+                "fileName": "my-stylefile",
+            },
+        }
+    }
+}
+</code>
+
+URLを使用したい場合は、skinRefオプションを使用します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "styleRef": "https://example.com/my-stylepath/my-stylefile.html",
+            },
+        }
+    }
+}
+</code>
+
+または"styles.default"セクションに記述します。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "styles": {
+                "default": {
+                    "type": "URL",
+                    "URL": "https://example.com/my-stylepath/my-stylefile.css",
+                },
+            }
+        }
+    }
+}
+</code>
+
+
+===CSSが不要な場合===
+
+もし、ユニットがCSSファイルを全く持たない場合、設定にそう記述する必要があります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "options": {
+                "styleRef": false,
+            },
+        }
+    }
+}
+</code>
+
+そうでないと、ユニットがデフォルトのCSSファイルをロードしようとして404エラーが発生し、初期化が中断してしまいます。
+
+====固定のCSS====
+
+設定にCSSを記述することで、そのCSSをユニットに対し使用します。Webpackなどを使用すれば、CSSは外部ファイルに記述しておきながら、一つのファイルにまとめることも可能です。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "styles": {
+                "default": {
+                    "type": "CSS",
+                    "CSS": "div {'background-color':'black'}"
+                },
+            }
+        }
+    }
+}
+</code>
+
+
+
+=====適用=====
+
+ロードされたCSSはdoTransformイベントで適用されます。HTMLも同じdoTransformイベントで適用されますが、StylePerkの方が優先度が高いためCSSが先に適用されます。さらに、まだTemplateクローン状態であるノードに対して適用するため、FOUCが派生しません。
+=====切り替え=====
+
+HTMLと同じく、"basic.transform"スペルを使用することで、複数のCSSを状況に応じて切り替えることができます。その際、初期化と同じようにCSSのロードと適用が行われます。スペルの引数には切り替え先のCSS名を指定します。
+
+<code javascript>
+this.use("spell", "basic.transform", {"styleName": "style2"});
+</code>
+
+<WRAP admonition tip>
+初期化時のデフォルトCSSのロードと適用にも、”basic.transform”スペルが使用されています。
+</WRAP>
+
+CSSを切り替えて使用する場合、あらかじめ設定の"style.styles"セクションに、切り替え先のCSSの設定を記述しておく必要があります。
+
+<code javascript>
+_getSettings()
+{
+    return {
+        "style": {
+            "styles": {
+                "style2": {
+                    "type": "CSS",
+                    "HTML": "div {'background-color':'pink'}"
+                },
+            }
+        }
+    }
+}
+</code>
