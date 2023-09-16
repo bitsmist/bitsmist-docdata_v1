@@ -2,9 +2,9 @@
 
 =====Overview=====
 
-Each unit has one HTML file by default. Each unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
+Each unit has one HTML file by default.  The unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
 
-A unit use the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
+A unit uses the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
 =====Settings=====
 
 SkinPerk settings are described in the "skin" section. The settings for SkinPerk itself are described in the "skin.options" section, and settings for each HTML are described under the "skin.skins" section using the HTML name as a key. The key name is the name specified in [[#switching_html|Switching HTML]] described below. Information about the default HTML is described in the "default" section. If the "default" section does not exist, the default file is loaded.
@@ -39,7 +39,7 @@ For more information on SkinPerk settings, please see below.
 
 =====Loading HTML=====
 
-SkinPerk loads HTML in the beforeTransform event. In the event, it creates a Template node based on the loaded HTML and sets it to the unitRoot property of the unit. At this point, the HTML is not yet displayed on the screen.
+SkinPerk loads HTML in the beforeTransform event. In the event, it creates a template node based on the loaded HTML and sets it to the unitRoot property of the unit. At this point, the HTML is not yet displayed on the screen.
 
 HTML can be loaded from a file, a node, or fixed HTML strings. If no settings are specified, the HTML file will be loaded using the default path and file name.
 
@@ -146,7 +146,7 @@ _getSettings()
 
 ====Node====
 
-A template node is created based on the innerHTML of a node in its own unit. Note that in order to specify a node, the HTML of the unit containing that node must be loaded in advance, so it must initially be loaded as a file or fixed HTML. Therefore, it is used to specify HTML for switching.
+A template node is created based on the innerHTML of a node in its own unit. Note that in order to specify a node, the HTML of the unit containing that node must be loaded in advance, so it must initially be loaded as a file or fixed HTML. Therefore, it can be used to specify HTML for switching.
 
 <code javascript>
 _getSettings()
@@ -197,7 +197,7 @@ _getSettings()
 </code>
 =====ShadowDOM=====
 
-BitsmistJS allows for either "open" or "closed" ShadowDOM to be applied to each unit, making each unit more independent. SkinPerk handles the application of ShadowDOm.
+BitsmistJS allows for either "open" or "closed" ShadowDOM to be applied to each unit, making each unit more independent. SkinPerk handles the application of ShadowDOM.
 
 <WRAP admonition note links>
 ShadowDOM is a standard Javascript technology. For more information, see

@@ -2,7 +2,7 @@
 
 =====Overview=====
 
-Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by specifying them in the settings. You can apply multiple structured CSS to a unit, such as common CSS and CSS specific to each unit. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
+Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by writing them in the settings. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
 
 <WRAP admonition note links>
 Constructable Stylesheets is a Javascript standard technology. See below for details.
@@ -15,7 +15,7 @@ The unit uses the "basic.transform" spell during initialization to trigger befor
 
 =====Settings=====
 
-You can specify which CSS to load and apply in the settings. In this case, Constructable Stylesheets are automatically used. CSS settings can be divided into settings; for common CSS used by multiple units and settings for unit-specific CSS.
+You can specify which CSS to load and apply in the settings and Constructable Stylesheets are automatically used. CSS settings can be divided into settings for common CSS used by multiple units and settings for unit-specific CSS.
 
 ====Common CSS====
 
@@ -46,7 +46,7 @@ BITSMIST.v1.Unit.use("skill", "setting.merge", {
 After the common CSS have been loaded, the CSS specified by the "apply" option are applied to the document.
 ====Unit-Specific CSS====
 
-StylePerk settings are described in the "style" section. The settings for StylePerk itself and common CSS to be applied are described in the "style.options" section, and settings for each CSS are described under the "style.styles" section using the CSS name as a key. The key name is the name specified in [[#switching_css|Switching CSS]] described below. The default CSS information is described in the "default" section. If the "default" section does not exist, the default file is loaded.
+Unit-specific settings are described in the "style" section. The settings for StylePerk itself and common CSS to be applied are described in the "style.options" section, and settings for each CSS are described under the "style.styles" section using the CSS name as a key. The key name is the name specified in [[#switching_css|Switching CSS]] described below. The default CSS information is described in the "default" section. If the "default" section does not exist, the default file is loaded.
 
 <code javascript>
 _getSettings()
@@ -73,7 +73,7 @@ _getSettings()
 }
 </code>
 
-Common CSS described in "styles.options.apply" will be applied no matter which CSS is used. Common CSS described in "styles.<styleName>.apply" will be applied only when switched to that CSS.
+Common CSS described in "styles.options.apply" will be applied no matter which CSS is used. Common CSS described in "styles.<styleName>.apply" will be applied only when switched to this CSS.
 
 <WRAP admonition note links>
 For more information on StylePerk settings, please see below.
@@ -140,7 +140,7 @@ _getSettings()
     return {
         "style": {
             "options": {
-                "styleRef": "https://example.com/my-stylepath/my-stylefile.html",
+                "styleRef": "https://example.com/my-stylepath/my-stylefile.css",
             },
         }
     }
@@ -168,7 +168,7 @@ _getSettings()
 
 ===No CSS===
 
-If the unit has no CSS files at all,  it must described in the settings.
+If the unit has no CSS files at all,  it must be described in the settings.
 
 <code javascript>
 _getSettings()
@@ -187,9 +187,7 @@ Otherwise, the unit will try to load the default CSS file and a 404 error will o
 
 ====Fixed CSS====
 
-By writing HTML strings in the settings, a template node is created based on that HTML, which is then displayed. Using Webpack or similar, the HTML can be written in an external file but combined into one file.
-
-By putting CSS in the settings, the CSS is applied to the unit. Using Webpack or similar, the HTML can be written in an external file but combined into one file
+By putting CSS strings in the settings, the CSS is applied to the unit. Using Webpack or similar, the HTML can be written in an external file but combined into one file
 
 <code javascript>
 _getSettings()
@@ -211,10 +209,10 @@ _getSettings()
 
 =====Applying CSS=====
 
-The loaded CSS is applied to the unit in the doTransform event. HTML is also applied in the same doTransform event, but StylePerk has higher priority, so CSS is applied first. In addition, since it is applied to a node that is still in template clone state, preventing FOUC.
+The loaded CSS is applied to the unit in the doTransform event. HTML is also applied in the same doTransform event, but StylePerk has higher priority, so CSS is applied first. In addition, since it is applied to a node that is still in a template clone state, it prevents FOUC.
 =====Switching CSS=====
 
-As with HTML, the "basic.transform" spell can be used to switch between multiple CSSs. The CSS is loaded and applied in the same way as initialization. Pass the name of the CSS to switch to for the spell argument.
+As with HTML, the "basic.transform" spell can be used to switch between multiple CSS. The CSS is loaded and applied in the same way as initialization. Pass the name of the CSS to switch to for the spell argument.
 
 <code javascript>
 this.use("spell", "basic.transform", {"styleName": "style2"});
@@ -224,7 +222,7 @@ this.use("spell", "basic.transform", {"styleName": "style2"});
 The "basic.transform" spell is also used to load and apply the default CSS at initialization.
 </WRAP>
 
-If you wish to switch between CSS, you must enter the target CSS settings in the "style.styles" section of the settings in advance.
+If you wish to switch between CSS, you need to write the target CSS settings in the "style.styles" section of the settings in advance.
 
 <code javascript>
 _getSettings()

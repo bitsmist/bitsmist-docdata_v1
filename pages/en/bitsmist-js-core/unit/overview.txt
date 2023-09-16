@@ -1,13 +1,13 @@
 ======Overview======
 
 This page briefly describes the Unit class, the heart of BitsmistJS, and serves as a gateway to more detailed explanations.
-=====Assets (Properties and Methods)=====
+=====Properties and Methods=====
 
-Units, which are components of BitmistJS, inherit the standard HTMLElement, but have almost no other functionality; in BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name clashes between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period separator, such as "basic.scan", to prevent name collisions.
+Units, which are components of BitmistJS, inherit the standard HTMLElement, have almost no other functionality. In BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name conflicts between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period-separated perk-specific word, such as “basic.scan”, to prevent name collisions.
 
 <WRAP admonition note links>
 See the following for the details.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:asset|Unit Explained - Assets (Properties and Methods)]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:asset|Unit Explained - Properties and Methods]]
 </WRAP>
 
 =====Settings=====
@@ -36,9 +36,9 @@ See the following for the details.
 </WRAP>
 =====HTML=====
 
-Each unit has one HTML file by default. Each unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
+Each unit has one HTML file by default.  The unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
 
-A unit use the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
+A unit uses the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
 
 <WRAP admonition note links>
 See the following for the details.
@@ -46,7 +46,7 @@ See the following for the details.
 </WRAP>
 =====CSS=====
 
-Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by specifying them in the settings. You can apply multiple structured CSS to a unit, such as common CSS and CSS specific to each unit. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
+Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by writing them in the settings. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
 
 BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using ShadowDOM.
 

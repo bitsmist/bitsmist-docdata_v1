@@ -2,7 +2,7 @@
 
 =====Overview=====
 
-Units, which are components of BitmistJS, inherit the standard HTMLElement, but have almost no other functionality; in BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name clashes between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period separator, such as "basic.scan", to prevent name collisions.
+Units, which are components of BitmistJS, inherit the standard HTMLElement, have almost no other functionality. In BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name conflicts between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period-separated perk-specific word, such as "basic.scan", to prevent name collisions.
 
 <WRAP admonition note>
 There is no restriction on adding properties or methods on the library side. Prefixing is also a rule, and there is no mechanism to enforce it. It is solely up to the creator to decide whether or not to comply.
@@ -24,7 +24,7 @@ Methods are provided primarily for accessing assets.
 |set()|Stores a value in an asset.|
 |get()|Get a value from an asset. |
 |has()|Checks if the specified item exists in the asset.|
-|use()|Use [[#skill/spell|skill, spell]] in the asset.|
+|use()|Use [[#skill_and_spell|skill, spell]] in the asset.|
 |uniqueId|The unique ID of the unit|
 |unitRoot|The unit's node.|
 
@@ -67,7 +67,7 @@ The set(), get(), and use() methods are provided to access items in the asset.
 When items are added to an asset, The items in the assets are prefixed with a period-delimited, perk-specific prefix, such as "basic.scan", to avoid name conflicts.
 ====Inventory, Vault and State====
 
-There are three types of assets for storing information: inventory, which stores publicly available information; vault, which stores private information; and state, which stores information about the state of the unit.
+There are three types of assets for storing information: inventory, which stores public information; vault, which stores private information; and state, which stores information about the state of the unit.
 
 The set() and get() methods are used to access the contents of each.
 
@@ -95,7 +95,7 @@ For more information on settings, please see below.
 </WRAP>
 ====Skill and Spell====
 
-There are two assets for storing methods: "skill" and "spell". The difference between skill and spell is that skill stores non-asynchronous methods and spell stores asynchronous methods. Spells return a Promise and should be handled appropriately.
+There are two assets for storing methods: "skill" and "spell". The difference between skill and spell is that skill stores non-asynchronous methods and spell stores asynchronous methods. Spells return a promise and should be handled appropriately.
 
 The items in skill and spell, like in other assets, are also separated by the prefix of each perk.
 
