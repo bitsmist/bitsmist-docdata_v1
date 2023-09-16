@@ -24,11 +24,11 @@ By default, the following perks are applied to a unit.
 
 =====Applying Perks=====
 
-To apply a perk, it must be described in the settings of each unit. There are two ways to do so.
+To apply a perk, it must be written in the settings of each unit. There are two ways to do so.
 
-====Describe in the "perk" section ====
+====Write in the "perk" Section ====
 
-Specify the name of the perks in [[en:bitsmist-js-core:reference:perk:perk-perk#apply|apply]] option of 
+Specify the name of the perks in [[en:bitsmist-js-core:reference:perk:perk-perk#apply|apply]] option of
  [[en:bitsmist-js-core:reference:perk:perk-perk#PerkPerk]].  Multiple perks can be specified.
 
 <code javascript>

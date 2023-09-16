@@ -9,7 +9,7 @@ The SkinPerk grants the HTML-related features. The Shadow DOM is also handled by
 
 ====Format - Global====
 
-Settings common to all units are described in the "system.skin" section of the global settings.
+Settings common to all units are written in the "system.skin" section of the global settings.
 
 <code javascript>
 {
@@ -26,7 +26,7 @@ Settings common to all units are described in the "system.skin" section of the g
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "skin" section.
+Unit-specific settings are written in the "skin" section.
 
 <code javascript>
 {
@@ -52,7 +52,7 @@ Unit-specific settings are described in the "skin" section.
 
 ====Format - Tag Attributes====
 
-Some settings can be described in tag attributes.
+Some settings can be written in tag attributes.
 
 <code html>
 <my-unit

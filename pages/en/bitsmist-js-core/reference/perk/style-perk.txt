@@ -9,7 +9,7 @@ StylePerk grants the unit's style-related functions, such as loading and applyin
 
 ====Format - Global====
 
-Settings common to all units are described in the "system.style" section of the global settings.
+Settings common to all units are written in the "system.style" section of the global settings.
 
 The CSS specified in the apply setting in the system section is loaded at Perk initialization and applied to the Document.
 
@@ -37,7 +37,7 @@ The CSS specified in the apply setting in the system section is loaded at Perk i
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "style" section.
+Unit-specific settings are written in the "style" section.
 
 <code javascript>
 {
@@ -62,7 +62,7 @@ Unit-specific settings are described in the "style" section.
 
 ====Format - Tag Attributes====
 
-Some settings can be described in tag attributes.
+Some settings can be written in tag attributes.
 
 <code html>
 <my-unit
@@ -76,9 +76,9 @@ Some settings can be described in tag attributes.
 
 The name of the CSS to be applied. If in the "system.style" section, the specified CSS is applied to the document.
 
-Within the "style" section, you can write in the "options" section and the "styles.<styleName>" section. If described in the "options" section, it will be applied no matter which CSS is used. If it is in the "styles.<styleName>" section, it will only be applied when that CSS is used. Each CSS is applied to the unit if in Shadow DOM mode, otherwise to the document.
+Within the "style" section, you can write in the "options" section and the "styles.<styleName>" section. If written in the "options" section, it will be applied no matter which CSS is used. If it is in the "styles.<styleName>" section, it will only be applied when that CSS is used. Each CSS is applied to the unit if in Shadow DOM mode, otherwise to the document.
 
-Note that you do not need to specify the default style here. If "style.options.styleRef" is specified, the default style for the unit is automatically applied **most last** even if it is not described here.
+Note that you do not need to specify the default style here. If "style.options.styleRef" is specified, the default style for the unit is automatically applied **most last** even if it is not written here.
 
 ----
 

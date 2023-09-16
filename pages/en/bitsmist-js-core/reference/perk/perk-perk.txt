@@ -10,7 +10,7 @@ PerkPerk grants units perk-related functions such as attaching perks.
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "perk" section.
+Unit-specific settings are written in the "perk" section.
 
 <code javascript>
 {

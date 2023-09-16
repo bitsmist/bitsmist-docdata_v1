@@ -19,7 +19,7 @@ You can specify which CSS to load and apply in the settings and Constructable St
 
 ====Common CSS====
 
-The settings for common CSS used by multiple units are described in the "system.styles" section of the global settings. StylePerk starts loading the common CSS described in the "styles" section at its initialization (before each unit is loaded).
+The settings for common CSS used by multiple units are written in the "system.styles" section of the global settings. StylePerk starts loading the common CSS written in the "styles" section at its initialization (before each unit is loaded).
 
 <code javascript>
 BITSMIST.v1.Unit.use("skill", "setting.merge", {
@@ -46,7 +46,7 @@ BITSMIST.v1.Unit.use("skill", "setting.merge", {
 After the common CSS have been loaded, the CSS specified by the "apply" option are applied to the document.
 ====Unit-Specific CSS====
 
-Unit-specific settings are described in the "style" section. The settings for StylePerk itself and common CSS to be applied are described in the "style.options" section, and settings for each CSS are described under the "style.styles" section using the CSS name as a key. The key name is the name specified in [[#switching_css|Switching CSS]] described below. The default CSS information is described in the "default" section. If the "default" section does not exist, the default file is loaded.
+Unit-specific settings are written in the "style" section. The settings for StylePerk itself and common CSS to be applied are written in the "style.options" section, and settings for each CSS are written under the "style.styles" section using the CSS name as a key. The key name is the name specified in [[#switching_css|Switching CSS]] described below. The default CSS information is written in the "default" section. If the "default" section does not exist, the default file is loaded.
 
 <code javascript>
 _getSettings()
@@ -73,7 +73,7 @@ _getSettings()
 }
 </code>
 
-Common CSS described in "styles.options.apply" will be applied no matter which CSS is used. Common CSS described in "styles.<styleName>.apply" will be applied only when switched to this CSS.
+Common CSS written in "styles.options.apply" will be applied no matter which CSS is used. Common CSS written in "styles.<styleName>.apply" will be applied only when switched to this CSS.
 
 <WRAP admonition note links>
 For more information on StylePerk settings, please see below.
@@ -82,7 +82,7 @@ For more information on StylePerk settings, please see below.
 
 ====Not Using Constractable Stylesheets====
 
-If you do not use Shadow DOM, you can also apply styles in the traditional way without using Construtable Stylesheets. Describe in the settings to not use CSS and load the styles using <style> tags.
+If you do not use Shadow DOM, you can also apply styles in the traditional way without using Construtable Stylesheets. Write in the settings to not use CSS and load the styles using <style> tags.
 
 You can make sure that all units do not use CSS by putting it in the global settings.
 
@@ -168,7 +168,7 @@ _getSettings()
 
 ===No CSS===
 
-If the unit has no CSS files at all,  it must be described in the settings.
+If the unit has no CSS files at all,  it must be written in the settings.
 
 <code javascript>
 _getSettings()

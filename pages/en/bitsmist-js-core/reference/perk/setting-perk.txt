@@ -10,7 +10,7 @@ SettingPerk grants functions related to the unit's settings.
 
 ====Format - Global====
 
-Settings common to all units are described in the "system.setting" section of the global settings.
+Settings common to all units are written in the "system.setting" section of the global settings.
 
 <code javascript>
 {
@@ -26,7 +26,7 @@ Settings common to all units are described in the "system.setting" section of th
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "setting" section.
+Unit-specific settings are written in the "setting" section.
 
 <code javascript>
 {
@@ -41,7 +41,7 @@ Unit-specific settings are described in the "setting" section.
 
 ====Format - Tag Attributes====
 
-Some settings can be described in tag attributes.
+Some settings can be written in tag attributes.
 
 <code html>
 <my-unit

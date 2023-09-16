@@ -9,7 +9,7 @@ UnitPerk grants functions related to loading and instantiating units, such as lo
 
 ====Format - Global====
 
-Settings common to all units are described in the "system.unit" section of the global settings.
+Settings common to all units are written in the "system.unit" section of the global settings.
 
 <code javascript>
 {
@@ -26,9 +26,9 @@ Settings common to all units are described in the "system.unit" section of the g
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "unit" section.
+Unit-specific settings are written in the "unit" section.
 
-The "unit.units" section lists the units to be added dynamically. The object set as the value of <unitName> is the settings for the unit to be added. All settings, including those not listed here, can be described. The values described here will be merged into the unit's settings.
+The "unit.units" section lists the units to be added dynamically. The object set as the value of <unitName> is the settings for the unit to be added. All settings, including those not listed here, can be written. The values written here will be merged into the unit's settings.
 
 <code javascript>
 {
@@ -60,7 +60,7 @@ The "unit.units" section lists the units to be added dynamically. The object set
 
 ====Format - Tag Attributes====
 
-Some settings can be described in tag attributes.
+Some settings can be written in tag attributes.
 
 <code html>
 <my-unit

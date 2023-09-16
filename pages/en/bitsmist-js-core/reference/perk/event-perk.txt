@@ -9,7 +9,7 @@ EventPerk grants event-related functions such as adding event handlers and trigg
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "event" section.
+Unit-specific settings are written in the "event" section.
 
 <code javascript>
 {

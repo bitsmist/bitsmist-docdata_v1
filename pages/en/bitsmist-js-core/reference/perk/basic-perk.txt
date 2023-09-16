@@ -10,7 +10,7 @@ The BasicPerk grants basic functionality to the unit. However, this perk only tr
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "basic" section.
+Unit-specific settings are written in the "basic" section.
 
 <code javascript>
 {

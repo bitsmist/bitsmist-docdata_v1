@@ -43,7 +43,7 @@ This is the most typical way of configuring a unit.
 
 ====Load from the External File====
 
-Describe the settings in JSON format in an external file and specify its URL in the bm-settingref attribute of the tag.
+Write the settings in JSON format in an external file and specify its URL in the bm-settingref attribute of the tag.
 
 <code html>
 <bar-header bm-settingsref="https://example.com/settings/bar-header.settings.js"></bar-header>
@@ -116,7 +116,7 @@ The actual processing of the units according to their settings is done by each p
   * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:perks| Unit Explained - Extending with Perks]]
 </WRAP>
 
-The settings are separated by sections. Each perk has its own dedicated section and its settings are described in that section.
+The settings are separated by sections. Each perk has its own dedicated section and its settings are written in that section.
 
 Here is a list of the sections of each perk in the core library. Please follow the links for details on each perk's settings.
 
@@ -129,10 +129,10 @@ Here is a list of the sections of each perk in the core library. Please follow t
 |style|[[en:bitsmist-js-core:reference:perk:skin-perk|StylePerk]]|Handles CSS.|
 |unit|[[en:bitsmist-js-core:reference:perk:unit-perk|UnitPerk]]|Handles loading units.|
 
-There is also a "system" section that is referenced by the various perks. Since this affects the entire system, it is usually described in [[#global_settings|Global Settings]], which will be explained later.
+There is also a "system" section that is referenced by the various perks. Since this affects the entire system, it is usually written in [[#global_settings|Global Settings]], which will be explained later.
 
 <WRAP admonition tip>
-Global system settings can be described in the unit's settings to override global settings.
+Global system settings can be written in the unit's settings to override global settings.
 </WRAP>
 
 =====Accessing Settings=====

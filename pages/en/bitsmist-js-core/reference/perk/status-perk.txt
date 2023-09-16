@@ -10,7 +10,7 @@ StatusPerk grants functions related to the unit's status.
 
 ====Format - Global====
 
-Settings common to all units are described in the "system.status" section of the global settings.
+Settings common to all units are written in the "system.status" section of the global settings.
 
 <code javascript>
 {
@@ -26,7 +26,7 @@ Settings common to all units are described in the "system.status" section of the
 
 ====Format - Unit====
 
-Unit-specific settings are described in the "status" section.
+Unit-specific settings are written in the "status" section.
 
 <code javascript>
 {
