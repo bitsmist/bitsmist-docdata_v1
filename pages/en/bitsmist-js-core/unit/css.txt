@@ -6,7 +6,7 @@ Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets
 
 <WRAP admonition note links>
 Constructable Stylesheets is a Javascript standard technology. See below for details.
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() constructor - Mozilla Developer]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() constructor - Mozilla Developer]]
 </WRAP>
 
 BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using Shadow DOM.

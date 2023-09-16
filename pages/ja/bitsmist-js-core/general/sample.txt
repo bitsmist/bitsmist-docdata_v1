@@ -42,7 +42,7 @@ BitsmistJSでは、ユニットは全て標準技術であるWeb Componentsの�
 
 <WRAP admonition tip links>
 ルールについては、以下のページなどを参考にしてください。
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_custom_elements | カスタム要素の使用 | MDN Web Docs]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_custom_elements | カスタム要素の使用 | MDN Web Docs]]
 </WRAP>
 
 今回は"pad-hello"というタグにします。

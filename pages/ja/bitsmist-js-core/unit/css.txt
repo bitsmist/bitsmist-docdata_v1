@@ -6,7 +6,7 @@
 
 <WRAP admonition note links>
 Constructable StylesheetsはJavascript標準の技術です。詳細は以下をご覧ください。
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() コンストラクター | Mozilla Developer]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() コンストラクター | Mozilla Developer]]
 </WRAP>
 
 BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。Shadow DOMの使用時には、必須の機能です。

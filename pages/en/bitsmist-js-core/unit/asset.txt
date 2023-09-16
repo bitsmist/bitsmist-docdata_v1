@@ -20,6 +20,7 @@ Although we refer to them here as public and private, there is no specific diffe
 
 Methods are provided primarily for accessing assets.
 
+|< 100% 130px - >|
 ^Name^Description^
 |set()|Stores a value in an asset.|
 |get()|Get a value from an asset. |
@@ -32,6 +33,7 @@ Methods are provided primarily for accessing assets.
 
 Private properties are prefixed with %%__bm_%%. Although the library cannot prevent access to them, it is recommended that they not be used.
 
+|< 100% 130px - >|
 ^Name^Description^
 |%%__bm_assets%%|The object to store the assets.|
 |%%__bm_uniqueid%%|The unique ID of the unit.|
@@ -42,6 +44,7 @@ Private properties are prefixed with %%__bm_%%. Although the library cannot prev
 
 There are also methods that are assumed to be overridden and implemented.
 
+|< 100% 130px - >|
 ^Name^Description^
 |_getSettings()|Returns the unit settings.|
 
@@ -49,6 +52,7 @@ There are also methods that are assumed to be overridden and implemented.
 
 An asset is a container for various types of items. By default, there are "inventory", "vault", "state", "setting", "skill", and "spell".
 
+|< 100% 130px - >|
 ^Name^Description^
 |inventory|The asset to store the unit's public information.|
 |vault|The asset to store the unit's private information.|
@@ -59,6 +63,7 @@ An asset is a container for various types of items. By default, there are "inven
 
 The set(), get(), and use() methods are provided to access items in the asset.
 
+|< 100% 130px - >|
 ^Name^Description^
 |set()|The method to store values in an asset.|
 |get()|The method to retrieve a value from an asset.|

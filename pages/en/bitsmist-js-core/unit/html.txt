@@ -201,7 +201,7 @@ BitsmistJS allows for either "open" or "closed" Shadow DOM to be applied to each
 
 <WRAP admonition note links>
 Shadow DOM is a standard Javascript technology. For more information, see
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM|Using shadow DOM - Mozilla Developer]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM|Using shadow DOM - Mozilla Developer]]
 </WRAP>
 
 Shadow DOM is not used by default. If you want to use Shadow DOM, you must put it in your settings.

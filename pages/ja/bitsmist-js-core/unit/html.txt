@@ -199,7 +199,7 @@ BitsmistJSでは、各ユニットに"open"、"closed"のいずれのShadow DOM�
 
 <WRAP admonition note links>
 Shadow DOMはJavascriptの標準技術です。詳細については、以下をご覧ください。
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/Web_components/Using_shadow_DOM|シャドウ DOM の使用 - Mozilla Developer]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/Web_components/Using_shadow_DOM|シャドウ DOM の使用 - Mozilla Developer]]
 </WRAP>
 
 デフォルトではShadow DOMは使用されません。Shadow DOMを使用する場合、設定に記述する必要があります。

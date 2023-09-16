@@ -41,7 +41,7 @@ Since the BitsmistJS units are built on top of the custom elements in the standa
 
 <WRAP admonition tip links>
 Refer to the following page for details.
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en/docs/Web/Web_Components/Using_custom_elements | Using custom elements | MDN Web Docs]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/en/docs/Web/Web_Components/Using_custom_elements | Using custom elements | MDN Web Docs]]
 </WRAP>
 
 We name the tag "pad-hello" here.

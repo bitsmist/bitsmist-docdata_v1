@@ -38,7 +38,7 @@
 
 <WRAP admonition note links>
 この例では相対パスを使っていますが、絶対パスでも構いません。ただし、XMLHttpRequestを使用して取得しているため、絶対パスを使って別のオリジンからロードする場合は、サーバ側でAccess-Control-Allow-Originヘッダーを付加する必要があります。
-  * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/HTTP/CORS|オリジン間リソース共有 (CORS) | MDN Web Docs]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/ja/docs/Web/HTTP/CORS|オリジン間リソース共有 (CORS) | MDN Web Docs]]
 </WRAP>
 
 ===URLを指定しない===

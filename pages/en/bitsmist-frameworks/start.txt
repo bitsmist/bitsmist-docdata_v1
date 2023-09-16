@@ -3,13 +3,17 @@
 =====BitsmistJS=====
 
 BitsmistJS is a Web Components-based javascript framework.
+
+|< 100% 150px 150px - >|
 ^Name^Links^Description^
-| BitsmistJS Core|[[https://github.com/bitsmist/bitsmist-js_v1|GitHub]] \\ [[en:bitsmist-js-core:start| Documents]]|Core library. You need at least this to use BitsmistJS.|
-|BitsmistJS Extras|[[https://github.com/bitsmist/bitsmist-js-extras_v1|GitHub]]|Extra features. This is a collection of experimental features.|
+| BitsmistJS Core|<html><i class="fas fa-external-link-alt"></i></html> [[https://github.com/bitsmist/bitsmist-js_v1|GitHub]] \\ <html><i class="fas fa-link"></i></html> [[en:bitsmist-js-core:start| Documents]]|Core library. You need at least this to use BitsmistJS.|
+|BitsmistJS Extras|<html><i class="fas fa-external-link-alt"></i></html> [[https://github.com/bitsmist/bitsmist-js-extras_v1|GitHub]]|Extra features. This is a collection of experimental features.|
 
 =====Bitsmist Server=====
 
 Bitsmist Server is a Web API framework made with PHP.
+
+|< 100% 150px 150px - >|
 ^Name^Links^Description^
-|Bitsmist Server Core|[[https://github.com/bitsmist/bitsmist-server_v1|GitHub]] \\ [[https://packagist.org/packages/bitsmist/bitsmist-server_v1|Composer]]|Core library. You need at least this to use Bitsmist Server.|
-|Bitsmist Server Skeleton|[[https://github.com/bitsmist/bitsmist-server-skeleton_v1|GitHub]] \\ [[https://packagist.org/packages/bitsmist/bitsmist-server-skeleton_v1|Composer]]|A composer project to start with.|
+|Bitsmist Server Core|<html><i class="fas fa-external-link-alt"></i></html> [[https://github.com/bitsmist/bitsmist-server_v1|GitHub]] \\ <html><i class="fas fa-external-link-alt"></i></html> [[https://packagist.org/packages/bitsmist/bitsmist-server_v1|Composer]]|Core library. You need at least this to use Bitsmist Server.|
+|Bitsmist Server Skeleton|<html><i class="fas fa-external-link-alt"></i></html> [[https://github.com/bitsmist/bitsmist-server-skeleton_v1|GitHub]] \\ <html><i class="fas fa-external-link-alt"></i></html> [[https://packagist.org/packages/bitsmist/bitsmist-server-skeleton_v1|Composer]]|A composer project to start with.|

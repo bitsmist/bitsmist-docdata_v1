@@ -40,7 +40,7 @@ The BitsmistJS library will then automatically download the file from the specif
 
 <WRAP admonition note links>
 Though the path in this example is relative, you can also use an absolute path. However, the library uses XMLHttpRequest to load files, servers hosting units need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
-  * [[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
+  * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
 </WRAP>
 
 ===Use Default Path/Filename===
