@@ -4,7 +4,7 @@
 
 =====概要=====
 
-SkinPerkはユニットのHTMLに関する機能を付与します。またShadowDOMの有効化も、このパークが行います。
+SkinPerkはユニットのHTMLに関する機能を付与します。またShadow DOMの有効化も、このパークが行います。
 
 =====設定=====
 
@@ -98,7 +98,7 @@ HTMLファイルのパスを指定します。"system.skin.options.path"と"skin
 
 ''型:String'' ''デフォルト:False''
 
-ShadowDOMを使用する場合、"open"または"closed"を指定します。それ以外の文字を指定すると、ShadowDOMを使用しません。デフォルトではShadowDOMを使用しません。
+Shadow DOMを使用する場合、"open"または"closed"を指定します。それ以外の文字を指定すると、Shadow DOMを使用しません。デフォルトではShadow DOMを使用しません。
 
 ----
 

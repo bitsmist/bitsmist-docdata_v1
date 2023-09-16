@@ -4,7 +4,7 @@
 
 =====Overview=====
 
-The SkinPerk grants the HTML-related features. The ShadowDOM is also handled by this perk.
+The SkinPerk grants the HTML-related features. The Shadow DOM is also handled by this perk.
 =====Settings=====
 
 ====Format - Global====
@@ -96,7 +96,7 @@ The selector string that points to a specific node in the unit. The format is th
 
 ''Type:String'' ''Default:False''
 
-To use ShadowDOM, specify "open" or "closed", otherwise ShadowDOM is not used. By default, ShadowDOM is not used.
+To use Shadow DOM, specify "open" or "closed", otherwise Shadow DOM is not used. By default, Shadow DOM is not used.
 
 ----
 

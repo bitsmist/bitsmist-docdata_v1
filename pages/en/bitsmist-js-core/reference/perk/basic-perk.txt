@@ -95,7 +95,7 @@ A unique ID assigned to each instance of the unit. It is automatically generated
 
 ''Type:HTMLElement'' ''Target:Prototype'' ''get/set''
 
-The root node of the unit. If the unit is ShadowDOM, it is the return value of attachShadow(), otherwise, "this". As an exception, when transforming the clone of the template HTML is set. 
+The root node of the unit. If the unit is Shadow DOM, it is the return value of attachShadow(), otherwise, "this". As an exception, when transforming the clone of the template HTML is set.
 
 =====Unit Methods=====
 

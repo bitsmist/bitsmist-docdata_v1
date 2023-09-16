@@ -2,7 +2,7 @@
 
 =====Overview=====
 
-Each unit has one HTML file by default.  The unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
+Each unit has one HTML file by default.  The unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the Shadow DOM is also handled by SkinPerk.
 
 A unit uses the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
 =====Settings=====
@@ -195,16 +195,16 @@ _getSettings()
     }
 }
 </code>
-=====ShadowDOM=====
+=====Shadow DOM=====
 
-BitsmistJS allows for either "open" or "closed" ShadowDOM to be applied to each unit, making each unit more independent. SkinPerk handles the application of ShadowDOM.
+BitsmistJS allows for either "open" or "closed" Shadow DOM to be applied to each unit, making each unit more independent. SkinPerk handles the application of Shadow DOM.
 
 <WRAP admonition note links>
-ShadowDOM is a standard Javascript technology. For more information, see
+Shadow DOM is a standard Javascript technology. For more information, see
   * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM|Using shadow DOM - Mozilla Developer]]
 </WRAP>
 
-ShadowDOM is not used by default. If you want to use ShadowDOM, you must put it in your settings.
+Shadow DOM is not used by default. If you want to use Shadow DOM, you must put it in your settings.
 
 <code javascript>
 _getSettings()
@@ -222,7 +222,7 @@ _getSettings()
 You can specify "open" or "closed".
 
 <WRAP admonition caution links>
-When using ShadowDOM, the CSS structure must be carefully designed; see also the StylePerk configuration for handling CSS.
+When using Shadow DOM, the CSS structure must be carefully designed; see also the StylePerk configuration for handling CSS.
 
   * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:css#settings|Unit Explained - CSS - Settings]]
 </WRAP>

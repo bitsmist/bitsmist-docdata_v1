@@ -9,7 +9,7 @@ Constructable StylesheetsはJavascript標準の技術です。詳細は以下を
   * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() コンストラクター | Mozilla Developer]]
 </WRAP>
 
-BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。ShadowDOMの使用時には、必須の機能です。
+BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。Shadow DOMの使用時には、必須の機能です。
 
 ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
 
@@ -83,7 +83,7 @@ StylePerkの設定の詳細については以下をご覧ください。
 
 ====Constractable Stylesheetsを使用しない====
 
-ShadowDOMを使わない場合、Construtable Stylesheetsを使わずに、従来の方法でスタイルを適用することもできます。Constructable Stylesheetsを使用したくない場合は、各ユニットの設定でデフォルトCSSを使わない設定にしておき、<style>タグなどで、スタイルをロードします。
+Shadow DOMを使わない場合、Construtable Stylesheetsを使わずに、従来の方法でスタイルを適用することもできます。Constructable Stylesheetsを使用したくない場合は、各ユニットの設定でデフォルトCSSを使わない設定にしておき、<style>タグなどで、スタイルをロードします。
 
 グローバル設定に記述することで、全ユニットがCSSを使わないようにすることができます。
 

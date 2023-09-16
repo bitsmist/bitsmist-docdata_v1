@@ -74,9 +74,9 @@ Some settings can be described in tag attributes.
 
 ''Type:Array of String''
 
-The name of the CSS to be applied. If in the "system.style" section, the specified CSS is applied to the document. 
+The name of the CSS to be applied. If in the "system.style" section, the specified CSS is applied to the document.
 
-Within the "style" section, you can write in the "options" section and the "styles.<styleName>" section. If described in the "options" section, it will be applied no matter which CSS is used. If it is in the "styles.<styleName>" section, it will only be applied when that CSS is used. Each CSS is applied to the unit if in ShadowDOM mode, otherwise to the document.
+Within the "style" section, you can write in the "options" section and the "styles.<styleName>" section. If described in the "options" section, it will be applied no matter which CSS is used. If it is in the "styles.<styleName>" section, it will only be applied when that CSS is used. Each CSS is applied to the unit if in Shadow DOM mode, otherwise to the document.
 
 Note that you do not need to specify the default style here. If "style.options.styleRef" is specified, the default style for the unit is automatically applied **most last** even if it is not described here.
 

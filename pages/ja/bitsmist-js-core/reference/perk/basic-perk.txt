@@ -97,7 +97,7 @@ Trueの場合、スタート処理中に自動的に[[#transform|transform]]ス�
 
 ''型:HTMLElement'' ''対象:プロトタイプ'' ''get/set''
 
-ユニットのルートとなるノードです。ShadowDOMの場合、attachShadow()の戻り値となります。ShadowDOMでない場合は、"this"となります。ただし、トランスフォーム中はTemplateノードのクローンがセットされます。
+ユニットのルートとなるノードです。Shadow DOMの場合、attachShadow()の戻り値となります。Shadow DOMでない場合は、"this"となります。ただし、トランスフォーム中はTemplateノードのクローンがセットされます。
 =====ユニットメソッド=====
 
 ====get(assetName, key, defaultValue)====

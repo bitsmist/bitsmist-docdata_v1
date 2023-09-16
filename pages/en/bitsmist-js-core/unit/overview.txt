@@ -36,7 +36,7 @@ See the following for the details.
 </WRAP>
 =====HTML=====
 
-Each unit has one HTML file by default.  The unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the ShadowDOM is also handled by SkinPerk.
+Each unit has one HTML file by default.  The unit's HTML file must be loaded and applied to the unit (added to the node). It is possible to switch between multiple HTML files or create a unit with no HTML at all. These functions are handled by SkinPerk. In addition, the Shadow DOM is also handled by SkinPerk.
 
 A unit uses the "basic.transform" spell during its initialization to trigger beforeTransform, doTransform, and afterTransform events. The SkinPerk installs beforeTransform event handler to load HTML, and doTransform event handler to apply the loaded HTML.
 
@@ -48,7 +48,7 @@ See the following for the details.
 
 Each unit has one CSS file by default. BitsmistJS uses Constructable Stylesheets, a standard technology for applying CSS, which allows multiple structured CSS to be applied to a unit, including common CSS and CSS specific to each unit, just by writing them in the settings. It is also possible to switch between multiple CSS or to create units that use no CSS at all. These functions are handled by StylePerk.
 
-BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using ShadowDOM.
+BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using Shadow DOM.
 
 The unit uses the "basic.transform" spell during initialization to trigger beforeTransform, doTransform, and afterTransform events. The StylePerk installs doTransform event handler to load and apply CSS.
 

@@ -2,7 +2,7 @@
 
 =====概要=====
 
-各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadowDOMの適用も、SkinPerkによって行われます。
+各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadow DOMの適用も、SkinPerkによって行われます。
 
 ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
 =====設定=====
@@ -193,16 +193,16 @@ _getSettings()
     }
 }
 </code>
-=====ShadowDOM=====
+=====Shadow DOM=====
 
-BitsmistJSでは、各ユニットに"open"、"closed"のいずれのShadowDOMも適用することができます。ShadowDOMを使用することで、各ユニットの独立性が上がります。ShadowDOMの適用は、SkinPerkによって行われます。
+BitsmistJSでは、各ユニットに"open"、"closed"のいずれのShadow DOMも適用することができます。Shadow DOMを使用することで、各ユニットの独立性が上がります。Shadow DOMの適用は、SkinPerkによって行われます。
 
 <WRAP admonition note links>
-ShadowDOMはJavascriptの標準技術です。詳細については、以下をご覧ください。
+Shadow DOMはJavascriptの標準技術です。詳細については、以下をご覧ください。
   * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/ja/docs/Web/API/Web_components/Using_shadow_DOM|シャドウ DOM の使用 - Mozilla Developer]]
 </WRAP>
 
-デフォルトではShadowDOMは使用されません。ShadowDOMを使用する場合、設定に記述する必要があります。
+デフォルトではShadow DOMは使用されません。Shadow DOMを使用する場合、設定に記述する必要があります。
 
 <code javascript>
 _getSettings()
@@ -220,7 +220,7 @@ _getSettings()
 "open"または"closed"を指定することができます。
 
 <WRAP admonition caution links>
-ShadowDOMを使う場合、CSSの構造を綿密に設計する必要があります。CSSを取り扱うStylePerkの設定についても参照してください。
+Shadow DOMを使う場合、CSSの構造を綿密に設計する必要があります。CSSを取り扱うStylePerkの設定についても参照してください。
 
   * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:css#設定|ユニットの解説 - CSS - 設定]]
 </WRAP>

@@ -9,7 +9,7 @@ Constructable Stylesheets is a Javascript standard technology. See below for det
   * <html><i class="fas fa-link"></i></html>[[https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/CSSStyleSheet|CSSStyleSheet: CSSStyleSheet() constructor - Mozilla Developer]]
 </WRAP>
 
-BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using ShadowDOM.
+BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using Shadow DOM.
 
 The unit uses the "basic.transform" spell during initialization to trigger beforeTransform, doTransform, and afterTransform events. The StylePerk installs doTransform event handler to load and apply CSS.
 
@@ -82,9 +82,9 @@ For more information on StylePerk settings, please see below.
 
 ====Not Using Constractable Stylesheets====
 
-If you do not use ShadowDOM, you can also apply styles in the traditional way without using Construtable Stylesheets. Describe in the settings to not use CSS and load the styles using <style> tags.
+If you do not use Shadow DOM, you can also apply styles in the traditional way without using Construtable Stylesheets. Describe in the settings to not use CSS and load the styles using <style> tags.
 
-You can make sure that all units do not use CSS by putting it in the global settings 
+You can make sure that all units do not use CSS by putting it in the global settings.
 
 <code javascript>
 BITSMIST.v1.Unit.use("skill", "setting.merge", {

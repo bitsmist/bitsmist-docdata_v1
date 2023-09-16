@@ -40,7 +40,7 @@ BitsmistJSの特徴のひとつが、イベントドリブンです。各ユニ�
 </WRAP>
 =====HTML=====
 
-各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadowDOMの適用も、SkinPerkによって行われます。
+各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadow DOMの適用も、SkinPerkによって行われます。
 
 ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
 
@@ -52,7 +52,7 @@ BitsmistJSの特徴のひとつが、イベントドリブンです。各ユニ�
 
 各ユニットはデフォルトでは1つのCSSファイルを持ちます。各ユニットのCSSファイルは、ロードしてユニットに適用される必要があります。BitsmistJSではCSSの適用に標準技術のConstructable Stylesheetsを採用しており、設定に記述することで、共通のCSSと各ユニット専用のCSSといった複数の構造化されたCSSをユニットに適用することができます。また、複数のCSSを切り替えて使ったり、逆にCSSを全く使用しないユニットを作ることもできます。これらの機能はStylePerkによって処理されます。
 
-BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。ShadowDOMの使用時には、必須の機能です。
+BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。Shadow DOMの使用時には、必須の機能です。
 
 ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
 <WRAP admonition note links>
