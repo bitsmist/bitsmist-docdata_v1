@@ -167,6 +167,8 @@ A clone of the Template created in beforeTransform is added to the unit and disp
 The object that holds skin information.
 
 Each item has the following keys:
+
+|< 100% 180px 130px - >|
 ^Key^Type^Description^
 |name|String|The skin name.|
 |HTML|String|The skin HTML.|
@@ -182,6 +184,8 @@ Each item has the following keys:
 The object that stores the currently active skin information.
 
 Each item has the following keys:
+
+|< 100% 180px 130px - >|
 ^Key^Type^Description^
 |skinName|String|The currently active skin name. Set when the [[#apply|apply]] skill is used.|
 
@@ -195,6 +199,7 @@ Applies a skin to the unit. If the specified skin has already been applied, does
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |skinName \\ ''Required''|String|The name of the skin to be applied.|
 |clone|Node|The template to apply. If not specified, the template in [[#skins|the skin info]] is used.|
@@ -217,6 +222,7 @@ Loads an HTML file. Only loads, and does not apply. If it has already been loade
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |skinName \\ ''Required''|String|The name of the skin to be loaded.|
 |options|Object|This is equivalent to [[#format_-_unit|the settings set as a value]] for <skinName>.|
@@ -230,7 +236,7 @@ Returns [[#skins|skin info object]] of the loaded skin.
   * [[#path|skin.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[#skinref_bm-skinref|skin.options.skinRef]]
   * [[#type|skin.skins.<skinName>.type]]
-  * [[#html|skin.skins.<skinName>.HTML]]  
-  * [[#rootnode|skin.skins.<skinName>.rootNode]] 
-  * [[#url|skin.skins.<skinName>.URL]] 
+  * [[#html|skin.skins.<skinName>.HTML]]
+  * [[#rootnode|skin.skins.<skinName>.rootNode]]
+  * [[#url|skin.skins.<skinName>.URL]]
   * [[#path|system.skin.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

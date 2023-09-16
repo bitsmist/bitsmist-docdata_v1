@@ -11,8 +11,9 @@ This is the base class of the Perk. All perks inherit this Perk.
 
 Returns an object with information about this perk. It has the following keys:
 
+|< 100% 180px 130px - >|
 ^Key^Type^Description^
-|depends|String/Array of String|The name of the perk on which this perk depends. It is possible to specify more than one in an array.|
+|depends|String \\ Array of String|The name of the perk on which this perk depends. It is possible to specify more than one in an array.|
 |section|String|The section name of the settings this perk will use. If this section name is present in the settings, the corresponding perk will be attached to the unit.|
 |order|Number|The priority level of the perk. The lower the number, the higher the priority. Perk initialization and event handlers are executed according to this priority order.|
 
@@ -50,6 +51,7 @@ The base class does nothing.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |unit \\ ''Required''|Unit|A unit to be attached.|
 |options|Object|Initialization options.|
@@ -75,6 +77,7 @@ Upgrades the unit. The type of upgrade varies depending on the type argument.
 
 ===Paramters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |unit \\ ''Required''|Unit|The unit to be upgraded.|
 |type \\ ''Required''|String|The upgrade type. Valid types are "asset", "method", "property", "event" and the asset names.|

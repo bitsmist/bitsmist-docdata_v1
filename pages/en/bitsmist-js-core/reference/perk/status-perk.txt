@@ -90,6 +90,7 @@ Changes the unit's status.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |status|String|The unit's status. See [[#status|State - status]] for valid values.|
 
@@ -107,6 +108,7 @@ Waits for other units to be specific status.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |waitList \\ ''Required''|Array of Object|The wait info array. Each object in the array is equivalent to the settings set as a value for [[#eventname|<eventName>]].|
 |timeout \\ ''Default:(see desc)''|Number|The timeout in milliseconds. If the unit is not in the specified status after the time specified here, an exception is raised. If not specified, [[#waitfortimeout|waitForTimeout]] setting value is used.|

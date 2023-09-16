@@ -170,6 +170,7 @@ beforeTransformで作成されたTemplateのクローンをユニットに追加
 
 スキン情報を保持するオブジェクトです。それぞれのアイテムは以下のキーを持っています。
 
+|< 100% 180px 130px - >|
 ^キー^型^説明^
 |name|String|スキン名です。|
 |HTML|String|スキンのHTMLです。|
@@ -186,6 +187,7 @@ beforeTransformで作成されたTemplateのクローンをユニットに追加
 
 以下のキーを持ちます。
 
+|< 100% 180px 130px - >|
 ^キー^型^説明^
 |skinName|String|現在有効なスキン名です。[[#apply|apply]]スキルを使用すると、セットされます。|
 
@@ -201,6 +203,7 @@ beforeTransformで作成されたTemplateのクローンをユニットに追加
 
 ===パラメータ===
 
+|< 100% 180px 130px - >|
 ^パラメータ^型^説明^
 |skinName \\ ''必須''|String|適用するスキンの名前です。|
 |clone|Node|適用するテンプレートです。指定がない場合、[[#skins|スキン情報]]にあるテンプレートが使用されます。|
@@ -223,6 +226,7 @@ HTMLファイルをロードします。ロードするのみでユニットに�
 
 ===パラメータ===
 
+|< 100% 180px 130px - >|
 ^パラメータ^型^説明^
 |skinName \\ ''必須''|String|ロードするスキン名です。|
 |options|Object|[[#書式-ユニット固有設定|設定の<skinName>の値]]と同じものです。|
@@ -236,7 +240,7 @@ HTMLファイルをロードします。ロードするのみでユニットに�
   * [[#path|skin.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[#skinref_bm-skinref|skin.options.skinRef]]
   * [[#type|skin.skins.<skinName>.type]]
-  * [[#html|skin.skins.<skinName>.HTML]]  
-  * [[#rootnode|skin.skins.<skinName>.rootNode]] 
-  * [[#url|skin.skins.<skinName>.URL]] 
+  * [[#html|skin.skins.<skinName>.HTML]]
+  * [[#rootnode|skin.skins.<skinName>.rootNode]]
+  * [[#url|skin.skins.<skinName>.URL]]
   * [[#path|system.skin.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

@@ -163,6 +163,8 @@ First, loads all the CSS required for the unit using [[#summon|summon]] spell. T
 The object that holds style information.
 
 Each item has the following keys:
+
+|< 100% 180px 130px - >|
 ^Key^Type^Description^
 |name|String|The style name.|
 |CSS|String|The CSS.|
@@ -178,6 +180,7 @@ Applies a style to the unit. If the specified style has already been applied, do
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |styleName \\ ''Required''|String|The name of the style to be applied.|
 
@@ -199,6 +202,7 @@ Loads a CSS file. Only loads, and does not apply. If it has already been loaded,
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |styleName \\ ''Required''|String|The name of the style to be loaded.|
 |options|Object|This is equivalent to [[#format_-_unit|the settings set as a value]] for <styleName>.|
@@ -212,6 +216,6 @@ Returns [[#styles|style info object]] of the loaded style.
   * [[#path|style.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[#styleref_bm-styleref|style.options.styleRef]]
   * [[#type|style.sytles.<styleName>.type]]
-  * [[#css|style.sytles.<styleName>.CSS]]  
-  * [[#url|style.sytles.<styleName>.URL]] 
+  * [[#css|style.sytles.<styleName>.CSS]]
+  * [[#url|style.sytles.<styleName>.URL]]
   * [[#path|system.style.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

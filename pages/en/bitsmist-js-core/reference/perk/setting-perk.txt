@@ -91,6 +91,7 @@ Retrieves settings from the settings asset.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |key \\ ''Required''|String|The key to be retrieved.|
 |defaultValue|*|The value to be returned if the key does not exist.|
@@ -109,6 +110,7 @@ Merges settings.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |key \\ ''Required''|String|The key to merge.|
 |value \\ ''Required''|*|The value to merge.|
@@ -127,6 +129,7 @@ Sets the setting to the settings asset.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |key \\ ''Required''|String|The key to set.|
 |value \\ ''Required''|*|The value to set.|
@@ -145,6 +148,7 @@ Triggers events to apply the settings. It also uses the [[en:bitsmist-js-core:re
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |options \\ ''Required''|Object|Options passed to the event to be triggered. Has the following keys:|
 |  "settings" \\ ''Required''|Object|The unit settings.|

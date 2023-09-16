@@ -207,6 +207,7 @@ Loads settings from the "unit.units" section and add units using [[#materialize|
 
 This object holds the units added to this unit. Each item has the following keys:
 
+|< 100% 180px 130px - >|
 ^Key^Type^Description^
 |object|Unit|Added units.|
 
@@ -220,6 +221,7 @@ Adds a new unit inside a unit. Instances of the added units will be added to the
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |tagName \\ ''Required''|String|The tag name of the unit to be added.|
 |settings|Object|The settings for the unit to be added. This is equivalent to [[#format_-_unit|the settings set as a value]] for <unitName>.|
@@ -248,6 +250,7 @@ Instantiates all units that need to be loaded under the root node specified. The
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |rootNode \\ ''Required''|HTMLElement|The node that is the base point for loading units.|
 |options|Object|Load options. Has the following keys:|
@@ -272,6 +275,7 @@ Loads the class file for the unit. After the file has been loaded, the unit can 
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |tagName \\ ''Required''|Object|Tag name of the unit to be loaded.|
 |settings|Object|Unit Settings.|

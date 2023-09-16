@@ -321,6 +321,7 @@ Sets event handlers for an event to elements.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |eventName \\ ''Required''|String|The event name.|
 |handlerInfo \\ ''Required''|Object|The handler info. This is equivalent to [[#settings|the settings set as a value for <eventName>]].|
@@ -341,6 +342,7 @@ Sets event handlers for events to elements. Unlike [[#add|add]] skill, init skil
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |elementName \\ ''Required''|Object|The element name. See [[#elementname|elementName setting]] also.|
 |eventInfo|Object|The event info. This is equivalent to [[#settings|the settings set as a value for <elementName>]]. If not specified, the value from the settings of the elemetName is used instead.|
@@ -364,6 +366,7 @@ Removes event handlers from elements.
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |eventName \\ ''Required''|String|The event name.|
 |handlerInfo \\ ''Required''|Object|The handler info. This is equivalent to [[#settings|the settings set as a value for <eventName>]]|
@@ -383,6 +386,7 @@ Removes event handlers from elements. The reverse process of the [[#init|init]] 
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |elementName \\ ''Required''|Object|The element name. See [[#elementname|elementName settings]] also.|
 |eventInfo|Object|The event info. This is equivalent to [[#settings|the setting set as a value for <elementName>]]. If not specified, the value from settings of the elementName is used instead.|
@@ -406,6 +410,7 @@ Fires an event, but unlike [[#trigger|trigger]], it calls the next handler witho
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |eventName \\ ''Required''|String|The event name to trigger.|
 |options|Object|Options passed to the event handler. Can be accessed from the event handlers via e.detail parameter.|
@@ -429,6 +434,7 @@ The event handler can wait for the previous handler only if the previous event h
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |eventName \\ ''Required''|String|The event name to trigger.|
 |options|Object|Options passed to the event handler. Can be accessed from the event handlers via e.detail parameter.|

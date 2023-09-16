@@ -38,6 +38,7 @@ Registers the perk with the system. A perk cannot be attached unless it is regis
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |perk|Perk|The perk to register.|
 
@@ -53,6 +54,7 @@ Undefined.
 
 This object holds the perks attached to this unit. Each item has the following keys:
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |object|Perk|The perk attached.|
 
@@ -66,6 +68,7 @@ Attaches the perk passed in the argument to the unit. If the perk depends on oth
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |perk|Perk|The perk to attach.|
 |options|Object|Options. Passed to the init() method of the attaching perk.|
@@ -86,6 +89,7 @@ Attaches all the perks depending on the settings using the [[#attach|attachl]] s
 
 ===Parameters===
 
+|< 100% 180px 130px - >|
 ^Parameter^Type^Description^
 |options|Object|Options. Has the following keys:|
 |  "settings"|Object|The unit settings.|

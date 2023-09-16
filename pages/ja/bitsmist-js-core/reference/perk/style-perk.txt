@@ -164,6 +164,7 @@ CSSファイルのURLを指定します。"type"設定が"URL"の時に使用さ
 
 スタイル情報を保持するオブジェクトです。それぞれのアイテムは以下のキーを持っています。
 
+|< 100% 180px 130px - >|
 ^キー^型^説明^
 |name|String|スタイル名です。|
 |CSS|String|スタイルのCSSです。|
@@ -180,6 +181,7 @@ CSSファイルのURLを指定します。"type"設定が"URL"の時に使用さ
 
 ===パラメータ===
 
+|< 100% 180px 130px - >|
 ^パラメータ^型^説明^
 |styleName \\ ''必須''|String|適用するスタイルの名前です。|
 
@@ -202,6 +204,7 @@ CSSをロードします。ロードするのみで適用はされません。�
 
 ===パラメータ===
 
+|< 100% 180px 130px - >|
 ^パラメータ^型^説明^
 |styleName \\ ''必須''|String|ロードするスタイル名です。|
 |options|Object|[[#書式-ユニット固有設定|設定の<styleName>の値]]と同じものです。|
@@ -215,6 +218,6 @@ CSSをロードします。ロードするのみで適用はされません。�
   * [[#path|style.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[#styleref_bm-styleref|style.options.styleRef]]
   * [[#type|style.sytles.<styleName>.type]]
-  * [[#css|style.sytles.<styleName>.CSS]]  
-  * [[#url|style.sytles.<styleName>.URL]] 
+  * [[#css|style.sytles.<styleName>.CSS]]
+  * [[#url|style.sytles.<styleName>.URL]]
   * [[#path|system.style.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]
