@@ -1,5 +1,10 @@
 ====== Installation ======
 
+=====Overview=====
+
+To use BitmistJS, the necessary files must be placed within the HTML HEAD tag. The core library requires only one file, bitsmist-js_v1.min.js. You can use that file from CDN or upload the downloaded file to your own server.
+
+bitsmist-js_v1.js without "min" is a development library. It displays a large number of debugging messages in the console. It is not usually used.
 =====CDN=====
 
 Load the BitsmistJS library from CDN in your HTML files.
