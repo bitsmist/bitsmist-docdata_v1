@@ -93,19 +93,21 @@ The value specified by the key. When the key is not found, returns defaultValue,
 
 ----
 
-====merge(value, merger)====
+====merge(value, merger, options)====
 
 ''Type:Undefined''
 
 Merges new items into current items.
 
-If the store is chained to another store, by default it merges with its own store items. If "writeThrough" option is true, then it merges with items in the chained store.
+If the store is chained to another store, by default it merges with its own store items. If "writeThrough" option is true in either the constructor option or the option parameter, it merges with items in the chained store.
 
 ===Parameters===
 
 ^Parameter^Type^Description^
 |value \\ ''Required''|Object/ \\ Array of objects|An object to merge or an array of objects. If the newItems parameter is an array, all objects in the array will be merged in order.|
 |merger|Function|The function for merging objects. This parameter has a higher priority than [[#merger|merger]] property.|
+|options|Object|The options. Has the following keys:|
+|  "writeThrough"|Boolean|If True, then it sets the value to the chained store.|
 
 ===Return Value===
 
@@ -119,7 +121,7 @@ Undefined.
 
 Sets the value to an item specified by the key parameter. If the key does not exist, it will be automatically created.
 
-If the store is chained to another store, by default it sets the item to its own store. If "writeThrough" option is true then it sets the item to the chained store.
+If the store is chained to another store, by default it sets the item to its own store. If "writeThrough" option is true in either the constructor option or the option parameter, it sets the item to the chained store.
 
 ===Parameters===
 
