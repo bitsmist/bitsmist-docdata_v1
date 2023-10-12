@@ -45,6 +45,7 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
         "options": {
             "apply": [String, ...],
             "fileName": String,
+            "hasStyle": Boolean,
             "path": String,
             "styleRef": Boolean|String,
         },
@@ -52,6 +53,8 @@ systemセクションのapplyで指定されたCSSは、Perkの初期化時に�
             <styleName>: {
                 "apply": [String, ...],
                 "CSS": String,
+                "fileName": String,
+                "path": String,
                 "type": "CSS"|"URL",
                 "URL": String,
             },
@@ -96,7 +99,20 @@ CSSの文字列を指定します。これは**CSSであって、CSSのファイ
 
 ''型:String'' ''デフォルト:<タグ名>''
 
-CSSのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子"css"を付けたファイルをロードします。
+CSSのファイル名を指定します。拡張子は不要です。"style.options"と"style.styles.<styleName>"の２箇所に記述することができます。
+
+優先順は高い順に、"style.styles.<styleName>.fileName"、"style.options.fileName"、[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|"unit.options.fileName"]]で、いずれも指定がない場合はタグ名がファイル名として使われます。
+
+ファイル名に拡張子"css"を付けたファイルをロードします。
+
+----
+
+===="hasStyle"====
+
+
+''型:Boolean'' ''デフォルト:True''
+
+ユニットがユニット専用CSSを持つかどうかを指定します。Falseの場合、ユニット専用CSSのロードと適用は行われません。ただし、"style.options.apply"に設定されている共通CSSは適用されます。
 
 ----
 
@@ -104,7 +120,9 @@ CSSのファイル名を指定します。拡張子は不要です。ここに�
 
 ''型:String''
 
-CSSファイルのパスを指定します。"system.style.options.path"と"style.options.path"を繋げたものが、デフォルトのパスとして使用されます。もし存在しない場合はそれぞれ、"system.unit.options.path"と"unit.options.path"が代わりに使用されます。
+CSSファイルのパスを指定します。"style.options"と"style.styles.<styleName>"の２箇所に記述することができます。優先順は高い順に"style.stlyes.<styleName>.path"、"style.options.path"です。
+
+システム設定のパスと、StylePerkの設定でのパスを連結したものが、最終的なパスとして使われます。システム設定は"system.style.options.path"、"system.unit.options.path"の優先順で使用されます。
 
 ----
 
@@ -121,7 +139,7 @@ CSSファイルのパスを指定します。"system.style.options.path"と"styl
 
 ''型:Boolean|String'' ''デフォルト:True''
 
-ユニットのデフォルトのCSSファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、デフォルトCSSファイルのロードと適用が行われません。
+ユニットのデフォルトのCSSファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、デフォルトCSSファイルのロードと適用が行われません。[[#hasstyle|hasStyle]]オプションをFalseに設定するのと同じ意味になります。
 
 bm-styleref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、"false"という文字列を指定してください。
 
@@ -130,9 +148,9 @@ CSSファイルが存在しない場合、404エラーが発生し、ユニッ�
 
 ===="type"====
 
-''型:String''
+''型:String'' ''デフォルト:"URL"''
 
-CSSをどこから取得するかを指定します。タイプは"CSS"、"URL""のいずれかです。"CSS"の場合は、"CSS"設定からCSS文字列を取得して使用します。"URL"の場合は、"URL"オプションで指定されたURLからCSSファイルをロードします。
+CSSをどこから取得するかを指定します。タイプは"CSS"、"URL"のいずれかです。"CSS"の場合は、"CSS"設定からCSS文字列を取得して使用します。"URL"の場合は、"URL"オプションで指定されたURLからCSSファイルをロードします。
 
 ----
 
@@ -146,16 +164,29 @@ CSSファイルのURLを指定します。"type"設定が"URL"の時に使用さ
 
 
 
-====doTransform====
+====beforeTransform====
 
-まずユニットに必要なCSSを[[#summon|summon]]スペルを使って、全てロードします。必要なCSSとは"style.options.apply"に指定されているスタイルと、デフォルトのスタイルです。ロードが完了すると、そのユニットに適用されていた全てのCSSを取り除きます。その後、ロードしたCSSを全て順番に[[#apply|apply]]スペルで、適用します。
+[[#summon|summon]]スペルを使ってCSSをロードします。ロードするCSSは"style.options.apply"に指定されている共通スタイル、設定の"style.options.hasStyle"がTrueの場合(デフォルトはTrue)はさらに、e.detail.styleNameで指定されたスタイルと、そのスタイルの設定"style.styles.<styleName>.apply"に指定されているスタイルです。
 
 ===参照する設定===
 
   * [[#apply|style.options.apply]]
+  * [[#hasstyle|style.options.hasStyle]]
   * [[#apply|style.styles.<styleName>.apply]]
-  * [[#styleref_bm-styleref|style.options.styleRef]]
 
+----
+
+====doTransform====
+
+[[#apply|apply]]スペルを使ってCSSをユニットに適用します。適用するCSSは"style.options.apply"に指定されている共通スタイル、設定の"style.options.hasStyle"がTrueの場合(デフォルトはTrue)はさらに、e.detail.styleNameで指定されたスタイルと、そのスタイルの設定"style.styles.<styleName>.apply"に指定されているスタイルです。
+
+スタイルを適用する前に、そのユニットに既に適用されているスタイルをクリアします。
+
+===参照する設定===
+
+  * [[#apply|style.options.apply]]
+  * [[#hasstyle|style.options.hasStyle]]
+  * [[#apply|style.styles.<styleName>.apply]]
 =====インベントリ=====
 
 ====styles====
@@ -216,8 +247,11 @@ CSSをロードします。ロードするのみで適用はされません。�
 ===参照する設定===
 
   * [[#path|style.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
+  * [[#path|style.options.path]]
   * [[#styleref_bm-styleref|style.options.styleRef]]
+  * [[#fileName|style.styles.<styleName>.fileName]]
   * [[#type|style.sytles.<styleName>.type]]
   * [[#css|style.sytles.<styleName>.CSS]]
+  * [[#path|style.styles.<styleName>.path]]
   * [[#url|style.sytles.<styleName>.URL]]
   * [[#path|system.style.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

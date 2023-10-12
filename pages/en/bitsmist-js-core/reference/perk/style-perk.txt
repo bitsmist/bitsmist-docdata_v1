@@ -45,12 +45,15 @@ Unit-specific settings are written in the "style" section.
         "options": {
             "apply": [String, ...],
             "fileName": String,
+            "hasStyle": Boolean,
             "path": String,
             "styleRef": Boolean|String,
         },
         "styles": {
             <styleName>: {
                 "CSS": String,
+                "fileName": String,
+                "path": String,
                 "type": "CSS"|"URL",
                 "URL": String,
             },
@@ -95,15 +98,30 @@ The CSS string. This is **CSS, not a CSS filename**. Used when the "type" settin
 
 ''Type:String'' ''Default:<Tag Name>''
 
-The CSS file name. No extension is required. If not set, then [[en:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]] is used.  If it is not available, then the tag name is used as the file name. Loads a file with the filename + extension "css".
+The CSS file name. No extension is required. This option can be set in either "style.options" or "style.<styleName>", or both. 
+
+The priority, in higher order,  is "style.styles.<styleName>.fileName", "style.options.fileName", [[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|"unit.options.fileName"]].  If all of them are not available, then the tag name is used as the file name.
+
+Loads a file with the filename + extension "css".
 
 ----
+
+===="hasStyle"====
+
+''Type:Boolean'' ''Default:True''
+
+Specifies whether the unit has unit-specific CSS. if false, no unit-specific CSS is loaded. However, common CSS set in "style.options.apply" will be applied.
+
+----
+
 
 ===="path"====
 
 ''Type:String''
 
-The path to the CSS file. The "system.style.options.path" and "style.options.path" concatenated will be used as the default path. If the setting does not exist, "system.unit.options.path" and "unit.options.path" will be used instead.
+The path to the CSS file. This option can be set in either "style.options" or "style.styles.<styleName>", or both. The priority, in higher order, is "style.styles.<styleName>.path", "style.options.path".
+
+The final path is the path concatenated with the path in the system settings and the path in the StylePerk settings. The system settings are used in the following order of precedence: "system.style.options.path", "system.unit.options.path".
 
 ----
 
@@ -119,7 +137,7 @@ The style name. Specify "default" for the default style. Only one <styleName> ca
 
 ''Type:Boolean|String'' ''Default:True''
 
-The URL to the default style file or a boolean value. If true, the file is loaded from the default URL. If false, the default style file is loaded and applied.
+The URL to the default style file or a boolean value. If true, the file is loaded from the default URL. If false, the default style file is loaded and applied. This is the same as setting [[#hasstyle|hasStyle]] option to false.
 
 If the value for the bm-styleref attribute is set, the value is used as the URL to the file, or true if no value is specified. To specify false, set the string "false".
 
@@ -130,7 +148,7 @@ If the CSS file is not found, it causes a 404 error and the unit initialization 
 
 ===="type"====
 
-''Type:String''
+''Type:String'' ''Default:"URL"''
 
 Specifies where to get the CSS from. Type can be "CSS" or "URL". If "CSS", the CSS string is retrieved from the "CSS" setting. For "URL", the CSS file is loaded from the URL specified in the "URL" setting.
 
@@ -143,15 +161,31 @@ Specifies where to get the CSS from. Type can be "CSS" or "URL". If "CSS", the C
 The URL of the CSS file. Used when the "type" setting is "URL".
 =====Event Handlers=====
 
-====doTransform====
+====beforeTransform====
 
-First, loads all the CSS required for the unit using [[#summon|summon]] spell. The required CSS are the styles specified in "style.options.apply" and the default styles. When loading is complete, all CSS applied to the unit is removed. After that, all loaded CSS is applied in order using [[#apply|apply]] spell.
+Load CSS using the [[#summon|summon]] spell. The CSS to be loaded is the common style specified in "style.options.apply", and if the setting "style.options.hasStyle" is True (default is True), then the style specified in e.details.styleName and the style specified in the style setting "style.styles.<styleName>.apply".
 
 ===Reference Settings===
 
   * [[#apply|style.options.apply]]
-  * [[#apply|styles.<styleName>.apply]]
-  * [[#styleref_bm-styleref|style.options.styleRef]]
+  * [[#hasstyle|style.options.hasStyle]]
+  * [[#apply|style.styles.<styleName>.apply]]
+
+----
+
+====doTransform====
+
+Apply CSS to the unit using the [[#apply|apply]] spell. The CSS to be applied is the common style specified in "style.options.apply", and if the setting "style.options.hasStyle" is True (default is True), then the style specified in e.details.styleName and the style specified in the style setting "style.styles.<styleName>.apply".
+
+Before applying a style, any styles already applied to the unit are cleared.
+
+
+===Reference Settings===
+
+  * [[#apply|style.options.apply]]
+  * [[#hasstyle|style.options.hasStyle]]
+  * [[#apply|style.styles.<styleName>.apply]]
+
 
 
 =====Inventory=====
@@ -214,8 +248,11 @@ Returns [[#styles|style info object]] of the loaded style.
 ===Reference Settings===
 
   * [[#path|style.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
+  * [[#path|style.options.path]]
   * [[#styleref_bm-styleref|style.options.styleRef]]
+  * [[#fileName|style.styless.<styleName>.fileName]]
   * [[#type|style.sytles.<styleName>.type]]
   * [[#css|style.sytles.<styleName>.CSS]]
+  * [[#path|style.styles.<styleName>.path]]
   * [[#url|style.sytles.<styleName>.URL]]
   * [[#path|system.style.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]
