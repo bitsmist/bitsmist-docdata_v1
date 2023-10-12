@@ -34,13 +34,16 @@ SkinPerkはユニットのHTMLに関する機能を付与します。またShado
     "skin": {
         "options": {
             "fileName": String,
+            "hasSkin": Boolean,
             "path": String,
             "shadowDOM": "open"|"closed",
             "skinRef": Boolean|String,
         },
         "skins": {
             <skinName>: {
+                "fileName": String,
                 "HTML": String,
+                "path": String,
                 "rootNode": String,
                 "type": "HTML"|"node"|"URL",
                 "URL": String,
@@ -66,7 +69,20 @@ SkinPerkはユニットのHTMLに関する機能を付与します。またShado
 
 ''型:String'' ''デフォルト:<タグ名>''
 
-HTMLのファイル名を指定します。拡張子は不要です。ここに指定がない場合、次に[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]]が使われ、それも指定がない場合はタグ名がファイル名として使われます。ファイル名に拡張子"html"を付けたファイルをロードします。
+HTMLのファイル名を指定します。拡張子は不要です。"skin.options"と"skin.skins.<skinName>"の２箇所に記述することができます。
+
+優先順は高い順に、"skin.skins.<skinName>.fileName"、"skin.options.fileName"、[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|"unit.options.fileName"]]で、いずれも指定がない場合はタグ名がファイル名として使われます。
+
+ファイル名に拡張子"html"を付けたファイルをロードします。
+
+----
+
+===="hasSkin"====
+
+
+''型:Boolean'' ''デフォルト:True''
+
+ユニットがHTMLを持つかどうかを指定します。Falseの場合、HTMLのロードは行われません。ただし、ロードに関連するイベント、beforeTransform、doTransform、afterTransformイベントは発生します。
 
 ----
 
@@ -82,7 +98,9 @@ HTMLの文字列を指定します。これは**HTMLであって、HTMLのファ
 
 ''型:String''
 
-HTMLファイルのパスを指定します。"system.skin.options.path"と"skin.options.path"を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、"system.unit.options.path"と"unit.options.path"が代わりに使用されます。
+HTMLファイルのパスを指定します。"skin.options"と"skin.skins.<skinName>"の２箇所に記述することができます。優先順は高い順に"skin.skins.<skinName>.path"、"skin.options.path"です。
+
+システム設定のパスと、SkinPerkの設定でのパスを連結したものが、最終的なパスとして使われます。システム設定は"system.skin.options.path"、"system.unit.options.path"の優先順で使用されます。
 
 ----
 
@@ -114,7 +132,7 @@ Shadow DOMを使用する場合、"open"または"closed"を指定します。�
 
 ''型:Boolean|String'' ''デフォルト:True''
 
-ユニットのデフォルトのスキンファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、スキンファイルのロードと適用が行われません。
+ユニットのデフォルトのスキンファイルへのURLを指定します。Trueの場合は、デフォルトのURLが使用されます。Falseの場合、スキンファイルのロードと適用が行われません。[[#hasskin|hasSkin]]オプションをFalseに設定するのと同じ意味になります。
 
 bm-skinref属性を指定した場合、値が指定されていればファイルへのURL、値が指定されてなければTrueとみなされます。Falseを指定したい場合は、"false"という文字列を指定してください。
 
@@ -124,9 +142,10 @@ bm-skinref属性を指定した場合、値が指定されていればファイ�
 
 ===="type"====
 
-''型:String''
+''型:String'' ''デフォルト:"URL"''
 
-HTMLテンプレートをどこから取得するかを指定します。タイプは"HTML"、"URL"、"node"のいずれかです。"HTML"の場合は、"HTML"設定からHTML文字列を取得して使用します。"URL"の場合は、"URL"設定で指定されたURLからHTMLファイルをロードします。"node"の場合は、"rootNode"設定で指定されたセレクタを使いノードを取得し、それを利用します。
+HTMLテンプレートをどこから取得するかを指定します。タイプは"HTML"、"URL"、"node", "inline"のいずれかです。"HTML"の場合は、"HTML"設定からHTML文字列を取得して使用します。"URL"の場合は、"URL"設定で指定されたURLからHTMLファイルをロードします。"node"の場合は、"rootNode"設定で指定されたセレクタを使いノードを取得し、それを利用します。"inline"の場合は、タグのinnerHTMLが使われます。
+
 
 ----
 
@@ -141,26 +160,24 @@ HTMLファイルのURLを指定します。"type"設定が"URL"の時に使用�
 
 ====beforeTransform====
 
-e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合(デフォルトはTrue)、[[#summon|summon]]スキルを使ってスキンをロードします。スキン名の指定がない場合は、デフォルトのスキンをロードします。デフォルトのスキンは、"default"セクションの設定がない場合はデフォルトのURLからロードされます。"default"セクションの設定がある場合は、その設定に従います。
+設定の"skin.options.hasSkin"がTrueの場合(デフォルトはTrue)、[[#summon|summon]]スペルを使ってスキンをロードします。
 
-ロードしたHTMLを元にTemplateノードを作成し、それをクローンしたものが[[ja:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]]プロパティにセットされます。次のdoTransformで実際に適用されるまでは、ユニットのスキンに対する操作はこのクローンに対して行われ、画面には描画されません。
+[[#summon|summon]]スペルがHTMLをロードした際に作成したTemplateノードを、このイベントハンドラ内でクローンしたものが[[ja:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]]プロパティにセットされます。次のdoTransformで実際に適用されるまでは、ユニットのスキンに対する操作はこのクローンに対して行われ、画面には描画されません。
 
 ===参照する設定===
 
-  * [[#skinref_bm-skinref|skin.options.skinRef]]
+  * [[#hasskin|skin.options.hasSkin]]
 
 
 ----
 
 ====doTransform====
 
-e.detail.skinNameにスキン名が指定してある場合、または設定の"skin.options.skinRef"がTrueの場合(デフォルトはTrue)、[[#apply|apply]]スキルを使って、ユニットにHTMLを適用します。スキン名の指定がない場合は、デフォルトのスキンを適用します。
-
-beforeTransformで作成されたTemplateのクローンをユニットに追加し、表示します。
+設定の"skin.options.hasSkin"がTrueの場合(デフォルトはTrue)、[[#apply|apply]]スキルを使って、beforeTransformで作成されたTemplateのクローンをユニットに追加し、表示します。
 
 ===参照する設定===
 
-  * [[#skinref_bm-skinref|skin.options.skinRef]]
+  * [[#hasskin|skin.options.hasSkin]]
 
 =====インベントリ=====
 
@@ -239,8 +256,11 @@ HTMLファイルをロードします。ロードするのみでユニットに�
 
   * [[#path|skin.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[#skinref_bm-skinref|skin.options.skinRef]]
+  * [[#path|skin.options.path]]
+  * [[#fileName|skin.skins.<skinName>.fileName]]
   * [[#type|skin.skins.<skinName>.type]]
   * [[#html|skin.skins.<skinName>.HTML]]
+  * [[#path|skin.skins.<skinName>.path]]
   * [[#rootnode|skin.skins.<skinName>.rootNode]]
   * [[#url|skin.skins.<skinName>.URL]]
   * [[#path|system.skin.options.path]] / [[ja:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]

@@ -33,13 +33,16 @@ Unit-specific settings are written in the "skin" section.
     "skin": {
         "options": {
             "fileName": String,
+            "hasSkin": Boolean,
             "path": String,
             "shadowDOM": "open"|"closed",
             "skinRef": Boolean|String,
         },
         "skins": {
             <skinName>: {
+                "fileName": String,
                 "HTML": String,
+                "path": String,
                 "rootNode": String,
                 "type": "HTML"|"node"|"URL",
                 "URL": String,
@@ -64,7 +67,20 @@ Some settings can be written in tag attributes.
 
 ''Type:String'' ''Default:<tag name>''
 
-The HTML file name. No extension is required. If not set, then [[en:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|unit.options.fileName]] is used.  If it is not available, then the tag name is used as the file name. Loads a file with the filename + extension "html".
+The HTML file name. No extension is required. This option can be set in either "skin.options" or "skin.<skinName>", or both. 
+
+The priority, in higher order,  is "skin.skins.<skinName>.fileName", "skin.options.fileName", [[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|"unit.options.fileName"]].  If all of them are not available, then the tag name is used as the file name.
+
+Loads a file with the filename + extension "html".
+
+----
+
+===="hasSkin"====
+
+
+''Type:Boolean'' ''Default:True''
+
+Specifies whether the unit has HTML. if false, no HTML is loaded. However, the events related to loading, beforeTransform, doTransform, and afterTransform events will be fired even if the value is false.
 
 ----
 
@@ -80,7 +96,9 @@ The HTML string. This is **HTML, not an HTML filename**. Used when the "type" se
 
 ''Type:String''
 
-The path to the HTML file. The "system.skin.options.path" and "skin.options.path" concatenated will be used as the default path. If the setting does not exist, "system.unit.options.path" and "unit.options.path" will be used instead.
+The path to the HTML file. This option can be set in either "skin.options" or "skin.skins.<skinName>", or both. The priority, in higher order, is "skin.skins.<skinName>.path", "skin.options.path".
+
+The final path is the path concatenated with the path in the system settings and the path in the SkinPerk settings. The system settings are used in the following order of precedence: "system.skin.options.path", "system.unit.options.path".
 
 ----
 
@@ -112,7 +130,7 @@ The skin name. Specify "default" for the default skin. Only one <skinName> can b
 
 ''Type:Boolean|String'' ''Default:True''
 
-The URL to the default skin file or a boolean value. If true, the file is loaded from the default URL. If false, no skin file is loaded and applied.
+The URL to the default skin file or a boolean value. If true, the file is loaded from the default URL. If false, no skin file is loaded and applied. This is the same as setting [[#hasskin|hasSkin]] option to false.
 
 If the value for the bm-skinref attribute is set, the value is used as the URL to the file, or true if no value is specified. To specify false, set the string "false".
 
@@ -122,9 +140,9 @@ If the skin file is not found, it causes a 404 error and the unit initialization
 
 ===="type"====
 
-''Type:String''
+''Type:String'' ''Default:"URL"''
 
-Specifies where to get the HTML template from. Type can be "HTML", "URL", or "node". If "HTML", the HTML string is retrieved from the "HTML" setting. For "URL", the HTML file is loaded from the URL specified in the "URL" setting. For "node", the selector specified in the "rootNode" setting is used to obtain the node.
+Specifies where to get the HTML template from. Type can be "HTML", "URL", or "node". If "HTML", the HTML string is retrieved from the "HTML" setting. For "URL", the HTML file is loaded from the URL specified in the "URL" setting. For "node", the selector specified in the "rootNode" setting is used to obtain the node. For “inline”, the innerHTML of the unit is used as a template.
 
 ----
 
@@ -138,25 +156,23 @@ The URL of the HTML file. Used when the "type" setting is "URL".
 
 ====beforeTransform====
 
-If a skin name is specified in e.details.skinName or "skin.options.skinRef" is set to true (default is true), the skin is loaded using [[#summon|summon]] spell. If no skin name is specified, the default skin is loaded. The default skin is loaded from the default URL if the "default" section is not set. If the "default" section is set, it follows the settings.
+If "skin.options.hasSkin" in the settings is True (default is True), then loads the skin using the [[#summon|summon]] spell.
 
-A Template node is created from the loaded HTML, and the clone is set to the [[en:bitsmist-js-core:reference:perk:basic-perk#unitroot|unitRoot]] property. Until actually applied in the next doTransform event handler, operations on the unit's skin will be performed on this clone and will not be drawn to the screen.
+The template node created in the [[#summon|summon]] skill is cloned in this event handler and set to the [[en:bitsmist-js-core:reference:perk:basic-perk#unitroot| unitRoot]] property. Until the next doTransform event, operations on the unit's skin will be performed on this clone and will not be drawn to the screen.
 
 ===Reference Settings===
 
-  * [[#skinref_bm-skinref|skinRef]]
+  * [[#hasskin|skin.options.hasSkin]]
 
 ----
 
 ====doTransform====
 
-If e.detail.skinName is set or "skin.options.skinRef" is true (default is true), the skin is applied using [[#apply|apply]] skill. If no skin name is specified, the default skin is applied.
-
-A clone of the Template created in beforeTransform is added to the unit and displayed.
+If the setting "skin.options.hasSkin" is True (default is True), the skin is applied (append to unit) using [[#apply|apply]] skill.
 
 ===Reference Settings===
 
-  * [[#skinref_bm-skinref|skinRef]]
+  * [[#hasskin|skin.options.hasSkin]]
 
 =====Inventory=====
 
@@ -235,8 +251,11 @@ Returns [[#skins|skin info object]] of the loaded skin.
 
   * [[#path|skin.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|unit.options.path]]
   * [[#skinref_bm-skinref|skin.options.skinRef]]
+  * [[#path|skin.options.path]]
+  * [[#fileName|skin.skins.<skinName>.fileName]]
   * [[#type|skin.skins.<skinName>.type]]
   * [[#html|skin.skins.<skinName>.HTML]]
+  * [[#path|skin.skins.<skinName>.path]]
   * [[#rootnode|skin.skins.<skinName>.rootNode]]
   * [[#url|skin.skins.<skinName>.URL]]
   * [[#path|system.skin.options.path]] / [[en:bitsmist-js-core:reference:perk:unit-perk#path_bm-path|system.unit.options.path]]
