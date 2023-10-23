@@ -17,7 +17,6 @@ Settings common to all units are written in the "system.unit" section of the glo
         "unit": {
             "options": {
                 "path": String,
-                "splitClass": Boolean,
             }
         }
     }
@@ -44,7 +43,6 @@ The "unit.units" section lists the units to be added dynamically. The object set
             "path": String,
             "query": String,
             "replaceParent": Boolean,
-            "splitClass": Boolean,
             "syncOnAdd": String,
             "tag": String,
         },
@@ -69,7 +67,6 @@ Some settings can be written in tag attributes.
     bm-classname=String
     bm-filename=String
     bm-path=String
-    bm-splitclass=Empty|"false"
 ></my-unit>
 </code>
 
@@ -113,7 +110,9 @@ The class name of the unit. If not specified, the class name is the name of the 
 
 ''Type:String'' ''Default:<tag name>''
 
-The file name of the unit without extension. If not specified, the tag name is used as the file name. This is used as the file name when loading class files, HTML files, and other files.
+The file name of the unit without extension. If not specified, the tag name is used as the file name. 
+
+This is used as the file name when loading HTML files, CSS files, and other files, also.
 
 ----
 
@@ -139,6 +138,8 @@ The parent unit to which this unit will be added. The value is the same as the t
 
 The path to the unit. The final path will be the string "system.unit.options.path" and "unit.options.path" concatenated.
 
+This is used as the path when loading HTML files, CSS files, and other files, also.
+
 ----
 
 ===="query"====
@@ -157,15 +158,6 @@ Specifies whether to replace the parent node.
 
 ----
 
-===="splitClass" / bm-splitclass====
-
-''Type:Boolean'' ''Default:False''
-
-Specifies whether the unit's class files are split. If True, two files, *.settings.js and *.js, are loaded.
-
-If the bm-splitclass attribute is specified, it is assumed to be True even if no value is specified. To specify False, set the string "false".
-
-----
 
 ===="syncOnAdd"====
 
