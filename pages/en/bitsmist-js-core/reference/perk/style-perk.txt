@@ -119,9 +119,9 @@ Specifies whether the unit has unit-specific CSS. if false, no unit-specific CSS
 
 ''Type:String''
 
-The path to the CSS file. This option can be set in either "style.options" or "style.styles.<styleName>", or both. The priority, in higher order, is "style.styles.<styleName>.path", "style.options.path".
+The path to the CSS file. This option can be set in either "style.options" or "style.styles.<styleName>", or both. The final path is the path concatenated with the path in the global settings and the path in the unit-specific settings.
 
-The final path is the path concatenated with the path in the system settings and the path in the StylePerk settings. The system settings are used in the following order of precedence: "system.style.options.path", "system.unit.options.path".
+The global settings are used in the following order of precedence: "system.style.options.path", "system.unit.options.path" and unit-specific settings are used in the following order of precedence: "style.styles.<styleName>.path", "style.options.path", "unit.options.path".
 
 ----
 

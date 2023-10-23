@@ -120,9 +120,9 @@ CSSのファイル名を指定します。拡張子は不要です。"style.opti
 
 ''型:String''
 
-CSSファイルのパスを指定します。"style.options"と"style.styles.<styleName>"の２箇所に記述することができます。優先順は高い順に"style.stlyes.<styleName>.path"、"style.options.path"です。
+CSSファイルのパスを指定します。"style.options"と"style.styles.<styleName>"の２箇所に記述することができます。グローバル設定のパスと、ユニット固有設定のパスを連結したものが、最終的なパスとして使われます。
 
-システム設定のパスと、StylePerkの設定でのパスを連結したものが、最終的なパスとして使われます。システム設定は"system.style.options.path"、"system.unit.options.path"の優先順で使用されます。
+グローバル設定は"system.style.options.path"、"system.unit.options.path"の優先順で使用され、ユニット固有設定は“style.styles.<styleName>.path”、"style.options.path"、"unit.options.path"の優先順で使用されます。
 
 ----
 

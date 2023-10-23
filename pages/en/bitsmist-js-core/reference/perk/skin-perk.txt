@@ -96,9 +96,9 @@ The HTML string. This is **HTML, not an HTML filename**. Used when the "type" se
 
 ''Type:String''
 
-The path to the HTML file. This option can be set in either "skin.options" or "skin.skins.<skinName>", or both. The priority, in higher order, is "skin.skins.<skinName>.path", "skin.options.path".
+The path to the HTML file. This option can be set in either "skin.options" or "skin.skins.<skinName>", or both. The final path is the path concatenated with the path in the global settings and the path in the unit-specific settings.
 
-The final path is the path concatenated with the path in the system settings and the path in the SkinPerk settings. The system settings are used in the following order of precedence: "system.skin.options.path", "system.unit.options.path".
+The system settings are used in the following order of precedence: "system.skin.options.path", "system.unit.options.path" and unit-specific settings are used in the following order of precedence: "skin.skins.<skinName>.path", "skin.options.path", "unit.options.path".
 
 ----
 
@@ -142,7 +142,7 @@ If the skin file is not found, it causes a 404 error and the unit initialization
 
 ''Type:String'' ''Default:"URL"''
 
-Specifies where to get the HTML template from. Type can be "HTML", "URL", or "node". If "HTML", the HTML string is retrieved from the "HTML" setting. For "URL", the HTML file is loaded from the URL specified in the "URL" setting. For "node", the selector specified in the "rootNode" setting is used to obtain the node. For “inline”, the innerHTML of the unit is used as a template.
+Specifies where to get the HTML template from. Type can be "HTML", "URL", or "node". If "HTML", the HTML string is retrieved from the "HTML" setting. For "URL", the HTML file is loaded from the URL specified in the "URL" setting. For "node", the selector specified in the "rootNode" setting is used to obtain the node. For inline", the innerHTML of the unit is used as a template.
 
 ----
 

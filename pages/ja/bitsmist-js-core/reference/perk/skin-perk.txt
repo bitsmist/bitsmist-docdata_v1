@@ -98,9 +98,9 @@ HTMLの文字列を指定します。これは**HTMLであって、HTMLのファ
 
 ''型:String''
 
-HTMLファイルのパスを指定します。"skin.options"と"skin.skins.<skinName>"の２箇所に記述することができます。優先順は高い順に"skin.skins.<skinName>.path"、"skin.options.path"です。
+HTMLファイルのパスを指定します。"skin.options"と"skin.skins.<skinName>"の２箇所に記述することができます。グローバル設定のパスと、ユニット固有設定のパスを連結したものが、最終的なパスとして使われます。
 
-システム設定のパスと、SkinPerkの設定でのパスを連結したものが、最終的なパスとして使われます。システム設定は"system.skin.options.path"、"system.unit.options.path"の優先順で使用されます。
+グローバル設定は"system.skin.options.path"、"system.unit.options.path"の優先順で使用され、ユニット固有設定は"skin.skins.<skinName>.path"、"skin.options.path"、"unit.options.path"の優先順で使用されます。
 
 ----
 
