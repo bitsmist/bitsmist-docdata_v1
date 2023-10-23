@@ -17,7 +17,9 @@ SettingPerkはユニットの設定に関する機能を付与します。
     "system": {
         "setting": {
             "options": {
+                "path": String,
                 "settingFormat": "js"|"json",
+                "settingsRef": Boolean|String,
             }
         }
     }
@@ -32,6 +34,9 @@ SettingPerkはユニットの設定に関する機能を付与します。
 {
     "setting": {
         "options": {
+            "autoLoad": String,
+            "fileName": String,
+            "path": String,
             "settingFormat": "js"|"json",
             "settingsRef": Boolean|String,
         }
@@ -45,16 +50,47 @@ SettingPerkはユニットの設定に関する機能を付与します。
 
 <code html>
 <my-unit
+    bm-autoload=String
+    bm-filename=String
     bm-options=String
+    bm-path=String
     bm-settingref=Empty|String|"false"
 ></my-unit>
 </code>
 
+===="autoLoad" / bm-autoload====
+
+''型:String'' ''デフォルト:False''
+
+ユニットに必要なファイルを自動的にロードすることを示します。本来はUnitPerkの設定ですが、ここにURLが指定されている場合、SettingPerkでは設定ファイルのパスとファイル名として使用します。
+
+----
 ====bm-options====
 
 ''型:String''
 
 JSON形式で設定を記述します。ここで指定された設定は、ユニット設定の"options"セクションにマージされます。
+
+----
+
+===="fileName" / bm-filename====
+
+''型:String'' ''デフォルト:<タグ名>''
+
+設定のファイル名を指定します。拡張子は不要です。
+
+優先順は高い順に、"setting.options.fileName"、[[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|"unit.options.fileName"]]で、いずれも指定がない場合はタグ名がファイル名として使われます。
+
+ファイル名に拡張子"settings.js"を付けたファイルをロードします。
+
+----
+===="path" / bm-path====
+
+''型:String''
+
+設定ファイルのパスを指定します。グローバル設定のパスと、ユニット固有設定のパスを連結したものが、最終的なパスとして使われます。
+
+グローバル設定は"system.setting.options.path"、"system.unit.options.path"の優先順で使用され、ユニット固有設定は"setting.options.path"、"unit.options.path"の優先順で使用されます。
 
 ----
 

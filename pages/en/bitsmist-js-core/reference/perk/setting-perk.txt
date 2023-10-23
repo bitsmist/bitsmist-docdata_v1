@@ -17,7 +17,9 @@ Settings common to all units are written in the "system.setting" section of the 
     "system": {
         "setting": {
             "options": {
+                "path": String,
                 "settingFormat": "js"|"json",
+                "settingsRef": Boolean|String,
             }
         }
     }
@@ -32,6 +34,9 @@ Unit-specific settings are written in the "setting" section.
 {
     "setting": {
         "options": {
+            "autoLoad": String,
+            "fileName": String,
+            "path": String,
             "settingFormat": "js"|"json",
             "settingsRef": Boolean|String,
         }
@@ -45,16 +50,44 @@ Some settings can be written in tag attributes.
 
 <code html>
 <my-unit
+    bm-autoload=String
+    bm-filename=String
     bm-options=String
+    bm-path=String
     bm-settingref=Empty|String|"false"
 ></my-unit>
 </code>
+===="autoLoad" / bm-autoload====
 
+''Type:String'' ''Default:False''
+
+Indicates that the unit will automatically load the necessary files. This is essentially a UnitPerk setting, but if a URL is specified here, SettingPerk will use it as the path and file name of the settings file.
+
+----
 ====bm-options====
 
 ''Type:String''
 
 Settings string in JSON format. The settings specified here will be merged into the "options" section of the unit settings.
+
+----
+===="fileName" / bm-filename====
+
+''Type:String'' ''Default:<tag name>''
+
+The Setting file name. No extension is required.
+
+The priority, in higher order,  is "setting.options.fileName", [[ja:bitsmist-js-core:reference:perk:unit-perk#filename_bm-filename|"unit.options.fileName"]].  If all of them are not available, then the tag name is used as the file name.
+
+Loads a file with the filename + extension "settings.js".
+----
+===="path" / bm-path====
+
+''Type:String''
+
+The path to the setting file. The final path is the path concatenated with the path in the global settings and the path in the unit-specific settings.
+
+The global settings are used in the following order of precedence: "system.setting.options.path", "system.unit.options.path" and unit-specific settings are used in the following order of precedence: "setting.options.path", "unit.options.path".
 
 ----
 
