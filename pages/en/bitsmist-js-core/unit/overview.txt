@@ -3,7 +3,7 @@
 This page briefly describes the Unit class, the heart of BitsmistJS, and serves as a gateway to more detailed explanations.
 =====Properties and Methods=====
 
-Units, which are components of BitmistJS, inherit the standard HTMLElement, have almost no other functionality. In BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name conflicts between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period-separated perk-specific word, such as “basic.scan”, to prevent name collisions.
+Units, which are components of BitmistJS, inherit the standard HTMLElement, have almost no other functionality. In BitmistJS, functionality is added to units by attaching what is called a perk to the unit. Units can have additional properties and methods, but the addition of properties and methods is kept to a minimum to avoid name conflicts between the functions added by the various perks. Instead, we have a container called an asset, into which each perk will add functions. Items in assets are prefixed with a period-separated perk-specific word, such as "basic.scan", to prevent name collisions.
 
 <WRAP admonition note links>
 See the following for the details.

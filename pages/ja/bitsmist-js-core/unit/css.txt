@@ -11,7 +11,7 @@ Constructable StylesheetsはJavascript標準の技術です。詳細は以下を
 
 BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。Shadow DOMの使用時には、必須の機能です。
 
-ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
+ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
 
 =====設定=====
 
@@ -111,9 +111,9 @@ CSSのロード元としては、ファイル・固定のCSSの2種類からロ�
 
 ===デフォルトのファイル===
 
-”system.style.options.path”と“style.options.path”を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、“system.unit.options.path”と“unit.options.path”が代わりに使用されます。
+"system.style.options.path"と"style.options.path"を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、"system.unit.options.path"と"unit.options.path"が代わりに使用されます。
 
-また、タグ名に拡張子“css”をつけたファイル名を、デフォルトのファイル名として使用します。
+また、タグ名に拡張子"css"をつけたファイル名を、デフォルトのファイル名として使用します。
 
 ===ファイル名やパスを指定する===
 
@@ -220,7 +220,7 @@ this.use("spell", "basic.transform", {"styleName": "style2"});
 </code>
 
 <WRAP admonition tip>
-初期化時のデフォルトCSSのロードと適用にも、”basic.transform”スペルが使用されています。
+初期化時のデフォルトCSSのロードと適用にも、"basic.transform"スペルが使用されています。
 </WRAP>
 
 CSSを切り替えて使用する場合、あらかじめ設定の"style.styles"セクションに、切り替え先のCSSの設定を記述しておく必要があります。

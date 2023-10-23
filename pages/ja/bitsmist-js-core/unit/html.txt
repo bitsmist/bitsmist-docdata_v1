@@ -4,7 +4,7 @@
 
 各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadow DOMの適用も、SkinPerkによって行われます。
 
-ユニットは初期化中に“basic.transform”スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
+ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
 =====設定=====
 
 SkinPerkの設定は"skin"セクションに記述します。SkinPerkに対する設定は"skin.options"セクションに、各HTMLに関する設定は、"skin.skins"セクション配下にHTML名をキーに記述します。キー名は後述の[[#切り替え|HTMLの切り替え]]時に指定する名前となります。デフォルトのHTMLに関する情報は"default"セクションに記述します。なお"default"セクションが存在しない場合は、デフォルトのファイルをロードします。
@@ -47,7 +47,7 @@ HTMLのロード元としては、ファイル・ノード・固定のHTMLの3�
 
 ===デフォルトのパスとファイル===
 
-”system.skin.options.path”と“skin.options.path”を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、“system.unit.options.path”と“unit.options.path”が代わりに使用されます。
+"system.skin.options.path"と"skin.options.path"を繋げたものが、デフォルトのパスとして使用されます。もし設定が存在しない場合はそれぞれ、"system.unit.options.path"と"unit.options.path"が代わりに使用されます。
 
 また、タグ名に拡張子"html"をつけたファイル名を、デフォルトのファイル名として使用します。
 
@@ -173,7 +173,7 @@ this.use("spell", "basic.transform", {"skinName": "skin2"});
 </code>
 
 <WRAP admonition tip>
-初期化時のデフォルトHTMLのロードと適用にも、”basic.transform”スペルが使用されています。
+初期化時のデフォルトHTMLのロードと適用にも、"basic.transform"スペルが使用されています。
 </WRAP>
 
 HTMLを切り替えて使用する場合、あらかじめ設定の"skin.skins"セクションに、切り替え先のHTMLの設定を記述しておく必要があります。

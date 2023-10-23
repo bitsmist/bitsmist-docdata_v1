@@ -110,7 +110,7 @@ CSS can be loaded from a file or fixed CSS strings. If no settings are specified
 
 ===Default Path and File===
 
-“system.style.options.path” and “style.options.path” settings concatenated will be used as the default path. If the setting does not exist, “system.unit.options.path” and “unit.options.path” will be used instead.
+"system.style.options.path" and "style.options.path" settings concatenated will be used as the default path. If the setting does not exist, "system.unit.options.path" and "unit.options.path" will be used instead.
 
 The default filename is the tag name with the "css" extension.
 

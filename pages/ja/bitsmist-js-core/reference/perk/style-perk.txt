@@ -122,7 +122,7 @@ CSSのファイル名を指定します。拡張子は不要です。"style.opti
 
 CSSファイルのパスを指定します。"style.options"と"style.styles.<styleName>"の２箇所に記述することができます。グローバル設定のパスと、ユニット固有設定のパスを連結したものが、最終的なパスとして使われます。
 
-グローバル設定は"system.style.options.path"、"system.unit.options.path"の優先順で使用され、ユニット固有設定は“style.styles.<styleName>.path”、"style.options.path"、"unit.options.path"の優先順で使用されます。
+グローバル設定は"system.style.options.path"、"system.unit.options.path"の優先順で使用され、ユニット固有設定は"style.styles.<styleName>.path"、"style.options.path"、"unit.options.path"の優先順で使用されます。
 
 ----
 
