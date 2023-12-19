@@ -2,7 +2,7 @@
 //	ButtonTotop Class
 // =============================================================================
 
-class ButtonTotop extends BITSMIST.v1.Unit {}
+class ButtonTotop extends BITSMIST.V1.Unit {}
 
 // -----------------------------------------------------------------------------
 //  Settings
@@ -36,7 +36,7 @@ ButtonTotop.prototype._getSettings = function()
 					}
 				},
 				"nav": {
-					"rootNode":					"nav",
+					"selector":					"nav",
 					"handlers": {
 						"click":				this.nav_onClicked
 					}
@@ -76,7 +76,7 @@ ButtonTotop.prototype.onAfterStart = function(sender, e)
 	case "parent":
 	default:
 		let parentNode = ( this.parentNode.host ? this.parentNode.host : this.parentNode );
-		this._container = ( container ? BITSMIST.v1.Util.scopedSelectorAll(parentNode, container)[0] : parentNode );
+		this._container = ( container ? BITSMIST.V1.$CORE.Util.scopedSelectorAll(parentNode, container)[0] : parentNode );
 		break;
 	}
 	if (this._container === window)
@@ -89,10 +89,10 @@ ButtonTotop.prototype.onAfterStart = function(sender, e)
 	}
 
 	/// Init
-	this.use("skill", "basic.scan", "span").innerHTML = title;
+	this.use("basic.scan", "span").innerHTML = title;
 	if (wrapperClass)
 	{
-		this.use("skill", "basic.scan", "div").classList.add(wrapperClass);
+		this.use("basic.scan", "div").classList.add(wrapperClass);
 	}
 	this._container.addEventListener("scroll", this.setStyle.bind(this));
 

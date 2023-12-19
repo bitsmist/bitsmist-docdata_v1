@@ -1,4 +1,4 @@
-class PadLangselector extends BITSMIST.v1.Unit
+class PadLangselector extends BITSMIST.V1.Unit
 {
 
 	_getSettings()

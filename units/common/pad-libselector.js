@@ -1,4 +1,4 @@
-class PadLibselector extends BITSMIST.v1.Unit
+class PadLibselector extends BITSMIST.V1.Unit
 {
 
 	_getSettings()
@@ -7,7 +7,7 @@ class PadLibselector extends BITSMIST.v1.Unit
 		return {
 			"style": {
 				"options": {
-					"styleRef":					false,
+					"hasStyle":					false,
 				}
 			},
 
@@ -26,7 +26,7 @@ class PadLibselector extends BITSMIST.v1.Unit
 						}
 					},
 					"menu": {
-						"rootNode":				".fa-bars",
+						"selector":				".fa-bars",
 						"handlers": {
 							"click":			"onMenu_Click"
 						}
