@@ -63,7 +63,7 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 
 ----
 
-====loadScript(url)====
+====loadScript(url, options)====
 
 ''型:Undefined'' ''非同期'' ''Static''
 
@@ -73,6 +73,8 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 
 ^パラメータ^型^説明^
 |url \\ ''必須''|String|スクリプトファイルのURLを指定します。|
+|options|String|オプションを指定します。以下のキーがあります。|
+|  "type"|String|スクリプトのタイプを指定します。scriptタグのtype属性として使用されます。|
 
 ===戻り値===
 
@@ -163,8 +165,7 @@ CSSファイルを指定されたURLからロードします。
 
 ^パラメータ^型^説明^
 |url \\ ''Required''|String|クラスファイルのURLを指定します。拡張子は不要です。|
-|options|String|ロードする際のオプションです。以下のキーがあります。|
-|  "splitClass"|Boolean|Trueの場合、分割クラスファイルとなります。|
+|options|String|ロードする際のオプションです。[[#loadscript_url_options|loadScript()]]関数に渡されます。|
 
 ===戻り値===
 

@@ -62,7 +62,7 @@ BITSMIST.v1.AjaxUtil.ajaxRequest({
 
 ----
 
-====loadScript(url)====
+====loadScript(url, options)====
 
 ''Type:Undefined'' ''Asynchronous'' ''Static''
 
@@ -72,6 +72,8 @@ Loads the script file from the server. The loaded script will be appended to the
 
 ^Parameter^Type^Description^
 |url \\ ''Required''|String|The URL of the file.|
+|options|String|Load options. Has the following keys:|
+|  "type"|String|The type of a script. Used as a value for the type attribute.|
 
 ===Return Value===
 
@@ -163,8 +165,7 @@ Do not **add an extension** to the URL argument. The library will automatically 
 
 ^Parameter^Type^Description^
 |url \\ ''Required''|String|The URL of the file without extension.|
-|options|String|Load options. Has the following keys:|
-|  "splitClass"|Boolean|If true, the class file is split into two files.|
+|options|String|Load options. Passed to [[#loadscript_url_options|loadScript()]].|
 
 ===Return Value===
 
