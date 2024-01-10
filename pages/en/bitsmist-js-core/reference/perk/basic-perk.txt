@@ -153,6 +153,14 @@ The asset to store skills.
 The asset to store spells.
 
 
+=====Inventory=====
+
+====unitRoot====
+
+''Type:HTMLElement'' ''Target:Instance''
+
+Stores a root element of a unit. It is a ShadowRoot object if the unit is ShadowDOM.
+
 =====Skills=====
 
 ====locate====

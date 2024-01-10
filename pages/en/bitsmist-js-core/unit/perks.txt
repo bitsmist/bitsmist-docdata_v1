@@ -8,14 +8,13 @@ For example, in [[en:bitsmist-js-core:general:sample|"Create a Sample Unit"]], a
 
 Perk has the following functions.
 
-  * Add event handlers to the unit to perform processing at specific times.
-  * Add skills, spells, and inventories to the unit instance or prototype.
+  * Add event handlers to a unit to perform processing at specific event.
+  * Add skills, spells, and inventories to a unit.
 
 By default, the following perks are applied to a unit.
 
   * [[en:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
   * [[en:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
-  * [[en:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
   * [[en:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
   * [[en:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
   * [[en:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]
@@ -28,8 +27,8 @@ To apply a perk, it must be written in the settings of each unit. There are two 
 
 ====Write in the "perk" Section ====
 
-Specify the name of the perks in [[en:bitsmist-js-core:reference:perk:perk-perk#apply|apply]] option of
- [[en:bitsmist-js-core:reference:perk:perk-perk#PerkPerk]].  Multiple perks can be specified.
+Specify the name of the perks in [[en:bitsmist-js-core:reference:perk:perk#apply|apply]] option of
+ [[en:bitsmist-js-core:reference:perk:perk#Perk]].  Multiple perks can be specified.
 
 <code javascript>
 _getSettings()
@@ -37,7 +36,7 @@ _getSettings()
     return {
         "perk": {
             "options": {
-                "apply": ["event"]
+                "apply": ["EventPerk"]
             }
         }
     };
@@ -83,66 +82,63 @@ Below is a list of what the perk in the core library does at which events. For m
 |:::|[[en:bitsmist-js-core:reference:perk:status-perk#doapplysettings|StatuePerk]]|Install event handlers to wait for other units.|
 |:::|[[en:bitsmist-js-core:reference:perk:unit-perk#doapplysettings|UnitPerk]]|Add child units.|
 |beforeTransform|[[en:bitsmist-js-core:reference:perk:skin-perk#beforetransform|SkinPerk]]|Load HTML file.|
+|:::|[[en:bitsmist-js-core:reference:perk:style-perk#dotransform|StylePerk]]|Load and Apply common CSS files.|
 |doTransform|[[en:bitsmist-js-core:reference:perk:skin-perk#dotransform|SkinPerk]]|Apply HTML file.|
-|:::|[[en:bitsmist-js-core:reference:perk:style-perk#dotransform|StylePerk]]|Load and Apply CSS files.|
+|:::|[[en:bitsmist-js-core:reference:perk:style-perk#dotransform|StylePerk]]|Load and Apply unit-specifi CSS files.|
 |afterTransform|[[en:bitsmist-js-core:reference:perk:event-perk#afterTransform|EventPerk]]|Install event handlers for child elements.|
 
 =====Extended Features====
 
-Each perk also has the ability to add assets, inventory, states, skills, and spells to the unit prototype and/or each instance.
+Each perk also has the ability to add assets, inventory, skills, and spells to the unit prototype and/or each instance.
 
 Below is a list of the functions added by the perks in the core library. Please see the description of each perk for more details.
 
 ^Perk^Type^Name^
-|BasicPerk|Property|[[en:bitsmist-js-core:reference:perk:basic-perk#|uniqueId]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|unitRoot]]|
-|:::|Method|[[en:bitsmist-js-core:reference:perk:basic-perk#|get]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|has]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|set]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|use]]|
-|:::|Asset|[[en:bitsmist-js-core:reference:perk:basic-perk#|inventory]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|skill]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|spell]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|state]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|vault]]|
-|:::|Skill|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.locate]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.locateAll]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.scanAll]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.scan]]|
-|:::|Spell|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.clear]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.fetch]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.fill]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.refresh]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.setup]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.start]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.stop]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#|basic.transform]]|
-|EventPerk|Skill|[[en:bitsmist-js-core:reference:perk:event-perk#|event.add]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#|event.init]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#|event.remove]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#|event.reset]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#|trigger]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#|triggerSync]]|
-|PerkPerk|Spell|[[en:bitsmist-js-core:reference:perk:perk-perk#|perk.attach]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:perk-perk#|attachPerks]]|
-|SettingPerk|Asset|[[en:bitsmist-js-core:reference:perk:setting-perk#|setting]]|
-|:::|Skill|[[en:bitsmist-js-core:reference:perk:setting-perk#|seting.get]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:setting-perk#|setting.merge]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:setting-perk#|setting.set]]|
-|:::|Spell|[[en:bitsmist-js-core:reference:perk:setting-perk#|setting.apply]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:setting-perk#|setting.summon]]|
-|SkinPerk|Inventory|[[en:bitsmist-js-core:reference:perk:skin-perk#|skin.skins]]|
-|:::|State|[[en:bitsmist-js-core:reference:perk:skin-perk#|skin.active.skinName]]|
-|:::|Skill|[[en:bitsmist-js-core:reference:perk:skin-perk#|skin.apply]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:skin-perk#|skin.clone]]|
-|:::|Spell|[[en:bitsmist-js-core:reference:perk:skin-perk#|skin.summon]]|
-|StatusPerk|State|[[en:bitsmist-js-core:reference:perk:status-perk#|status.status]]|
-|:::|Skill|[[en:bitsmist-js-core:reference:perk:status-perk#|status.change]]|
-|:::|Spell|[[en:bitsmist-js-core:reference:perk:status-perk#|status.wait]]|
-|StylePerk|Inventory|[[en:bitsmist-js-core:reference:perk:style-perk#|style.styles]]|
-|:::|Spell|[[en:bitsmist-js-core:reference:perk:style-perk#|style.apply]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:style-perk#|style.summon]]|
-|UnitPerk|Inventory|[[en:bitsmist-js-core:reference:perk:unit-perk#|unit.units]]|
-|:::|Spell|[[en:bitsmist-js-core:reference:perk:unit-perk#|unit.materialize]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:unit-perk#|unit.materializeAll]]|
-|:::|:::|[[en:bitsmist-js-core:reference:perk:unit-perk#|unit.summon]]|
+|BasicPerk|Method|[[en:bitsmist-js-core:reference:perk:basic-perk##cast_spellname_args|cast]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#use_skillname_args|use]]|
+|:::|Asset|[[en:bitsmist-js-core:reference:perk:basic-perk#inventory|inventory]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#perk|perk]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#skill|skill]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#spell|spell]]|
+|:::|Inventory|[[en:bitsmist-js-core:reference:perk:basic-perk#unitroot|basic.unitRoot]]|
+|:::|Skill|[[en:bitsmist-js-core:reference:perk:basic-perk#locate|basic.locate]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#locateall|basic.locateAll]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#scan|basic.scan]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#scanall|basic.scanAll]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:basic-perk#clear|basic.clear]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#fetch|basic.fetch]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#fill|basic.fill]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#refresh|basic.refresh]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#setup|basic.setup]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#start|basic.start]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#stop|basic.stop]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:basic-perk#transform|basic.transform]]|
+|EventPerk|Skill|[[en:bitsmist-js-core:reference:perk:event-perk#add|event.add]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#init|event.init]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#remove|event.remove]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#reset|event.reset]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:event-perk#triggersync|event.triggerSync]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:event-perk#trigger|event.trigger]]|
+|Perk|Spell|[[en:bitsmist-js-core:reference:perk:perk-perk#attach|perk.attach]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:perk-perk#attachperks|perk.attachPerks]]|
+|SettingPerk|Asset|[[en:bitsmist-js-core:reference:perk:setting-perk#setting|setting]]|
+|:::|Skill|[[en:bitsmist-js-core:reference:perk:setting-perk#get|setting.get]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:setting-perk#merge|setting.merge]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:setting-perk#set|setting.set]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:setting-perk#apply|setting.apply]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:setting-perk#summon|setting.summon]]|
+|SkinPerk|Inventory|[[en:bitsmist-js-core:reference:perk:skin-perk#skins|skin.skins]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:skin-perk#active|skin.active]]|
+|:::|Skill|[[en:bitsmist-js-core:reference:perk:skin-perk#apply|skin.apply]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:skin-perk#summon|skin.summon]]|
+|StatusPerk|Inventory|[[en:bitsmist-js-core:reference:perk:status-perk#status|status.status]]|
+|:::|Skill|[[en:bitsmist-js-core:reference:perk:status-perk#change|status.change]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:status-perk#wait|status.wait]]|
+|StylePerk|Inventory|[[en:bitsmist-js-core:reference:perk:style-perk#styles|style.styles]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:style-perk#apply1|style.apply]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:style-perk#summon|style.summon]]|
+|UnitPerk|Inventory|[[en:bitsmist-js-core:reference:perk:unit-perk#units|unit.units]]|
+|:::|Spell|[[en:bitsmist-js-core:reference:perk:unit-perk#materialize|unit.materialize]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:unit-perk#materializeall|unit.materializeAll]]|
+|:::|:::|[[en:bitsmist-js-core:reference:perk:unit-perk#summon|unit.summon]]|
+
