@@ -132,20 +132,6 @@ The converted tag Name.
 ----
 
 
-====getUUID()====
-
-''Type:String'' ''Static''
-
-Generates and returns a unique ID or UUID.
-
-===Parameters===
-
-None.
-
-===Return Value===
-
-The generated UUID.
-----
 
 ====randomWait(max, fixed)====
 
