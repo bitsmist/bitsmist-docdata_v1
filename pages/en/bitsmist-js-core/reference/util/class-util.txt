@@ -5,27 +5,6 @@
 ClassUtil is a utility class that handles class-related tasks such as creating new classes.
 =====Methods=====
 
-====createObject(className, ...args)====
-
-''Type:Object'' ''Static''
-
-Instantiates the specified class. An exception is thrown when the specified class doesn't exist.
-
-===Parameters===
-
-^Parameter^Type^Description^
-|className \\ ''Required''|Function|The class name to instantiate.|
-|...args| |Arguments passed to the class constructor.|
-
-===Return Value===
-
-A created instance.
-
-===Exception===
-
-  * If the specified class doesn't exist.
-
-----
 
 ====getClass(className)====
 
