@@ -2,7 +2,7 @@
 
 ===== 特徴 =====
 
-BitsmistJSはWeb ComponentsをベースとしたJavascriptのフレームワークです。コンポーネントベースのフレームワークで、コンポーネントを作成することが目的となります。それぞれのコンポーネントは独立していますが、他のコンポーネントとコミュニケーションをとりながら、一つのサイトを作り上げていきます。
+BitsmistJSはWeb ComponentsをベースとしたJavascriptのフレームワークです。それぞれのコンポーネントは独立していますが、他のコンポーネントとコミュニケーションをとりながら、一つのサイトを作り上げていきます。
 
 できるだけコーディングが少なくなることを目標としています。設定を記述するだけで、さまざまな機能が利用できるように考慮されています。
 
@@ -20,7 +20,7 @@ Web Components・Constructable Stylesheets・Shadow DOM・非同期処理とい�
 
 ====オートローディング====
 
-必要な時に必要なファイルがロードされます。全て非同期で処理されるため、効率よくファイルをロードできます。
+必要な時に必要なファイルがロードされます。全て非同期で処理されるため、効率よくファイルをロードできます。もちろんWebpackなどのバンドラーを使用して、全て/一部のコンポーネントをパッケージングすることも可能です。
 ====イベントドリヴン====
 
 HTMLファイルとは分離されたファイルに、イベントごとに処理を記述していきます。どの処理がどこに書かれているのか、一目瞭然です。
@@ -40,7 +40,7 @@ BitmistJSではコンポーネント(このフレームワークではユニッ�
 <file html index.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 </head>
 <body>
 <pad-hello bm-autoload="/pad-hello.html"></pad-hello>
@@ -67,7 +67,7 @@ pad-hello {
 <file html index.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 </head>
 <body>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
@@ -89,7 +89,7 @@ pad-hello {
 </file>
 
 <file javascript pad-hello.js>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
     _getSettings()
     {

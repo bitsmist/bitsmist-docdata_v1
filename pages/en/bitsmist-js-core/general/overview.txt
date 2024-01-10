@@ -2,12 +2,13 @@
 
 =====Features=====
 
-BitsmistJS is a JavaScript framework built upon Web Components. It operates on a component-based architecture with the main objective of facilitating the creation of components. While each component functions independently, it also interacts with other components to form a cohesive website.
+BitsmistJS is a JavaScript framework built upon Web Components. While each component functions independently, it also interacts with other components to form a cohesive website.
 
 The primary aim is to minimize the amount of code required. By configuring the settings, you can easily harness various functions.
+
 ====Standard Javascript====
 
-We use standard Javascript technologies such as Web Components, Constructable Stylesheets, Shadow DOM, and asynchronous processing.
+BitsmistJS uses standard Javascript technologies such as Web Components, Constructable Stylesheets, Shadow DOM, and asynchronous processing.
 
 ==== Components ====
 
@@ -15,21 +16,21 @@ You create distinct components and integrate them to form a website. Each compon
 
 ====Independent Plain HTML File ====
 
-We simply use the original HTML as-is. Since JavaScript is written in a separate file, it's also easy for web designers to handle.
+BismistJS uses plain HTML as-is. Since JavaScript is written in a separate file, it's also easy for web designers to handle.
 
 ==== Autoloading====
 
-The necessary files are loaded when needed. All processing is asynchronous, so files can be loaded efficiently.
+The necessary files are loaded when needed. All processing is asynchronous, so files can be loaded efficiently. You can also bundle all/part of components using a bundler such as WebPack.
 
 
 ====Event driven====
 
-Javascript codes for each event is written in a file that is separated from the HTML file. It's clear at a glance which processing is written where.
+Javascript codes are written in a separate file from the HTML file. It's clear at a glance which processing is written where.
 
 
 ====Extensibility====
 
-Components can be extended using a mechanism called "Perks. By simply preparing a perk and describing it in the configuration, new functions can be added to the component.
+Components can be extended using a mechanism called "Perks". By simply adding the configuration, new functions can be added to the component.
 
 
 =====Sample Unit=====
@@ -43,7 +44,7 @@ In BitmistJS, you create components (called units in this framework) and combine
 <file html index.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 </head>
 <body>
 <pad-hello bm-autoload="/pad-hello.html"></pad-hello>
@@ -70,7 +71,7 @@ pad-hello {
 <file html index.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 </head>
 <body>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
@@ -92,7 +93,7 @@ pad-hello {
 </file>
 
 <file javascript pad-hello.js>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
     _getSettings()
     {
