@@ -26,7 +26,6 @@
   * [[ja:bitsmist-js-core:reference:perk:perk|Perk（ベースクラス）]]
   * [[ja:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
   * [[ja:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
-  * [[ja:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
   * [[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
   * [[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
   * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]

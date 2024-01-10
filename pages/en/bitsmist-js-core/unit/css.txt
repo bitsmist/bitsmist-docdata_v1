@@ -11,7 +11,7 @@ Constructable Stylesheets is a Javascript standard technology. See below for det
 
 BitsmistJS also allows you to load and apply styles using the usual <style> tags, but you can make them more componentized using Constructable Stylesheets, which is essential when using Shadow DOM.
 
-The unit uses the "basic.transform" spell during initialization to trigger beforeTransform, doTransform, and afterTransform events. The StylePerk installs doTransform event handler to load and apply CSS.
+The unit uses the "basic.transform" spell during initialization to trigger beforeTransform, doTransform, and afterTransform events. The StylePerk installs beforeTransform event handler to load and apply common CSS and, doTransform event handler to load and apply unit-specific CSS.
 
 =====Settings=====
 
@@ -19,10 +19,10 @@ You can specify which CSS to load and apply in the settings and Constructable St
 
 ====Common CSS====
 
-The settings for common CSS used by multiple units are written in the "system.styles" section of the global settings. StylePerk starts loading the common CSS written in the "styles" section at its initialization (before each unit is loaded).
+The settings for common CSS used by multiple units are written in the "system.styles" section of the global settings. StylePerk starts loading the common CSS at its initialization (before starting to load each unit).
 
 <code javascript>
-BITSMIST.v1.Unit.use("skill", "setting.merge", {
+BITSMIST.v1.Unit.use("setting.merge", {
     "system": {
         "style": {
             "options": {
@@ -87,7 +87,7 @@ If you do not use Shadow DOM, you can also apply styles in the traditional way w
 You can make sure that all units do not use CSS by putting it in the global settings.
 
 <code javascript>
-BITSMIST.v1.Unit.use("skill", "setting.merge", {
+BITSMIST.v1.Unit.use("setting.merge", {
     "style": {
         "options": {
             "styleRef": false,
@@ -102,11 +102,11 @@ It takes advantage of the fact that each unit is linked to a global setting.
 </WRAP>
 =====Loading CSS=====
 
-StylePerk loads and applies CSS in the doTransform event.
+StylePerk loads and applies CSS in the beforeTransform and doTransform event.
 
-CSS can be loaded from a file or fixed CSS strings. If no settings are specified, the CSS file is loaded using the default path and file name.
+CSS can be loaded from a file or fixed CSS strings. The CSS file is loaded using the default path and file name if no settings are specified.
 
-====File====
+====Load CSS from a File====
 
 ===Default Path and File===
 
@@ -185,7 +185,7 @@ _getSettings()
 
 Otherwise, the unit will try to load the default CSS file and a 404 error will occur, interrupting the initialization.
 
-====Fixed CSS====
+====Load CSS from Fixed CSS====
 
 By putting CSS strings in the settings, the CSS is applied to the unit. Using Webpack or similar, the HTML can be written in an external file but combined into one file
 
@@ -209,13 +209,13 @@ _getSettings()
 
 =====Applying CSS=====
 
-The loaded CSS is applied to the unit in the doTransform event. HTML is also applied in the same doTransform event, but StylePerk has higher priority, so CSS is applied first. In addition, since it is applied to a node that is still in a template clone state, it prevents FOUC.
+The loaded common CSS is applied to the unit in the beforeTransform event and unit-specific CSS in the doTransform event. Though HTML is also applied in the doTransform event, StylePerk has higher priority, and  CSS is applied first. In addition, since it is applied to a node that is still in a template clone state, it prevents FOUC.
 =====Switching CSS=====
 
 As with HTML, the "basic.transform" spell can be used to switch between multiple CSS. The CSS is loaded and applied in the same way as initialization. Pass the name of the CSS to switch to for the spell argument.
 
 <code javascript>
-this.use("spell", "basic.transform", {"styleName": "style2"});
+this.cast("basic.transform", {"styleName": "style2"});
 </code>
 
 <WRAP admonition tip>

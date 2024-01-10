@@ -16,7 +16,7 @@ This section describes the loading of the **class files** of the unit. See below
 
 =====How to Load a Unit=====
 
-The following methods are available for loading units
+The following methods are available for loading units:
 
   * Specify the bm-autoload attribute in a tag.
   * Import with a <script> tag.
@@ -36,10 +36,10 @@ This is how we loaded a unit in [[en:bitsmist-js-core:general:sample|"Create a S
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
 </code>
 
-The BitsmistJS library will then automatically download the file from the specified URL. The unit is then initialized and the interface HTML/CSS files are loaded and displayed on the browser.
+The BitsmistJS library will then automatically download the file from the specified URL. The unit is then initialized and the HTML/CSS files are loaded and displayed on the browser.
 
 <WRAP admonition note links>
-Though the path in this example is relative, you can also use an absolute path. However, the library uses XMLHttpRequest to load files, servers hosting units need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
+Though the path in this example is relative, you can also use an absolute path. However, the library uses XMLHttpRequest to load files, and server hosting units need to add "Control-Allow-Origin" headers when you are loading from cross-domain sites.
   * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/en/docs/Web/HTTP/CORS|Cross-Origin Resource Sharing (CORS)| MDN Web Docs]]
 </WRAP>
 
@@ -131,7 +131,7 @@ this.use("spell", "unit.materializeAll");
 Cast [[en:bitsmist-js-core:reference:perk:unit-perk#materialize|unit.materialize]] spell to add the unit as a child unit. Pass the settings object to the materialize spell and the unit can be initialized.
 
 <code javascript>
-this.use("spell", "unit.materialize", "PadFilter", {
+this.use("unit.materialize", "PadFilter", {
     "unit": {
         "options": {
             "path":"common",
@@ -146,6 +146,7 @@ In the above example, a child unit called PadFilter is added to the #pads node o
 <WRAP admonition tip links>
 materializeAll/materialize spells are offered by UnitPerk.
   * [[en:bitsmist-js-core:reference:perk:unit-perk#materialize|Reference - UnitPerk - materialize]]
+  * [[en:bitsmist-js-core:reference:perk:unit-perk#materializeAll|Reference - UnitPerk - materializeAll]]
 </WRAP>
 
 
@@ -161,7 +162,7 @@ If a URL to an HTML file is specified in the bm-autoload attribute, a new class 
 <pad-hello bm-autoload="/pad-hello.html"></pad-hello>
 </code>
 
-In the above example, the PadHello class inheriting from the Unit class is created and tied to the pad-hello tag. The tag is then instantiated, starts initializing, loads the HTML file from the server, and the tag is displayed in the browser.
+In the above example, the PadHello class inheriting from the Unit class is created and tied to the pad-hello tag. The tag is then instantiated, starts initializing, loads the HTML and CSS file from the server, and the tag is displayed in the browser.
 
 ===Load the Default HTML File===
 
@@ -230,7 +231,7 @@ Refer to the Settings page for details.
 The system unit path is basically set in the global settings.
 
 <code javascript>
-BITSMIST.v1.Unit.settings.merge({
+BITSMIST.v1.Unit.use("settings.merge", {
     "system": {
         "unit": {
             "options": {
@@ -272,7 +273,7 @@ You can place them in the unit's "unit" settings if you add units using the "uni
 </code>
 
 <code javascript>
-this.use("spell", "unit.materialize", "PadSetting", {
+this.cast("unit.materialize", "PadSetting", {
     "unit": {
         "options": {
             "path": "common"
@@ -320,7 +321,7 @@ You can place them in the unit's "unit" settings if you add units using the "uni
 </code>
 
 <code javascript>
-this.use("skill", "unit.materialize", "BarHeader", {
+this.use("unit.materialize", "BarHeader", {
     "unit": {
         "options": {
             "fileName": "header",

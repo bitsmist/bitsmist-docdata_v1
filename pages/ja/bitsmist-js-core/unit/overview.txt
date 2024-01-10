@@ -3,7 +3,7 @@
 ここではBitsmistJSの中心であるUnitクラスについて簡単に説明し、より詳しい説明への入り口とします。
 =====プロパティとメソッド=====
 
-BitmistJSのコンポーネントであるユニットは標準のHTMLElementを継承していますが、それ以外の機能はほぼ持っていません。BitsmistJSでは、パークと呼ばれるものをユニットにアタッチすることによって、ユニットに機能を追加します。ユニットにはプロパティとメソッドを追加することができますが、様々なパークが追加する機能の名前の衝突を防ぐため、プロパティとメソッドの追加は最小限にしています。代わりにアセットと呼ばれる入れ物を用意しており、各パークはそこへ機能を追加していくことになります。アセット内のアイテムは、"basic.scan"といったように、ピリオド区切りで各パーク固有の接頭語をつけることで、名前の衝突を防ぎます。
+BitsmistJSでは、パークと呼ばれるものをユニットにアタッチすることによって、ユニットに機能を追加します。ユニットにはプロパティとメソッドを追加することができますが、様々なパークが追加する機能の名前の衝突を防ぐため、プロパティとメソッドの追加は最小限にしています。代わりにアセットと呼ばれる入れ物を用意しており、各パークはそこへ機能を追加していくことになります。アセット内のアイテムは、"basic.scan"といったように、ピリオド区切りで各パーク固有の接頭語をつけることで、名前の衝突を防ぎます。
 
 <WRAP admonition note links>
 詳細についてはこちらをご覧ください。
@@ -42,7 +42,7 @@ BitsmistJSの特徴のひとつが、イベントドリブンです。各ユニ�
 
 各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadow DOMの適用も、SkinPerkによって行われます。
 
-ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
+ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。
 
 <WRAP admonition note links>
 詳細についてはこちらをご覧ください。
@@ -54,7 +54,8 @@ BitsmistJSの特徴のひとつが、イベントドリブンです。各ユニ�
 
 BitsmistJSでは、通常の<style>タグを使用したスタイルのロードと適用もできますが、Constructable Stylesheetsを使って、よりコンポーネント化することが可能です。Shadow DOMの使用時には、必須の機能です。
 
-ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。StylePerkはdoTransformでCSSをロード、適用するイベントハンドラをインストールします。
+ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。
+
 <WRAP admonition note links>
 詳細についてはこちらをご覧ください。
   * <html><i class="fas fa-link"></i></html>[[ja:bitsmist-js-core:unit:css|ユニットの解説 - CSS]]
@@ -74,7 +75,6 @@ BitsmistJSの核であるUnitユニットはごく単純な機能しか持ちま
 
   * [[ja:bitsmist-js-core:reference:perk:basic-perk|BasicPerk]]
   * [[ja:bitsmist-js-core:reference:perk:event-perk|EventPerk]]
-  * [[ja:bitsmist-js-core:reference:perk:perk-perk|PerkPerk]]
   * [[ja:bitsmist-js-core:reference:perk:setting-perk|SettingPerk]]
   * [[ja:bitsmist-js-core:reference:perk:skin-perk|SkinPerk]]
   * [[ja:bitsmist-js-core:reference:perk:status-perk|StatusPerk]]

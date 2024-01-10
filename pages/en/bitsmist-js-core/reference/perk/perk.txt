@@ -2,7 +2,24 @@
 
 =====Overview=====
 
-This is the base class of the Perk. All perks inherit this Perk.
+This is the base class of the Perks. All perks inherit this Perk.
+=====Settings=====
+
+====Format - Unit====
+
+Unit-specific settings are written in the "perk" section.
+
+<code javascript>
+{
+    "perk": {
+        "options": {
+            "apply": [String, ...],
+        }
+    }
+}
+</code>
+
+
 =====Properties=====
 
 ====info====
@@ -13,23 +30,65 @@ Returns an object with information about this perk. It has the following keys:
 
 |< 100% 180px 130px - >|
 ^Key^Type^Description^
-|depends|String \\ Array of String|The name of the perk on which this perk depends. It is possible to specify more than one in an array.|
-|section|String|The section name of the settings this perk will use. If this section name is present in the settings, the corresponding perk will be attached to the unit.|
+|depends|String/ \\ Array of String|The name of the perk on which this perk depends. It is possible to specify more than one in an array.|
+|sectionName|String|The section name of the settings this perk will use. If this section name is present in the settings, the corresponding perk will be attached to the unit.|
 |order|Number|The priority level of the perk. The lower the number, the higher the priority. Perk initialization and event handlers are executed according to this priority order.|
 
+Each perk needs to override this property and return proper information.
 
-The base class returns an empty object.
+====ready====
+
+''Type:Promise'' ''get''
+
+The promise that is resolved when a perk is ready.
 
 =====Methods=====
+
+====createHandler(handlerName, ...args)====
+
+''Type:Function''
+
+Create a handler. The handler must have been previously registered with [[#registerhandler_handler_perkname|registerHandler()]].
+
+=== Parameters ===
+
+|< 100% 180px 130px - >|
+^Parameter^Type^Description^
+|handlerName \\ ''Required''|String|The name of a handler to create.|
+|...args|Array of Arguments|The arguments passed to a handler's constructor.|
+
+=== Return Value ===
+
+A created handler instance.
+
+----
+
+====getPerk(perkName)====
+
+''Type:Perk'' ''static''
+
+Returns a perk specified with the perkName argument. The perk must have been previously registered with registerPerk().
+
+=== Parameters ===
+
+|< 100% 180px 130px - >|
+^Parameter^Type^Description^
+|perkName \\ ''Required''|String|The name of a perk to retrieve.|
+
+=== Return Value ===
+
+Perk.
+
+----
 
 ====globalInit()====
 
 ''Type:Undefined'' ''static''
 
-Initializes the perk. It is called automatically once when a perk is registered using [[en:bitsmist-js-core:reference:perk:perk-perk#register_perk|PerkPerk.register()]]. Normally, the perk is registered before all processing begins.
+Initializes the perk. It is called automatically once when a perk is registered using [[#registerperk_perk|registerPerk()]]. Normally, the perk is registered before any other processing begins.
 
 
-The base class does nothing.
+Each perk needs to override this method and do its processing if necessary.
 
 ===Parameters===
 
@@ -47,7 +106,7 @@ Undefined.
 
 Initializes the unit. It is called when attaching a perk to a unit. Normally, it is called automatically when the settings are loaded. The unit to be attached is passed as an argument.
 
-The base class does nothing.
+Each perk needs to override this method and do its processing if necessary.
 
 ===Parameters===
 
@@ -62,27 +121,77 @@ Undefined.
 
 ----
 
-====upgrade(unit, type, name, content)====
+====registerHandler(handler, perkName)====
 
-''Type:Undefined'' ''static''
+''Type:Undefined''
 
-Upgrades the unit. The type of upgrade varies depending on the type argument.
+Registers a handler with the perk. The handler is a class that is used by a perk to handle actual processing.
 
-^type^Description^
-|"asset"|Adds the asset to the unit. Specify the asset name for the "name" and content holder for the "content" parameter.|
-|"method"|Adds the method to the unit. Specify the method name for the "name" and the Function object for "the content" parameter.|
-|"property"|Adds the property to the unit. Specify the property name for the "name" and the getter/setter for the "content" parameter.|
-|"event"|Adds the event handler to the unit. Specify the event name for the "name" and the event handler Function object for the "content" parameter.|
-|others|Adds content to the asset specified by the "name" parameter with the "content" parameter.|
-
-===Paramters===
+=== Parameters ===
 
 |< 100% 180px 130px - >|
 ^Parameter^Type^Description^
-|unit \\ ''Required''|Unit|The unit to be upgraded.|
-|type \\ ''Required''|String|The upgrade type. Valid types are "asset", "method", "property", "event" and the asset names.|
-|name \\ ''Required''|String|The name of the item to be upgraded.|
-|content \\ ''Required''|*|The content of upgrade.|
+|handler \\ ''Required''|Function|The handler to register.|
+|perkName|String|The perk with which a handler registers.|
+
+=== Return Value ===
+
+None.
+
+----
+
+
+
+====registerPerk(perk)====
+
+''Type:Undefined''
+
+Registers the perk with the system. A perk cannot be attached unless it is registered. The perk's global initialization process is executed when registered.
+
+===Parameters===
+
+|< 100% 180px 130px - >|
+^Parameter^Type^Description^
+|perk \\ ''Required''|Perk|The perk to register.|
+
+===Return Value===
+
+Undefined.
+
+=====Spells=====
+
+====attach====
+
+''Type:Undefined'' ''Target:Unit''
+
+Attaches the perk passed in the argument to the unit. If the perk depends on other perks, dependent perks are attached first. The attached perk is added to the unit's perk asset. When attaching, each park's init() method is called and the unit is upgraded. If the specified perk is already attached, nothing is done.
+
+===Parameters===
+
+|< 100% 180px 130px - >|
+^Parameter^Type^Description^
+|perk \\ ''Required''|Perk|The perk to attach.|
+|options|Object|Options. Passed to the init() method of the attaching perk.|
+
+===Return Value===
+
+Undefined.
+
+
+----
+
+====attachPerks====
+
+''Type:Undefined'' ''Target:Unit''
+
+Attaches all the perks depending on the settings using the [[#attach|attachl]] spell. The order of attaching is based on the priority number of each perk, the lower the number the earlier.
+
+===Parameters===
+
+|< 100% 180px 130px - >|
+^Parameter^Type^Description^
+|options \\ ''Required''|Object|Options. Has the following keys:|
+|  "settings"|Object|The unit settings.|
 
 ===Return Value===
 

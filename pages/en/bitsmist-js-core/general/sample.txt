@@ -37,7 +37,7 @@ Usually, however, once the tag name is determined, the default name can be used 
 
 ==== Tag Name ====
 
-Since the BitsmistJS units are built on top of the custom elements in the standard Web Components technology,  you need to follow the rules. Each unit requires its own tag name. There must be one "-" in the tag name.
+Since the BitsmistJS units are built on top of the custom elements in the standard Web Components technology,  you need to follow its rules. Each unit requires its own tag name. There must be one "-" in the tag name.
 
 <WRAP admonition tip links>
 Refer to the following page for details.
@@ -48,10 +48,10 @@ We name the tag "pad-hello" here.
 
 ==== Class Name ====
 
-A unit needs a class definition if the unit has actions (event handlers). By default, BitsmistJS create the class name by removing the "-" from the tag name and capitalizing the first letter of each word. In this project, it is "PadHello" since the tag name is "pad-hello".
+A unit needs a class definition if the unit has actions (event handlers). By default, BitsmistJS uses the class name created by removing the "-" from the tag name and capitalizing the first letter of each word. In this project, it is "PadHello" since the tag name is "pad-hello".
 
 <WRAP admonition note>
-Internally, the BitsmistJS library automatically creates a class according to the tag name for the unit that doesn't have any javascript files.
+Internally, the BitsmistJS library automatically creates a class according to the tag name for the unit that doesn't have any JavaScript files.
 </WRAP>
 
 ====File Name====
@@ -96,10 +96,10 @@ In BitsmistJS, we inherit one of the base units to create our custom units. As o
 
 ====Define the Class====
 
-The base unit we inherit is in BITSMIST.v1 global object, we inherit like this:
+The base unit we inherit is in BITSMIST.V1 global object, we inherit like this:
 
 <code javascript>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
 }
 </code>
@@ -112,11 +112,11 @@ Next, we add the unit's settings in "pad-hello.js". Override _getSettings() func
 
 <WRAP admonition tip links>
 There are other ways to configure components' settings.
-  *  <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:docs:component:settings#specifying_settings|Unit Explained - Settings - Specifying Settings]]
+  *  <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:settings#loading_settings|Unit Explained - Settings - Loading Settings]]
 </WRAP>
 
 <code javascript>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
     _getSettings()
     {
@@ -142,7 +142,7 @@ We specify which function will run when the button is pushed in the "event.event
 Next, we create the event handler in "pad-hello.js". Write the action taken when the button is pushed. The function name is "onBtnGreet_Click" as written in the settings we added earlier.
 
 <code javascript>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
     ...
 
@@ -155,7 +155,7 @@ class PadHello extends BITSMIST.v1.Unit
 
 <WRAP admonition tip links>
 Every event handlers have the same function signature.
-  * <html><i class="fas fa-link"></i></html>[[en:bitsmistjs_core:docs:component:events#event_handler_syntax|Unit Explained - Events - Event Handler Syntax]]
+  * <html><i class="fas fa-link"></i></html>[[en:bitsmist-js-core:unit:events#event_handlers|Unit Explained - Events - Event Handlers]]
 </WRAP>
 
 =====6. Create the Container HTML File.=====
@@ -191,7 +191,7 @@ These are the source files for this sample project.
 <file html sample.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 <title>BitsmisJS Sample</title>
 </head>
 <body>

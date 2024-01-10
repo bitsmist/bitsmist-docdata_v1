@@ -194,8 +194,7 @@ HTMLファイルのURLを指定します。"type"設定が"URL"の時に使用�
 |template|String|スキンのHTMLから作られたtemplateノードです。|
 |status|String|スキンのロード状態を示します。""(空白)またはloaded"の値を取ります。|
 
-=====ステート=====
-
+----
 ====active====
 
 ''型:Object'' ''対象:インスタンス''

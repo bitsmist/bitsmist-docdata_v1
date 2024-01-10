@@ -82,7 +82,7 @@ Event handler information is an object that is set as the value of "eventName" i
 
 =====How to Specify Event Handlers=====
 
-Specify which event handlers are triggered on when and on which element in the "event" section of the settings.
+Specify which event handlers are triggered on when and on which element in the "event.events" section of the settings.
 
 <code javascript>
 _getSettings()

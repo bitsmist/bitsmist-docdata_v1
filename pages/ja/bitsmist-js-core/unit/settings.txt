@@ -26,7 +26,9 @@ _getSettings()
 {
     return {
         "setting": {
-            "path": "common",
+            "options": {
+                "path": "common",
+            }
         },
         "event": {
             "events": {
@@ -45,7 +47,7 @@ _getSettings()
 
 ====外部ファイルに記述する====
 
-外部ファイルにJSON形式で設定を記述し、そのURLをタグのbm-settingref属性に指定します。
+外部ファイルにJSONまたはJavascript Object形式で設定を記述し、そのURLをタグのbm-settingsref属性に指定します。
 
 <code html>
 <bar-header bm-settingsref="https://example.com/settings/bar-header.settings.js"></bar-header>
@@ -54,7 +56,9 @@ _getSettings()
 <file javascript bar-header.setting.js>
 {
     "setting": {
-        "path": "common"
+        "options": {
+            "path": "common"
+        }
     },
     "event": {
         "events": {
@@ -92,7 +96,7 @@ bm-options属性にJSON形式で記述します。
 
 ====グローバル設定に記述する====
 
-グローバル設定はページ上の全てのユニットで共有される設定です。各ユニットの設定はグローバル設定に連結されています。どういうことかというと、ユニットが自身の設定を参照した際、もしその設定が存在しない場合は透過的にグローバル設定から取得されるようになっています。
+グローバル設定はページ上の全てのユニットで共有される設定です。各ユニットの設定はグローバル設定に連結されています。ユニットが自身の設定を参照した際、もしその設定が存在しない場合は透過的にグローバル設定から取得されるようになっています。
 
 <WRAP admonition note links>
 グローバル設定についての詳細は、専用のセクションを参考にしてください。
@@ -165,12 +169,12 @@ console.log(this.get("setting", "mysection.value")); // console displays 1
 
 ====グローバル設定の設定方法====
 
-各ユニットがsettingアセットを持っているのと同様に、全てのユニットの親であるBITSMIST.v1.Unitクラスもsettingアセットを持っています。このUnitクラスのsettingアセットにセットされた値が、グローバルな値となります。
+各ユニットがsettingアセットを持っているのと同様に、全てのユニットの親であるBITSMIST.V1.Unit静的クラスもsettingアセットを持っています。このUnitクラスのsettingアセットにセットされた値が、グローバルな値となります。
 
 次の例ではsetting.mergeスキルを使って、グローバル設定をマージしています。
 
 <code javascript>
-BITSMIST.v1.Unit.use("skill", "setting.merge", {
+BITSMIST.V1.Unit.use("skill", "setting.merge", {
     "system": {
         "options": {
             "env": "prod",
@@ -180,7 +184,7 @@ BITSMIST.v1.Unit.use("skill", "setting.merge", {
 </code>
 
 <WRAP admonition note>
-既に他の場所でグローバル設定がされている可能性もあるため、それらを消してしまわないよう、set()メソッドではなくsetting.mergeスキルを使うことをお勧めします。
+既に他の場所でグローバル設定がされている可能性もあるため、それらを消してしまわないよう、setting.setスキルではなくsetting.mergeスキルを使うことをお勧めします。
 </WRAP>
 
 ====グローバル設定のロード====
@@ -210,7 +214,7 @@ console.log(this.get("setting", "myValue")); // console displays 1
 これを利用して、各ユニット固有の設定をグローバル設定に記述することで、全ユニットに同じ設定を適用することが可能です。
 
 <code javascript>
-BITSMIST.v1.Unit.use("skill", "setting.merge", {
+BITSMIST.v1.Unit.use("setting.merge", {
     "style": {
         "options": {
             "styleRef": false,
@@ -222,7 +226,7 @@ BITSMIST.v1.Unit.use("skill", "setting.merge", {
 例えば上記の場合、全てのユニットがユニット固有CSSのロードを行いません。
 ====グローバル設定の上書き====
 
-グローバルな設定と同じ設定がユニット内にあると、そちらが優先されます。そのため、**あえてグローバルとは違う設定を使いたい**ユニットに対しては、ユニットに同じ項目の設定をすることで、連結されたグローバルな設定を取得しないようになります。
+グローバルな設定と同じ設定がユニット内にあると、そちらが優先されます。そのため、あえてグローバルとは違う設定を使いたいユニットに対しては、ユニットに同じ項目の設定をすることで、連結されたグローバルな設定を取得しないようになります。
 
 <code javascript>
 BITSMIST.v1.Unit.set("setting", "myValue", 1)

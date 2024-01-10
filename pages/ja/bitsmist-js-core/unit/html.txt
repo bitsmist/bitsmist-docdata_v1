@@ -2,12 +2,12 @@
 
 =====概要=====
 
-各ユニットはデフォルトでは1つのHTMLファイルを持ちます。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadow DOMの適用も、SkinPerkによって行われます。
+各ユニットはデフォルトでは1つのHTMLファイルを持ちます（BitsmistJSではスキンと呼びます）。各ユニットのHTMLファイルは、ロードしてユニットに適用（ノードに追加）される必要があります。複数のHTMLファイルを切り替えて表示したり、逆に全くHTMLを使用しないユニットを作成することもできます。これらの機能は、SkinPerkによって処理されます。さらにShadow DOMの適用も、SkinPerkによって行われます。
 
 ユニットは初期化中に"basic.transform"スペルを使い、beforeTransform・doTransform・afterTransformイベントをトリガーします。SkinPerkはbeforeTransformでHTMLをロードするイベントハンドラをインストールし、doTransformでロードしたHTMLを適用するイベントハンドラをインストールします。
 =====設定=====
 
-SkinPerkの設定は"skin"セクションに記述します。SkinPerkに対する設定は"skin.options"セクションに、各HTMLに関する設定は、"skin.skins"セクション配下にHTML名をキーに記述します。キー名は後述の[[#切り替え|HTMLの切り替え]]時に指定する名前となります。デフォルトのHTMLに関する情報は"default"セクションに記述します。なお"default"セクションが存在しない場合は、デフォルトのファイルをロードします。
+SkinPerkの設定は"skin"セクションに記述します。SkinPerkに対する設定は"skin.options"セクションに、各HTMLに関する設定は、"skin.skins"セクション配下にスキン名をキーに記述します。スキン名は後述の[[#切り替え|スキンの切り替え]]時に指定する名前となります。デフォルトのスキンに関する情報は"default"セクションに記述します。なお"default"セクションが存在しない場合は、デフォルトのファイルをロードします。
 
 <code javascript>
 _getSettings()
@@ -39,7 +39,7 @@ SkinPerkの設定の詳細については以下をご覧ください。
 
 =====ロード=====
 
-SkinPerkはbeforeTransformイベントでHTMLをロードします。その際、ロードしたHTMLを元にTemplateノードを作成し、ユニットのunitRootプロパティにセットします。この時点ではまだ、画面には表示されません。
+SkinPerkはbeforeTransformイベントでHTMLをロードします。その際、ロードしたHTMLを元にTemplateノードを作成し、ユニットのインベントリのbasic.unitRootにセットします。この時点ではまだ、画面には表示されません。
 
 HTMLのロード元としては、ファイル・ノード・固定のHTMLの3種類からロードすることができます。何も設定を記述しない場合、デフォルトのパスとファイル名を使ってHTMLファイルをロードします。
 
@@ -154,7 +154,7 @@ _getSettings()
             "skins": {
                 "default": {
                     "type": "node",
-                    "rootNode": "template#grid"
+                    "selctor": "template#grid"
                 },
             }
         }
@@ -166,10 +166,10 @@ _getSettings()
 ロードしたHTMLは、doTransformイベントでユニットに適用されます。具体的には、ユニットのinnerHTMLが""（空文字）で初期化された後、Templateをクローンしたノードがユニットに追加されます。
 =====切り替え=====
 
-"basic.transform"スペルを使い、複数のHTMLを状況に応じて、切り替えることができます。その際、初期化と同じようにHTMLのロードと適用が行われます。スペルの引数には切り替え先のHTML名を指定します。
+"basic.transform"スペルを使い、複数のHTMLを状況に応じて、切り替えることができます。その際、初期化と同じようにHTMLのロードと適用が行われます。スペルの引数には切り替え先のスキン名を指定します。
 
 <code javascript>
-this.use("spell", "basic.transform", {"skinName": "skin2"});
+this.cast("basic.transform", {"skinName": "skin2"});
 </code>
 
 <WRAP admonition tip>

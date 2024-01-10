@@ -191,7 +191,7 @@ Each item has the following keys:
 |template|String|The template node created from the skin's HTML.|
 |status|String|The skin loading status. The values are either ""(empty string) or "loaded".|
 
-=====States=====
+----
 
 ====active====
 

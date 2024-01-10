@@ -10,12 +10,12 @@ This page describes the settings.
 
 There are four ways to specify a unit's settings.
 
-  * Return the Settings Object.
+  * Return the Settings Object in _getSettings().
   * Load from the External File.
   * Specify in Tag Attributes.
   * Specify in Global Settings.
 
-====Return the Settings Object====
+====Return the Settings Object in _getSettings()====
 
 Every BitsmistJS unit has a method called _getSettings(). Overriding the method and returning an object that contains the settings configures the unit.
 
@@ -24,7 +24,9 @@ _getSettings()
 {
     return {
         "setting": {
-            "path": "common",
+            "options": {
+                "path": "common",
+            }
         },
         "event": {
             "events": {
@@ -43,7 +45,7 @@ This is the most typical way of configuring a unit.
 
 ====Load from the External File====
 
-Write the settings in JSON format in an external file and specify its URL in the bm-settingref attribute of the tag.
+Write the settings in JSON or Javascript Object format in an external file and specify its URL in the bm-settingsref attribute of the tag.
 
 <code html>
 <bar-header bm-settingsref="https://example.com/settings/bar-header.settings.js"></bar-header>
@@ -52,7 +54,9 @@ Write the settings in JSON format in an external file and specify its URL in the
 <file javascript bar-header.setting.js>
 {
     "setting": {
-        "path": "common"
+        "options": {
+            "path": "common"
+        }
     },
     "event": {
         "events": {
@@ -82,7 +86,7 @@ However, the only section you can specify here is the "options" section of the s
 
 In this way, as with reading external files, different settings are possible for different tags in the same unit.
 
-Some perks also read settings from their own attributes. For example, in UnitPerk, the attribute "bm-path" can be used to specify the path to load the unit.
+Some perks also read settings from their own attributes. For example, UnitPerk reads the attribute "bm-path" to specify the path of the unit.
 
 <code html>
 <bar-header bm-autoload bm-path="common"></bar-header>
@@ -163,12 +167,12 @@ This section describes the global settings that are shared among all units.
 
 ====How to Set Global Settings====
 
-Just as each unit has a setting asset, the BITSMIST.v1.Unit class, the parent of all units, also has a setting asset. The value set in the setting asset of this Unit class becomes the global value.
+Just as each unit has a setting asset, the BITSMIST.V1.Unit static class, the parent of all units, also has a setting asset. The value set in the setting asset of this Unit class becomes the global value.
 
 The following example uses the setting.merge skill to merge settings into global settings.
 
 <code javascript>
-BITSMIST.v1.Unit.use("skill", "setting.merge", {
+BITSMIST.V1.Unit.use("skill", "setting.merge", {
     "system": {
         "options": {
             "env": "prod",
@@ -178,7 +182,7 @@ BITSMIST.v1.Unit.use("skill", "setting.merge", {
 </code>
 
 <WRAP admonition note>
-Since there may already be global settings elsewhere, we recommend using the setting.merge skill instead of the set() method to avoid erasing them.
+Since global settings may be already set elsewhere, we recommend using the setting.merge skill instead of the setting.set skill to avoid erasing them.
 </WRAP>
 
 ====Loading Global Settings====
@@ -208,7 +212,7 @@ console.log(this.get("setting", "myValue")); // console displays 1
 This can be used to apply the same settings to all units by writing the unit settings in the global settings.
 
 <code javascript>
-BITSMIST.v1.Unit.use("skill", "setting.merge", {
+BITSMIST.v1.Unit.use("setting.merge", {
     "style": {
         "options": {
             "styleRef": false,
@@ -222,7 +226,7 @@ In the above example, all units do not load unit-specific CSS.
 
 ====Overriding Global Settings====
 
-If there is a setting in a unit that is the same as the global setting, the unit's setting takes precedence. Therefore, for units that **dare to use settings different from the global settings**, setting the same items in the unit will prevent the unit from using the global settings.
+If there is a setting in a unit that also exists in the global setting, the unit's setting takes precedence. Therefore, for units that use settings different from the global settings, setting the same items in the unit will prevent the unit from using the global settings.
 
 <code javascript>
 BITSMIST.v1.Unit.set("setting", "myValue", 1)
@@ -232,7 +236,7 @@ this.set("setting", "myValue", 2)
 console.log(this.get("setting", "myValue")); // console displays 2
 </code>
 
-For example, a unit on that site will follow the global settings, but a third-party unit served from a different server may want to use its own settings.
+For example, a unit on the site will follow the global settings, but a third-party unit served from a different server may want to use its own settings.
 
 However, there are exceptions. Depending on the variable type combination of global and unit settings, setting the same item in a unit will result in a merge.
 

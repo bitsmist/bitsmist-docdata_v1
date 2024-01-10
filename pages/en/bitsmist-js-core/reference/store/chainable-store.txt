@@ -93,6 +93,25 @@ The value specified by the key. When the key is not found, returns defaultValue,
 
 ----
 
+====has(key)====
+
+''Type:Boolean''
+
+Returns if the specified key exists.
+
+It tries to retrieve the item from the chained store object if the item requested does not exist in its own store.
+
+===Parameters===
+
+^Parameter^Type^Description^
+|key \\ ''Required''|String|The key to check.|
+
+===Return Value===
+
+True if the key exists, false if it doesn't exist.
+
+----
+
 ====merge(value, merger, options)====
 
 ''Type:Undefined''

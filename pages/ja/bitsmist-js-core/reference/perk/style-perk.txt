@@ -166,25 +166,20 @@ CSSファイルのURLを指定します。"type"設定が"URL"の時に使用さ
 
 ====beforeTransform====
 
-[[#summon|summon]]スペルを使ってCSSをロードします。ロードするCSSは"style.options.apply"に指定されている共通スタイル、設定の"style.options.hasStyle"がTrueの場合(デフォルトはTrue)はさらに、e.detail.styleNameで指定されたスタイルと、そのスタイルの設定"style.styles.<styleName>.apply"に指定されているスタイルです。
+beforeTransformでは、まず現在適用されているCSSをクリアした後、[[#summon|summon]]スペルを使って共通CSSをロードします。共通CSSは"style.options.apply"に指定されている共通スタイルです。ロードが完了すると、[[#apply|apply]]スペルを使ってCSSをユニットに適用します。
 
 ===参照する設定===
 
   * [[#apply|style.options.apply]]
-  * [[#hasstyle|style.options.hasStyle]]
-  * [[#apply|style.styles.<styleName>.apply]]
 
 ----
 
 ====doTransform====
 
-[[#apply|apply]]スペルを使ってCSSをユニットに適用します。適用するCSSは"style.options.apply"に指定されている共通スタイル、設定の"style.options.hasStyle"がTrueの場合(デフォルトはTrue)はさらに、e.detail.styleNameで指定されたスタイルと、そのスタイルの設定"style.styles.<styleName>.apply"に指定されているスタイルです。
-
-スタイルを適用する前に、そのユニットに既に適用されているスタイルをクリアします。
+doTransformでは、設定の"style.options.hasStyle"がTrueの場合(デフォルトはTrue)、[[#summon|summon]]スペルを使ってユニット専用CSSをロードします。ユニット専用CSSはe.detail.styleNameで指定されたスタイルと、そのスタイルの設定"style.styles.<styleName>.apply"に指定されているスタイルです。ロードが完了すると、[[#apply|apply]]スペルを使ってCSSをユニットに適用します。
 
 ===参照する設定===
 
-  * [[#apply|style.options.apply]]
   * [[#hasstyle|style.options.hasStyle]]
   * [[#apply|style.styles.<styleName>.apply]]
 =====インベントリ=====

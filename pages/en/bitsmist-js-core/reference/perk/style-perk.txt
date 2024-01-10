@@ -163,26 +163,21 @@ The URL of the CSS file. Used when the "type" setting is "URL".
 
 ====beforeTransform====
 
-Load CSS using the [[#summon|summon]] spell. The CSS to be loaded is the common style specified in "style.options.apply", and if the setting "style.options.hasStyle" is True (default is True), then the style specified in e.details.styleName and the style specified in the style setting "style.styles.<styleName>.apply".
+In the beforeTransform event, any styles already applied to a unit are cleared first. Then common CSS are loaded using [[#summon|summon]] spell and apply loaded CSS to the unit using [[#apply|apply]] spell.
 
 ===Reference Settings===
 
   * [[#apply|style.options.apply]]
-  * [[#hasstyle|style.options.hasStyle]]
-  * [[#apply|style.styles.<styleName>.apply]]
 
 ----
 
 ====doTransform====
 
-Apply CSS to the unit using the [[#apply|apply]] spell. The CSS to be applied is the common style specified in "style.options.apply", and if the setting "style.options.hasStyle" is True (default is True), then the style specified in e.details.styleName and the style specified in the style setting "style.styles.<styleName>.apply".
-
-Before applying a style, any styles already applied to the unit are cleared.
-
+In the doTransform event, if "style.options.hasStyle" setting is True (default is True), unit-specific CSS 
+ are loaded using [[#summon|summon]] spell. The unit-specific CSS are the style specified in e.details.styleName and the styles specified in "style.styles.<styleName>.apply" setting. Those loaded CSS are applied to the unit using [[#apply1|apply]] spell. 
 
 ===Reference Settings===
 
-  * [[#apply|style.options.apply]]
   * [[#hasstyle|style.options.hasStyle]]
   * [[#apply|style.styles.<styleName>.apply]]
 

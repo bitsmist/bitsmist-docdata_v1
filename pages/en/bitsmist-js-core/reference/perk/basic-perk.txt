@@ -81,98 +81,39 @@ If true, the [[#setup|setup]] spell is automatically invoked during the transfor
 ''Type:Boolean'' ''Default:True''
 
 If true, the [[#transform|transform]] spell is automatically called during the initialization.
-=====Unit Properties=====
 
-====uniqueId====
-
-''Type:String'' ''Target:Prototype'' ''get''
-
-A unique ID assigned to each instance of the unit. It is automatically generated.
-
-----
-
-====unitRoot====
-
-''Type:HTMLElement'' ''Target:Prototype'' ''get/set''
-
-The root node of the unit. If the unit is Shadow DOM, it is the return value of attachShadow(), otherwise, "this". As an exception, when transforming the clone of the template HTML is set.
-
-=====Unit Methods=====
-
-====get(assetName, key, defaultValue)====
+=====Methods (Unit)=====
+====cast(spellName, ..args)====
 
 ''Type:*'' ''Target:Prototype''
 
-Returns the value from the asset.
+Cast the unit's spell (asynchronous function).
 
 ===Parameters===
 
 |< 100% 180px 130px - >|
 ^Parameter^Type^Description^
-|assetName \\ ''Required''|String| The asset name.|
-|key \\ ''Required''|String|The key in the asset to be retrieved.|
-|defaultValue|*|Returns this value if the specified key is not found in the asset.|
+|spellName \\ ''Required''|String|The spell to cast.|
+|...args|*|Arguments passed to the spell.|
 
 ===Return Value===
 
-The value obtained from the asset.
+The promise.
 
 ----
 
-
-====has(assetName, key)====
-
-''Type:Boolean'' ''Target:Prototype''
-
-Returns whether the asset has the specified key.
-
-===Parameters===
-
-|< 100% 180px 130px - >|
-^Parameter^Type^Description^
-|assetName \\ ''Required''|String| The asset name.|
-|key \\ ''Required''|String|The key in the asset to be checked.|
-
-===Return Value===
-
-True if the key exists, False if not.
-
-----
-
-====set(assetName, key, value)====
-
-''Type:Undefined'' ''Target:Prototype''
-
-Sets the value to the asset.
-
-===Parameters===
-
-|< 100% 180px 130px - >|
-^Parameter^Type^Description^
-|assetName \\ ''Required''|String| The asset name.|
-|key \\ ''Required''|String|The key in the asset to be set.|
-|value|*|The value to set.|
-
-===Return Value===
-
-Undefined.
-
-----
-
-
-====use(assetName, key, ..args)====
+====use(skillName, ..args)====
 
 ''Type:*'' ''Target:Prototype''
 
-Calls the function in the asset.
+Use the unit's skill (synchronous function).
 
 ===Parameters===
 
 |< 100% 180px 130px - >|
 ^Parameter^Type^Description^
-|assetName \\ ''Required''|String| The asset name.|
-|key \\ ''Required''|String|The key in the asset to be used.|
-|...args|*|Arguments passed to the function.|
+|skillName \\ ''Required''|String|The skill name to use.|
+|...args|*|Arguments passed to the skill.|
 
 ===Return Value===
 
@@ -184,15 +125,24 @@ The return value of the function.
 
 ''Type:ChainableStore'' ''Target:Instance''
 
-The asset used to store information. It may be referenced by other units.
+The asset to store a unit's information. It may be referenced by other units.
 
 ----
+
+====perk====
+
+''Type:Object'' ''Target:Instance''
+
+The asset to store perks that are attached to a unit.
+
+----
+
 
 ====skill====
 
 ''Type:ChainableStore'' ''Target:Instance''
 
-The asset used to store skills.
+The asset to store skills.
 
 ----
 
@@ -200,23 +150,9 @@ The asset used to store skills.
 
 ''Type:ChainableStore'' ''Target:Instance''
 
-The asset used to store spells.
+The asset to store spells.
 
-----
 
-====state====
-
-''Type:ChainableStore'' ''Target:Instance''
-
-The asset used to store the unit's states.
-
-----
-
-====vault====
-
-''Type:ChainableStore'' ''Target:Instance''
-
-The asset used to store private information. However, there are no mechanisms to prevent access from other units as of now. Do not use it for security purposes.
 =====Skills=====
 
 ====locate====

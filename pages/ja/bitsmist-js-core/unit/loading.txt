@@ -18,7 +18,7 @@
 
   * bm-autoload属性を持つタグを記述する
   * <script>タグでインポートする
-  * 設定の"unit"セクションに記述する
+  * 設定の"unit.units"セクションに記述する
   * プログラムから動的に追加する
   * モーフィングする
 
@@ -28,20 +28,20 @@
 
 ===URLを指定する===
 
-これは[[ja:bitsmist-js-core:general:sample|サンプルユニット]]で使用した方法です。カスタムタグの"bm-autoload"属性にJavascriptファイルへのURLを記述します。
+これは[[ja:bitsmist-js-core:general:sample|"サンプルユニットを作る"]]で使用した方法です。カスタムタグの"bm-autoload"属性にJavascriptファイルへのURLを記述します。
 
 <code html>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
 </code>
 
-するとBitsmistJSライブラリが、指定されたURLからファイルを自動的にダウンロードします。その後ユニットが初期化され、インターフェースのHTML/CSSファイルがロードされて画面に表示されます。
+するとBitsmistJSライブラリが、指定されたURLからファイルを自動的にダウンロードします。その後ユニットが初期化され、HTML/CSSファイルがロードされて画面に表示されます。
 
 <WRAP admonition note links>
 この例では相対パスを使っていますが、絶対パスでも構いません。ただし、XMLHttpRequestを使用して取得しているため、絶対パスを使って別のオリジンからロードする場合は、サーバ側でAccess-Control-Allow-Originヘッダーを付加する必要があります。
   * <html><i class="fas fa-external-link-alt"></i></html>[[https://developer.mozilla.org/ja/docs/Web/HTTP/CORS|オリジン間リソース共有 (CORS) | MDN Web Docs]]
 </WRAP>
 
-===URLを指定しない===
+===デフォルトのパスとファイルを使用する===
 
 bm-autoload属性の値にURLを指定しない場合は、デフォルトのパスとファイル名が使用されます。
 
@@ -128,7 +128,7 @@ this.use("spell", "unit.materializeAll");
 各ユニットが持っている[[ja:bitsmist-js-core:reference:perk:unit-perk#materialize|unit.materialize]]スペルを使用して、そのユニットの子ユニットして追加することができます。materializeスペルに設定内容を記述したオブジェクトを渡すことで、初期化できます。
 
 <code javascript>
-this.use("spell", "unit.materialize", "PadFilter", {
+this.use("unit.materialize", "PadFilter", {
     "unit": {
         "options": {
             "path":"common",
@@ -143,6 +143,7 @@ this.use("spell", "unit.materialize", "PadFilter", {
 <WRAP admonition tip links>
 materializeAll/materializeスペルはUnitPerkによって提供されます。
   * [[ja:bitsmist-js-core:reference:perk:unit-perk#materialize|リファレンス - UnitPerk - materialize]]
+  * [[ja:bitsmist-js-core:reference:perk:unit-perk#materializeAll|リファレンス - UnitPerk - materializeAll]]
 </WRAP>
 
 
@@ -158,7 +159,7 @@ bm-autoload属性にHTMLファイルへのURLを指定した場合、内部で�
 <pad-hello bm-autoload="/pad-hello.html"></pad-hello>
 </code>
 
-上記の例の場合、Unitクラスを継承したPadHelloクラスが作成され、pad-helloタグに紐づけられます。その後タグがインスタンス化され、Unitクラスの初期化が始まり、HTMLファイルがサーバから読み込まれ、カスタムタグ内に表示されます。
+上記の例の場合、Unitクラスを継承したPadHelloクラスが作成され、pad-helloタグに紐づけられます。その後タグがインスタンス化され、Unitクラスの初期化が始まり、HTMLファイルとCSSファイルがサーバから読み込まれ、カスタムタグ内に表示されます。
 
 ===デフォルトのファイルをロードする===
 
@@ -228,7 +229,7 @@ bm-autoload属性にHTMLファイルへのURLを指定した場合、内部で�
 システムユニットパスは、基本的にはグローバル設定で行います。
 
 <code javascript>
-BITSMIST.v1.Unit.settings.merge({
+BITSMIST.v1.Unit.use("setting.merge", {
     "system": {
         "unit": {
             "options": {
@@ -270,7 +271,7 @@ BITSMIST.v1.Unit.settings.merge({
 </code>
 
 <code javascript>
-this.use("spell", "unit.materialize", "PadSetting", {
+this.cast("unit.materialize", "PadSetting", {
     "unit": {
         "options": {
             "path": "common"
@@ -318,7 +319,7 @@ bm-autoload属性でURLを指定しない場合、デフォルトのファイル
 </code>
 
 <code javascript>
-document.querySelector("bm-router").use("skill", "unit.materialize", "BarHeader", {
+document.querySelector("bm-router").use("unit.materialize", "BarHeader", {
     "unit": {
         "options": {
             "fileName": "header",

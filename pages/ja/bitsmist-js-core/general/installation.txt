@@ -4,7 +4,7 @@
 
 BitmistJSを使用するためには、必要なファイルをHTMLのHEADタグ内に記述する必要があります。コアライブラリで必要なファイルは、bitsmist-js_v1.min.js一つだけです。そのファイルをCDNから、またはダウンロードしたファイルを自分のサーバーにアップロードして使用します。
 
-minがつかない、bitsmist-js_v1.jsは開発用のライブラリです。こちらを使用するとデバッグ用のメッセージがコンソールに大量に表示されます。普通は使用することはありません。
+minがつかないbitsmist-js_v1.jsは開発用のライブラリです。こちらを使用するとデバッグ用のメッセージがコンソールに大量に表示されます。普通は使用することはありません。
 
 
 
@@ -15,7 +15,7 @@ HTMLファイルの中でBitsmistJSをCDNからインポートしてください
 <code html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 ...
 </code>
 

@@ -18,9 +18,7 @@
 
 =====1. ユニットの名称を決める=====
 
-ユニットを作るにあたって、まずユニットに必要な様々なものの名称を決めていきます。
-
-BitsmistJSのユニットは、以下のファイルが必要となります。
+ユニットを作るにあたって、まずユニットに必要な様々なものの名称を決めていきます。BitsmistJSのユニットは通常、以下のファイルが必要となります。
 
   * ユニットの動作を記述するJavascriptファイル
   * 画面を定義するHTML/CSSファイル
@@ -92,10 +90,10 @@ pad-hello {
 BitmistJSではベースとなるユニットを継承し、カスタムコンポーネントを作成していきます。現在のところBitsmistJS Coreライブラリは"Unit"という名前のベースユニットのみを提供しています。
 ====クラスを定義する====
 
-継承元のユニットはBITSMIST.v1グローバルオブジェクトの中に存在するので、実際に継承するときは以下のようになります。
+継承元のユニットはBITSMIST.V1グローバルオブジェクトの中に存在するので、実際に継承するときは以下のようになります。
 
 <code javascript>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
 }
 </code>
@@ -112,7 +110,7 @@ class PadHello extends BITSMIST.v1.Unit
 </WRAP>
 
 <code javascript>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
     _getSettings()
     {
@@ -138,7 +136,7 @@ class PadHello extends BITSMIST.v1.Unit
 次に"pad-hello.js"内にイベントハンドラを作成します。このユニットにはボタンが一個あり、そのボタンを押したときの動作を記述します。イベントハンドラ名は先ほどの設定に記述したとおり、"onBtnGreet_Click"としています。
 
 <code javascript>
-class PadHello extends BITSMIST.v1.Unit
+class PadHello extends BITSMIST.V1.Unit
 {
     ...省略...
 
@@ -187,7 +185,7 @@ class PadHello extends BITSMIST.v1.Unit
 <file html sample.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.11.1/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
 <title>BitsmisJS Sample</title>
 </head>
 <body>
