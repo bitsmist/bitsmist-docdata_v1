@@ -191,7 +191,7 @@ These are the source files for this sample project.
 <file html sample.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.3/dist/bitsmist-js_v1.min.js"></script>
 <title>BitsmisJS Sample</title>
 </head>
 <body>

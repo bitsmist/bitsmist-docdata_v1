@@ -40,7 +40,7 @@ BitmistJSではコンポーネント(このフレームワークではユニッ�
 <file html index.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.3/dist/bitsmist-js_v1.min.js"></script>
 </head>
 <body>
 <pad-hello bm-autoload="/pad-hello.html"></pad-hello>
@@ -67,7 +67,7 @@ pad-hello {
 <file html index.html>
 <html>
 <head>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.2/dist/bitsmist-js_v1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bitsmist/bitsmist-js_v1@0.12.3/dist/bitsmist-js_v1.min.js"></script>
 </head>
 <body>
 <pad-hello bm-autoload="/pad-hello.js"></pad-hello>
